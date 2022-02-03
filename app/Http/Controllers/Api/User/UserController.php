@@ -119,13 +119,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getDeletedRecords( )
+    public function getDeletedRecords()
     {
-        $user = User::onlyTrashed()->paginate(env('API_PAGINATION', 10));; 
+        $users = User::onlyTrashed()->paginate(env('API_PAGINATION', 10));
         return response()->json([
             'success'=> true, 
-            'message'=>'User restored', 
-            'data'=>$user],  200);
+            'message'=>'Deleted users fetched successfully', 
+            'data'=>$users],  200);
     }
    
     /**
@@ -135,7 +135,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function restoreDeletedRecord( $id)
+    public function restore( $id)
     {
         $user = User::onlyTrashed()->findOrFail($id)->restore(); 
         return response()->json([

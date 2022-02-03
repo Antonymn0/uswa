@@ -20,4 +20,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
     //user routes
+  Route::get('/user/restore/{id}','Api\User\UserController@restore');
+  Route::get('/user/get-deleted','Api\User\UserController@getDeletedRecords');
+  Route::get('/user/parmanently-delete/{id}','Api\User\UserController@parmanentlyDelete');  
   Route::apiResource('/user','Api\User\UserController');
+  
+
+
+
+// fall back route
+  Route::fallback(function() {
+        return response()->json([
+            'success'=> false,
+            'message' => 'No such route found on this server',
+            ], 404);
+});

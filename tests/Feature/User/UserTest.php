@@ -34,8 +34,7 @@ class UserTest extends TestCase
      * @return void
      */
     public function test_can_create_user()
-    {
-        
+    {        
         $data = @json_decode(json_encode( User::factory()->create()), true);
         $user = User::first()->delete();
         $response = $this->json('POST', 'api/user/', $data);
@@ -92,6 +91,23 @@ class UserTest extends TestCase
                 
         $response = $this->json('DELETE', 'api/user/'. $user->id); 
         $response = $this->json('GET', 'api/user/restore/'.$user->id); 
+        $response->assertStatus(200)
+                    ->assertJson([
+                        'success' => true,
+                        ]);                  
+    }
+
+    /**
+     * A basic feature test can get soft deleted user .
+     *
+     * @return void
+     */
+    public function test_can_get_deleted_users()
+    {       
+       $user = Passport::actingAs( User::factory()->create() );
+                
+        $response = $this->json('DELETE', 'api/user/'. $user->id); 
+        $response = $this->json('GET', 'api/user/get-deleted' ); 
         $response->assertStatus(200)
                     ->assertJson([
                         'success' => true,
