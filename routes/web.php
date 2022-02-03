@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+//default laravel auth routes (some turned off)
+Auth::routes([
+    'register'=> false,
+    'login'=> false,
+    'register' => false,
+    'verify' => true,
+    ]); 
+
+Route::get('/{any?}', function() {
     return view('welcome');
 });
+
+
