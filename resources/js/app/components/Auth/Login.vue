@@ -29,7 +29,7 @@
         <div class="container" >
             <button type="button" class="cancelbtn m-2 rounded" @click.prevent="()=>{this.$router.push({name: 'frontpage'})}">Cancel</button>
             <button type="button" class="cancelbtn m-2 rounded" @click.prevent="()=>{this.$router.push({name: 'register'})}">Register</button>
-            <span class="psw"> <a href="/password/reset">Forgot password?</a></span>
+            <span class="psw"> <a href="password/reset">Forgot password?</a></span>
         </div>
         </form>
 
