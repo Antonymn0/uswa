@@ -1,8 +1,7 @@
 require("./bootstrap");
 import { createApp, h } from "vue";
 
-window.axios = require("axios");
-const axios = require("axios");
+import axios from "axios";
 
 // import moment from "moment";
 window.axios.defaults.headers.common = {
