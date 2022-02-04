@@ -14,9 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+// Route::group(['middleware'=>['auth:api']],function(){
+  
+// });
+
+//Login route
+  Route::post('/login','Api\Auth\AuthController@login');
+ //Logout route
+  Route::post('/logout','Api\Auth\AuthController@logout');
 
 // register route 
 Route::post('/register','Api\User\UserController@store');
@@ -27,11 +36,9 @@ Route::post('/register','Api\User\UserController@store');
   Route::get('/user/parmanently-delete/{id}','Api\User\UserController@parmanentlyDelete');  
   Route::apiResource('/user','Api\User\UserController');
 
-  //Login route
-  Route::post('/login','Api\Auth\AuthController@login');
+  
 
-  //Login route
-  Route::post('/logout','Api\Auth\AuthController@logout');
+ 
   
 
 // fall back route

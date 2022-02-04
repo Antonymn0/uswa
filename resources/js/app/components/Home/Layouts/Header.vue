@@ -27,6 +27,7 @@
       <div class="px-3 desktop">
         <router-link :to="{name: 'login'}" class="px-1">Login</router-link>
         <router-link :to="{name: 'register'}" class="px-1">Register</router-link>
+        <a href="#" class="px-1" @click.prevent="this.logout()">Logout</a>
       </div>
       <div> <MobileNav /> </div>
     </div>
@@ -42,6 +43,24 @@ import MobileNav from "../../Navigation/MobileNav.vue";
 export default {
   components:{
     MobileNav
+  },
+  methods:{
+    logout(){
+      console.log(this.$store.state.user.user);
+      axios.post('/api/logout', {
+        headers: {
+            'Accept': 'application/json',
+            Authorization: "Bearer " + this.$store.state.user.user.token
+             }
+        })
+      .then(response=>{
+        console.log(response)
+      })
+      .catch(error=>{
+        console.log(error.response);
+      });
+      // this.$store.commit('unsetUser', user=null);
+    }
   }
 
 }

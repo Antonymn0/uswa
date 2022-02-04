@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 //default laravel auth routes (some turned off)
 Auth::routes([
     'register'=> false,
-    'login'=> false,
+    'login'=> true,
     'register' => false,
     'verify' => true,
     ]); 
