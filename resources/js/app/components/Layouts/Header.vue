@@ -76,8 +76,10 @@ export default {
   },
   computed:{
     ...mapGetters(["isLogedIn"]),    
-  }
-
+  },
+mounted(){
+    this.$router.push({name: 'home'});
+}
 }
 </script>
 
