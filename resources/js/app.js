@@ -19,4 +19,4 @@ import store from "./app/Store/store.js";
 
 const app = createApp({});
 app.component("App", App).use(router).use(store).mount("#app");
-app.config.globalProperties.axios = axios;
+app.provide("axios", axios);
