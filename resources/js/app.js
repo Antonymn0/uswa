@@ -1,6 +1,9 @@
 require("./bootstrap");
 import { createApp, h } from "vue";
 
+window.axios = require("axios");
+const axios = require("axios");
+
 // import moment from "moment";
 window.axios.defaults.headers.common = {
     "X-Requested-With": "XMLHttpRequest",
@@ -9,10 +12,11 @@ window.axios.defaults.headers.common = {
         .getAttribute("content"),
 };
 
+
 import App from "./App.vue";
 
 import router from "./app/Router/index.js";
 import store from "./app/Store/store.js";
 
-const axios = require("axios");
-createApp({}).component("App", App).use(router).use(store).mount("#app");
+const app = createApp({});
+app.component("App", App).use(router).use(store).mount("#app");
