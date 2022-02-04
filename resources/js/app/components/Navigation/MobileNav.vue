@@ -7,14 +7,14 @@
             <a href="javascript:void(0)" class="closebtn" @click.prevent="closeNav()">&times;</a>
                 <ul class="list-unstyled ml-5">
                     <li class="nav-item">
-                        <route-link :to="{name: 'home'}" class="nav-link">Home </route-link>
+                        <route-link :to="{name: 'home'}" class="nav-link" @click.prevent="pushRoutes('home')">Home </route-link>
                     </li>
                     
                     <li class="nav-item">
-                        <route-link :to="{name: ''}" class="nav-link">Help </route-link>
+                        <route-link :to="{name: ''}" class="nav-link" @click.prevent="pushRoutes('')">Help </route-link>
                     </li>                   
                     <li class="nav-item">
-                        <route-link :to="{name: ''}" class="nav-link">FAQs </route-link>
+                        <route-link :to="{name: ''}" class="nav-link" @click.prevent="pushRoutes('')">FAQs </route-link>
                     </li>                   
                     
                     <li class="dropdown-item  pt-2">
@@ -44,6 +44,9 @@ export default {
         closeNav() {
             document.getElementById("mySidenav").style.width = "0";           
             document.body.style.backgroundColor = "white";
+        },
+        pushRoutes(route){
+            this.$router.push({name: route});
         }
     }
 }
