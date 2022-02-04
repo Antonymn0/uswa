@@ -93,7 +93,6 @@ methods:{
         if(this.form.password !== this.form.password_again) this.errors.password_again = "Password does not match";
         if(this.form.password.length < 4) this.errors.password = "Password must be atleast 4 characters";
     }
-
 }
 
 }
