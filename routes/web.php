@@ -25,4 +25,10 @@ Route::get('/{any?}', function() {
     return view('welcome');
 });
 
-
+// fall back route
+  Route::fallback(function() {
+        return response()->json([
+            'success'=> false,
+            'message' => 'No such route found on this server',
+            ], 404);
+});

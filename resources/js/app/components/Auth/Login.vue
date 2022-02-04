@@ -54,21 +54,20 @@ methods:{
     loginUser(){
         this.validateForm();
         if(Object.keys(this.errors).length) return;
-        console.log('Validating..');
         var form_data = new FormData();
         form_data.append('email', this.form.email);
         form_data.append('password', this.form.password);
-        console.log("Send axios...");
+
         axios.post('api/login', form_data )
         .then(response=>{
-            console.log(response);
-            console.log(this.$store.state.user.user);
+            this.$store.commit('setToken', response.data.token);
             this.$store.commit('setUser', response.data.user);
             this.$router.push({name: 'student-dashboard'});
         })
         .catch(error=>{
             if(error.response.status == 401){
-                this.errors.credentials = error.response.data.message;
+              this.$store.commit('unsetUser', error.response.data);
+              this.errors.credentials = error.response.data.message;
             }
             console.log(error.response);
         })

@@ -15,17 +15,19 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        
         $credentials = $request->validate([
                 'email' => ['required', 'string', 'email', 'max:255'],
                 'password' => ['required', 'string', 'min:4'],
             ]);
         if(Auth::attempt($credentials)){
             $user = Auth::user();
-            $user->token = auth()->user()->createToken('token')->accessToken;
+            $token = auth()->user()->createToken('token')->accessToken;
             return response()->json([
                 'success' => true,
                 'message' => 'User  successfully logged in',
-                'user' => $user            
+                'user' => $user,
+                'token' => $token            
             ],200);
         }
         return response()->json([
@@ -38,7 +40,8 @@ class AuthController extends Controller
      * Logout user
     */
     public function logout(Request $request){
-       if(true ==true){
+       
+       if($request){
           $request->user()->token()->revoke();
             return response()->json([
                 'success' => true,
@@ -52,10 +55,21 @@ class AuthController extends Controller
                 'message' => 'User  not authenitcated',
                 'data' => false           
             ],401);
-       }
-            
-        
-           
-           
+       }         
+    }
+
+    // check if user is authenticated and token still valid 
+    public function checkIfUserAuthenticated(Request $request){
+        if($request){
+            $user =  $request->user();
+            $token =  $request->user()->token();
+            return response()->json([
+                'success' => true,
+                'message' => 'User  valid and authenticated',
+                'user' => $user,           
+            ],200);
+        }
+        else  return false;            
+
     }
 }

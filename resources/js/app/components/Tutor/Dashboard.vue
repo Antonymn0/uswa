@@ -1,5 +1,5 @@
 <template>
-  <div>Footer home</div>
+  <div> <h1> Tutor dashboard</h1> </div>
 </template>
 
 <script>

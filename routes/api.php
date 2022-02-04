@@ -23,14 +23,16 @@ if (App::environment('production')) {
 //     return $request->user();
 // });
 
-// Route::group(['middleware'=>['auth:api']],function(){
-  
-// });
+Route::group(['middleware'=>['auth:api']],function(){
+  //Logout route
+  Route::get('/logout','Api\Auth\AuthController@logout');
+  Route::get('/check-user-authenticated','Api\Auth\AuthController@checkIfUserAuthenticated');
+
+});
 
 //Login route
   Route::post('/login','Api\Auth\AuthController@login');
- //Logout route
-  Route::post('/logout','Api\Auth\AuthController@logout');
+ 
 
 // register route 
 Route::post('/register','Api\User\UserController@store');
@@ -40,10 +42,6 @@ Route::post('/register','Api\User\UserController@store');
   Route::get('/user/get-deleted','Api\User\UserController@getDeletedRecords');
   Route::get('/user/parmanently-delete/{id}','Api\User\UserController@parmanentlyDelete');  
   Route::apiResource('/user','Api\User\UserController');
-
-  
-
- 
   
 
 // fall back route

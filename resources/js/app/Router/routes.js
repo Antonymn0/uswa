@@ -9,15 +9,11 @@ const routes = [
         path: "/login",
         component: require("../components/Auth/Login.vue").default,
     },
+  
     {
         name: "home",
         path: "/home",
-        component: require("../components/Home/Home.vue").default,
-    },
-    {
-        name: "frontpage",
-        path: "/front-page",
-        component: require("../components/Home/FrontPage.vue").default,
+        component: require("../components/Home/HomePage.vue").default,
     },
 
     // student routes
@@ -25,6 +21,12 @@ const routes = [
         name: "student-dashboard",
         path: "/student/dashboard",
         component: require("../components/Student/Dashboard.vue").default,
+    },
+    // Tutor routes
+    {
+        name: "tutor-dashboard",
+        path: "/tutor/dashboard",
+        component: require("../components/Tutor/Dashboard.vue").default,
     },
 
     //fallback route

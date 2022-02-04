@@ -65,7 +65,11 @@ methods:{
             form_data.append('password_again', this.form.password_again);
             form_data.append('role', this.form.role);
 
-        axios.post('api/register', form_data )
+        axios.post('api/register', form_data ,{
+          headers:{
+            'accept':'application/json'
+          }
+        })
         .then(response=>{
             if(response.status == 201){               
                 this.$router.push({name: 'login'})

@@ -1,22 +1,41 @@
 <template>
- <Home />
+ <Header />
+  
 </template>
 
 <script>
 import {mapState} from 'vuex';
 
-import Home from './app/components/Home/Home.vue'
+
+import Header from './app/components/Layouts/Header.vue'
 export default {
-  components:{
-    Home
+  components:{   
+    Header
   },
   computed:{
     token(){
       return this.$store.state.token;
+    },    
+  },
+  methods:{
+    checkIfUserIsAuthenitcated(){
+      if(! this.$store.state.token.token) return;
+      let token = this.$store.state.token.token;
+      axios.get('/api/check-user-authenticated', { headers: { 'Authorization': 'Bearer ' + token } })
+      .then(response => {
+          if(response.status == 200){
+            this.$store.commit('setUser', response.data.user);
+            console.log(response)
+          }
+      })
+      .catch(error=>{
+
+      })
     }
   },
   mounted(){
-    console.log(this.$store.state.user);
+    this.$router.push({name: 'home'});
+    this.checkIfUserIsAuthenitcated();
   }
 }
 </script>

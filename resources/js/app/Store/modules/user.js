@@ -1,23 +1,28 @@
 export const user = {
     state: () => ({
-        user: JSON.parse(localStorage.getItem("uswa_user")) || null,
-        loged_in:false,
+        user:  null,
+        is_logedin:false,
     }),
 
     actions: {},
 
     mutations: {
         setUser(state, user) {
-            state.user = user;
-            localStorage.setItem("uswa_user", JSON.stringify(user));
-            state.loged_in = true;
+            state.user = user;           
+            state.is_logedin = true;
+            console.log('User set...');
+            console.log(state.is_logedin);
         },
         unsetUser(state,user) {
-            state.user = null;
-            localStorage.removeItem("uswa_user");
-            state.loged_in = false;
+            state.user = null;           
+            state.is_logedin = false;
+            console.log('User Unset...');
         }
     },
 
-    getters: {},
+    getters: {
+        isLogedIn(state) {
+            return state.is_logedin;
+        }
+    },
 };
