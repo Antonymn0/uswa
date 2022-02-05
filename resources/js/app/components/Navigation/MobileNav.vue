@@ -17,12 +17,11 @@
                         <route-link :to="{name: ''}" class="nav-link" @click.prevent="pushRoutes('')">FAQs </route-link>
                     </li>                   
                     
-                    <li class="dropdown-item  pt-2">
-                          
-                            <button type="submit" class="btn-danger mx-auto"> 
-                                <Logout />                               
-                            </button>
-                                                
+                    <li class="dropdown-item  pt-2">                          
+                        <button type="submit" class="btn-danger mx-auto text-white"> 
+                            <span> <router-link :to="{name: 'login'}" class="px-1 text-white" v-if="! isLogedIn">Login</router-link></span>                            
+                            <Logout />                               
+                        </button>                                                
                     </li>                  
                 </ul>
             </div>
@@ -32,6 +31,7 @@
 </template>
 
 <script>
+import {mapGetters,  mapActions } from "vuex";
 import Logout from '../Auth/Logout.vue';
 export default {
     components:{
@@ -49,7 +49,10 @@ export default {
         pushRoutes(route){
             this.$router.push({name: route});
         }
-    }
+    },
+    computed:{
+        ...mapGetters(["isLogedIn"]),    
+    },
 }
 </script>
 

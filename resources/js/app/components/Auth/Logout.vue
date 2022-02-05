@@ -1,7 +1,8 @@
-<template>
-  <div>
-       <a href="#" class="px-1" @click.prevent="this.logout()" v-if=" isLogedIn">Logout</a>
-  </div>
+<template> 
+    <span>
+        <a href="#" class="px-1" @click.prevent="this.logout()" v-if=" isLogedIn">Logout</a> 
+    </span>
+     
 </template>
 
 <script>
