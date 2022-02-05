@@ -4,7 +4,7 @@
     <div  class="col-md-6">
       <div class="px-auto pt-3">
         <span class="bold mx-auto">
-          Prepare to Speak differently
+         Speak a new language with confidence
         </span> <br>
         <span class="semi-bold mx-auto">
           with the best online tutors.

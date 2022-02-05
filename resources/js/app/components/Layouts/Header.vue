@@ -61,13 +61,15 @@ export default {
     }
   },
   methods:{
-    
+    showHomePage(){
+        this.$router.push({name: 'home'});
+    }
   },
   computed:{
     ...mapGetters(["isLogedIn"]),    
   },
-mounted(){
-    this.$router.push({name: 'home'});
+mounted(){     
+    setTimeout(this.showHomePage(), 200);
     }
 }
 </script>
