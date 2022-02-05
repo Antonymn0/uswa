@@ -20,7 +20,7 @@ class AuthController extends Controller
                 'password' => ['required', 'string', 'min:4'],
             ]);
         if(Auth::attempt($credentials)){
-            $user = 'Auth::user()';
+            $user = Auth::user();
             $token = "auth()->user()->createToken('token')->accessToken";
             return response()->json([
                 'success' => true,
