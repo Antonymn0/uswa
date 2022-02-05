@@ -21,7 +21,7 @@ class AuthController extends Controller
             ]);
         if(Auth::attempt($credentials)){
             $user = Auth::user();
-            $token = "auth()->user()->createToken('token')->accessToken";
+            $token = auth()->user()->createToken('token')->accessToken;
             return response()->json([
                 'success' => true,
                 'message' => 'User  successfully logged in',
@@ -38,8 +38,8 @@ class AuthController extends Controller
     /**
      * Logout user
     */
-    public function logout(Request $request){
-       
+    public function logout(Request $request)
+    {       
        if($request){
           $request->user()->token()->revoke();
             return response()->json([
