@@ -18,14 +18,11 @@
                     </li>                   
                     
                     <li class="dropdown-item  pt-2">
-                        <form action="/logout" method="POST" enctype="multipart/form-data">
-                            <div class="ml-2 border-top pt-2">
-                            <input type="hidden" name="_token" value="csrf">     
+                          
                             <button type="submit" class="btn-danger mx-auto"> 
-                                <i class="bi bi-box-arrow-left pr-1"></i>  Logout                               
+                                <Logout />                               
                             </button>
-                            </div>                        
-                        </form>                     
+                                                
                     </li>                  
                 </ul>
             </div>
@@ -35,7 +32,11 @@
 </template>
 
 <script>
+import Logout from '../Auth/Logout.vue';
 export default {
+    components:{
+        Logout
+    },
     methods:{
         openNav() {
             document.getElementById("mySidenav").style.width = "60%";            

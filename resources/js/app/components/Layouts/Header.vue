@@ -28,7 +28,7 @@
       <div class="px-3 desktop">
         <router-link :to="{name: 'login'}" class="px-1" v-if="! isLogedIn">Login</router-link>
         <router-link :to="{name: 'register'}" class="px-1" v-if="! isLogedIn">Register</router-link>
-        <a href="#" class="px-1" @click.prevent="this.logout()" v-if=" isLogedIn">Logout</a>
+       <Logout />
       </div>
       
     </div>
@@ -47,11 +47,13 @@
 import {mapGetters,  mapActions } from "vuex";
 
 import MobileNav from "../Navigation/MobileNav.vue";
+import Logout from "../Auth/Logout.vue";
 import Footer from "./Footer.vue";
 export default {
   components:{
     MobileNav,
-    Footer
+    Footer,
+    Logout
   },
   data(){
     return{
@@ -59,27 +61,14 @@ export default {
     }
   },
   methods:{
-    logout(){
-      let token = this.$store.state.token.token;
-      axios.get('/api/logout', {  headers: {   'Authorization': 'Bearer ' + token } })
-      .then(response=>{
-        if(response.status == 200){
-          this.$store.commit('unsetToken', response.data);
-          this.$store.commit('unsetUser', response.data);
-        }
-        console.log(response)
-      })
-      .catch(error=>{
-        console.log(error.response);
-      });
-    }
+    
   },
   computed:{
     ...mapGetters(["isLogedIn"]),    
   },
 mounted(){
     this.$router.push({name: 'home'});
-}
+    }
 }
 </script>
 
