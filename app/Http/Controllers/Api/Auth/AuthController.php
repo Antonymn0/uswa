@@ -20,14 +20,19 @@ class AuthController extends Controller
                 'password' => ['required', 'string', 'min:4'],
             ]);
         if(Auth::attempt($credentials)){
-            $user = Auth::user();
-            $token = auth()->user()->createToken('token')->accessToken;
-            return response()->json([
-                'success' => true,
-                'message' => 'User  successfully logged in',
-                'user' => $user,
-                'token' => $token            
-            ],200);
+            try {
+                $user = Auth::user();
+                $token = auth()->user()->createToken('token')->accessToken;
+                return response()->json([
+                    'success' => true,
+                    'message' => 'User  successfully logged in',
+                    'user' => $user,
+                    'token' => $token            
+                ],200);
+            } catch (\Throwable $th) {
+                return $th;
+            }
+           
         }
         return response()->json([
             'success'=> false,
