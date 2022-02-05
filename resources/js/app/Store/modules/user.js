@@ -23,6 +23,10 @@ export const user = {
     getters: {
         isLogedIn(state) {
             return state.is_logedin;
-        }
+        },
+        getUser(state) {
+            return state.user;
+        },
+        
     },
 };

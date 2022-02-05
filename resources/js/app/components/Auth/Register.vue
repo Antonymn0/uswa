@@ -22,7 +22,7 @@
             <input type="password" placeholder="Enter Password" v-model="form.password_again" required @input.prevent="matchPassword()">
             <small class="text-danger">{{this.errors.password_again}}</small> <br>
 
-            <button type="submit">Register</button>
+            <button type="submit">  <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner"></span> Register</button>
            
         </div>
 
@@ -49,6 +49,7 @@ data(){
             password_again:null,
             role:'student',
         },
+        spinner:false,
         errors:{} , 
         regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/, 
     }
@@ -64,18 +65,21 @@ methods:{
             form_data.append('password', this.form.password);
             form_data.append('password_again', this.form.password_again);
             form_data.append('role', this.form.role);
-
+        this.spinner =true;
         axios.post('api/register', form_data ,{
           headers:{
             'accept':'application/json'
           }
         })
         .then(response=>{
-            if(response.status == 201){               
+            if(response.status == 201){   
+                this.spinner=false;            
                 this.$router.push({name: 'login'})
             }
+            this.spinner=false; 
         })
         .catch(error=>{
+          this.spinner=false; 
             if(error.response.status == 422){
                 this.errors.email = error.response.data.errors.email[0];
                 return;
@@ -106,7 +110,7 @@ methods:{
 
 /* Bordered form */
 form {
-    width:35rem;
+    width:30rem;
     max-width:98%;    
     background-color:#fefefe;
   

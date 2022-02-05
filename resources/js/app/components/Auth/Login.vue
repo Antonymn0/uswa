@@ -20,7 +20,7 @@
             <input type="password" placeholder="Enter Password" v-model="form.password" required>
             <small class="text-danger">{{this.errors.password}}</small> <br>
 
-            <button type="submit">Login</button>
+            <button type="submit"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner"></span> Login</button>
             <label>
             <input type="checkbox" checked="checked" name="remember"> Remember me
             </label>
@@ -46,6 +46,7 @@ data(){
            email:null,
            password:null 
         },
+        spinner:false,
         errors:{} , 
         regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/, 
     }
@@ -58,14 +59,16 @@ methods:{
         form_data.append('email', this.form.email);
         form_data.append('password', this.form.password);
 
+        this.spinner=true;
         axios.post('api/login', form_data )
         .then(response=>{
-            console.log(response);
             this.$store.commit('setToken', response.data.token);
             this.$store.commit('setUser', response.data.user);
+            this.spinner=false;
             this.$router.push({name: 'student-dashboard'});
         })
         .catch(error=>{
+          this.spinner=false;
             if(error.response.status == 401){
               this.$store.commit('unsetUser', error.response.data);
               this.errors.credentials = error.response.data.message;
@@ -90,7 +93,7 @@ methods:{
 
 /* Bordered form */
 form {
-    width:35rem;
+    width:30rem;
     max-width:98%;    
     background-color:#fefefe;  
 }

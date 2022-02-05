@@ -1,5 +1,8 @@
 <template>
-<div> <MobileNav /> </div>
+<div> 
+<VerifyEmail />
+<MobileNav /> 
+</div>
   <div class="parent-header d-flex justify-content-between  border-bottom px-3">
     <div class="d-flex justify-content-start align-items-center">
       <div class="d-flex py-4 "> 
@@ -15,29 +18,36 @@
     </div>
 
     <div class="d-flex align-items-center">     
-      <div class="px-2 desktop">
-      <router-link :to="{name: 'home'}">Home</router-link>
-      </div>
-      <div class="p-4 border-right desktop">
-       Language | currency
-      </div>
-      <div class="px-2 desktop">
-        Help
-      </div>
-      
-      <div class="px-3 desktop">
-        <router-link :to="{name: 'login'}" class="px-1" v-if="! isLogedIn">Login</router-link>
-        <router-link :to="{name: 'register'}" class="px-1" v-if="! isLogedIn">Register</router-link>
-       <Logout />
-      </div>
-      
-    </div>
+        <div class="px-2 desktop">
+        <router-link :to="{name: 'home'}">Home</router-link>
+        </div>
+        <div class="p-4 border-right desktop">
+        en | USD
+        </div>
+        <div class="px-3 desktop">
+            <router-link :to="{name: 'login'}" class="px-1" v-if="! isLogedIn">Login</router-link>
+            <router-link :to="{name: 'register'}" class="px-1" v-if="! isLogedIn">Register</router-link>
+            <div class="dropdown">
+            <a v-if=" isLogedIn" class="d-flex align-items-center " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            {{getUser.first_name}} &nbsp;  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.5rem"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">            
+                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdropProfile">Profile</a></li>
+                <li><a class="dropdown-item" href="#"><Logout /></a></li>
+            </ul>
+            </div>
+        
+        </div>
+        
+        </div>
   </div>
  
 <div class="w-100">
     <router-view></router-view>
   </div> <br>
   <div class="w-100 ">
+      <Profile />
+
      <Footer /> 
   </div>
   
@@ -49,11 +59,15 @@ import {mapGetters,  mapActions } from "vuex";
 import MobileNav from "../Navigation/MobileNav.vue";
 import Logout from "../Auth/Logout.vue";
 import Footer from "./Footer.vue";
+import Profile from "../Profile/Profile.vue";
+import VerifyEmail from "../Notifications/EmailUnverified.vue";
 export default {
   components:{
     MobileNav,
     Footer,
-    Logout
+    Logout,
+    Profile,
+    VerifyEmail,
   },
   data(){
     return{
@@ -66,7 +80,7 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(["isLogedIn"]),    
+    ...mapGetters(['isLogedIn', 'getUser']),    
   },
 mounted(){     
     setTimeout(this.showHomePage(), 200);

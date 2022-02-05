@@ -25,7 +25,7 @@ export default {
       .then(response => {
           if(response.status == 200){
             this.$store.commit('setUser', response.data.user);
-            console.log(response)
+            console.log("Success " + response.data.message);
           }
       })
       .catch(error=>{

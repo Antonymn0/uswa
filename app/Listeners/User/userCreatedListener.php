@@ -5,8 +5,11 @@ namespace App\Listeners\User;
 use App\Events\User\userCreated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\User\WelcomeToUswa;
+use App\Mail\EmailVerification\VerifyEmail;
 
-class userCreatedListener
+class userCreatedListener implements shouldQueue
 {
     /**
      * Create the event listener.
@@ -26,6 +29,8 @@ class userCreatedListener
      */
     public function handle(userCreated $event)
     {
-        //
+        //send welcome emails
+        Mail::to($event->user->email)->send(new WelcomeToUswa($event->user));
+        Mail::to($event->user->email)->send(new verifyEmail($event->user));
     }
 }

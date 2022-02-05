@@ -29,6 +29,11 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\User\userDestroyed' => [
             'App\Listeners\User\userDestroyedListener',
         ],
+        // email verification  events
+        'App\Events\EmailVerification\SendEmailVerificationLink' => [
+            'App\Listeners\EmailVerification\SendEmailVerificationLinkListener',
+        ],
+        
         
 
     ];

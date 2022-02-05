@@ -21,6 +21,9 @@ Auth::routes([
     'verify' => true,
     ]); 
 
+//email verification routes
+  Route::get('/verify-email/{email}','Api\Auth\EmailVerificationController@verifyEmail');
+
 Route::get('/{any?}', function() {
     return view('welcome');
 });
