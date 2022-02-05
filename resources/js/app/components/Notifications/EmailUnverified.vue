@@ -4,7 +4,7 @@
         <span>{{this.user.first_name }}, You have not yet verified your email address. Please click this button to:
             <button class="btn btn-secondary px-4 rounded " style="background-color:#394e4e;" @click.prevent="sendEmailverificationLink()">Verify</button>
         </span> <br>        
-        <small class="text-white" v-if="this.show_message">  We have sent you a verification link to '{{email}}' . Please check your email inbox to verify.</small>
+        <small class="text-white" v-if="this.show_message">  We have sent a verification link to '{{email}}' . Please check your email inbox to verify.</small>
     </div>
   </div>
 </template>

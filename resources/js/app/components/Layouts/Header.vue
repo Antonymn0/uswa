@@ -21,13 +21,15 @@
     <!-- ---------------------- -->
     <div class="mobile">
       <span> 
+        <router-link :to="{name: 'login'}" class="px-1" v-if="! isLogedIn">Login</router-link>
         <a v-if=" isLogedIn" class="d-flex align-items-center " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             &nbsp;  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.1rem"></i>  &nbsp;
             {{getUser.first_name}}
         </a> </span>
     </div>
     <!-- -------------------------- -->
-    <div class="d-flex align-items-center">     
+    <div class="d-flex align-items-center"> 
+
         <div class="px-2 desktop">
         <router-link :to="{name: 'home'}">Home</router-link>
         </div>
@@ -50,7 +52,7 @@
         <MobileNav /> 
         </div>
   </div>
-  <div class="d-flex justify-content-center py-2">
+  <div class=" py-2 mobile text-center mx-auto">    
     <router-link :to="{name: 'student-dashboard'}" class="px-3" >Find a tutor</router-link>          
     <router-link :to="{name: 'tutor-dashboard'}" class="px-3" >Become a tutor</router-link>   
   </div>
