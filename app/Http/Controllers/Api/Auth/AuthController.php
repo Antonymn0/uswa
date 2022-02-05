@@ -14,15 +14,14 @@ class AuthController extends Controller
      * Login user
      */
     public function login(Request $request)
-    {
-        
+    {        
         $credentials = $request->validate([
                 'email' => ['required', 'string', 'email', 'max:255'],
                 'password' => ['required', 'string', 'min:4'],
             ]);
         if(Auth::attempt($credentials)){
-            $user = Auth::user();
-            $token = auth()->user()->createToken('token')->accessToken;
+            $user = 'Auth::user()';
+            $token = "auth()->user()->createToken('token')->accessToken";
             return response()->json([
                 'success' => true,
                 'message' => 'User  successfully logged in',
