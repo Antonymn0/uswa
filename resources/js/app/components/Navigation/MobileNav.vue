@@ -2,9 +2,9 @@
   <div class="parent-nav   py-2">
    
     <div>
-        <span @click.prevent="openNav()"><i class="bi bi-list text-dark " style="font-size:1.8rem; margin-right:1rem"></i></span>
+        <span @click.prevent="openNav()"><i class="bi bi-list text-dark float-right" style="font-size:1.8rem; margin-right:1rem"></i></span>
         <div id="mySidenav" class="sidenav" style="">
-            <a href="javascript:void(0)" class="closebtn" @click.prevent="closeNav()">&times;</a>
+            <a href="javascript:void(0)" class="closebtn" id="closeNav" @click.prevent="closeNav()">&times;</a>
                 <ul class="list-unstyled ml-5">
                     <li class="nav-item">
                         <route-link :to="{name: 'home'}" class="nav-link" @click.prevent="pushRoutes('home')">Home </route-link>
@@ -18,8 +18,8 @@
                     </li>                   
                     
                     <li class="dropdown-item  pt-2">                          
-                        <button type="submit" class="btn-danger mx-auto text-white"> 
-                            <span> <router-link :to="{name: 'login'}" class="px-1 text-white" v-if="! isLogedIn">Login</router-link></span>                            
+                        <button type="submit" class="btn-danger mx-auto text-white" @click.prevent="this.closeNav()"> 
+                            <span> <router-link :to="{name: 'login'}" class="px-1 text-white"  v-if="! isLogedIn" >Login</router-link></span>                            
                             <Logout />                               
                         </button>                                                
                     </li>                  
@@ -48,6 +48,7 @@ export default {
         },
         pushRoutes(route){
             this.$router.push({name: route});
+            this.closeNav();
         }
     },
     computed:{

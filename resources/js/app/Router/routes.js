@@ -19,13 +19,13 @@ const routes = [
     // student routes
     {
         name: "student-dashboard",
-        path: "/student/dashboard",
+        path: "/dashboard/student",
         component: require("../components/Student/Dashboard.vue").default,
     },
     // Tutor routes
     {
         name: "tutor-dashboard",
-        path: "/tutor/dashboard",
+        path: "/dashboar/tutor",
         component: require("../components/Tutor/Dashboard.vue").default,
     },
 
