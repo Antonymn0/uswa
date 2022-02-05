@@ -60,6 +60,7 @@ methods:{
 
         axios.post('api/login', form_data )
         .then(response=>{
+            console.log(response);
             this.$store.commit('setToken', response.data.token);
             this.$store.commit('setUser', response.data.user);
             this.$router.push({name: 'student-dashboard'});
