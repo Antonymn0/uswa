@@ -19,8 +19,8 @@ const routes = [
     // student routes
     {
         name: "student-dashboard",
-        path: "/dashboard/student",
-        component: require("../components/Student/Dashboard.vue").default,
+        path: "/student/find-tutors",
+        component: require("../components/Student/FindTutors/FindTutors.vue").default,
     },
     // Tutor routes
     {

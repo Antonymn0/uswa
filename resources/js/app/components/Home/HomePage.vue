@@ -1,6 +1,6 @@
 <template>
 <div class="parent">
-  <div class="row pb-3 pt-5 mx-4">
+  <div class="row pb-3 pt-5 mx-4 top">
     <div  class="col-md-6">
       <div class="px-auto pt-3">
         <span class="bold mx-auto">
@@ -103,7 +103,7 @@
     </div>
     </div>
     <!-- ------------------------------------------ -->
-    <div class="my-5 mx-5">
+    <div class="my-5 mx-5 new-language">
       <h3 class="text-center fw-bold py-5">Learn a new language the easy way</h3>
         <div>
           <ul class="row list-unstyled ">
@@ -129,7 +129,59 @@
         </div>
     </div>
     <!-- -------------------------------------------------- -->
-  
+  <div>
+    <h2 class="text-center fw-bold ">How Uswa works</h2>
+
+    <div class="row mx-5 py-2 how-uswa-work">
+      <div class="col-md-2  my-3 text-center">
+        <span class="text-center number"> 1</span>
+      </div>
+      <div class="col-md-5">
+        <h4> Find the best tutor</h4> 
+        <p>Choose from over 12,000 online tutors. Use filters to narrow your search and find the perfect fit </p>        
+      </div>
+      <div class="col-md-5">
+         <img src="/images/find-tutors.webp" alt="image">
+      </div>
+    </div>
+
+    <div class="row mx-5 my-2 how-uswa-work">
+      <div class="col-md-2 my-3 text-center">
+        <span class="text-center number"> 2</span>
+        
+      </div>
+      <div class="col-md-5 ">
+        <h4>Take lessons anytime anywhere </h4> 
+        <p>Find the perfect time for your busy schedule. Book lessons in seconds via desktop or mobile </p>        
+      </div>
+      <div class="col-md-5">
+        <img src="/images/calender.webp" alt="image">
+      </div>
+    </div>
+
+    <div class="row mx-5 py-2 how-uswa-work">
+      <div class="col-md-2 my-3 text-center">
+        <span class="text-center number"> 3</span>
+      </div>
+      <div class="col-md-5">
+        <h4>Enter virtual classroom </h4> 
+        <p>When it’s lesson time, connect with your tutor through our comprehensive video platform </p>        
+      </div>
+      <div class="col-md-5">
+         <img src="/images/calender.webp" alt="image">
+      </div>
+    </div>
+
+    <div class="flags">      
+      <span><img src="/images/us.svg" alt="" class="rounded-circle"></span>
+      <span><img src="/images/italian.svg" alt="" class="rounded-circle"></span>
+      <span><img src="/images/french.svg" alt="" class="rounded-circle"></span>
+      <span><img src="/images/russian.svg" alt="" class="rounded-circle"></span>
+      <span><img src="/images/german.svg" alt="" class="rounded-circle"></span>
+      <span><img src="/images/chinese.svg" alt="" class="rounded-circle"></span>
+    </div>
+
+  </div>
 </div>
   
 </template>
@@ -193,6 +245,39 @@ export default {
   color:#6f757b;
 }
 
+.how-uswa-work{
+  margin-left:2rem;
+  margin-right:2rem;
+}
+.how-uswa-work img{
+  width:35rem; 
+  max-width:100%;
+}
+.flags{
+  margin-left: 5rem;
+  margin-right: 5rem;
+}
+.flags span{
+  width:3rem;
+  margin:1rem;
+  margin-bottom: 2rem;
+}
+.flags img{
+  width:4rem;
+  height:4rem;
+  padding: .3rem;;
+}
+.number{
+  text-align: center;
+  background-color: #e2f0f1;
+  color: #3bb3bd;
+  width:auto;
+  border-radius:50%;
+  padding:1.3rem;
+
+
+}
+
 /* media quesries */
 @media only screen and (max-width: 950px) {
     .tutors .tutor-panels{
@@ -203,8 +288,33 @@ export default {
 /* media quesries */
 @media only screen and (max-width: 600px) {
     .tutors .tutor-panels{
-        width:100%;
-       
+        width:100%;       
+    }
+    .top {
+      margin-left: 5px !important;
+      margin-right: 5px !important;
+    }
+    .tutors{
+      margin-left: 1%;
+      margin-right: 1%;
+      margin-bottom:5rem !important;
+      
+    }
+    .how-uswa-work{
+      text-align: center;
+    }
+    .new-language {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    padding-top:5rem;
+  }
+    .new-language h3{  
+      margin-top:5rem;
+      margin-bottom: 1.2rem;
+    }
+    .mx-5{
+      margin-right:3px !important;
+      margin-left:3px !important;
     }
 }
 
