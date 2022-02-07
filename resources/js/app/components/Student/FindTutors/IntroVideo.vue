@@ -9,11 +9,22 @@
             </div>
             <div class="modal-body ">
               <h6>Video</h6>
-                <video width="320" height="240"  preload="true" controls>
-                    <source src="/videos/video.mp4" type="video/mp4">
-                    <source src="movie.ogg" type="video/ogg">
-                    Your browser does not support the video tag.
-                </video>
+              <div class="row">
+                  <div>
+                    <video width="320" height="240"  preload="true" controls>
+                        <source src="/videos/video.mp4" type="video/mp4">
+                        <source src="movie.ogg" type="video/ogg">
+                        Your browser does not support the video tag.
+                    </video>
+                  </div>
+                  <div> 
+                      <div>
+                          <h4>Schedule</h4>
+                          Calender
+                      </div>
+                  </div>
+              </div>
+              
                
               <div class="p-1 text-left">
                 <button class="btn btn-success m-1">Message</button> 
