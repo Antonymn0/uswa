@@ -218,7 +218,6 @@
                     <span> <button class="btn btn-primary rounded m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial </button>  </span> 
                     <span> <button class="btn btn-primary rounded m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Intro video</button>  </span> 
                     <span> <button class='btn btn-success m-1' data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span>
-
                 </div>
             </div>
         </div>
