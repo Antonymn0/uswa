@@ -215,9 +215,9 @@
                     </span>
                 </div>
                 <div class="d-flex justify-content-center py-2">
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial lesson</button> &nbsp; </span> 
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Watch intro</button> &nbsp; </span> 
-                    <span> <button class='btn btn-success ' data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span>
+                    <span> <button class="btn btn-primary rounded m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial lesson</button>  </span> 
+                    <span> <button class="btn btn-primary rounded m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Watch intro</button>  </span> 
+                    <span> <button class='btn btn-success m-1' data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span>
 
                 </div>
             </div>
