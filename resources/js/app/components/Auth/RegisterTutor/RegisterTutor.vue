@@ -2,7 +2,7 @@
   <div class="px-2 py-5">
       <form action="#" @submit.prevent="registerUser()" class="mx-auto rounded shadow pt-3">
         <div class="imgcontainer">
-            <h2>Register</h2>
+            <h2>Register as a tutor</h2>
         </div>      
 
         <div class="container">
@@ -21,9 +21,7 @@
             <label for="psw"><b>Confirm Password </b></label>
             <input type="password" placeholder="Enter Password" v-model="form.password_again" required @input.prevent="matchPassword()">
             <small class="text-danger">{{this.errors.password_again}}</small> <br>
-
-            <button type="submit">  <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner"></span> Register</button>
-           
+            <button type="submit">  <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner"></span> Register</button>           
         </div>
 
         <div class="container d-flex" >
@@ -56,6 +54,8 @@ data(){
 },
 methods:{
     registerUser(){
+      this.$router.push({name: 'register-tutor-signup'});
+        return;
         this.validateForm();
         if(Object.keys(this.errors).length) return;
 
@@ -66,6 +66,8 @@ methods:{
             form_data.append('password_again', this.form.password_again);
             form_data.append('role', this.form.role);
         this.spinner =true;
+        
+
         axios.post('api/register', form_data ,{
           headers:{
             'accept':'application/json'
@@ -74,7 +76,7 @@ methods:{
         .then(response=>{
             if(response.status == 201){   
                 this.spinner=false;            
-                this.$router.push({name: 'login'})
+                this.$router.push({name: 'register-tutor-signup'})
             }
             this.spinner=false; 
         })

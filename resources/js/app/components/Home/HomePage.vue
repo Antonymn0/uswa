@@ -1,14 +1,21 @@
 <template>
-<div class="parent">
+<div class="parent ">
   <div class="row pb-3 pt-5 mx-4 top">
     <div  class="col-md-6">
       <div class="px-auto pt-3">
         <span class="bold mx-auto">
          Speak a new language with confidence
         </span> <br>
-        <span class="semi-bold mx-auto">
+        <span class="semi-bold mx-auto ">
           with the best online tutors.
         </span>
+        <div class="py-3">
+          <span class="d-flex">
+            <input type="text" class=" border w-100 p-3 shadow search-rounded">
+            <button class="background-red text-white  py-3 px-4 search-btn-rounded shadow">Search </button>
+          </span>
+         
+        </div>
       </div>      
       </div>
     <div class="col-md-6 text-right"><img src="https://static.preply.com/static/ssr/_next/static/images/hero-image-mobile-480-6f3bf0d176f9763ef4eca2f53c1bce25.webp" alt="" style="max-width:90%"></div>
@@ -16,90 +23,105 @@
   <!-- --------------------- -->
   <div>    
     <div class="tutors rounded">
-      <div class="tutor-panels">
-        <span class="lang-icon"> EN </span>
+      <div class="tutor-panels ">
+        <span class="lang-icon fonts-red border-red"> EN </span>
         <span>
-          <span class="title"> English Tutors </span> <br>
-          <small>200 Tutors </small>
+          <span class="title "> English Tutors </span> <br>
+          <small class="">200 Tutors </small>
         </span>               
       </div>
-      <div class="tutor-panels">
-        <span class="lang-icon"> EN </span>
+     
+      <div class="tutor-panels ">
+        <span class="lang-icon fonts-red border-red"> EN </span>
         <span>
-          <span class="title"> English Tutors </span> <br>
-          <small>200 Tutors </small>
+          <span class="title "> English Tutors </span> <br>
+          <small class="">200 Tutors </small>
         </span>               
       </div>
-      <div class="tutor-panels">
-        <span class="lang-icon"> EN </span>
+     
+      <div class="tutor-panels ">
+        <span class="lang-icon fonts-red border-red"> EN </span>
         <span>
-          <span class="title"> English Tutors </span> <br>
-          <small>200 Tutors </small>
+          <span class="title "> English Tutors </span> <br>
+          <small class="">200 Tutors </small>
         </span>               
       </div>
-      <div class="tutor-panels">
-        <span class="lang-icon"> EN </span>
+     
+      <div class="tutor-panels ">
+        <span class="lang-icon fonts-red border-red"> EN </span>
         <span>
-          <span class="title"> English Tutors </span> <br>
-          <small>200 Tutors </small>
+          <span class="title "> English Tutors </span> <br>
+          <small class="">200 Tutors </small>
         </span>               
       </div>
-      <div class="tutor-panels">
-        <span class="lang-icon"> EN </span>
+     
+      <div class="tutor-panels ">
+        <span class="lang-icon fonts-red border-red"> EN </span>
         <span>
-          <span class="title"> English Tutors </span> <br>
-          <small>200 Tutors </small>
+          <span class="title "> English Tutors </span> <br>
+          <small class="">200 Tutors </small>
         </span>               
       </div>
-      <div class="tutor-panels">
-        <span class="lang-icon"> EN </span>
+     
+      <div class="tutor-panels ">
+        <span class="lang-icon fonts-red border-red"> EN </span>
         <span>
-          <span class="title"> English Tutors </span> <br>
-          <small>200 Tutors </small>
+          <span class="title "> English Tutors </span> <br>
+          <small class="">200 Tutors </small>
         </span>               
       </div>
-      <div class="tutor-panels">
-        <span class="lang-icon"> EN </span>
+     
+      <div class="tutor-panels ">
+        <span class="lang-icon fonts-red border-red"> EN </span>
         <span>
-          <span class="title"> English Tutors </span> <br>
-          <small>200 Tutors </small>
+          <span class="title "> English Tutors </span> <br>
+          <small class="">200 Tutors </small>
         </span>               
       </div>
-      <div class="tutor-panels">
-        <span class="lang-icon"> EN </span>
+     
+      <div class="tutor-panels ">
+        <span class="lang-icon fonts-red border-red"> EN </span>
         <span>
-          <span class="title"> English Tutors </span> <br>
-          <small>200 Tutors </small>
+          <span class="title "> English Tutors </span> <br>
+          <small class="">200 Tutors </small>
         </span>               
       </div>
-      <div class="tutor-panels">
-        <span class="lang-icon"> EN </span>
+     
+      <div class="tutor-panels ">
+        <span class="lang-icon fonts-red border-red"> EN </span>
         <span>
-          <span class="title"> English Tutors </span> <br>
-          <small>200 Tutors </small>
+          <span class="title "> English Tutors </span> <br>
+          <small class="">200 Tutors </small>
         </span>               
       </div>
-      <div class="tutor-panels">
-        <span class="lang-icon"> EN </span>
+     
+      <div class="tutor-panels ">
+        <span class="lang-icon fonts-red border-red"> EN </span>
         <span>
-          <span class="title"> English Tutors </span> <br>
-          <small>200 Tutors </small>
+          <span class="title "> English Tutors </span> <br>
+          <small class="">200 Tutors </small>
         </span>               
       </div>
-      <div class="tutor-panels">
-        <span class="lang-icon"> EN </span>
+     
+      <div class="tutor-panels ">
+        <span class="lang-icon fonts-red border-red"> EN </span>
         <span>
-          <span class="title"> English Tutors </span> <br>
-          <small>200 Tutors </small>
+          <span class="title "> English Tutors </span> <br>
+          <small class="">200 Tutors </small>
         </span>               
       </div>
-      <div class="tutor-panels">
-        <span class="lang-icon"> EN </span>
+     
+      <div class="tutor-panels ">
+        <span class="lang-icon fonts-red border-red"> EN </span>
         <span>
-          <span class="title"> English Tutors </span> <br>
-          <small>200 Tutors </small>
+          <span class="title "> English Tutors </span> <br>
+          <small class="">200 Tutors </small>
         </span>               
-      </div>    
+      </div>
+     
+      
+     
+     
     </div>
     </div>
     <!-- ------------------------------------------ -->
@@ -134,7 +156,7 @@
 
     <div class="row mx-5 py-2 how-uswa-work">
       <div class="col-md-2  my-3 text-center">
-        <span class="text-center number"> 1</span>
+        <span class="text-center number background-gray"> 1</span>
       </div>
       <div class="col-md-5">
         <h4> Find the best tutor</h4> 
@@ -198,6 +220,18 @@ export default {
 </script>
 
 <style scoped>
+.search-rounded{
+  border-radius:2rem 0 0 2rem;
+  border-right:none !important;
+}
+
+input[type=text]:focus{
+  border: 1px solid grey !important;
+}
+.search-btn-rounded{
+  border-radius:0 2rem  2rem 0;
+  border-left: none !important;
+}
 .parent{
   color: #3c4447;
     font-family: Poppins,Montserrat,-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
@@ -227,8 +261,6 @@ export default {
   border:1px solid rgba(240, 238, 240, 0.623)
 }
 .lang-icon{
-  border:3px solid #3bb3bd;
-  color:#3bb3bd;
   border-radius:50%;
   padding-right:7px;
   padding-left:7px;
@@ -269,8 +301,8 @@ export default {
 }
 .number{
   text-align: center;
-  background-color: #e2f0f1;
-  color: #3bb3bd;
+  background-color: #f523230c;
+  color: #cf2424f3;
   width:auto;
   border-radius:50%;
   padding:1.3rem;

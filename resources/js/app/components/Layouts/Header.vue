@@ -7,12 +7,12 @@
   <div class="parent-header d-flex justify-content-between align-items-center  border-bottom px-3">
     <div class="d-flex justify-content-start align-items-center">
       <div class="d-flex py-4 "> 
-        <span> <router-link :to="{name: 'home'}"> <h2>USWA</h2></router-link>  </span>  
+        <span> <router-link :to="{name: 'home'}"> <h2 class="text-danger">USWA</h2></router-link>  </span>  
       </div>
       <div class="pl-3 desktop " >
          <ul class="list-unstyled d-flex  ">
          <router-link :to="{name: 'student-dashboard'}" class="px-3" >Find a tutor</router-link>          
-         <router-link :to="{name: 'tutor-dashboard'}" class="px-3" >Become a tutor</router-link>          
+         <router-link :to="{name: 'register-tutor'}" class="px-3" >Become a tutor</router-link>          
           <li class="px-3 desktop"><a href="#">FAQs</a></li>
         </ul>
       </div>  
@@ -69,7 +69,7 @@
     <router-view></router-view>
   </div> <br>
   <div class="clearfix"></div>
-  <div class="w-100 clearfix ">
+  <div class="w-100  ">
       <Profile />
 
      <Footer /> 

@@ -28,6 +28,21 @@ const routes = [
         path: "/dashboar/tutor",
         component: require("../components/Tutor/Dashboard.vue").default,
     },
+    {
+        name: "register-tutor",
+        path: "/register/tutor",
+        component: require("../components/Auth/RegisterTutor/RegisterTutor.vue").default,
+    },
+    {
+        name: "register-tutor-signup",
+        path: "/register/tutor-signup",
+        component: require("../components/Auth/RegisterTutor/TutorSignUpProcess.vue").default,
+    },
+    {
+        name: "tutor-signup-about",
+        path: "/register/tutor-about",
+        component: require("../components/Auth/RegisterTutor/TutorSignUpProcess.vue").default,
+    },
 
     //fallback route
     {
