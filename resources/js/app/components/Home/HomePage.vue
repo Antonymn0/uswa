@@ -251,9 +251,10 @@ input[type=text]:focus{
   background-color:#ffff ;
   color:#3c4447;
   height:100vh;
+  overflow:hidden;
 }
 .tutors .tutor-panels{
-  width:33%;
+  width:33.33%;
   float:left;
   padding:4rem;
   background-color:#ffff ;
