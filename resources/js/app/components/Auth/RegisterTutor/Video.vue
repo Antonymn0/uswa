@@ -1,26 +1,29 @@
 <template>
   <div>
-      <h4>Video introduction</h4>
-      <h5>Record your video</h5>
-      <p>Now introduce yourself to students! You can watch and re-record your intro before you submit it.</p>
+      <h4 class="py-4">Video introduction</h4>
+      <h5>Upload a video</h5>
+      <p>Introduce yourself to students! Upload a short introduction video about yourself and what you do.</p>
       <div class="row">
             <div class="col-md-6">
                 <div>                   
-                    <span > 
-                        <iframe width="320" height="240" class="bg-secondary" :src="video_preview" >  </iframe>
-                     </span>
-                    <br>
-                    <span class="mt-3">
-                        <label for="videolink" class="btn btn-secondary">Select video </label>
-                        <input type="file" hidden  name="image" class=" btn-sm btn alert-danger text-white m-2"  id="videolink"    @change="this.fileUpload($event)">
+                    <p class="shadow" style="overflow:hidden"> 
+                       <span class="w-100" style="position:absolute" v-if="!this.video_preview"> <small class="" style="position:absolute;top:6rem; left:1.2rem; ">Select a video or paste a link  below.</small></span> 
+                        <iframe width="360" height="260"  :src="video_preview" >  </iframe>
                         
-                    </span>                    
+                     </p>
+                     <small class="text-danger">{{this.errors.video}}</small>
+                    <br>
+                    <p class="mt-3">
+                        <label for="videolink" class="btn btn-secondary">Select video </label> <small class="text-muted">Max: 50mb</small>
+                        <input type="file" hidden  name="image" class=" btn-sm btn alert-danger text-white m-2"  id="videolink"    @change="this.fileUpload($event)">
+                    </p>                    
                 </div>
                  
                 <p class="pt-5"> 
-                    <label for="link" class="form-label">Or Paste a link to Your video </label>
-                   <span> <input type="text" class="w-auto p-2 border rounded" id="link" placeholder="https://website.com/video" @input.prevent="this.videoLink($event)" v-model="video_link"> </span>
-                    <span class="ml-2"> <i class="bi bi-x px-1 alert-danger rounded-circle" style="font-size:1.2rem; cursor:pointer;" @click.prevent="video_link = null"></i></span> 
+                    <label for="link" class="form-label fw-bold">Or Paste a link to Your video </label>
+                   <span> <input type="text" class="w-auto p-2 border rounded" id="link" placeholder="https://website.com/video" @input.prevent="this.videoLink($event)" v-model="video_url"> </span>
+                    <span class="ml-2"> <i class="bi bi-x px-1 alert-danger rounded-circle" style="font-size:1.2rem; cursor:pointer;" @click.prevent="clearUrl()"></i></span> 
+                    <br> <small class="text-muted">Tip: Copy Youtube links from the share button</small>
                 </p>
           </div>
           <div class="col-md-6"> 
@@ -49,18 +52,47 @@
 export default {
     data(){
         return{            
-            video_preview:null, 
-            video_link:null,                      
+           errors:{}                
         }
     },
-    methods:{
-        fileUpload(event){
-            this.video_preview = URL.createObjectURL(event.currentTarget.files[0]); 
+    computed:{
+        video_preview:{
+            get() { return this.$store.state.signupProcess_video.video.video_preview; },
+            set(value) { this.$store.commit('set_video_preview', value); }
         },
-        videoLink(event){
-            this.video_preview = this.video_link;
+        video:{
+            get() { return this.$store.state.signupProcess_video.video.video; },
+            set(value) { this.$store.commit('set_video', value); }
+        },
+        video_url:{
+            get() { return this.$store.state.signupProcess_video.video.video_url; },
+            set(value) { this.$store.commit('set_video_url', value); }
+        },
+    },
+    methods:{
+        fileUpload(event){  
+            this.errors={}
+            if(Math.round(event.currentTarget.files[0]/1024/1024) > 50){ // less than 50mb
+              this.errors.video = "File too big: Select an image less than 50mb."; 
+              this.video = null;
+              this.video_preview = null;
+              return;
+            } 
+            if(event.currentTarget.files[0]['type'] === 'video/mp4'  ){
+                this.video_preview = URL.createObjectURL(event.currentTarget.files[0]); 
+                this.video = event.target.files[0];                
+                return;
+            } 
+            else {
+                this.errors.video = "Error:  Allowed file tyype mp4";
+                this.video_preview = null;
+                this.video = null;
+            }
         },
         nextStep(){
+            this.validateForm();
+            if(Object.keys(this.errors).length) return;
+
             document.getElementById('video').classList.add('hidden');
             document.getElementById('availability').classList.remove('hidden');
         },
@@ -68,6 +100,26 @@ export default {
             document.getElementById('video').classList.add('hidden');
             document.getElementById('education').classList.remove('hidden');
         },
+        videoLink(event){
+            this.errors={};
+            // sanitize youtube link
+            if(this.video_url.includes('https://youtu.be/')){
+                this.video_url = this.video_url.replace('https://youtu.be/', 'https://youtube.com/embed/');
+            }
+            this.video_preview = this.video_url;
+            this.video=null;
+        },
+        clearUrl(){
+            this.video = null;
+            this.video_url = null;
+            this.video_preview = null;
+        },
+        
+        validateForm(){
+            this.errors={};
+            if(!this.video && !this.video_url) this.errors.video = "Please select a video or paste a link in the box below.";
+        }
+
     
     }
 }

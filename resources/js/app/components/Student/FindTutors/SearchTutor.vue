@@ -2,7 +2,7 @@
   <div>
        <div class="mb-3 col-md-6">
             <label for="phone" class="form-label">Search Language or subject </label>
-            <input type="text" class="form-control py-2 rounded" id="phone" placeholder="Subject to learn" v-model="this.language">                        
+            <input type="text" class="form-control py-3 search-bar " id="phone" placeholder="Subject to learn" v-model="this.language">                        
         </div>
 
   </div>
@@ -19,5 +19,7 @@ export default {
 </script>
 
 <style>
-
+    .search-bar{
+        border-radius:20rem;
+    }
 </style>

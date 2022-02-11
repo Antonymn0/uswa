@@ -16,8 +16,8 @@
                             <span>&nbsp;<i class="bi bi-shield-fill-check text-primary" ></i> </span> 
                         </h5>
                         <div class=" d-flex align-items-center justify-content-between " >                           
-                            <span><i class="bi bi-mortarboard-fill"></i> &nbsp; Spannish </span>
-                            <span><i class="bi bi-suit-heart-fill" style="font-size:1.5rem"></i> </span>
+                            <span><i class="bi bi-mortarboard-fill text-secondary"></i> &nbsp; Spannish </span>
+                            <span><i class="bi bi-suit-heart-fill text-danger" style="font-size:1.5rem"></i> </span>
                         </div>
 
                         <div class="">
@@ -55,11 +55,10 @@
                          modi architecto nesciunt perspiciatis quo reprehenderit, voluptate accusantium aspernatur ea est quia?
                     </span>
                 </div>
-                <div class="d-flex justify-content-center py-2">
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial lesson</button> &nbsp; </span> 
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Watch intro</button> &nbsp; </span> 
-                    <span> <button class='btn btn-success ' data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span>
-
+                <div class="d-flex align-items-center py-2">                    
+                    <span> <button class="btn btn-danger rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Watch intro</button> &nbsp; </span> 
+                    <span> <button class="btn btn-danger  rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial lesson</button> &nbsp; </span> 
+                    <span> <button class='btn btn-success ' data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span> 
                 </div>
             </div>
         </div>

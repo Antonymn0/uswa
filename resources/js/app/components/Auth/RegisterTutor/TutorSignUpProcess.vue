@@ -1,5 +1,5 @@
 <template>
-<div class="text-muted">
+<div class="text-secondary">
 <p class="sign-up-steps py-2 fw-bold ">
     <span> <i class="bi bi-check-circle"></i> About <i class="bi bi-chevron-right"></i></span>
     <span> <i class="bi bi-check-circle"></i> Photo <i class="bi bi-chevron-right"></i></span>
@@ -32,6 +32,9 @@
         <div id="availability" class="hidden">
            <Availability /> 
         </div>        
+        <div id="finish" class="hidden">
+           <Finish /> 
+        </div>        
     </div>
  </div>
    
@@ -45,6 +48,7 @@ import Certification from "./Certification.vue";
 import Education from "./Education.vue";
 import Video from "./Video.vue";
 import Availability from "./Availability.vue";
+import Finish from "./Finish.vue";
 
 export default {
     components:{
@@ -54,6 +58,7 @@ export default {
         Education,
         Video,
         Availability,
+        Finish,
     }
 }
 </script>

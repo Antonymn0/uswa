@@ -19,7 +19,7 @@
       
     </div>
     <!-- ---------------------- -->
-    <div class="mobile pl-3">
+    <div class="mobile pl-3 text-center">
       <span class="pl-3"> 
         <router-link :to="{name: 'login'}" class="px-1" v-if="! isLogedIn">Login</router-link>
         <a v-if=" isLogedIn" class="d-flex align-items-center " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -60,7 +60,7 @@
  <!-- --------------------------------------------------- -->
     <span class=" py-2 mobile  badge-success  text-default fw-bold">    
       <router-link :to="{name: 'student-dashboard'}" class="px-3" >Find a tutor</router-link>          
-      <router-link :to="{name: 'tutor-dashboard'}" class="px-3" >Become a tutor</router-link>   
+      <router-link :to="{name: 'register-tutor'}" class="px-3" >Become a tutor</router-link>   
     </span>  
   </div>
 <div class="clearfix"></div>

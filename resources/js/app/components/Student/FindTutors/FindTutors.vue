@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="top-header">
+        <div class="top-header background-red">
             <span>
                 <h1>Online English tutors & teachers for private lessons </h1>  
                 <p>
@@ -44,7 +44,7 @@ export default {
 
 <style>
     .top-header{
-        background-color:#011b36e6;
+       
         color: #efefef;
         border-radius: 0 0 2rem 2rem;
         padding: 2rem 5rem 

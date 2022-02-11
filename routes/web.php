@@ -32,6 +32,6 @@ Route::get('/{any?}', function() {
   Route::fallback(function() {
         return response()->json([
             'success'=> false,
-            'message' => 'No such route found on this server',
+            'message' => 'No such route found on this web server',
             ], 404);
 });

@@ -1,5 +1,5 @@
 <template>
-  <div class="infos text-center">
+  <div class="infos text-center tex-secondary">
       <span data-bs-toggle="modal" data-bs-target="#staticBackdrop1"> How to choose an ideal tutor</span>
       <span data-bs-toggle="modal" data-bs-target="#staticBackdrop2">How you can pay for lessons</span>
       <span data-bs-toggle="modal" data-bs-target="#staticBackdrop3">Where lessons take place</span>
@@ -144,8 +144,8 @@ export default {
        width:10rem;
        padding: .7rem;
        margin:  1rem;
-       border:1px solid black;
-       background: beige;
+       border:1px solid rgba(145, 3, 3, 0.418);
+       background: rgba(216, 16, 2, 0.205);
        cursor:pointer;
        border-radius:10rem;
 
