@@ -1,6 +1,6 @@
 export const user = {
-    state: () => ({
-        user:  null,
+    state:  () => ({
+        user:  {},
         is_logedin:false,
     }),
 
@@ -10,8 +10,8 @@ export const user = {
         setUser(state, user) {
             state.user = user;           
             state.is_logedin = true;
-            console.log('User set...');
-            console.log(state.is_logedin);
+            console.log('User successfully set...');
+            console.log('Logged_in: ' + state.is_logedin);
         },
         unsetUser(state,user) {
             state.user = null;           

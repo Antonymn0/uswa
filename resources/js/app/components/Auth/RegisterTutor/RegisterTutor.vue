@@ -45,7 +45,7 @@ data(){
             email:null,
             password:null, 
             password_again:null,
-            role:'student',
+            role:'tutor',
         },
         spinner:false,
         errors:{} , 
@@ -53,9 +53,7 @@ data(){
     }
 },
 methods:{
-    registerUser(){
-      this.$router.push({name: 'register-tutor-signup'});
-        return;
+    registerUser(){      
         this.validateForm();
         if(Object.keys(this.errors).length) return;
 
@@ -65,16 +63,17 @@ methods:{
             form_data.append('password', this.form.password);
             form_data.append('password_again', this.form.password_again);
             form_data.append('role', this.form.role);
-        this.spinner =true;
-        
+        this.spinner =true;        
 
-        axios.post('api/register', form_data ,{
+        axios.post('/api/register', form_data ,{
           headers:{
             'accept':'application/json'
           }
         })
         .then(response=>{
-            if(response.status == 201){   
+            if(response.status == 201){  
+                this.$store.commit('setToken', response.data.token);
+                this.$store.commit('setUser', response.data.user);
                 this.spinner=false;            
                 this.$router.push({name: 'register-tutor-signup'})
             }

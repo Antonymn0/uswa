@@ -47,10 +47,21 @@ Route::post('/register','Api\User\UserController@store');
   Route::apiResource('/user','Api\User\UserController');
   
 
-// fall back route
+
+
+
+
+  // Import students routes file
+  require __DIR__.'/students/students.php';
+
+
+
+
+
+// Fall back route
   Route::fallback(function() {
-        return response()->json([
-            'success'=> false,
-            'message' => 'No such route found on this server',
-            ], 404);
+    return response()->json([
+        'success'=> false,
+        'message' => 'No such route found on this server',
+        ], 404);
 });

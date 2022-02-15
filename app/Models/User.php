@@ -19,38 +19,9 @@ class User extends Authenticatable
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
+     *
      */
-    protected $fillable = [
-        'full_name',
-        'first_name',
-        'middle_name',
-        'last_name',
-        'username',
-        'email',
-        'role',
-        'password',
-        'phone',
-        'address',
-        'biography',
-        'id_number',
-        'date_of_birth',
-        'city',
-        'country',
-        'nationality',
-        'postal_code',
-        'phone_verified_at',
-        'email_verified_at',
-        'id_verified_at',
-        'suspended_at',
-        'approved',
-        'approved_at',
-        'deleted_at',
-        'approved_by',
-        'registered_by',
-        'suspended_by',
-        'reason_suspended',
-        'image'
-    ];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -70,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // eloquent relation
+     public function tutorSchedule(){
+        return $this->hasOne(TutorSchedule::class,'user_id', 'id');
+    }
 }

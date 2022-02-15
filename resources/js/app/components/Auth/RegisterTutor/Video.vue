@@ -89,7 +89,17 @@ export default {
                 this.video = null;
             }
         },
+        videoLink(event){
+            this.errors={};
+            // sanitize youtube link
+            if(this.video_url.includes('https://youtu.be/')){
+                this.video_url = this.video_url.replace('https://youtu.be/', 'https://youtube.com/embed/');
+            }
+            this.video_preview = this.video_url;
+            this.video=null;
+        },
         nextStep(){
+            console.log(this.video);
             this.validateForm();
             if(Object.keys(this.errors).length) return;
 
@@ -100,15 +110,7 @@ export default {
             document.getElementById('video').classList.add('hidden');
             document.getElementById('education').classList.remove('hidden');
         },
-        videoLink(event){
-            this.errors={};
-            // sanitize youtube link
-            if(this.video_url.includes('https://youtu.be/')){
-                this.video_url = this.video_url.replace('https://youtu.be/', 'https://youtube.com/embed/');
-            }
-            this.video_preview = this.video_url;
-            this.video=null;
-        },
+        
         clearUrl(){
             this.video = null;
             this.video_url = null;

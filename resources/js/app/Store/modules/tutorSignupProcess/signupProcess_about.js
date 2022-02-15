@@ -13,6 +13,7 @@ export const signupProcess_about = {
             subject: null,
             phone: null,
             over18: null,
+            description:null
         },
     }),
 
@@ -53,6 +54,9 @@ export const signupProcess_about = {
         },
         set_over18(state, payload) {
             state.about.over18 = payload;
+        },
+        set_description(state, payload) {
+            state.about.description = payload;
         },
     },
 };

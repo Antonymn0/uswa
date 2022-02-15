@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\User\WelcomeToUswa;
 use App\Mail\EmailVerification\VerifyEmail;
 
-class userCreatedListener implements shouldQueue
+class userCreatedListener implements ShouldQueue
 {
     /**
      * Create the event listener.

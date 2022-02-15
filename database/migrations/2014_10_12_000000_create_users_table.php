@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
            $table->string('email')->requried();
            $table->string('role')->requried();
            $table->string('password')->requried();
+
            $table->string('phone')->nullable();
            $table->string('address')->nullable();
            $table->text('biography')->nullable();
@@ -32,6 +33,7 @@ class CreateUsersTable extends Migration
            $table->string('country')->nullable();
            $table->string('nationality')->nullable();
            $table->string('postal_code')->nullable();
+
            $table->dateTime('phone_verified_at')->nullable();
            $table->dateTime('email_verified_at')->nullable();
            $table->dateTime('id_verified_at')->nullable();
@@ -41,9 +43,38 @@ class CreateUsersTable extends Migration
            $table->dateTime('deleted_at')->nullable();
            $table->integer('approved_by')->nullable();
            $table->integer('registered_by')->nullable();
+           $table->string('registration')->nullable();
            $table->integer('suspended_by')->nullable();
            $table->string('reason_suspended')->nullable();
            $table->string('image')->nullable();
+
+           $table->string('timezone')->nullable();
+           $table->string('currency')->nullable();
+           $table->string('language')->nullable();
+           $table->string('level')->nullable();
+           $table->string('subject')->nullable();
+           $table->string('over18')->nullable();
+           $table->string('description')->nullable();
+
+           $table->string('has_teaching_certificate')->nullable();           
+           $table->string('teaching_certificate_upload')->nullable();
+           $table->string('teaching_certificate_subject')->nullable();
+           $table->string('teaching_certificate_year_of_study_from')->nullable();
+           $table->string('teaching_certificate_year_of_study_to')->nullable();
+           $table->text('teaching_certificate_description')->nullable();
+           $table->string('teaching_certificate_issued_by')->nullable();
+
+           $table->string('has_higher_education_certificate')->nullable();
+           $table->string('higher_education_level')->nullable();
+           $table->string('higher_education_type')->nullable();
+           $table->string('higher_education_specialty')->nullable();
+           $table->string('higher_education_certificate_upload')->nullable();
+         
+           $table->string('introduction_video')->nullable();
+           $table->string('introduction_video_url')->nullable();
+
+           $table->string('availability')->nullable();
+
 
             $table->rememberToken();
             $table->timestamps();

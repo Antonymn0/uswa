@@ -1,15 +1,53 @@
 <template>
   <div>
         <div class="modal fade" id="staticBackdropTrial" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog modal-lg text-secondary modal-dialog-centered modal-dialog-scrollable ">
             <div class="modal-content px-3">
             <div class="modal-header">
-                <h4 class="modal-title">Book a 1hr trial lesson</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h4 class="modal-title">Book Trial lesson</h4>
+                <button type="button" id="closedate" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body px-2">
-              <h5>Calender</h5>
-              <button class="btn btn-primary">Confirm time</button>
+            <div class="modal-body px-2">  
+                <p class="alert-success p-2 m-2" v-if="this.success.book_trial">{{this.success.book_trial}}</p> 
+              <h5>Select date and time to meet with {{this.tutor.first_name}} {{this.tutor.last_name}}</h5>
+               <div>
+                 <p>
+                   <label for="date">Date</label>
+                   <span> <input type="date" id="date" class="form-control py-3" v-model="this.date" @change.prevent="this.validateDate()"> </span>
+                    <small class="text-danger" v-if="this.errors.date"><i class="bi bi-exclamation-triangle"></i> {{this.errors.date}}</small>
+                 </p>
+                 
+                  <p class="row py-2"> 
+                    <span class="p-3 col-sm-6">
+                      <label for="from">From </label> <br>
+                        <select name="" id="from" class="p-3 w-100 rounded bg-white border text-muted" v-model="this.time.from">
+                            <option  v-bind="this.item" v-for="item in this.time_selector" :key="item" class="form-contro" > {{item}} </option>
+                        </select>
+                    </span>
+                    <span class="p-3 col-sm-6">
+                      <label for="to">To</label> <br>
+                        <select name="" id="to" class="p-3 w-100 rounded bg-white border text-muted" v-model="this.time.to" @change.prevent="testTimeLimit()">
+                            <option  v-bind="this.item" v-for="item in this.time_selector" :key="item" class="form-contro"> {{item}} </option>
+                        </select>
+                        <small class="text-danger" v-if="this.errors.time_limit"><i class="bi bi-exclamation-triangle"></i> {{this.errors.time_limit}}</small>
+                    </span>
+                  </p>
+                  
+               </div>
+                  <div class="small text-muted pb-4">
+                    <span class="fw-bold"> Note: </span>
+                    <span> 
+                      <ul>
+                        <li>All trial lessons are limited to 1hr and below. </li>
+                        <li>This is to help you test the tutor and see if you like them. </li>
+                        <li>If you dont like the tutor you can always find another. </li>
+                        <li>We emphasize you to watch the tutor introduction video before booking a lesson with them. </li>
+                      </ul>
+                    </span> 
+                   
+                    </div>        
+                   <span class="small text-danger text-center">{{this.errors.error}}</span> <br>
+              <button class="btn btn-danger mb-2" @click.prevent="bookTrialLesson()">Book lesson</button>
             </div>            
             </div>
         </div>
@@ -18,8 +56,122 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
+    props:['tutor'],
+  
+    data(){
+        return{
+            time_selector:[
+                        '00:00',
+                        '00:30',
+                        '01:00',
+                        '01:30',
+                        '02:00',
+                        '02:30',
+                        '03:00',
+                        '03:30',
+                        '04:00',
+                        '04:30',
+                        '05:00',
+                        '05:30',
+                        '06:00',
+                        '06:30',
+                        '07:00',
+                        '07:30',
+                        '08:00',
+                        '08:30',
+                        '09:00',
+                        '09:30',
+                        '10:00',
+                        '10:30',
+                        '11:00',
+                        '11:30',
+                        '12:00',
+                        '12:30',
+                        '13:00',
+                        '13:30',
+                        '14:00',
+                        '14:30',
+                        '15:00',
+                        '15:30',
+                        '16:00',
+                        '16:30',
+                        '17:00',
+                        '17:30',
+                        '18:00',
+                        '18:30',
+                        '19:00',
+                        '19:30',
+                        '20:00',
+                        '20:30',
+                        '21:00',
+                        '21:30',
+                        '22:00',
+                        '22:30',
+                        '23:00',
+                        '23:30',
+                    ],
+            date:null,
+            time:{
+                from:null,
+                to:null,
+            },
+            errors:{},
+            success:{},
+        }
+    },
+    methods:{
+        testTimeLimit(){
+            delete this.errors.time_limit ;
+            if( moment(this.time.to, 'H:mm').diff( moment(this.time.from, 'H:mm'), 'minutes') < 30)  this.errors.time_limit = "Invalid time range selection";          
+            if( moment(this.time.to, 'H:mm').diff( moment(this.time.from, 'H:mm'), 'minutes') > 60)  this.errors.time_limit = "Trial lesson is limited to 1hr.";    
+        },
+        validateDate(){
+            delete this.errors.date;
+            if( moment(this.date).isBefore(moment()) ) this.errors.date = "Invalid date selection."
+        },
+        bookTrialLesson(){
+            this.errors = {};
 
+            this.testTimeLimit() ;
+            this.validateDate();
+
+            if(!this.date) this.errors.date = "Date field is required";
+            if(!this.time.from) this.errors.time_limit = "Time selection is required";
+            if(!this.time.to) this.errors.time_limit = "Time selection is required";            
+
+            if(Object.keys(this.errors).length) return;
+            var form_data = new FormData();
+                form_data.append('lesson_date', this.date);
+                form_data.append('start_time', this.time.from);
+                form_data.append('end_time', this.time.from);
+                form_data.append('student_id', this.$store.state.user.user.id);
+                form_data.append('student_timezone', this.$store.state.user.user.timezone);
+                form_data.append('tutor_id', this.tutor.id);
+                form_data.append('tutor_timezone', this.tutor.timezone);
+           
+            
+            axios.post('/api/student/trial-lesson', form_data)
+            .then(response => {
+                console.log(response.data);
+                this.success.book_trial = "Success, Your trial lesson has been booked successfully!";
+
+              // setTimeout(() => {
+              //     document.getElementById('closedate').click();
+              //     delete this.success.book_trial;
+              // }, 2500);
+            })
+            .catch(error => {
+              console.log(error.response);
+              this.errors.error = "Error: Something went wrong. Please try again later."
+            });
+
+            
+            
+        }
+
+    }
 }
 </script>
 

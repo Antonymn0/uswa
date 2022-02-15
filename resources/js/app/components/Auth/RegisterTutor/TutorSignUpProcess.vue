@@ -7,7 +7,7 @@
     <span> <i class="bi bi-check-circle"></i> Education <i class="bi bi-chevron-right"></i></span>
     <span> <i class="bi bi-check-circle"></i> Video <i class="bi bi-chevron-right"></i></span>
     <span> <i class="bi bi-check-circle"></i> Availability <i class="bi bi-chevron-right"></i></span>
-    <span> <i class="bi bi-check-circle"></i> Finnish <i class="bi bi-chevron-right"></i></span>
+    <span> <i class="bi bi-check-circle"></i> Finish <i class="bi bi-chevron-right"></i></span>
 </p>
     <div class="parent">
         <div id="about" class="">

@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Api\TutorSchedule\TutorScheduleController;
+use Illuminate\Support\Facades\Auth;
 use App\Events\User\userCreated;
 use App\Events\User\userUpdated;
 use App\Events\User\userDestroyed;
@@ -42,14 +43,22 @@ class UserController extends Controller
         $data = $request->validated();
 
         $user_data = Utilities::createNamesFromFullName($data);
-        $user_data['password']  = Hash::make($data['password']);       
+        $user_data['password']  = Hash::make($data['password']);        
 
-        $user= User::create($user_data);
-        event(new userCreated($user));
+        $new_user= User::create($user_data);
+        // event(new userCreated($new_user));
+
+        $user =   Auth::attempt([
+            'email' => $new_user->email,
+            'password' => $data['password'],
+            ]);
+        $token = auth()->user()->createToken('token')->accessToken;
+
         return response()->json([
             'success'=> true,
             'message'=> 'User created successfuly',
             'data' => $user,
+            'token' => $token 
             ],  201);
     }
 
@@ -75,20 +84,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUser $request, $id)
+    public function update(UpdateUser $request, User $user)
     {
-        $data = $request->validated();
-        
-        $user= User::findOrFail($id);
-
         $data = $request->validated(); 
-        if($request->hasFile('image')){  
-           $path = $request->file('image')->store('images', 's3'); // send image to AWS S3         
-           \Storage::disk('s3')->setVisibility($path, 'public'); // set file visibility to public
-           $path = \Storage::disk('s3')->url($path);  // create file path
-        $data['image'] = $path;
-        }  
-        $user->update($data);
+        // if($request->hasFile('image')){  
+        //    $path = $request->file('image')->store('images', 's3'); // send image to AWS S3         
+        //    \Storage::disk('s3')->setVisibility($path, 'public'); // set file visibility to public
+        //    $path = \Storage::disk('s3')->url($path);  // create file path
+        // $data['image'] = $path;
+        // }  
+        // $user->update($data);
+       return  (new TutorScheduleController)->store($request, $user->id);
+
         event(new UserUpdated($user));
         return response()->json([
             'success'=> true, 

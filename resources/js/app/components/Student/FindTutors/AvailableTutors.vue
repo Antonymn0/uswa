@@ -1,9 +1,10 @@
 <template>
   <div class="parent">
       <h5> 20 Available english tutors </h5>
-
-      <div class="  ">
-          <div class="mobile   ">
+      <!-- ----------------------------------------------------------------------------------------------------- -->
+      <div v-if="Object.keys(this.current_tutors).length">
+      <div class="mobile-outer " v-for="(tutor, index) in this.current_tutors" :key="index">
+          <div class="mobile   ">              
             <div class="bg-white  inner rounded">
                 <div class="d-flex justify-content-cente">
                     <div class="px-3">
@@ -11,13 +12,13 @@
                     </div>
                     <div class="pl-2">
                         <h5>
-                            Antony mn 
+                            {{tutor.first_name}} {{tutor.last_name}}
                             <span> &nbsp; <country-flag country='ke' size='1rem'/> &nbsp;</span> 
                             <span>&nbsp;<i class="bi bi-shield-fill-check text-primary" ></i> </span> 
                         </h5>
                         <div class=" d-flex align-items-center justify-content-between " >                           
-                            <span><i class="bi bi-mortarboard-fill text-secondary"></i> &nbsp; Spannish </span>
-                            <span><i class="bi bi-suit-heart-fill text-danger" style="font-size:1.5rem"></i> </span>
+                            <span><i class="bi bi-mortarboard-fill text-secondary"></i> &nbsp; {{tutor.language}} </span>
+                            <span ><i class="bi bi-suit-heart-fill text-muted" style="font-size:1.5rem" @click.prevent="toggleFavourite($event, tutor)"></i> </span>
                         </div>
 
                         <div class="">
@@ -48,423 +49,28 @@
                 <!-- -------------------------- -->
                 <div class="px-2">
                     <span> Description: </span>
-                    <span> 
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis adipisci facilis quidem dicta dolore fugiat,
-                         minima optio error sed laborum doloribus quisquam molestiae sapiente nisi neque, eum, sit ratione possimus?
-                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero vitae, atque molestiae est inventore numquam debitis odio. Quas,
-                         modi architecto nesciunt perspiciatis quo reprehenderit, voluptate accusantium aspernatur ea est quia?
-                    </span>
+                    <span>{{tutor.description}}  </span>
                 </div>
                 <div class="d-flex align-items-center py-2">                    
-                    <span> <button class="btn btn-danger rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Watch intro</button> &nbsp; </span> 
-                    <span> <button class="btn btn-danger  rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial lesson</button> &nbsp; </span> 
-                    <span> <button class='btn btn-success ' data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span> 
+                    <span> <button class="btn btn-danger rounded" @click.prevent="updateCurrent_tutor(tutor)" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Watch intro</button> &nbsp; </span> 
+                    <span> <button class="btn btn-danger  rounded"  @click.prevent="updateCurrent_tutor(tutor)" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial lesson</button> &nbsp; </span> 
+                    <span> <button class='btn btn-primary '  @click.prevent="updateCurrent_tutor(tutor)"  data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span> 
                 </div>
             </div>
-        </div>
-         
-            
-          <div class="mobile   ">
-            <div class="bg-white  inner rounded">
-                <div class="d-flex justify-content-cente">
-                    <div class="px-3">
-                        <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem;">
-                    </div>
-                    <div class="">
-                        <h5>
-                            Antony mn 
-                            <span> &nbsp; <country-flag country='ke' size='1rem'/> &nbsp;</span> 
-                            <span>&nbsp;<i class="bi bi-shield-fill-check text-primary" ></i> </span> 
-                        </h5>
-                        <div class="pb-2">Language: Spanish</div>
-                        <div class="d-flex justify-content-between">
-                            <div class="p-1">
-                                <i class="bi bi-star-fill text-warning"></i> 5  <br>
-                               <small> 15 reviews</small> 
-                            </div>
-                            <div class="p-1">
-                                $ 10/ hr 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- ------------------------------- -->
-                <div class="d-flex  small p-2">
-                    <span> <i class="bi bi-person-fill"></i> 12 Actve students</span>
-                    <span class=""> &nbsp; | &nbsp;</span> 
-                    <span>102 Lessons </span>
-                </div>
-                <!-- ------------------------------------- -->
-                <div class="d-flex  small p-2 speaks">
-                    <span class="fw-bold">Speaks: </span> 
-                    <span>English </span>  <span class="alert-success px-2 rounded"> Native</span> 
-                    <span>Spanish </span>  <span class="alert-primary px-2 rounded"> Fluent</span> 
-                </div>
-                <!-- -------------------------- -->
-                <div class="px-2">
-                    <span> Description: </span>
-                    <span> 
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis adipisci facilis quidem dicta dolore fugiat,
-                         minima optio error sed laborum doloribus quisquam molestiae sapiente nisi neque, eum, sit ratione possimus?
-                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero vitae, atque molestiae est inventore numquam debitis odio. Quas,
-                         modi architecto nesciunt perspiciatis quo reprehenderit, voluptate accusantium aspernatur ea est quia?
-                    </span>
-                </div>
-                <div class="d-flex justify-content-center py-2">
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial lesson</button> &nbsp; </span> 
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Watch intro</button> &nbsp; </span> 
-                    <span> <button class='btn btn-success ' data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span>
+        </div> 
+      </div>  
 
-                </div>
-            </div>
-        </div>
-         
-            
-          <div class="mobile   ">
-            <div class="bg-white  inner rounded">
-                <div class="d-flex justify-content-cente">
-                    <div class="px-3">
-                        <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem;">
-                    </div>
-                    <div class="">
-                        <h5>
-                            Antony mn 
-                            <span> &nbsp; <country-flag country='ke' size='1rem'/> &nbsp;</span> 
-                            <span>&nbsp;<i class="bi bi-shield-fill-check text-primary" ></i> </span> 
-                        </h5>
-                        <div class="pb-2">Language: Spanish</div>
-                        <div class="d-flex justify-content-between">
-                            <div class="p-1">
-                                <i class="bi bi-star-fill text-warning"></i> 5  <br>
-                               <small> 15 reviews</small> 
-                            </div>
-                            <div class="p-1">
-                                $ 10/ hr 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- ------------------------------- -->
-                <div class="d-flex  small p-2">
-                    <span> <i class="bi bi-person-fill"></i> 12 Actve students</span>
-                    <span class=""> &nbsp; | &nbsp;</span> 
-                    <span>102 Lessons </span>
-                </div>
-                <!-- ------------------------------------- -->
-                <div class="d-flex  small p-2 speaks">
-                    <span class="fw-bold">Speaks: </span> 
-                    <span>English </span>  <span class="alert-success px-2 rounded"> Native</span> 
-                    <span>Spanish </span>  <span class="alert-primary px-2 rounded"> Fluent</span> 
-                </div>
-                <!-- -------------------------- -->
-                <div class="px-2">
-                    <span> Description: </span>
-                    <span> 
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis adipisci facilis quidem dicta dolore fugiat,
-                         minima optio error sed laborum doloribus quisquam molestiae sapiente nisi neque, eum, sit ratione possimus?
-                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero vitae, atque molestiae est inventore numquam debitis odio. Quas,
-                         modi architecto nesciunt perspiciatis quo reprehenderit, voluptate accusantium aspernatur ea est quia?
-                    </span>
-                </div>
-                <div class="d-flex justify-content-center py-2">
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial lesson</button> &nbsp; </span> 
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Watch intro</button> &nbsp; </span> 
-                    <span> <button class='btn btn-success ' data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span>
-
-                </div>
-            </div>
-        </div>
-         
-            
-          <div class="mobile   ">
-            <div class="bg-white  inner rounded">
-                <div class="d-flex justify-content-cente">
-                    <div class="px-3">
-                        <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem;">
-                    </div>
-                    <div class="">
-                        <h5>
-                            Antony mn 
-                            <span> &nbsp; <country-flag country='ke' size='1rem'/> &nbsp;</span> 
-                            <span>&nbsp;<i class="bi bi-shield-fill-check text-primary" ></i> </span> 
-                        </h5>
-                        <div class="pb-2">Language: Spanish</div>
-                        <div class="d-flex justify-content-between">
-                            <div class="p-1">
-                                <i class="bi bi-star-fill text-warning"></i> 5  <br>
-                               <small> 15 reviews</small> 
-                            </div>
-                            <div class="p-1">
-                                $ 10/ hr 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- ------------------------------- -->
-                <div class="d-flex  small p-2">
-                    <span> <i class="bi bi-person-fill"></i> 12 Actve students</span>
-                    <span class=""> &nbsp; | &nbsp;</span> 
-                    <span>102 Lessons </span>
-                </div>
-                <!-- ------------------------------------- -->
-                <div class="d-flex  small p-2 speaks">
-                    <span class="fw-bold">Speaks: </span> 
-                    <span>English </span>  <span class="alert-success px-2 rounded"> Native</span> 
-                    <span>Spanish </span>  <span class="alert-primary px-2 rounded"> Fluent</span> 
-                </div>
-                <!-- -------------------------- -->
-                <div class="px-2">
-                    <span> Description: </span>
-                    <span> 
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis adipisci facilis quidem dicta dolore fugiat,
-                         minima optio error sed laborum doloribus quisquam molestiae sapiente nisi neque, eum, sit ratione possimus?
-                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero vitae, atque molestiae est inventore numquam debitis odio. Quas,
-                         modi architecto nesciunt perspiciatis quo reprehenderit, voluptate accusantium aspernatur ea est quia?
-                    </span>
-                </div>
-                <div class="d-flex justify-content-center py-2">
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial lesson</button> &nbsp; </span> 
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Watch intro</button> &nbsp; </span> 
-                    <span> <button class='btn btn-success ' data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span>
-
-                </div>
-            </div>
-        </div>
-         
-            
-          <div class="mobile   ">
-            <div class="bg-white  inner rounded">
-                <div class="d-flex justify-content-cente">
-                    <div class="px-3">
-                        <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem;">
-                    </div>
-                    <div class="">
-                        <h5>
-                            Antony mn 
-                            <span> &nbsp; <country-flag country='ke' size='1rem'/> &nbsp;</span> 
-                            <span>&nbsp;<i class="bi bi-shield-fill-check text-primary" ></i> </span> 
-                        </h5>
-                        <div class="pb-2">Language: Spanish</div>
-                        <div class="d-flex justify-content-between">
-                            <div class="p-1">
-                                <i class="bi bi-star-fill text-warning"></i> 5  <br>
-                               <small> 15 reviews</small> 
-                            </div>
-                            <div class="p-1">
-                                $ 10/ hr 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- ------------------------------- -->
-                <div class="d-flex  small p-2">
-                    <span> <i class="bi bi-person-fill"></i> 12 Actve students</span>
-                    <span class=""> &nbsp; | &nbsp;</span> 
-                    <span>102 Lessons </span>
-                </div>
-                <!-- ------------------------------------- -->
-                <div class="d-flex  small p-2 speaks">
-                    <span class="fw-bold">Speaks: </span> 
-                    <span>English </span>  <span class="alert-success px-2 rounded"> Native</span> 
-                    <span>Spanish </span>  <span class="alert-primary px-2 rounded"> Fluent</span> 
-                </div>
-                <!-- -------------------------- -->
-                <div class="px-2">
-                    <span> Description: </span>
-                    <span> 
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis adipisci facilis quidem dicta dolore fugiat,
-                         minima optio error sed laborum doloribus quisquam molestiae sapiente nisi neque, eum, sit ratione possimus?
-                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero vitae, atque molestiae est inventore numquam debitis odio. Quas,
-                         modi architecto nesciunt perspiciatis quo reprehenderit, voluptate accusantium aspernatur ea est quia?
-                    </span>
-                </div>
-                <div class="d-flex justify-content-center py-2">
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial lesson</button> &nbsp; </span> 
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Watch intro</button> &nbsp; </span> 
-                    <span> <button class='btn btn-success ' data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span>
-
-                </div>
-            </div>
-        </div>
-         
-            
-          <div class="mobile   ">
-            <div class="bg-white  inner rounded">
-                <div class="d-flex justify-content-cente">
-                    <div class="px-3">
-                        <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem;">
-                    </div>
-                    <div class="">
-                        <h5>
-                            Antony mn 
-                            <span> &nbsp; <country-flag country='ke' size='1rem'/> &nbsp;</span> 
-                            <span>&nbsp;<i class="bi bi-shield-fill-check text-primary" ></i> </span> 
-                        </h5>
-                        <div class="pb-2">Language: Spanish</div>
-                        <div class="d-flex justify-content-between">
-                            <div class="p-1">
-                                <i class="bi bi-star-fill text-warning"></i> 5  <br>
-                               <small> 15 reviews</small> 
-                            </div>
-                            <div class="p-1">
-                                $ 10/ hr 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- ------------------------------- -->
-                <div class="d-flex  small p-2">
-                    <span> <i class="bi bi-person-fill"></i> 12 Actve students</span>
-                    <span class=""> &nbsp; | &nbsp;</span> 
-                    <span>102 Lessons </span>
-                </div>
-                <!-- ------------------------------------- -->
-                <div class="d-flex  small p-2 speaks">
-                    <span class="fw-bold">Speaks: </span> 
-                    <span>English </span>  <span class="alert-success px-2 rounded"> Native</span> 
-                    <span>Spanish </span>  <span class="alert-primary px-2 rounded"> Fluent</span> 
-                </div>
-                <!-- -------------------------- -->
-                <div class="px-2">
-                    <span> Description: </span>
-                    <span> 
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis adipisci facilis quidem dicta dolore fugiat,
-                         minima optio error sed laborum doloribus quisquam molestiae sapiente nisi neque, eum, sit ratione possimus?
-                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero vitae, atque molestiae est inventore numquam debitis odio. Quas,
-                         modi architecto nesciunt perspiciatis quo reprehenderit, voluptate accusantium aspernatur ea est quia?
-                    </span>
-                </div>
-                <div class="d-flex justify-content-center py-2">
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial lesson</button> &nbsp; </span> 
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Watch intro</button> &nbsp; </span> 
-                    <span> <button class='btn btn-success ' data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span>
-
-                </div>
-            </div>
-        </div>
-         
-            
-          <div class="mobile   ">
-            <div class="bg-white  inner rounded">
-                <div class="d-flex justify-content-cente">
-                    <div class="px-3">
-                        <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem;">
-                    </div>
-                    <div class="">
-                        <h5>
-                            Antony mn 
-                            <span> &nbsp; <country-flag country='ke' size='1rem'/> &nbsp;</span> 
-                            <span>&nbsp;<i class="bi bi-shield-fill-check text-primary" ></i> </span> 
-                        </h5>
-                        <div class="pb-2">Language: Spanish</div>
-                        <div class="d-flex justify-content-between">
-                            <div class="p-1">
-                                <i class="bi bi-star-fill text-warning"></i> 5  <br>
-                               <small> 15 reviews</small> 
-                            </div>
-                            <div class="p-1">
-                                $ 10/ hr 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- ------------------------------- -->
-                <div class="d-flex  small p-2">
-                    <span> <i class="bi bi-person-fill"></i> 12 Actve students</span>
-                    <span class=""> &nbsp; | &nbsp;</span> 
-                    <span>102 Lessons </span>
-                </div>
-                <!-- ------------------------------------- -->
-                <div class="d-flex  small p-2 speaks">
-                    <span class="fw-bold">Speaks: </span> 
-                    <span>English </span>  <span class="alert-success px-2 rounded"> Native</span> 
-                    <span>Spanish </span>  <span class="alert-primary px-2 rounded"> Fluent</span> 
-                </div>
-                <!-- -------------------------- -->
-                <div class="px-2">
-                    <span> Description: </span>
-                    <span> 
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis adipisci facilis quidem dicta dolore fugiat,
-                         minima optio error sed laborum doloribus quisquam molestiae sapiente nisi neque, eum, sit ratione possimus?
-                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero vitae, atque molestiae est inventore numquam debitis odio. Quas,
-                         modi architecto nesciunt perspiciatis quo reprehenderit, voluptate accusantium aspernatur ea est quia?
-                    </span>
-                </div>
-                <div class="d-flex justify-content-center py-2">
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial lesson</button> &nbsp; </span> 
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Watch intro</button> &nbsp; </span> 
-                    <span> <button class='btn btn-success ' data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span>
-
-                </div>
-            </div>
-        </div>
-         
-            
-          <div class="mobile   ">
-            <div class="bg-white  inner rounded">
-                <div class="d-flex justify-content-cente">
-                    <div class="px-3">
-                        <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem;">
-                    </div>
-                    <div class="">
-                        <h5>
-                            Antony mn 
-                            <span> &nbsp; <country-flag country='ke' size='1rem'/> &nbsp;</span> 
-                            <span>&nbsp;<i class="bi bi-shield-fill-check text-primary" ></i> </span> 
-                        </h5>
-                        <div class="pb-2">Language: Spanish</div>
-                        <div class="d-flex justify-content-between">
-                            <div class="p-1">
-                                <i class="bi bi-star-fill text-warning"></i> 5  <br>
-                               <small> 15 reviews</small> 
-                            </div>
-                            <div class="p-1">
-                                $ 10/ hr 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- ------------------------------- -->
-                <div class="d-flex  small p-2">
-                    <span> <i class="bi bi-person-fill"></i> 12 Actve students</span>
-                    <span class=""> &nbsp; | &nbsp;</span> 
-                    <span>102 Lessons </span>
-                </div>
-                <!-- ------------------------------------- -->
-                <div class="d-flex  small p-2 speaks">
-                    <span class="fw-bold">Speaks: </span> 
-                    <span>English </span>  <span class="alert-success px-2 rounded"> Native</span> 
-                    <span>Spanish </span>  <span class="alert-primary px-2 rounded"> Fluent</span> 
-                </div>
-                <!-- -------------------------- -->
-                <div class="px-2">
-                    <span> Description: </span>
-                    <span> 
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis adipisci facilis quidem dicta dolore fugiat,
-                         minima optio error sed laborum doloribus quisquam molestiae sapiente nisi neque, eum, sit ratione possimus?
-                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero vitae, atque molestiae est inventore numquam debitis odio. Quas,
-                         modi architecto nesciunt perspiciatis quo reprehenderit, voluptate accusantium aspernatur ea est quia?
-                    </span>
-                </div>
-                <div class="d-flex justify-content-center py-2">
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial lesson</button> &nbsp; </span> 
-                    <span> <button class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Watch intro</button> &nbsp; </span> 
-                    <span> <button class='btn btn-success ' data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span>
-
-                </div>
-            </div>
-        </div>
-         
-            
-          
-            <!-- ======================================================= -->
-            <div class="tablet"></div>
-            <div class="desktop"></div>
+        <div class="clearfix"></div> 
+      
       </div>
+      <div v-else>
+        <p class="text-center text-muted py-5">No turtors found currently</p>
+      </div>
+    <!-- ------------------------------------------------------------------------------------------------------------------ -->
 <div>
-    <BookTialLessonModal />
-    <SendMessage />
-    <IntroVideo />
+    <BookTialLessonModal :tutor="this.current_tutor"/>
+    <SendMessage :tutor="this.current_tutor"/>
+    <IntroVideo :tutor="this.current_tutor"/>
 </div>
   </div>
 </template>
@@ -474,6 +80,7 @@ import BookTialLessonModal from "./BookTrialLessonModal.vue";
 import CountryFlag from 'vue-country-flag-next';
 import SendMessage from "./SendMessage";
 import IntroVideo from "./IntroVideo.vue";
+import axios from 'axios';
 
 export default {
     components: {
@@ -481,7 +88,55 @@ export default {
         BookTialLessonModal,
         SendMessage,
         IntroVideo
+    },
+    data(){
+        return{
+            current_tutors: this.$store.state.tutors.tutors,
+            current_tutor:{}
+        }
+    },
+    computed:{
+        tutors:{
+            get() { return this.$store.state.tutors.tutors; },
+            set(value) { this.$store.commit('set_tutors', value); }
+        },
+    },
+    methods:{
+        updateCurrent_tutor(tutor){
+            this.current_tutor = tutor;
+            console.log(this.current_tutor);
+        },
+        toggleFavourite(event, tutor){
+            if(event.target.classList.contains('text-danger')){
+                event.target.classList.remove('text-danger');
+                event.target.classList.add('text-muted');
+            }else{
+               event.target.classList.remove('text-muted'); 
+               event.target.classList.add('text-danger'); 
+            }          
+            
+        },
+        fetchAvailableTutors(){
+            setTimeout(() => {
+                axios.get('/api/student/available-tutors')
+                .then(response=>{
+                    if(response.status == 200){  
+                        this.tutors =response.data.data.data;   
+                        this.current_tutors = this.tutors;         
+                    console.log(this.tutors);  
+                    }                
+                })
+                .catch(error=>{               
+                    console.log(error.response);
+                })
+            }, 500);
+            
+        }
+    },
+    mounted(){
+        this.fetchAvailableTutors();
     }
+
 }
 </script>
 
@@ -497,9 +152,10 @@ export default {
     .parent{
         margin: 0 2rem;
     }
+
     .mobile{
         width:25%;
-        float:left;       
+        float:left;    
     }
     .mobile .inner{
         padding:  .7rem;

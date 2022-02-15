@@ -10,6 +10,7 @@ import { signupProcess_certification } from "./modules/tutorSignupProcess/signup
 import { signupProcess_education } from "./modules/tutorSignupProcess/signupProcess_education.js";
 import { signupProcess_video } from "./modules/tutorSignupProcess/signupProcess_video.js";
 import { signupProcess_availability } from "./modules/tutorSignupProcess/signupProcess_availability.js";
+import { tutors} from "./modules/tutors/tutors.js";
 
 const store = createStore({
     modules: {
@@ -21,8 +22,9 @@ const store = createStore({
         signupProcess_education,
         signupProcess_video,
         signupProcess_availability,
+        tutors
     },
-    // strict: true,
+
 });
 
 export default store;

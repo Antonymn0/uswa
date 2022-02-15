@@ -9,7 +9,7 @@ export const token = {
         setToken(state, token) {
             state.token = token;
             localStorage.setItem('uswa_token', token);
-            console.log("token set..")
+            console.log("Token successfuly set..")
         },
         unsetToken(state, token=null) {
             state.token = null;

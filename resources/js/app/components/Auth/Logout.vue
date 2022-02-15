@@ -24,6 +24,7 @@ export default {
                     this.spinner =false;
                     this.$store.commit('unsetToken', response.data);
                     this.$store.commit('unsetUser', response.data);
+                    this.$router.push({name: 'home'});
                 }
             })
             .catch(error=>{

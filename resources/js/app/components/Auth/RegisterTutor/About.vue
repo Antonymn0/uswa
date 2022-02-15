@@ -56,17 +56,24 @@
                         <small class="text-danger small">{{this.errors.level}}</small>
                     </div>
                 </div>
-
-                <div class="mb-3 ">
-                    <label for="subject" class="form-label">Subject to teach</label>
-                    <input type="text" class="form-control" id="subject" v-model="subject">
-                    <small class="text-danger small">{{this.errors.subject}}</small>
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label for="subject" class="form-label">Subject to teach</label>
+                        <input type="text" class="form-control" id="subject" v-model="subject">
+                        <small class="text-danger small">{{this.errors.subject}}</small>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label for="phone" class="form-label">Phone </label>
+                        <input type="text" class="form-control" id="phone" v-model="phone">
+                        <small class="text-danger small">{{this.errors.phone}}</small>
+                    </div>
                 </div>
-                <div class="mb-3 ">
-                    <label for="phone" class="form-label">Phone </label>
-                    <input type="text" class="form-control" id="phone" v-model="phone">
-                    <small class="text-danger small">{{this.errors.phone}}</small>
-                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description </label>
+                    <textarea  cols="30" rows="5" class="p-2 form-control" id="description" placeholder="Introduce yourself with a short text description..." v-model="description"></textarea>
+                    <br> <small class="text-danger small">{{this.errors.description}}</small>
+                </div >
+                
 
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck" v-model="over18">
@@ -142,6 +149,10 @@ export default {
             get() { return this.$store.state.signupProcess_about.about.over18;},           
             set(value) {  this.$store.commit('set_over18', value); }
         },
+        description:{
+            get() { return this.$store.state.signupProcess_about.about.description;},           
+            set(value) {  this.$store.commit('set_description', value); }
+        },
     },
      methods:{
         logFile(){
@@ -172,6 +183,8 @@ export default {
             
             if(! this.$store.state.signupProcess_about.about.phone) this.errors.phone = "Phone field is required";
             if(! this.$store.state.signupProcess_about.about.over18) this.errors.over18 = "Confirm you are an adult";
+
+            if(! this.$store.state.signupProcess_about.about.description) this.errors.description = "Please provide a short description of yourself";
         }
     },
     mounted(){

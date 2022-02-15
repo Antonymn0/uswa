@@ -4,10 +4,10 @@
             <span>
                 <h1>Online English tutors & teachers for private lessons </h1>  
                 <p>
-                    Looking for an online English tutor? Preply is the leading online language learning platform worldwide. 
+                    Looking for an online English tutor? Uswa is the leading online language learning platform worldwide. 
                     You can choose from 10918 English teachers with an average rating of 4.89 out of 5 stars given by 71933 customers.
                     Book a lesson with a private English teacher today and start learning. 
-                    Not entirely happy with your tutor? No worries, Preply offers free tutor replacement till you're 100% satisfied.
+                    Not entirely happy with your tutor? No worries, Uswa offers free tutor replacement till you're 100% satisfied.
                 </p>
             </span>
             <span>

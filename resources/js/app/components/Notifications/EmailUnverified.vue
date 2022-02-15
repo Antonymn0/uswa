@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg-secondary text-white py-2 px-3" v-if="! email_verified">
+    <div class="bg-secondary text-white py-2 px-3 border-bottom " v-if="! email_verified">
         <span>{{this.user.first_name }}, You have not yet verified your email address. Please click this button to:
             <button class="btn btn-secondary px-4 rounded " style="background-color:#394e4e;" @click.prevent="sendEmailverificationLink()">Verify</button>
         </span> <br>        
@@ -39,6 +39,7 @@ export default {
         },
         is_emailVerified(){
             setTimeout(() => {
+                if(! this.getUser.email) return;
                 console.log('Setting user...');
                 this.user = this.getUser;
                 if(this.user.email_verified_at) return;
