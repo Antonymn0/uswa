@@ -1,12 +1,16 @@
 <template>
   <div>
-      <h1>Student dashboard </h1>      
+      <h4>Student dashboard </h4>  
+      <div> <myLessons /> </div>    
       </div>
 </template>
 
 <script>
-export default {
-
+import myLessons from "./Lessons/StudentLessons.vue";
+export default {  
+    components:{
+      myLessons
+    }
 }
 </script>
 

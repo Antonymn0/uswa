@@ -1,6 +1,6 @@
 <template>
 <div class="parent ">
-  <div class="row pb-3 pt-5 mx-4 top">
+  <div class="row pb-1 pt-5 mx-4 top">
     <div  class="col-md-6">
       <div class="px-auto pt-3">
         <span class="bold mx-auto">
@@ -18,7 +18,7 @@
         </div>
       </div>      
       </div>
-    <div class="col-md-6 text-right"><img src="https://static.preply.com/static/ssr/_next/static/images/hero-image-mobile-480-6f3bf0d176f9763ef4eca2f53c1bce25.webp" alt="" style="max-width:90%"></div>
+    <div class="col-md-6 text-right"><img src="/images/cover.png" alt="" style="max-width:90%"></div>
   </div>
   <!-- --------------------- -->
   <div>    
@@ -213,7 +213,21 @@
 
 export default {
   components:{
-    //
+    
+  },
+  methods:{
+    checkAuth(){
+      axios.get('/api/check-user-authenticated')
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error.response);
+      });
+    }
+  },
+  mounted(){
+    // this.checkAuth();
   }
 
 }

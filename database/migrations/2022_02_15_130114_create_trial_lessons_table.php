@@ -19,6 +19,7 @@ class CreateTrialLessonsTable extends Migration
             $table->integer('tutor_id')->required()->index(); // tutor user id 
             $table->dateTime('lesson_date')->required(); 
             $table->string('start_time')->required(); 
+            $table->string('lesson_type')->required(); 
             $table->string('end_time')->required(); 
             $table->string('tutor_confirm')->nullable(); 
             $table->string('tutor_timezone')->nullable(); 

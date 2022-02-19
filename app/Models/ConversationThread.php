@@ -33,4 +33,9 @@ class ConversationThread extends Model
     protected $casts = [
         //
     ];
+
+    // eloquent relation
+     public function conversation(){
+        return $this->hasmany(Conversation::class,'id', 'conversation_id');
+    }
 }

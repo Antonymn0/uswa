@@ -15,7 +15,7 @@ class CreateConversationThreadsTable extends Migration
     {
         Schema::create('conversation_threads', function (Blueprint $table) {
             $table->id();
-            $table->integer('conversation_id')->required()->index(); // conversations table id 
+            $table->bigInteger('conversation_id')->unsigned()->required()->index(); // conversations table id 
             $table->integer('sender')->required()->index();  
             $table->integer('recipient')->required()->index(); 
             $table->text('message')->required();
@@ -23,6 +23,7 @@ class CreateConversationThreadsTable extends Migration
             $table->timestamp('delivered')->nullable();
             $table->timestamp('seen')->nullable();
 
+            $table->foreign('conversation_id')->references('id')->on('conversations')->onDelete('cascade');
             $table->timestamps();
         });
     }

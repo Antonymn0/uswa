@@ -16,21 +16,18 @@ class TrialLesson extends Model
      */
     protected $guarded = ['id'];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        //
-    ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        //
-    ];
+
+    // eloquent relation
+    public function getTutor(){
+        return $this->hasOne(User::class, 'id', 'tutor_id');
+    }
+
+    // eloquent relation
+    public function getStudent(){
+        return $this->hasOne(User::class, 'id' , 'student_id', );
+    }
+
+
+
 }

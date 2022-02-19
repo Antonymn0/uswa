@@ -28,9 +28,11 @@ class ValidateTrialLesson extends FormRequest
             'tutor_id' => ['required', 'integer'],
             'lesson_date' => ['required', 'date'],
             'start_time' => ['required', 'string'],
+            'lesson_type' => ['required', 'string'],
             'end_time' => ['required', 'string'],
             'student_timezone' => ['nullable', 'string'],
             'tutor_timezone' => ['nullable', 'string'],
+            'tutor_confirm' => ['nullable', 'string'],
         ];
     }
 }

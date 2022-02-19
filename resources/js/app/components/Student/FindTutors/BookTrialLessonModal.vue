@@ -5,7 +5,7 @@
             <div class="modal-content px-3">
             <div class="modal-header">
                 <h4 class="modal-title">Book Trial lesson</h4>
-                <button type="button" id="closedate" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" id="closetrial" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body px-2">  
                 <p class="alert-success p-2 m-2" v-if="this.success.book_trial">{{this.success.book_trial}}</p> 
@@ -13,8 +13,22 @@
                <div>
                  <p>
                    <label for="date">Date</label>
-                   <span> <input type="date" id="date" class="form-control py-3" v-model="this.date" @change.prevent="this.validateDate()"> </span>
+                   <span> <input type="date" id="date" class="form-control py-3 text-muted" v-model="this.date" @change.prevent="this.validateDate()"> </span>
                     <small class="text-danger" v-if="this.errors.date"><i class="bi bi-exclamation-triangle"></i> {{this.errors.date}}</small>
+                 </p>
+                 <p>
+                   <label for="lesson_type">Language</label>
+                  <select  id="lesson_type" v-model="lesson_type" class="w-100 py-3 border text-muted rounded bg-white">
+                    <option selected value="">- Select -</option>
+                    <option  value="english">English</option>
+                    <option  value="german">German</option>
+                    <option  value="italian">Italian</option>
+                    <option  value="spanish">Spannish</option>
+                    <option  value="chinese">Chinese</option>
+                    <option  value="arabic">Arabic</option>
+                    <option  value="russian">russian</option>
+                  </select>
+                    <small class="text-danger" v-if="this.errors.lesson_type"><i class="bi bi-exclamation-triangle"></i> {{this.errors.lesson_type}}</small>
                  </p>
                  
                   <p class="row py-2"> 
@@ -113,6 +127,7 @@ export default {
                         '23:30',
                     ],
             date:null,
+            lesson_type:null,
             time:{
                 from:null,
                 to:null,
@@ -140,27 +155,31 @@ export default {
             if(!this.date) this.errors.date = "Date field is required";
             if(!this.time.from) this.errors.time_limit = "Time selection is required";
             if(!this.time.to) this.errors.time_limit = "Time selection is required";            
+            if(!this.lesson_type) this.errors.lesson_type = "Language selection is required";            
 
             if(Object.keys(this.errors).length) return;
             var form_data = new FormData();
                 form_data.append('lesson_date', this.date);
                 form_data.append('start_time', this.time.from);
-                form_data.append('end_time', this.time.from);
+                form_data.append('end_time', this.time.to);
+                form_data.append('lesson_type', this.lesson_type);
                 form_data.append('student_id', this.$store.state.user.user.id);
                 form_data.append('student_timezone', this.$store.state.user.user.timezone);
                 form_data.append('tutor_id', this.tutor.id);
-                form_data.append('tutor_timezone', this.tutor.timezone);
-           
+                form_data.append('tutor_confirm', 'pending');
+                form_data.append('tutor_timezone', this.tutor.timezone);           
             
             axios.post('/api/student/trial-lesson', form_data)
             .then(response => {
-                console.log(response.data);
                 this.success.book_trial = "Success, Your trial lesson has been booked successfully!";
-
-              // setTimeout(() => {
-              //     document.getElementById('closedate').click();
-              //     delete this.success.book_trial;
-              // }, 2500);
+                setTimeout(() => {
+                    document.getElementById('closetrial').click();
+                    delete this.success.book_trial;
+                    this.lesson_type = null
+                    this.date = null
+                    this.time.from = null
+                    this.time.to = null
+                }, 2500);
             })
             .catch(error => {
               console.log(error.response);

@@ -1,10 +1,15 @@
 <template>
-  <div> <h1> Tutor dashboard</h1> </div>
+  <div> <h4> Tutor dashboard</h4> </div>
+  <div> <Lessons /></div>
 </template>
 
 <script>
+import Lessons from "./Lessons/TutorLessons.vue";
 export default {
-
+  components:{
+      Lessons
+  }
+  
 }
 </script>
 

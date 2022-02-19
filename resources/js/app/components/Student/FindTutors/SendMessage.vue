@@ -56,12 +56,12 @@ export default {
 				form_data.append('sender', this.$store.state.user.user.id);
 				form_data.append('recipient', this.tutor.id);
 
-			axios.post('/api/student/message', form_data)
+			axios.post('/api/student/messages', form_data)
 			.then(response =>{
 				if(response.status == 201){
+          this.message= null;
 					this.success.message_sent = "Success, Message sent to  " + this.tutor.first_name;					
-					setTimeout(() => {
-						this.message= null;
+					setTimeout(() => {						
 						document.getElementById('closeMessage').click();
 						this.success ={};
 					}, 2500);

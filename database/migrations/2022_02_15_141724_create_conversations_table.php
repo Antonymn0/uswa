@@ -17,6 +17,8 @@ class CreateConversationsTable extends Migration
             $table->id();
             $table->integer('sender')->required()->index(); // student user id 
             $table->integer('recipient')->required()->index(); // tutor user id 
+            $table->integer('tutor_seen')->nullable();
+            $table->integer('student_seen')->nullable();
 
             $table->timestamps();
         });

@@ -13,9 +13,9 @@
       </div>
       <div class="pl-3 desktop " >
          <ul class="list-unstyled d-flex  ">
-         <router-link :to="{name: 'student-dashboard'}" class="px-3" v-if="getUser.role !== 'tutor' ">Find a tutor</router-link>          
+         <router-link :to="{name: 'find-tutor'}" class="px-3" v-if="getUser.role !== 'tutor' ">Find a tutor</router-link>          
          <router-link :to="{name: 'register-tutor'}" class="px-3"  v-if="getUser.role !== 'tutor' && getUser.role !== 'student' ">Become a tutor</router-link>          
-          <li class="px-3 desktop"><a href="#">FAQs</a></li>
+          <router-link :to="{name: 'home'}" class="px-1" >Home</router-link>
         </ul>
       </div>  
       
@@ -37,14 +37,16 @@
         <span><button class="btn btn-secondary">Buy hours</button> &nbsp;</span>
         <span class="mobile">Bal: 0hrs  </span>
       </div>
-        <div class="px-2 desktop">
-        <router-link :to="{name: 'home'}">Home</router-link>
+        <div class="px-2 desktop" v-if=" isLogedIn">
+          <router-link :to="{name: 'student-dashboard'}" v-if="getUser.role == 'student'">Dashboard</router-link> &nbsp;
+          <router-link :to="{name: 'tutor-dashboard'}" v-if="getUser.role == 'tutor'">Dashboard</router-link>
         </div>
         <div class="p-4 border-right desktop">
         en | USD
         </div>
         <div class="d-flex" v-if="isLogedIn">
-          <span class=""> <Messages /></span>
+          <span class="" v-if="getUser.role == 'student' "> <StudentMessages /></span>
+          <span class="" v-if="getUser.role == 'tutor' "> <TutorMessages /></span>
           <span class=""> <Notifications /></span>
         </div>
         <div class="px-3 desktop">
@@ -55,7 +57,13 @@
               <a v-if=" isLogedIn" class="d-flex align-items-center " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               {{getUser.first_name}} &nbsp;  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.5rem"></i>
               </a>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">            
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">  
+                  <li  v-if=" isLogedIn">
+                    <a href="#" class="dropdown-item">
+                      <router-link :to="{name: 'student-dashboard'}" v-if="getUser.role == 'student'">Dasboard</router-link> &nbsp;
+                      <router-link :to="{name: 'tutor-dashboard'}" v-if="getUser.role == 'tutor'">Dashboard</router-link>
+                    </a> 
+                  </li>
                   <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdropProfile">Profile</a></li>
                   <li><a class="dropdown-item" href="#"><Logout /></a></li>
               </ul>
@@ -65,10 +73,10 @@
         </div>
   </div>
  <!-- --------------------------------------------------- -->
-    <span class=" py-2 mobile  badge-success  text-default fw-bold">    
-      <router-link :to="{name: 'student-dashboard'}" class="px-3"  v-if="getUser.role !== 'tutor'">Find a tutor</router-link>          
+    <!-- <span class=" py-2 mobile  badge-success  text-default fw-bold">    
+      <router-link :to="{name: 'find-tutor'}" class="px-3"  v-if="getUser.role !== 'tutor'">Find a tutor</router-link>          
       <router-link :to="{name: 'register-tutor'}" class="px-3" v-if="getUser.role !== 'tutor'">Become a tutor</router-link>   
-    </span>  
+    </span>   -->
   </div>
 <div class="clearfix"></div>
  
@@ -92,7 +100,8 @@ import MobileNav from "../Navigation/MobileNav.vue";
 import Logout from "../Auth/Logout.vue";
 import Footer from "./Footer.vue";
 import Profile from "../Profile/Profile.vue";
-import Messages from "../Chats/Messages.vue";
+import StudentMessages from "../Chats/StudentMessages.vue";
+import TutorMessages from "../Chats/TutorMessages.vue";
 import Notifications from "../UserNotifications/Notifications.vue";
 import VerifyEmail from "../Notifications/EmailUnverified.vue";
 import TutorSignupProcessNotification from "../Notifications/TutorSignupProcessNotification.vue";
@@ -102,7 +111,8 @@ export default {
     Footer,
     Logout,
     Profile,
-    Messages,
+    StudentMessages,
+    TutorMessages,
     Notifications,
     VerifyEmail,
     TutorSignupProcessNotification

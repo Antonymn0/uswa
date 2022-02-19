@@ -2,17 +2,28 @@
   <div class="parent-nav   py-2">
    
     <div>
-        <span @click.prevent="openNav()"><i class="bi bi-list text-dark float-right" style="font-size:1.8rem; margin-right:1rem"></i></span>
+        <span @click.prevent="openMobileNav()"><i class="bi bi-list text-dark float-right" style="font-size:1.8rem; margin-right:1rem"></i></span>
         <div id="mySidenav" class="sidenav" style="">
             <a href="javascript:void(0)" class="closebtn" id="closeNav" @click.prevent="closeNav()">&times;</a>
                 <ul class="list-unstyled ml-5">
                     <li class="nav-item">
                         <route-link :to="{name: 'home'}" class="nav-link" @click.prevent="pushRoutes('home')">Home </route-link>
                     </li>
+                     <li class="nav-item" v-if=" isLogedIn">
+                       <route-link :to="{name: 'student-dashboard'}" class="nav-link" @click.prevent="pushRoutes('student-dashboard')" v-if="getUser.role == 'student'">Dashboard </route-link>
+                       <route-link :to="{name: 'tutor-dashboard'}" class="nav-link" @click.prevent="pushRoutes('tutor-dashboard')" v-if="getUser.role == 'tutor'">Dashboard </route-link>
+                    </li>
+                    <li class="nav-item">
+                        <route-link :to="{name: 'find-tutor'}" class="nav-link" @click.prevent="pushRoutes('find-tutor')" v-if="getUser.role !== 'tutor' ">Find a Tutor </route-link>
+                        <router-link :to="{name: 'register-tutor'}" class="px-3"  v-if="getUser.role !== 'tutor' && getUser.role !== 'student' ">Become a tutor</router-link>
+                    </li>
+
+                   
                     
                     <li class="nav-item">
                         <route-link :to="{name: ''}" class="nav-link" @click.prevent="pushRoutes('')">Help </route-link>
-                    </li>                   
+                    </li>   
+
                     <li class="nav-item">
                         <route-link :to="{name: ''}" class="nav-link" @click.prevent="pushRoutes('')">FAQs </route-link>
                     </li>                   
@@ -38,7 +49,7 @@ export default {
         Logout
     },
     methods:{
-        openNav() {
+        openMobileNav() {
             document.getElementById("mySidenav").style.width = "60%";            
             document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         },
@@ -52,8 +63,8 @@ export default {
         }
     },
     computed:{
-        ...mapGetters(["isLogedIn"]),    
-    },
+    ...mapGetters(['isLogedIn', 'getUser']),    
+  },
 }
 </script>
 

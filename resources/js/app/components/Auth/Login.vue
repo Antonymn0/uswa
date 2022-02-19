@@ -64,6 +64,7 @@ methods:{
         .then(response=>{
             this.$store.commit('setToken', response.data.token);
             this.$store.commit('setUser', response.data.user);
+            axios.defaults.headers.common['Authorization'] = response.data.token;
             this.spinner=false;
             this.$router.push({name: 'student-dashboard'});
         })
@@ -84,7 +85,8 @@ methods:{
         if(this.form.password.length < 4) this.errors.password = "Password must be atleast 4 characters";
     }
 
-}
+},
+
 
 }
 </script>

@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Conversation;
+use App\Models\TrialLesson;
 class User extends Authenticatable
 {
     use HasApiTokens; 
@@ -46,4 +48,11 @@ class User extends Authenticatable
      public function tutorSchedule(){
         return $this->hasOne(TutorSchedule::class,'user_id', 'id');
     }
+
+    // eloquent relation
+     public function trialLesson(){
+        return $this->hasMany(TrialLesson::class,'user_id', 'id');
+    }
+
+   
 }

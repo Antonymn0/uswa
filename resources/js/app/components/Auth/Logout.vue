@@ -18,11 +18,11 @@ export default {
         logout(){
             let token = this.$store.state.token.token;
             this.spinner =true;
-            axios.get('/api/logout', {  headers: {   'Authorization': 'Bearer ' + token } })
+            axios.get('/api/logout')
             .then(response=>{
                 if(response.status == 200){
                     this.spinner =false;
-                    this.$store.commit('unsetToken', response.data);
+                    this.$store.commit('unsetToken', token=null);
                     this.$store.commit('unsetUser', response.data);
                     this.$router.push({name: 'home'});
                 }

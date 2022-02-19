@@ -3,20 +3,52 @@
 namespace App\Http\Controllers\Api\Conversation;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Http\Requests\Conversation\ValidateConversation;
 use App\Models\Conversation;
 use App\Models\ConversationThread;
+use App\Models\User;
 
 class ConversationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * get student messages.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getStudentMessages(Request $request)
     {
-        //
+        $user = $request->user();
+        $messages = Conversation::with('conversationThread')
+                    ->with('messageRecipient')
+                    ->where('sender', $user->id)
+                    ->orWhere('recipient', $user->id)
+                    ->paginate(env('API_PAGINATION', 10));
+        return response()->json([
+            'success' => true,
+            'data' =>$messages,
+            'message'=> 'A list of messages'
+        ], 200);
+    }
+
+    /**
+     *get tutor messages.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getTutorMessages(Request $request)
+    {
+        $user = $request->user();
+        $messages = Conversation::with('conversationThread')
+                    ->with('messageSender')
+                    ->where('sender', $user->id)
+                    ->orWhere('recipient', $user->id)
+                    ->paginate(env('API_PAGINATION', 10));
+        return response()->json([
+            'success' => true,
+            'data' =>$messages,
+            'message'=> 'A list of messages'
+        ], 200);
     }
 
     /**
@@ -28,6 +60,7 @@ class ConversationController extends Controller
     public function store(ValidateConversation $request)
     {
         $data = $request->validated();
+        $data['student_seen'] = 1;   //set seen status to true
 
         $conversation = Conversation::create($data); // save conversation
 
@@ -37,7 +70,7 @@ class ConversationController extends Controller
         return response()->json([
             'success' => true,
             'data' =>true,
-            'message'=> 'Message sent successfully'
+            'message'=> 'Conversation started successfully'
         ], 201);
     }
 
@@ -49,20 +82,15 @@ class ConversationController extends Controller
      */
     public function show($id)
     {
-        //
+        $message = Conversation::with('conversationThread') ->first();
+        return response()->json([
+            'success' => true,
+            'data' =>$message,
+            'message'=> 'Conversation thread fetched successfully'
+        ], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+   
 
     /**
      * Remove the specified resource from storage.
@@ -70,8 +98,33 @@ class ConversationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy( $id)
+    {        
+       $conversation = Conversation::findOrFail($id);
+       $conversation->delete();
+       return response()->json([
+            'success' => true,
+            'data' =>$conversation,
+            'message'=> 'Conversation thread deleted successfully'
+        ], 200);
     }
+
+    /**
+     * update conversation  seen
+     */
+    public function updateSeen(request $request, $id){
+        
+        $conversation = Conversation::findOrfail($id);
+        $user = $request->user();
+
+        if($user->role == 'student')$conversation->update(['student_seen' => 1, ]);
+        if($user->role == 'tutor')$conversation->update(['tutor_seen' => 1, ]);
+        
+        return response()->json([
+            'success' => true,
+            'data' =>true,
+            'message'=> 'Conversation seen status updated.'
+        ], 200);
+    }
+
 }
