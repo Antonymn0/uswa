@@ -54,5 +54,10 @@ class User extends Authenticatable
         return $this->hasMany(TrialLesson::class,'user_id', 'id');
     }
 
+    // eloquent relation
+     public function getLesson(){
+        return $this->hasMany(Lesson::class,'user_id', 'id');
+    }
+
    
 }

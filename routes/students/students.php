@@ -45,10 +45,12 @@ use Illuminate\Support\Facades\Route;
         Route::delete('/student/get-message/{id}','Api\Conversation\ConversationController@destroy')->name('student.delete.message-thread');
         
         // fetch trial lessons
-        Route::get('/student/fetch-lessons/trial','Api\Student\StudentController@fetchTrialLessons')->name('student.fetch.trial-lessson');
+        Route::get('/students/fetch-lessons/trial','Api\Student\StudentController@fetchTrialLessons')->name('student.fetch.trial-lessson');
         
         // cancel trial lesson
         Route::get('/student/cancel-trial-lesson/{id}','Api\Student\StudentController@cancelTrialLesson')->name('student.cancel.trial-lessson');
-   
+        // fetch lessons
+        Route::get('/students/fetch-lessons','Api\Student\StudentLessonController@fetchLessons')->name('student.fetch.lesssons');
+
     });
 

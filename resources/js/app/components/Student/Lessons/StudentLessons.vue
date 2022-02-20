@@ -45,27 +45,27 @@
 <!-- ------------------------------------------------------------------------------------------------------------------ -->
 
  <div class="bg-white mt-3 ">
-      <h4 class="alert-secondary w-100 py-3 px-3">In progress <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" >Refresh</button> </span></h4>
+      <h4 class="alert-secondary w-100 py-3 px-3">In progress <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchLessons()">Refresh</button> </span></h4>
       <div class="row p-3 "> 
-          <div class="col-md-4 p-2">              
+          <div class="col-md-4 row p-2"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'ongoing'">              
               <div class="border rounded p-3">
                   <div>
                       <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
                           <h6 class="py-2 fw-bold"> 
                               <span>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
-                                TutorJoan
+                                {{lesson.get_lesson_tutor.first_name}}
                             </h6>
-                           <span class="small"> Status: continuing...</span>
+                           <span class="small"> Status: {{lesson.status}}...</span>
                          </span>
                        
-                      <p class="fw-bold"> <span>Spanish lesson with tutor Joan </span> <span class="float-end"><button class="btn btn-secondary">Classroom</button></span> </p>
-                      <span class="py-2">Date started : 2020/02/20</span> <br>
-                      <span class="py-2">Course duration: </span> <span>40hrs </span>
+                      <p class="fw-bold"> <span>{{lesson.lesson_type}} lesson with tutor Joan </span> <span class="float-end"><button class="btn btn-secondary">Classroom</button></span> </p>
+                      <span class="py-2">Date started : {{lesson.lessons_start_date}}</span> <br>
+                      <span class="py-2">Course duration: </span> <span>{{lesson.lesson_total_duration}}hrs </span>
                        <br>
-                      <span class="py-2">Covered hrs: </span> <span> 10hrs</span>
-                      <span class="py-2">Remaining hrs: </span> <span> 30hrs</span>
+                      <span class="py-2">Covered : </span> <span> {{lesson.covered_duration}}hrs</span> &nbsp; | &nbsp;
+                      <span class="py-2">Remaining : </span> <span> {{lesson.remaining_duration}}hrs</span>
 
-                      <p class="pt-2 mb-0" >
+                      <p class="pt-2 mb-0 small" >
                         Learning at Uswa is absolutely free-flow and self-paced. You  are in total control of your learning process. <br> 
                         You can take lessons anytime anywhere in the world. <br>
                         Happy learning..
@@ -74,47 +74,36 @@
               </div>              
           </div>
 
-          <div class="col-sm-4 p-2">
-              progess lesson 2
-          </div>
-          <div class="col-sm-4 p-2">
-             progress lesson 3
-          </div>
       </div>
   </div>
 
 <!-- ------------------------------------------------------------------------------------------------------------------------ -->
 
 <div class="bg-white mt-3 ">
-      <h4 class="alert-secondary w-100 py-3 px-3">Completed <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" >Refresh</button> </span></h4>
+      <h4 class="alert-secondary w-100 py-3 px-3">Completed <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchLessons()">Refresh</button> </span></h4>
       <div class="row p-3 "> 
-          <div class="col-md-4 p-2">              
+          <div class="col-md-4 row p-2"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'completed'">              
               <div class="border rounded p-3">
                   <div>
                     <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
                         <h6 class="py-2 fw-bold"> 
                             <span>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
-                            Tutor Antony
+                            {{this.capitalize(lesson.get_lesson_tutor.first_name)}}
                         </h6>
-                        <span class="small"> Status: completed</span>
+                        <span class="small"> Status: {{lesson.status}}</span>
                         </span>                       
-                    <p class="fw-bold">German lesson with tutor Antony</p>
-                    <span class="py-2">Date started: 2020/02/20</span> <br>
-                    <span class="py-2">Date completed: </span> <span> 2020/0102</span> <br>
-                    <span class="py-2">Total Duration: </span><span>1hr </span>  &nbsp; &nbsp;                      
-                    <span>Score: </span> <span>99%</span>
+                    <p class="fw-bold">{{lesson.lesson_type}} lessons with tutor {{this.capitalize(lesson.get_lesson_tutor.first_name)}}</p>
+                    <span class="py-2">Date started: {{this.formatDate(lesson.lessons_start_date)}}</span> <br>
+                    <span class="py-2">Date completed: </span> <span> {{this.formatDate(lesson.lessons_end_date)}}</span> <br>
+                    <span class="py-2">Total Duration: </span><span>{{lesson.lesson_total_duration}}hr </span>  &nbsp; &nbsp;                      
+                    <span>Score: </span> <span>{{lesson.student_score}}%</span>
 
-                      <p class="pt-2 mb-0">This was completed in a total duration of 40hrs.</p>
+                      <p class="pt-2 mb-0">This was completed in a total duration of {{lesson.lesson_total_duration}}hrs.</p>
                   </div>
               </div>              
           </div>
 
-          <div class="col-sm-4 p-2">
-              completed lesson 2
-          </div>
-          <div class="col-sm-4 p-2">
-              completed lesson 3
-          </div>
+         
       </div>
   </div>
 
@@ -129,6 +118,7 @@ export default {
     data(){
         return{
             current_trial_lessons:{},
+            current_lessons:{},
             decline_reason:null,
             errors:{},
             success:{ }
@@ -157,10 +147,19 @@ export default {
         },
         
         fetchTrialLessons(){
-            axios.get('/api/student/fetch-lessons/trial')
+            axios.get('/api/students/fetch-lessons/trial')
             .then(response =>{
-                console.log(response.data.data.data);
                 this.current_trial_lessons = response.data.data.data;
+            })
+            .catch(error=>{
+                console.log(error.response);
+            })
+        },
+        fetchLessons(){
+            axios.get('/api/students/fetch-lessons')
+            .then(response =>{
+                this.current_lessons = response.data.data.data;
+
             })
             .catch(error=>{
                 console.log(error.response);

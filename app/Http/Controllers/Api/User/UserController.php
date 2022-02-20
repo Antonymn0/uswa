@@ -94,7 +94,7 @@ class UserController extends Controller
         // $data['image'] = $path;
         // }  
         // $user->update($data);
-       return  (new TutorScheduleController)->store($request, $user->id);
+         (new TutorScheduleController)->store($request, $user->id);
 
         event(new UserUpdated($user));
         return response()->json([

@@ -15,7 +15,7 @@
                     </li>
                     <li class="nav-item">
                         <route-link :to="{name: 'find-tutor'}" class="nav-link" @click.prevent="pushRoutes('find-tutor')" v-if="getUser.role !== 'tutor' ">Find a Tutor </route-link>
-                        <router-link :to="{name: 'register-tutor'}" class="px-3"  v-if="getUser.role !== 'tutor' && getUser.role !== 'student' ">Become a tutor</router-link>
+                        <router-link :to="{name: 'register-tutor'}" class="px-3"  @click.prevent="pushRoutes('register-tutor')" v-if="getUser.role !== 'tutor' && getUser.role !== 'student' ">Become a tutor</router-link>
                     </li>
 
                    

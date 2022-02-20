@@ -33,6 +33,17 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\EmailVerification\SendEmailVerificationLink' => [
             'App\Listeners\EmailVerification\SendEmailVerificationLinkListener',
         ],
+
+        // Lesson events
+        'App\Events\Lesson\lessonCreated' => [
+            'App\Listeners\Lesson\lessonCreatedListener',
+        ],
+        'App\Events\Lesson\lessonUpdated' => [
+            'App\Listeners\Lesson\lessonUpdatedListener',
+        ],
+        'App\Events\Lesson\lessonDestroyed' => [
+            'App\Listeners\Lesson\lessonDestroyedListener',
+        ],
         
         
 

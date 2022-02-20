@@ -32,11 +32,14 @@ use Illuminate\Support\Facades\Route;
         Route::get('/tutor/update-seen/{id}','Api\Conversation\ConversationController@updateSeen')->name('tutor.update.seen');
 
         // fetch trial lessons
-        Route::get('/tutor/fetch-lessons/trial','Api\Tutor\TutorController@fetchTrialLessons')->name('tutor.fetch.trial-lessson');
+        Route::get('/tutor/fetch-lessons/trial','Api\Tutor\TutorTrialLessonController@fetchTrialLessons')->name('tutor.fetch.trial-lessson');
         // confirm trial lesson
-        Route::get('/tutor/confirm-trial-lesson/{id}','Api\Tutor\TutorController@confirmTrialLesson')->name('tutor.confirm.trial-lesssn');
+        Route::get('/tutor/confirm-trial-lesson/{id}','Api\Tutor\TutorTrialLessonController@confirmTrialLesson')->name('tutor.confirm.trial-lesssn');
         // decline trial lesson
-        Route::put('/tutor/decline-trial-lesson/{id}','Api\Tutor\TutorController@declineTrialLesson')->name('tutor.decline.trial-lesssn');
+        Route::put('/tutor/decline-trial-lesson/{id}','Api\Tutor\TutorTrialLessonController@declineTrialLesson')->name('tutor.decline.trial-lesssn');
+        
+        // fetch lessons
+        Route::get('/tutor/fetch-lessons','Api\Tutor\TutorLessonController@fetchLessons')->name('tutor.fetch.lesssons');
 
         
     });

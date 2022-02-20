@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\TrialLesson;
 use App\Models\User;
 
-class TutorController extends Controller
+class TutorTrialLessonController extends Controller
 {
     //fetch trial lesson
-    public function fetchTrialLessons(){
+    public function fetchTrialLessons(Request $request){
         $user = $request->user();
         $trail_lesson = TrialLesson::with('getStudent')
             ->with('getStudent')

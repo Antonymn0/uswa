@@ -9,7 +9,7 @@
   <div class="parent-header d-flex justify-content-between align-items-center  border-bottom px-3">
     <div class="d-flex justify-content-start align-items-center">
       <div class="d-flex py-4 "> 
-        <span> <router-link :to="{name: 'home'}"> <h2 class="text-danger">USWA</h2></router-link>  </span>  
+        <span> <router-link :to="{name: 'home'}"><img src="http://127.0.0.1:8000/images/logo.svg" alt="uswa-logo" style="width:150px; ">  </router-link>  </span>  
       </div>
       <div class="pl-3 desktop " >
          <ul class="list-unstyled d-flex  ">
