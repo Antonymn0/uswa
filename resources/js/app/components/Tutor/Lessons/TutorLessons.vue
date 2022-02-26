@@ -29,8 +29,7 @@
                     <p class="mb-0" v-if="trial_lesson.decline_reason !== null">
                         <span class="py-2 fw-normal">Declined:  </span> <span class="text-danger">true </span> <br>
                         <span class="py-2">Decline reason:  </span> <span> {{trial_lesson.decline_reason}}</span>
-                    </p>
-                   
+                    </p>                   
 
                     <p class="pt-2 mb-0"  v-if="trial_lesson.decline_reason == null">{{this.capitalize(trial_lesson.get_student.first_name)}} is eager to start learning {{this.capitalize(trial_lesson.lesson_type)}} with you.</p>
                     <p class="mb-0 py-2">
@@ -60,7 +59,6 @@
                             </div>
                         </div>
                         </div>
-
                     <!-- ------------------------------------------------------------- -->
                 </div>
             </div>              
@@ -148,7 +146,8 @@ export default {
             completed_lessons:{},
             decline_reason:null,
             errors:{},
-            success:{ }
+            success:{ },
+            refresh_interval:{}
 
         }
     },
@@ -160,6 +159,8 @@ export default {
             if(string) return string.charAt(0).toUpperCase() + string.slice(1);
         },
         acceptTrialLesson(trial_lesson){
+            if(trial_lesson.tutor_decline !== null) {alert('Lesson already declined!'); return;}
+            if(trial_lesson.status == 'accepted') {alert('Lesson already accepted and scheduled!'); return;}
             if(! confirm('Accept to meet with  ' + this.capitalize(trial_lesson.get_student.first_name) + ' on the specified date and time?')) return;
             axios.get('/api/tutor/confirm-trial-lesson/' + trial_lesson.id)
             .then(response =>{
@@ -209,12 +210,21 @@ export default {
             .catch(error=>{
                 console.log(error.response);
             })
+        },
+        scheduleRefresh(){
+            this.refresh_interval.trial_lessons = setInterval(() => {
+                this.fetchTrialLessons;
+            }, 10000);
+           this.refresh_interval.lessons =  setInterval(() => {
+                this.fetchLessons();
+            }, 20000);
         }
     },
     mounted(){
-        // this.fetchTrialLessons;
+        this.fetchTrialLessons();
+        this.fetchLessons();
+        this.scheduleRefresh()
     }
-
 }
 </script>
 

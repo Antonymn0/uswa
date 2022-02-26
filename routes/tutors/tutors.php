@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
         // tutor get current message route
         Route::get('/tutor/get-message/{id}','Api\Conversation\ConversationController@show')->name('tutor.get.message');
         // tutor delete current message thread route
-        Route::delete('/tutor/delete-message/{id}','Api\Conversation\ConversationController@destroy')->name('student.delete.message-thread');
+        Route::delete('/tutor/delete-message/{id}','Api\Conversation\ConversationController@destroy')->name('student.delete.message.thread');
 
         // tutor update conversation seen
         Route::get('/tutor/update-seen/{id}','Api\Conversation\ConversationController@updateSeen')->name('tutor.update.seen');

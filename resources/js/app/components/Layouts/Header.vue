@@ -78,11 +78,11 @@
       <router-link :to="{name: 'register-tutor'}" class="px-3" v-if="getUser.role !== 'tutor'">Become a tutor</router-link>   
     </span>   -->
   </div>
-<div class="clearfix"></div>
+
  
-<div class="w-100">
+<div class='w-100'>
     <router-view></router-view>
-  </div> <br>
+  </div> 
   <div class="clearfix"></div>
   <div class="w-100  ">
       <Profile />
@@ -119,19 +119,25 @@ export default {
   },
   data(){
     return{
-     //
+     user: this.getUser,
     }
   },
   methods:{
-    showHomePage(){
-        this.$router.push({name: 'home'});
+    showHomePage(){ 
+      this.$router.push({name: 'home'});
+      // setTimeout(() => {
+      //     if(window.zoom_success){ // handle zoom redirection if exists
+      //       if(this.user.role == 'student') this.$router.push({name: 'student-trial-lesson'});
+      //       if(this.user.role == 'tutor') this.$router.push({name: 'tutor-trial-lesson'});
+      //     } else this.$router.push({name: 'home'});        
+      //   }, 200);       
     }
   },
   computed:{
     ...mapGetters(['isLogedIn', 'getUser']),    
   },
 mounted(){     
-    setTimeout(this.showHomePage(), 200);
+    // this.showHomePage();
     }
 }
 </script>

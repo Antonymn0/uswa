@@ -48,14 +48,17 @@ Route::post('/register','Api\User\UserController@store');
   
 
 
-
-
-
   // Import students routes file
   require __DIR__.'/students/students.php';
 
   // Import tutors routes file
   require __DIR__.'/tutors/tutors.php';
+
+  // Import video streaming  routes file
+  require __DIR__.'/videoStreaming/videoStreaming.php';
+
+  // Import Zoom video streaming  routes file
+  require __DIR__.'/videoStreaming/zoom.php';
 
 
 

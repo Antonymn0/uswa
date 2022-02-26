@@ -33,7 +33,8 @@
                    <p class="py-2 mb-0 mt-2" v-if="trial_lesson.tutor_confirm == 'accepted' "> {{this.capitalize(trial_lesson.get_tutor.first_name)}} has accepted the trial request. Your lesson is scheduled on the set date.</p>
 
                     <p class="mb-0 py-2">
-                        <button class="btn btn-sm btn-secondary m-1" @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel lesson </button>
+                        <button class="btn btn-sm btn-secondary m-1" @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel request </button>
+                        <button class="btn btn-sm btn-secondary m-1" @click.prevent="this.openTrialLesson()">Open </button>
                     </p>
                    
                 </div>
@@ -121,7 +122,8 @@ export default {
             current_lessons:{},
             decline_reason:null,
             errors:{},
-            success:{ }
+            success:{ },
+             refresh_interval:{}
         }
     },
     methods:{
@@ -132,7 +134,7 @@ export default {
             if(string) return string.charAt(0).toUpperCase() + string.slice(1);
         },
         cancelTrialLesson(trial_lesson){
-            if(trial_lesson.tutor_confirm !== null){alert('Cannot delete this lesson'); return;}
+            if(trial_lesson.tutor_confirm !== null){alert('Cannot cancel this lesson'); return;}
             if(! confirm('Do you want to cancle this trial lesson. \n If you cancel, you and the tutor will no longer be able to see view this lesson.')) return;
             axios.get('/api/student/cancel-trial-lesson/' + trial_lesson.id)
             .then(response =>{
@@ -145,7 +147,10 @@ export default {
                 console.log(error.response);
             })
         },
-        
+        openTrialLesson(){
+            if(!confirm('Open trial lesson window?')) return;
+            this.$router.push({name: 'student-trial-lesson'});
+        },
         fetchTrialLessons(){
             axios.get('/api/students/fetch-lessons/trial')
             .then(response =>{
@@ -164,10 +169,20 @@ export default {
             .catch(error=>{
                 console.log(error.response);
             })
+        },
+        scheduleRefresh(){
+            this.refresh_interval.trial_lessons = setInterval(() => {
+                this.fetchTrialLessons;
+            }, 10000);
+           this.refresh_interval.lessons =  setInterval(() => {
+                this.fetchLessons();
+            }, 20000);
         }
     },
     mounted(){
-        // this.fetchTrialLessons;
+        this.fetchTrialLessons();
+        this.fetchLessons();
+        this.scheduleRefresh();
     }
 
 }

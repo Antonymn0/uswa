@@ -18,8 +18,9 @@ const routes = [
         component: require("../components/Home/HomePage.vue").default,
     },
 
-    // -------------------------------------------------------------------------------------------------------------------
-    // student routes
+    // ======================================================================================================================
+    
+    // STUDENT ROUTES
     {
         name: "find-tutor",
         path: "/student/find-tutors",
@@ -31,9 +32,15 @@ const routes = [
         path: "/dashboard/student",
         component: require("../components/Student/Dashboard.vue").default,
     },
+    {
+        name: "student-trial-lesson",
+        path: "/student/trial-lesson",
+        component: require("../components/Student/Lessons/StudentTrialLessonClass.vue").default,
+    },
 
-    // -----------------------------------------------------------------------------------------------------------
-    // Tutor routes
+    // ==================================================================================================================
+    
+    //TUTOR ROUTES
     {
         name: "tutor-dashboard",
         path: "/dashboard/tutor",
@@ -60,7 +67,8 @@ const routes = [
                 .default,
     },
 
-    // ---------------------------------------------------------------------------------------------------------
+    // ========================================================================================
+
     //fallback route
     {
         name: "404",

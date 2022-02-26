@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
         Route::apiResource('/student/messages', 'Api\Conversation\ConversationController'); 
 
         // conversation thread routes
-        Route::apiResource('/student/conversation-thread', 'Api\ConversationThread\ConversationThreadController'); 
+        Route::apiResource('/student/conversation-thread', 'Api\Conversation\ConversationThreadController'); 
 
         // student send message route
         Route::post('/student/send-message','Api\Conversation\ConversationThreadController@store')->name('student.send.message');

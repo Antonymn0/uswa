@@ -52,6 +52,7 @@ export default {
         openMobileNav() {
             document.getElementById("mySidenav").style.width = "60%";            
             document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+            console.log('Nav clicked...');
         },
         closeNav() {
             document.getElementById("mySidenav").style.width = "0";           

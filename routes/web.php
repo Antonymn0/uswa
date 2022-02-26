@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// ------------------------------------------------------------------------------------------
+// zoom token call back route
+Route::get('/zoom/auth','Api\Zoom\ZoomAuthController@getZoomAuthToken')->name('zoom.callback.route');
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
 //default laravel auth routes (some turned off)
 Auth::routes([
     'register'=> false,
@@ -26,7 +34,8 @@ Auth::routes([
 
 Route::get('/{any?}', function() {
     return view('welcome');
-});
+})->where('any','.*');
+
 
 // fall back route
   Route::fallback(function() {
