@@ -6,16 +6,16 @@
     Then set up lessons and start learning.
   </p>
   <p> 
-    <!-- <span> <button class="btn btn-secondary btn-small" @click="getZoomAuth()">Start video</button> </span>  -->
+    <small class="text-success text-center">{{success.scheduleMeeting}} <br> </small>
     <span> <a :href="'https://zoom.us/oauth/authorize?response_type=code&client_id=' + this.CLIENT_ID + '&redirect_uri=' + this.REDIRECT_URI" class="btn btn-secondary btn-small" >Link with zoom</a> </span> 
-    <span> <button @click.prevent="scheduleMeeting()" class="btn btn-secondary">Schedule Zoom meeting</button> </span> 
+    <span>  <button @click.prevent="scheduleMeeting()" class="btn btn-secondary">Schedule Zoom meeting</button> </span> 
     <span> <button @click.prevent="getMeetings()" class="btn btn-secondary">Get Zoom meetings</button> </span> 
     <span> <button @click.prevent="updateMeeting()" class="btn btn-secondary">Update Zoom meeting</button> </span> 
     <span> <button @click.prevent="deleteMeeting()" class="btn btn-secondary">Delete Zoom meeting</button> </span> 
 </p>
 
 <div class="p-3 border">
-    <span class="fw-bold">Your meetings</span>
+    <span class="fw-bold">Your scheduled meetings</span>
     <div v-for="(meeting, index) in this.zoom_meetings" :key="index">
        <span class="my-2" >Meeting topic: &nbsp; &nbsp; {{meeting.topic}}</span> 
        <span> <a :href="meeting.join_url" target="blank" class="btn btn-sm btn-secondary my-2">Launch meeting</a>
@@ -43,7 +43,8 @@ data(){
         zoom_meetings:{},
         CLIENT_ID: null,
         ZOOM_CLIENT_SECRET: null,
-        REDIRECT_URI: null
+        REDIRECT_URI: null,
+        success:{}
     }
 },
 methods:{
@@ -53,6 +54,7 @@ methods:{
             this.CLIENT_ID = response.data.data.client_id;
             this.ZOOM_CLIENT_SECRET = response.data.data.client_secret
             this.REDIRECT_URI = response.data.data.redirect_uri;
+            console.log(response.data.client_id); 
         })
         .catch(error=>{
             console.log(error.response);
@@ -70,6 +72,7 @@ methods:{
     scheduleMeeting(){
         axios.get('/api/zoom/meeting/create')
         .then(response => {
+            this.success.scheduleMeeting = 'Success, meeting scheduled!'
             console.log(response);
         })
         .catch(error=>{

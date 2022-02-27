@@ -30,8 +30,15 @@ Auth::routes([
     ]); 
 
 //email verification routes
-  Route::get('/verify-email/{email}','Api\Auth\EmailVerificationController@verifyEmail');
+Route::get('/verify-email/{email}','Api\Auth\EmailVerificationController@verifyEmail');
 
+
+ 
+Route::get('/', function() {
+    return view('welcome');
+})->name('default');
+
+// vue route 
 Route::get('/{any?}', function() {
     return view('welcome');
 })->where('any','.*');

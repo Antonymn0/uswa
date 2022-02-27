@@ -41,10 +41,9 @@ class ZoomAuthController extends Controller
 
         $zoom_success = true;
 
-        dd($response);
         // $user =$request->user()->update(['zoom_linked' => 'yes']);
 
-        // return view('welcome', compact(['zoom_success']));
+        return redirect()->intended('home');
     }
 
     /**
@@ -200,7 +199,7 @@ class ZoomAuthController extends Controller
      */
     public function getZoomCredentials(Request $request){
       $data = [
-        'client_id '=> env('ZOOM_CLIENT_ID'),
+        'client_id'=> env('ZOOM_CLIENT_ID'),
        'client_secret' => env('ZOOM_CLIENT_SECRET'),
         'redirect_uri' => env('ZOOM_REDIRECT_URI')
       ] ;

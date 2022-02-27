@@ -80,9 +80,9 @@
   </div>
 
  
-<div class='w-100'>
+
     <router-view></router-view>
-  </div> 
+
   <div class="clearfix"></div>
   <div class="w-100  ">
       <Profile />
@@ -137,7 +137,7 @@ export default {
     ...mapGetters(['isLogedIn', 'getUser']),    
   },
 mounted(){     
-    // this.showHomePage();
+    this.showHomePage();
     }
 }
 </script>
