@@ -17,6 +17,7 @@ class CreateLessonsTable extends Migration
             $table->id();
             $table->integer('student_id')->required()->index(); // student user id 
             $table->integer('tutor_id')->required()->index(); // tutor user id 
+            $table->integer('trial_lesson_id')->required()->unique()->index(); // trial lesson id 
 
             $table->string('lesson_total_duration')->nullable(); 
             $table->dateTime('lessons_start_date')->nullable();
@@ -46,6 +47,7 @@ class CreateLessonsTable extends Migration
             $table->string('student_remarks')->nullable(); 
             $table->string('tutor_remarks')->nullable(); 
             $table->string('status')->nullable(); 
+            $table->string('meeting_link')->nullable(); 
 
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();

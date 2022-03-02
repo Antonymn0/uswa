@@ -19,34 +19,28 @@ if (App::environment('production')) {
     URL::forceScheme('https');
 }
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-Route::group(['middleware'=>['auth:api']],function(){
-  //Logout route
-  Route::get('/logout','Api\Auth\AuthController@logout');
-  Route::get('/check-user-authenticated','Api\Auth\AuthController@checkIfUserAuthenticated');
-
-});
-
 //Login route
   Route::post('/login','Api\Auth\AuthController@login');
 
   //email verifivation routes
-  Route::post('/send-email-verification-link','Api\Auth\EmailVerificationController@sendVerificationLink');
- 
+  Route::post('/send-email-verification-link','Api\Auth\EmailVerificationController@sendVerificationLink'); 
 
 // register route 
 Route::post('/register','Api\User\UserController@store');
 
-    //user routes
-  Route::get('/user/restore/{id}','Api\User\UserController@restore');
-  Route::get('/user/get-deleted','Api\User\UserController@getDeletedRecords');
-  Route::get('/user/parmanently-delete/{id}','Api\User\UserController@parmanentlyDelete');  
-  Route::apiResource('/user','Api\User\UserController');
-  
 
+// -------------------Protected routes -----------------
+Route::group(['middleware'=>['auth:api']],function(){
+    //Logout route
+    Route::get('/logout','Api\Auth\AuthController@logout');
+    Route::get('/check-user-authenticated','Api\Auth\AuthController@checkIfUserAuthenticated');
+
+    //user routes
+    Route::get('/user/restore/{id}','Api\User\UserController@restore');
+    Route::get('/user/get-deleted','Api\User\UserController@getDeletedRecords');
+    Route::get('/user/parmanently-delete/{id}','Api\User\UserController@parmanentlyDelete');  
+    Route::apiResource('/user','Api\User\UserController');
+});
 
   // Import students routes file
   require __DIR__.'/students/students.php';
@@ -60,14 +54,14 @@ Route::post('/register','Api\User\UserController@store');
   // Import Zoom video streaming  routes file
   require __DIR__.'/videoStreaming/zoom.php';
 
-
-
+  // Import assignments routes file
+  require __DIR__.'/assignments/assignments.php';
 
 
 // Fall back route
-  Route::fallback(function() {
-    return response()->json([
-        'success'=> false,
-        'message' => 'No such route found on this server',
-        ], 404);
+Route::fallback(function() {
+return response()->json([
+    'success'=> false,
+    'message' => 'No such route found on this server',
+    ], 404);
 });

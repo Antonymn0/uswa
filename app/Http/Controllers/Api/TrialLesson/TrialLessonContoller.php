@@ -65,4 +65,20 @@ class TrialLessonContoller extends Controller
     {
         //
     }
+
+    /**
+     * Update meeting link
+     */
+    public function updateMeetingLink(Request $request, $id ){
+        $trial_lesson = TrialLesson::findOrFail($id);
+        $trial_lesson->update([
+            'meeting_link' => $request->meeting_link
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'meeting link updated',
+            'data' =>true
+        ],200);
+    }
 }

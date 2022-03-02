@@ -25,6 +25,7 @@ class CreateTrialLessonsTable extends Migration
             $table->string('tutor_timezone')->nullable(); 
             $table->string('student_timezone')->nullable(); 
             $table->string('decline_reason')->nullable(); 
+            $table->string('meeting_link')->nullable(); 
 
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();

@@ -8,7 +8,7 @@ use App\Models\Lesson;
 use App\Events\Lesson\lessonCreated;
 use App\Events\Lesson\lessonUpdated;
 use App\Events\Lesson\lessonDestroyed;
-use App\Http\Requests\Lesson\ValidateLesson;
+use App\Http\Requests\Lesson\ValidateLessonRequest;
 
 class LessonController extends Controller
 {
@@ -97,4 +97,21 @@ class LessonController extends Controller
             'message'=> 'lesson deleted successfuly', 
             'data'=>true], 200);
     }
+
+    /**
+     * Update meeting link
+     */
+    public function updateMeetingLink(Request $request, $id ){
+        $trial_lesson = Lesson::findOrFail($id);
+        $trial_lesson->update([
+            'meeting_link' => $request->meeting_link
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Lesson meeting link updated',
+            'data' =>true
+        ],200);
+    }
+
 }

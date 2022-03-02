@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Lesson;
 use App\Models\User;
-
-
+use App\Models\Assignment;
 class TutorLessonController extends Controller
 {
     //fetch tutor lessons
@@ -15,6 +14,7 @@ class TutorLessonController extends Controller
         $user = $request->user();
 
         $lesson = Lesson::with('getLessonStudent')
+            ->with('getAssignments')
             ->where('tutor_id', $user->id)
             ->paginate(env('API_PAGINATION', 10));
 

@@ -24,8 +24,9 @@ class ValidateLessonRequest extends FormRequest
     public function rules()
     {
         return [
-            'student_id' => ['string', 'required'],
-            'tutor_id' => ['string', 'required'],
+            'student_id' => ['integer', 'required'],
+            'tutor_id' => ['integer', 'required'],
+            'trial_lesson_id' => ['integer', 'required',  'unique:lessons'],
             'lesson_total_duration' => ['string', 'nullable'],
             'lessons_start_date' => ['date', 'nullable'],
             'next_lesson_date' => ['date', 'nullable'],
@@ -47,6 +48,7 @@ class ValidateLessonRequest extends FormRequest
             'student_remarks' => ['string', 'nullable'],
             'tutor_remarks' => ['string', 'nullable'],
             'status' => ['string', 'nullable'],
+            'meeting_link' => ['string', 'nullable'],
         ];
     }
 }

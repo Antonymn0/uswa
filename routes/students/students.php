@@ -49,8 +49,15 @@ use Illuminate\Support\Facades\Route;
         
         // cancel trial lesson
         Route::get('/student/cancel-trial-lesson/{id}','Api\Student\StudentController@cancelTrialLesson')->name('student.cancel.trial-lessson');
+        
         // fetch lessons
         Route::get('/students/fetch-lessons','Api\Student\StudentLessonController@fetchLessons')->name('student.fetch.lesssons');
+       
+        // Create lesson
+        Route::post('/lessons/create','Api\Lesson\LessonController@store')->name('student.fetch.lesssons');
+       
+        //update lesson meeting link
+        Route::post('/update-lesson-link/{lesson_id}','Api\Lesson\LessonController@updateMeetingLink')->name('student.update.meting-link.lesssons');
 
     });
 

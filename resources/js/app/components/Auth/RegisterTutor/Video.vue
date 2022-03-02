@@ -72,7 +72,7 @@ export default {
     methods:{
         fileUpload(event){  
             this.errors={}
-            if(Math.round(event.currentTarget.files[0]/1024/1024) > 50){ // less than 50mb
+            if(Math.round(event.currentTarget.files[0]/1024/1024) > 50){ // should be less than 50mb
               this.errors.video = "File too big: Select an image less than 50mb."; 
               this.video = null;
               this.video_preview = null;

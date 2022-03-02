@@ -24,6 +24,11 @@ class Lesson extends Model
     // eloquent relation
      public function getLessonStudent(){
         return $this->hasOne(User::class, 'id', 'student_id');
+     }
+
+    // eloquent relation
+     public function getAssignments(){
+        return $this->hasMany(Assignment::class, 'lesson_id', 'id');
     }
 
 }
