@@ -22,7 +22,7 @@ export const signupProcess_certification = {
         set_certificate_image(state, payload) {
             state.certification.image = payload;
         },
-        set_subject(state, payload) {
+        set_subject_cert(state, payload) {
             state.certification.subject = payload;
         },
         set_certificate(state, payload) {
@@ -31,7 +31,7 @@ export const signupProcess_certification = {
         set_issued_by(state, payload) {
             state.certification.issued_by = payload;
         },
-        set_description(state, payload) {
+        set_description_certification(state, payload) {
             state.certification.description = payload;
         },
         set_study_from(state, payload) {

@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const signupProcess_availability = {
     state: () => ({
         availability: {
@@ -46,41 +48,41 @@ export const signupProcess_availability = {
         set_timezone(state, timezone) {
             state.availability.timezone = timezone;
         },
-        // set_monday(state, is_available, from, to) {
-        //     state.monday.is_available = is_available;
-        //     state.monday.from = from;
-        //     state.monday.to = to;
-        // },
-        // set_tuesday(state, is_available, from, to) {
-        //     state.tuesday.is_available = is_available;
-        //     state.tuesday.from = from;
-        //     state.tuesday.to = to;
-        // },
-        // set_wedneday(state, is_available, from, to) {
-        //     state.wedneday.is_available = is_available;
-        //     state.wedneday.from = from;
-        //     state.wedneday.to = to;
-        // },
-        // set_thursday(state, is_available, from, to) {
-        //     state.thursday.is_available = is_available;
-        //     state.thursday.from = from;
-        //     state.thursday.to = to;
-        // },
-        // set_friday(state, is_available, from, to) {
-        //     state.friday.is_available = is_available;
-        //     state.friday.from = from;
-        //     state.friday.to = to;
-        // },
-        // set_saturday(state, is_available, from, to) {
-        //     state.saturday.is_available = is_available;
-        //     state.saturday.from = from;
-        //     state.saturday.to = to;
-        // },
-        // set_sunday(state, is_available, from, to) {
-        //     state.sunday.is_available = is_available;
-        //     state.sunday.from = from;
-        //     state.sunday.to = to;
-        // },
+        set_monday(state, is_available, from, to) {
+            state.monday.is_available = is_available;
+            state.monday.from = moment.utc(from, "HH:mm");
+            state.monday.to = moment.utc(to, "HH:mm");
+        },
+        set_tuesday(state, is_available, from, to) {
+            state.tuesday.is_available = is_available;
+            state.tuesday.from = moment.utc(from, "HH:mm");
+            state.tuesday.to = moment.utc(to, "HH:mm");
+        },
+        set_wedneday(state, is_available, from, to) {
+            state.wedneday.is_available = is_available;
+            state.wedneday.from = moment.utc(from, "HH:mm");
+            state.wedneday.to = moment.utc(to, "HH:mm");
+        },
+        set_thursday(state, is_available, from, to) {
+            state.thursday.is_available = is_available;
+            state.thursday.from = moment.utc(from, "HH:mm");
+            state.thursday.to = moment.utc(to, "HH:mm");
+        },
+        set_friday(state, is_available, from, to) {
+            state.friday.is_available = is_available;
+            state.friday.from = moment.utc(from, "HH:mm");
+            state.friday.to = moment.utc(to, "HH:mm");
+        },
+        set_saturday(state, is_available, from, to) {
+            state.saturday.is_available = is_available;
+            state.saturday.from = moment.utc(from, "HH:mm");
+            state.saturday.to = moment.utc(to, "HH:mm");
+        },
+        set_sunday(state, is_available, from, to) {
+            state.sunday.is_available = is_available;
+            state.sunday.from = moment.utc(from, "HH:mm");
+            state.sunday.to = moment.utc(to, "HH:mm");
+        },
         RESET_AVAILABILITY_STATE(state) {
             Object.assign(state, getDefaultState());
         },

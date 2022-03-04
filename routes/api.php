@@ -35,11 +35,12 @@ Route::group(['middleware'=>['auth:api']],function(){
     Route::get('/logout','Api\Auth\AuthController@logout');
     Route::get('/check-user-authenticated','Api\Auth\AuthController@checkIfUserAuthenticated');
 
-    //user routes
+    //USER ROUTE
     Route::get('/user/restore/{id}','Api\User\UserController@restore');
     Route::get('/user/get-deleted','Api\User\UserController@getDeletedRecords');
     Route::get('/user/parmanently-delete/{id}','Api\User\UserController@parmanentlyDelete');  
     Route::apiResource('/user','Api\User\UserController');
+    Route::get('/user/search/{email}','Api\User\UserController@searchUserByEmail');
 });
 
   // Import students routes file
@@ -48,14 +49,19 @@ Route::group(['middleware'=>['auth:api']],function(){
   // Import tutors routes file
   require __DIR__.'/tutors/tutors.php';
 
-  // Import video streaming  routes file
-  require __DIR__.'/videoStreaming/videoStreaming.php';
+ 
 
   // Import Zoom video streaming  routes file
   require __DIR__.'/videoStreaming/zoom.php';
 
   // Import assignments routes file
   require __DIR__.'/assignments/assignments.php';
+
+  // Import assignments routes file
+  require __DIR__.'/admin/lessons.php';
+
+  // Import admin turor routes file
+  require __DIR__.'/admin/tutors.php';
 
 
 // Fall back route

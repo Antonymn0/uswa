@@ -57,6 +57,7 @@ class UpdateUser extends FormRequest
             'language' => [ 'nullable', 'string'],
             'level' => ['nullable', 'string'],
             'subject' => [ 'nullable', 'string'],
+            'subject_level' => [ 'nullable', 'string'],
             'over18' => [ 'nullable', 'string'],
             'description' => [ 'nullable', 'string'],
 

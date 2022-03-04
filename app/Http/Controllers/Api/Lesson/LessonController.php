@@ -19,7 +19,9 @@ class LessonController extends Controller
      */
     public function index()
     {
-        $lesson = Lesson::paginate(env('API_PAGINATION', 10));
+        $lesson = Lesson::with('getLessonStudent')
+                ->with('getLessonTutor')
+                ->paginate(env('API_PAGINATION', 10));
         return response()->json([
             'success'=> true,
             'message' => 'A list of lessons',

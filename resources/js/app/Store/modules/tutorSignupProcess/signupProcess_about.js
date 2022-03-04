@@ -11,6 +11,7 @@ export const signupProcess_about = {
             language: null,
             level: null,
             subject: null,
+            subject_level: null,
             phone: null,
             over18: null,
             description:null
@@ -49,13 +50,16 @@ export const signupProcess_about = {
         set_subject(state, payload) {
             state.about.subject = payload;
         },
+        set_subject_level(state, payload) {
+            state.about.subject_level = payload;
+        },
         set_phone(state, payload) {
             state.about.phone = payload;
         },
         set_over18(state, payload) {
             state.about.over18 = payload;
         },
-        set_description(state, payload) {
+        set_description_about(state, payload) {
             state.about.description = payload;
         },
     },

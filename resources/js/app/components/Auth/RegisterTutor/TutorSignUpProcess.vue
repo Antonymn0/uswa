@@ -1,43 +1,49 @@
 <template>
 <div class="text-secondary">
-<p class="sign-up-steps py-2 fw-bold ">
-    <span> <i class="bi bi-check-circle"></i> About <i class="bi bi-chevron-right"></i></span>
-    <span> <i class="bi bi-check-circle"></i> Photo <i class="bi bi-chevron-right"></i></span>
-    <span> <i class="bi bi-check-circle"></i> Certificaion <i class="bi bi-chevron-right"></i></span>
-    <span> <i class="bi bi-check-circle"></i> Education <i class="bi bi-chevron-right"></i></span>
-    <span> <i class="bi bi-check-circle"></i> Video <i class="bi bi-chevron-right"></i></span>
-    <span> <i class="bi bi-check-circle"></i> Availability <i class="bi bi-chevron-right"></i></span>
-    <span> <i class="bi bi-check-circle"></i> Finish <i class="bi bi-chevron-right"></i></span>
-</p>
+    <p class="sign-up-steps py-2 fw-bold ">
+        <span> <i class="bi bi-check-circle"></i> About <i class="bi bi-chevron-right"></i></span>
+        <span> <i class="bi bi-check-circle"></i> Photo <i class="bi bi-chevron-right"></i></span>
+        <span> <i class="bi bi-check-circle"></i> Certificaion <i class="bi bi-chevron-right"></i></span>
+        <span> <i class="bi bi-check-circle"></i> Education <i class="bi bi-chevron-right"></i></span>
+        <span> <i class="bi bi-check-circle"></i> Video <i class="bi bi-chevron-right"></i></span>
+        <span> <i class="bi bi-check-circle"></i> Availability <i class="bi bi-chevron-right"></i></span>
+        <span> <i class="bi bi-check-circle"></i> Finish <i class="bi bi-chevron-right"></i></span>
+    </p>
     <div class="parent">
         <div id="about" class="">
         <h4 class="text-center">Complete the tutor sign up process </h4>    
            <About /> 
         </div>
+
+        <div class="clearfix"></div>
+
         <div id="photo" class="hidden">
            <Photo /> 
         </div>
-
+        <div class="clearfix"></div>
         <div id="certification" class="hidden">
            <Certification/> 
         </div>
-
+        <div class="clearfix"></div>
         <div id="education" class="hidden">
            <Education /> 
         </div>
-        
+        <div class="clearfix"></div>
         <div id="video" class="hidden">
            <Video /> 
         </div>
+        <div class="clearfix"></div>
         <div id="availability" class="hidden">
            <Availability /> 
-        </div>        
+        </div>  
+        <div class="clearfix"></div> 
         <div id="finish" class="hidden">
            <Finish /> 
         </div>        
     </div>
  </div>
-   
+<div class="clearfix"></div>
+
 
 </template>
 
@@ -76,6 +82,7 @@ export default {
     .parent{
         width:50rem;
         max-width:100%;
+        height:auto;
         background-color: #fff;
         padding:2rem;
         margin:auto;

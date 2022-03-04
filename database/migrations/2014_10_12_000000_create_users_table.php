@@ -53,6 +53,7 @@ class CreateUsersTable extends Migration
            $table->string('language')->nullable();
            $table->string('level')->nullable();
            $table->string('subject')->nullable();
+           $table->string('subject_level')->nullable();
            $table->string('over18')->nullable();
            $table->string('description')->nullable();
 
@@ -77,6 +78,7 @@ class CreateUsersTable extends Migration
            $table->string('zoom_id')->nullable();
 
            $table->string('availability')->nullable();
+           $table->text('revert_reason')->nullable();
 
 
             $table->rememberToken();

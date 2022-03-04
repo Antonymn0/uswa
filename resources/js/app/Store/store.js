@@ -1,7 +1,5 @@
 
-import { createApp } from 'vue';
 import { createStore } from 'vuex';
-
 import { token } from './modules/token/token.js';
 import { user } from './modules/user/user.js';
 import { signupProcess_about } from "./modules/tutorSignupProcess/signupProcess_about.js";

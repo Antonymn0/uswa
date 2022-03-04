@@ -26,6 +26,7 @@ export default {
           if(response.status == 200){
             this.$store.commit('setUser', response.data.user);
             console.log("Success " + response.data.message);
+            if(response.data.user.role == 'admin') this.$router.push({name: 'all-users'});  // show admin home route
           }
       })
       .catch(error=>{

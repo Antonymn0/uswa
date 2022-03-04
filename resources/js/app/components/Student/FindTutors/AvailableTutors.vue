@@ -42,9 +42,9 @@
                 <!-- ------------------------------------- -->
                 <div class="d-flex  small p-2 speaks">
                     <span class="fw-bold">Speaks: &nbsp; </span> 
-                    <span>English</span> <span class="alert-success px-1 rounded">Native</span>  
+                    <span>{{tutor.language}} </span> <span class="alert-success px-1 rounded">{{tutor.level}}</span>  
                     <span class="">  &nbsp; | &nbsp;</span>
-                    <span>Spanish</span><span class="alert-primary px-1 rounded">Fluent</span>  
+                    <span>{{tutor.subject}}</span><span class="alert-primary px-1 rounded">{{tutor.subject_level}}</span>  
                 </div>
                 <!-- -------------------------- -->
                 <div class="px-2">
@@ -104,7 +104,6 @@ export default {
     methods:{
         updateCurrent_tutor(tutor){
             this.current_tutor = tutor;
-            console.log(this.current_tutor);
         },
         toggleFavourite(event, tutor){
             if(event.target.classList.contains('text-danger')){
@@ -122,8 +121,7 @@ export default {
                 .then(response=>{
                     if(response.status == 200){  
                         this.tutors =response.data.data.data;   
-                        this.current_tutors = this.tutors;         
-                    console.log(this.tutors);  
+                        this.current_tutors = this.tutors;  
                     }                
                 })
                 .catch(error=>{               

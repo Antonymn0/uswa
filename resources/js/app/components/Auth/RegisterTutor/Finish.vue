@@ -81,7 +81,7 @@ export default {
                 form_data.append('higher_education_institution', this.$store.state.signupProcess_education.education.institution);
 
                 if(this.$store.state.signupProcess_video.video.video) form_data.append('introduction_video', this.$store.state.signupProcess_video.video.video);
-                form_data.append('introduction_video_url', this.$store.state.signupProcess_video.video.video_url);
+                if(this.$store.state.signupProcess_video.video.video_url) form_data.append('introduction_video_url', this.$store.state.signupProcess_video.video.video_url);
 
                 // availability
                 form_data.append('timezone', this.$store.state.signupProcess_availability.availability.timezone);
@@ -92,7 +92,7 @@ export default {
                 form_data.append('friday', JSON.stringify(this.$store.state.signupProcess_availability.availability.friday));
                 form_data.append('saturday', JSON.stringify(this.$store.state.signupProcess_availability.availability.saturday));
                 form_data.append('sunday', JSON.stringify(this.$store.state.signupProcess_availability.availability.sunday));
-                form_data.append('registration', 'complete');
+                form_data.append('registration', 'reviewing');
                 form_data.append('_method', 'PUT');
                 
                 this.spinner = true;
@@ -106,7 +106,7 @@ export default {
                 if(response.status == 200){   
                     this.spinner=false;  
                     this.success.signup = "Congratulations!. Your data has been submitted and is being reviewed. \n You will be redirected to dashboard shortly." ;
-                    // setTimeout(() => {this.$router.push({name: 'tutor-dashboard'})}, 3000); //redirect to home page                   
+                    setTimeout(() => {this.$router.push({name: 'tutor-dashboard'})}, 3000); //redirect to home page                   
                 }
                 this.spinner=false; 
             })

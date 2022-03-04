@@ -37,7 +37,7 @@
                     <div class="mb-0 py-2">
                         <a v-if="! this.zoom_user_auth_token" :href="'https://zoom.us/oauth/authorize?response_type=code&client_id=' + this.CLIENT_ID + '&state=' + this.ZOOM_STATE + '&redirect_uri=' + this.REDIRECT_URI" class="btn btn-secondary btn-small m-2" >Link with zoom</a>  
                         <button class="btn btn-sm btn-secondary m-1" v-if="! trial_lesson.meeting_link" @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel request </button>
-                        <button class="btn btn-sm btn-secondary m-1" v-if="! trial_lesson.meeting_link" @click.prevent="this.openTrialLesson()">Open </button>
+                        <!-- <button class="btn btn-sm btn-secondary m-1" v-if="! trial_lesson.meeting_link" @click.prevent="this.openTrialLesson()">Open </button> -->
                         <a :href="trial_lesson.meeting_link"   class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.meeting_link" >Launch meeting</a>
                         <button class="btn btn-sm btn-secondary m-1"  v-if=" trial_lesson.meeting_link" @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lesson </button>
                     </div>                   
@@ -234,10 +234,7 @@ export default {
             form_data.append('covered_duration', '0');
             form_data.append('remaining_duration', '0');
             form_data.append('status', 'ongoing');
-            form_data.append('tutor_timezone', trial_lesson.timezone);
-            
-            console.log(...form_data);
-           
+            form_data.append('tutor_timezone', trial_lesson.timezone);            
             
         axios.post('/api/lessons/create', form_data)
         .then(response => {
@@ -305,16 +302,16 @@ export default {
         });
     },
     updateMeetingLink(lesson_id, link){
-            let form_data = new FormData();
-            form_data.append('meeting_link', link);
-            axios.post('/api/update-lesson-link/' + lesson_id , form_data )
-            .then(response => {
-               console.log(response);
-            })
-            .catch(error=>{
-                console.log(error);
-            });
-        },
+        let form_data = new FormData();
+        form_data.append('meeting_link', link);
+        axios.post('/api/update-lesson-link/' + lesson_id , form_data )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error=>{
+            console.log(error);
+        });
+    },
     async refreshZoomAuthToken() { // refreshcurrent user's zoom auth token
         this.errors.token_expired = "Refreshing zoom... Please try again!"
         axios.get('/api/zoom/user-auth-token/refresh')

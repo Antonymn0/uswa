@@ -26,7 +26,10 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "country-region-data": "^2.1.0",
         "moment": "^2.29.1",
+        "moment-timezone": "^0.5.34",
+        "vue-countries-cities": "^1.0.0",
         "vue-country-flag-next": "^2.3.2",
         "vue-loader": "^17.0.0",
         "vue-router": "^4.0.12",

@@ -87,7 +87,7 @@ export default {
         },
         level:{
             get() { return this.$store.state.signupProcess_education.education.level; },
-            set(value) { this.$store.commit('set_level', value); }
+            set(value) { this.$store.commit('set_education_level', value); }
         },
         type:{
             get() { return this.$store.state.signupProcess_education.education.type; },

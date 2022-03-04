@@ -38,6 +38,7 @@
 
 <script>
 import axios from 'axios';
+import {mapGetters,  mapActions } from "vuex";
 
 export default {
 data(){
@@ -66,7 +67,9 @@ methods:{
             this.$store.commit('setUser', response.data.user);
             axios.defaults.headers.common['Authorization'] = response.data.token;
             this.spinner=false;
-            this.$router.push({name: 'student-dashboard'});
+           if(this.getUser.role == 'student') this.$router.push({name: 'student-dashboard'});
+           if(this.getUser.role == 'tutor') this.$router.push({name: 'tutor-dashboard'});
+           if(this.getUser.role == 'admin') this.$router.push({name: 'all-users'});
         })
         .catch(error=>{
           this.spinner=false;
@@ -86,7 +89,9 @@ methods:{
     }
 
 },
-
+  computed:{
+    ...mapGetters(['isLogedIn', 'getUser']),    
+  },
 
 }
 </script>

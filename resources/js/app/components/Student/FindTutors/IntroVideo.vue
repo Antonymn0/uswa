@@ -7,25 +7,27 @@
                 <h4 class="modal-title fw-bold">{{this.tutor.first_name}} {{this.tutor.last_name}}</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body ">
-              <h6>Video</h6>
-              <div class="row">
-                  <div class="col-md-6 ">
-                    <video width="320" height="240"  preload="true" controls class="">
-                        <source src="/videos/video.mp4" type="video/mp4">
-                        <source src="movie.ogg" type="video/ogg">
-                        Your browser does not support the video tag.
-                    </video>
-                  </div>
-                  <div class="col-md-6 border-start p-2"> 
-                      <p>
-                          <span>About {{tutor.first_name}}:</span> <br>
-                          <span>{{tutor.description}}</span>
-                      </p>
-                      <div class="py-2">
+            <div class="modal-body ">              
+                <div class="row">                     
+                    <div class="col-md-6 ">
+                        <h6>Introduction Video</h6>
+                        <p class="mb-0 rounded" style="overflow:hidden" v-if="this.tutor.introduction_video">                        
+                            <iframe width="400" height="300"  :src="this.tutor.introduction_video" class="shadow bg-dark rounded" >  </iframe>                    
+                        </p>
+                        <p class="mb-0 rouded" style="overflow:hidden" v-if="this.tutor.introduction_video_url"> 
+                            <iframe  width="400" height="300"  :src="this.tutor.introduction_video_url" class="shadow bg-dark rouded"  v-if="this.tutor.introduction_video_url">  </iframe>                        
+                        </p>
+                        <p v-if="!this.tutor.introduction_video && !this.tutor.introduction_video_url" class="text-muted small  py-5 mt-5">This tutor has not uploded an introduction video yet</p>
+                    </div>
+                    <div class="col-md-6 border-start px-3"> 
+                        <p >
+                            <span class="m-0 p-0">About {{tutor.first_name}}:</span> <br>
+                            <span class="m-0 p-0">{{tutor.description}}</span>
+                        </p>
+                        <div class="py-2">
                           <h5>Availability</h5>
                          <p v-if="tutor.tutor_schedule">
-                             <table class="table table-striped">
+                             <table class="table table-striped table-sm">
                                 <thead class="text-muted">
                                      <th >Day</th>
                                      <th>From</th>
@@ -34,85 +36,85 @@
                                 <tbody class="">
                                     <tr class="" v-if="tutor.tutor_schedule.monday == '1'">
                                         <td>Monday</td>
-                                        <td>{{tutor.tutor_schedule.monday_from}}</td>
-                                        <td>{{tutor.tutor_schedule.monday_to}}</td>
+                                        <td>{{convertTimeToLocal(tutor.tutor_schedule.monday_from)}}</td>
+                                        <td>{{convertTimeToLocal(tutor.tutor_schedule.monday_to)}}</td>
                                     </tr>
                                     <tr v-else>
                                         <td>Monday</td>
-                                        <td> Not available</td>
+                                        <td colspan="2" class="text-muted small"> Not available</td>
                                     </tr>
 
                                     <tr class="" v-if="tutor.tutor_schedule.tuesday == '1'">
                                         <td>Tuesday</td>
-                                        <td>{{tutor.tutor_schedule.tuesday_from}}</td>
-                                        <td>{{tutor.tutor_schedule.tuesday_to}}</td>
+                                        <td>{{convertTimeToLocal(tutor.tutor_schedule.tuesday_from)}}</td>
+                                        <td>{{convertTimeToLocal(tutor.tutor_schedule.tuesday_to)}}</td>
                                     </tr>
                                     <tr v-else>
                                         <td>Tuesday</td>
-                                        <td> Not available</td>
+                                        <td colspan="2" class="text-muted small"> Not available</td>
                                     </tr>
 
                                     <tr class="" v-if="tutor.tutor_schedule.wednesday == '1'">
                                         <td>Wednesday</td>
-                                        <td>{{tutor.tutor_schedule.wednesday_from}}</td>
-                                        <td>{{tutor.tutor_schedule.wednesday_to}}</td>
+                                        <td>{{convertTimeToLocal(tutor.tutor_schedule.wednesday_from)}}</td>
+                                        <td>{{convertTimeToLocal(tutor.tutor_schedule.wednesday_to)}}</td>
                                     </tr>
                                     <tr v-else>
                                         <td>Wednesday</td>
-                                        <td> Not available</td>
+                                        <td colspan="2" class="text-muted small"> Not available</td>
                                     </tr>
 
                                     <tr class="" v-if="tutor.tutor_schedule.thursday == '1'">
                                         <td>Thursday</td>
-                                        <td>{{tutor.tutor_schedule.thursday_from}}</td>
-                                        <td>{{tutor.tutor_schedule.thursday_to}}</td>
+                                        <td>{{convertTimeToLocal(tutor.tutor_schedule.thursday_from)}}</td>
+                                        <td>{{convertTimeToLocal(tutor.tutor_schedule.thursday_to)}}</td>
                                     </tr>
                                     <tr v-else>
                                         <td>Thursday</td>
-                                        <td> Not available</td>
+                                        <td colspan="2" class="text-muted small"> Not available</td>
                                     </tr>
 
                                     <tr class="" v-if="tutor.tutor_schedule.friday == '1'">
                                         <td>Friday</td>
-                                    <td>{{tutor.tutor_schedule.friday_from}}</td>
-                                        <td>{{tutor.tutor_schedule.friday_to}}</td>
+                                        <td>{{convertTimeToLocal(tutor.tutor_schedule.friday_from)}}</td>
+                                        <td>{{convertTimeToLocal(tutor.tutor_schedule.friday_to)}}</td>
                                     </tr>
                                     <tr v-else>
                                         <td>Friday</td>
-                                        <td> Not available</td>
+                                        <td colspan="2" class="text-muted small"> Not available</td>
+                                       
                                     </tr>
                                     
                                     <tr class="" v-if="tutor.tutor_schedule.saturday == '1'">
                                          <td>Saturday</td>
-                                         <td>{{tutor.tutor_schedule.saturday_from}}</td>
-                                         <td>{{tutor.tutor_schedule.saturday_to}}</td>
+                                         <td>{{convertTimeToLocal(tutor.tutor_schedule.saturday_from)}}</td>
+                                         <td>{{convertTimeToLocal(tutor.tutor_schedule.saturday_to)}}</td>
                                     </tr>
                                     <tr v-else>
                                         <td>Saturday</td>
-                                        <td> Not available</td>
+                                        <td colspan="2" class="text-muted small"> Not available</td>
                                     </tr>
 
                                     <tr class="" v-if="tutor.tutor_schedule.sunday == '1'">
                                          <td>Sunday</td>
-                                         <td>{{tutor.tutor_schedule.sunday_from}}</td>
-                                         <td>{{tutor.tutor_schedule.sunday_to}}</td>
+                                         <td>{{convertTimeToLocal(tutor.tutor_schedule.sunday_from)}}</td>
+                                         <td>{{convertTimeToLocal(tutor.tutor_schedule.sunday_to)}}</td>
                                     </tr>
                                     <tr v-else>
                                         <td>Sunday</td>
-                                        <td> Not available</td>
+                                        <td colspan="2" class="text-muted small"> Not available</td>
                                     </tr>
+                                 
                                  </tbody>
-                             </table>
-                             <span class="small text-muted text-center mx-auto">Tip: Time shown in 24hr format</span>
+                             </table>                             
                          </p>
                          <p v-else>
-                             <small class="text-center text-muted py-4">This tutor has not set his schedule yet</small>
+                             <small class="text-center  text-muted py-4">This tutor has not set his schedule yet</small>
                          </p>
                       </div>
                   </div>
               </div>
               
-               
               <div class="p-1 text-left">
                 <button class="btn btn-success m-1"  data-bs-toggle="modal" data-bs-target="#staticBackdropMessage">Message</button> 
                 <button class="btn btn-primary m-1"  data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial lesson</button> 
@@ -126,6 +128,7 @@
 </template>
 
 <script>
+import moment from "moment";
 
 export default {
     props:['tutor'],
@@ -135,38 +138,14 @@ export default {
         }
     },
     methods:{
-        playPauseVideo() {
-            let videos = document.querySelectorAll("video");
-            videos.forEach((video) => {
-                // We can only control playback without insteraction if video is mute
-                video.muted = false;
-                // Play is a promise so we need to check we have it
-                let playPromise = video.play();
-                if (playPromise !== undefined) {
-                    playPromise.then((_) => {
-                        let observer = new IntersectionObserver(
-                            (entries) => {
-                                entries.forEach((entry) => {
-                                    if (
-                                        entry.intersectionRatio !== 1 &&
-                                        !video.paused
-                                    ) {
-                                        video.pause();
-                                    } else if (video.paused) {
-                                        video.play();
-                                    }
-                                });
-                            },
-                            { threshold: 0.2 }
-                        );
-                        observer.observe(video);
-                    });
-                }
-            });
+        convertTimeToLocal(time){
+            // convert date from utc to local time 
+          if(time)  return moment.utc(time,'HH:mm').local().format("hh:mm a"); 
+          else return "Invalid time";
         }
     },
     mounted(){
-       this.playPauseVideo()
+
     }
 
 }

@@ -88,7 +88,7 @@ export default {
         },
         subject:{
             get() { return this.$store.state.signupProcess_certification.certification.subject; },
-            set(value) { this.$store.commit('set_subject', value); }
+            set(value) { this.$store.commit('set_subject_cert', value); }
         },
         certificate:{
             get() { return this.$store.state.signupProcess_certification.certification.certificate; },
@@ -100,7 +100,7 @@ export default {
         },
         description:{
             get() { return this.$store.state.signupProcess_certification.certification.description; },
-            set(value) { this.$store.commit('set_description', value); }
+            set(value) { this.$store.commit('set_description_certification', value); }
         },
         study_from:{
             get() { return this.$store.state.signupProcess_certification.certification.study_from; },

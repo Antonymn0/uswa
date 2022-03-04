@@ -24,7 +24,7 @@ export const signupProcess_education = {
         set_institution(state, payload) {
             state.education.institution = payload;
         },
-        set_level(state, payload) {
+        set_education_level(state, payload) {
             state.education.level = payload;
         },
         set_type(state, payload) {

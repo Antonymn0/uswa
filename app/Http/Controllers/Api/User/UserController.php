@@ -87,14 +87,37 @@ class UserController extends Controller
     public function update(UpdateUser $request, User $user)
     {
         $data = $request->validated(); 
-        // if($request->hasFile('image')){  
-        //    $path = $request->file('image')->store('images', 's3'); // send image to AWS S3         
-        //    \Storage::disk('s3')->setVisibility($path, 'public'); // set file visibility to public
-        //    $path = \Storage::disk('s3')->url($path);  // create file path
-        // $data['image'] = $path;
-        // }  
-        // $user->update($data);
-         (new TutorScheduleController)->store($request, $user->id);
+        //upload image
+        if($request->hasFile('image')){  
+           $path = $request->file('image')->store('images', 's3');          
+           \Storage::disk('s3')->setVisibility($path, 'public'); 
+           $path = \Storage::disk('s3')->url($path);  
+        $data['image'] = $path;
+        }  
+        // upload video 
+        if($request->hasFile('introduction_video')){  
+           $path = $request->file('introduction_video')->store('videos', 's3');          
+           \Storage::disk('s3')->setVisibility($path, 'public'); 
+           $path = \Storage::disk('s3')->url($path);  
+        $data['introduction_video'] = $path;
+        }  
+        // higher education certificate upload 
+        if($request->hasFile('higher_education_certificate_upload')){  
+           $path = $request->file('higher_education_certificate_upload')->store('images', 's3');          
+           \Storage::disk('s3')->setVisibility($path, 'public'); 
+           $path = \Storage::disk('s3')->url($path);  
+        $data['higher_education_certificate_upload'] = $path;
+        }  
+        // teaching certificate upload 
+        if($request->hasFile('teaching_certificate_upload')){  
+           $path = $request->file('teaching_certificate_upload')->store('images', 's3');          
+           \Storage::disk('s3')->setVisibility($path, 'public'); 
+           $path = \Storage::disk('s3')->url($path);  
+        $data['teaching_certificate_upload'] = $path;
+        }  
+
+        $user->update($data);
+        if(isset($request->monday) || isset($request->wednesday) || isset($request->friday)) (new TutorScheduleController)->store($request, $user->id); //save user schedule
 
         event(new UserUpdated($user));
         return response()->json([
@@ -164,6 +187,18 @@ class UserController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'User parmanently deleted!',
+            'data' => $user
+        ], 200);
+    }
+
+    /**
+     * Search user by email
+     */
+    public function searchUserByEmail($email){
+        $user = User::where('email', $email)->first();
+        return response()->json([
+            'success' => true,
+            'message' => 'Search user by email results!',
             'data' => $user
         ], 200);
     }

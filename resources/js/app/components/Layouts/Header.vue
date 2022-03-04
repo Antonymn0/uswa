@@ -1,21 +1,23 @@
 <template>
+<!-- ------------------ User dashboard--------------------------  -->
+<div> 
 <div> 
 <VerifyEmail />
-
 <TutorSignupProcessNotification />
-
 </div>
 <div class="border-bottom"> 
   <div class="parent-header d-flex justify-content-between align-items-center  border-bottom px-3">
     <div class="d-flex justify-content-start align-items-center">
       <div class="d-flex py-4 "> 
-        <span> <router-link :to="{name: 'home'}"><img src="http://127.0.0.1:8000/images/logo.svg" alt="uswa-logo" style="width:150px; ">  </router-link>  </span>  
+        <span v-if="getUser.role == 'admin'"> <router-link :to="{name: 'all-users'}"><img src="http://127.0.0.1:8000/images/logo.svg" alt="uswa-logo" style="width:150px; ">  </router-link>  </span>  
+        <span v-else> <router-link :to="{name: 'home'}"><img src="http://127.0.0.1:8000/images/logo.svg" alt="uswa-logo" style="width:150px; ">  </router-link>  </span>  
       </div>
-      <div class="pl-3 desktop " >
-         <ul class="list-unstyled d-flex  ">
+      <div class="pl-3 desktop " v-if="getUser.role !== 'admin' " >
+         <ul class="list-unstyled d-flex" >
          <router-link :to="{name: 'find-tutor'}" class="px-3" v-if="getUser.role !== 'tutor' ">Find a tutor</router-link>          
          <router-link :to="{name: 'register-tutor'}" class="px-3"  v-if="getUser.role !== 'tutor' && getUser.role !== 'student' ">Become a tutor</router-link>          
           <router-link :to="{name: 'home'}" class="px-1" >Home</router-link>
+          <router-link :to="{name: 'admin-dashboard'}" class="px-1" >Admin</router-link> 
         </ul>
       </div>  
       
@@ -30,21 +32,15 @@
         </a> 
         </span>
     </div>
+
     <!-- -------------------------- -->
-    <div class="d-flex align-items-center"> 
-       <div v-if=" isLogedIn">
-        <span class="desktop">Balance: 0hrs &nbsp; </span>
-        <span><button class="btn btn-secondary">Buy hours</button> &nbsp;</span>
-        <span class="mobile">Bal: 0hrs  </span>
-      </div>
-        <div class="px-2 desktop" v-if=" isLogedIn">
+    <div class="d-flex align-items-center">        
+        <div class="px-2 desktop" v-if=" isLogedIn && this.getUser.role !== 'admin'">
           <router-link :to="{name: 'student-dashboard'}" v-if="getUser.role == 'student'">Dashboard</router-link> &nbsp;
           <router-link :to="{name: 'tutor-dashboard'}" v-if="getUser.role == 'tutor'">Dashboard</router-link>
         </div>
-        <div class="p-4 border-right desktop">
-        en | USD
-        </div>
-        <div class="d-flex" v-if="isLogedIn">
+      
+        <div class="d-flex" v-if="isLogedIn && this.getUser.role !== 'admin' ">
           <span class="" v-if="getUser.role == 'student' "> <StudentMessages /></span>
           <span class="" v-if="getUser.role == 'tutor' "> <TutorMessages /></span>
           <span class=""> <Notifications /></span>
@@ -55,12 +51,15 @@
 
             <div class="dropdown mx-2">   
               <a v-if=" isLogedIn" class="d-flex align-items-center " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              {{getUser.first_name}} &nbsp;  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.5rem"></i>
+
+              {{getUser.first_name}} &nbsp; 
+               <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.5rem" v-if="! getUser.image"></i>
+               <img v-else :src="getUser.image" alt="profile picture" style="width:40px; height:40px; border-radius:50%">
               </a>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">  
-                  <li  v-if=" isLogedIn">
-                    <a href="#" class="dropdown-item">
-                      <router-link :to="{name: 'student-dashboard'}" v-if="getUser.role == 'student'">Dasboard</router-link> &nbsp;
+                  <li  v-if=" isLogedIn && getUser.role !== 'admin'">
+                    <a href="#" class="dropdown-item" >
+                      <router-link :to="{name: 'student-dashboard'}" v-if="getUser.role == 'student'">Dasboard</router-link> 
                       <router-link :to="{name: 'tutor-dashboard'}" v-if="getUser.role == 'tutor'">Dashboard</router-link>
                     </a> 
                   </li>
@@ -72,21 +71,15 @@
         <MobileNav /> 
         </div>
   </div>
- <!-- --------------------------------------------------- -->
-    <!-- <span class=" py-2 mobile  badge-success  text-default fw-bold">    
-      <router-link :to="{name: 'find-tutor'}" class="px-3"  v-if="getUser.role !== 'tutor'">Find a tutor</router-link>          
-      <router-link :to="{name: 'register-tutor'}" class="px-3" v-if="getUser.role !== 'tutor'">Become a tutor</router-link>   
-    </span>   -->
   </div>
-
- 
+  </div>
 
     <router-view></router-view>
 
   <div class="clearfix"></div>
+
   <div class="w-100  ">
-      <Profile />
-      
+      <Profile />     
 
      <Footer /> 
   </div>
@@ -105,6 +98,9 @@ import TutorMessages from "../Chats/TutorMessages.vue";
 import Notifications from "../UserNotifications/Notifications.vue";
 import VerifyEmail from "../Notifications/EmailUnverified.vue";
 import TutorSignupProcessNotification from "../Notifications/TutorSignupProcessNotification.vue";
+
+import AdminDashboard from "../Admin/Dashboard.vue";
+
 export default {
   components:{
     MobileNav,
@@ -115,7 +111,8 @@ export default {
     TutorMessages,
     Notifications,
     VerifyEmail,
-    TutorSignupProcessNotification
+    TutorSignupProcessNotification,
+    AdminDashboard,
   },
   data(){
     return{

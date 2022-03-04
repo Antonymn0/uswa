@@ -19,7 +19,7 @@ const routes = [
     },
 
     // ======================================================================================================================
-    
+
     // STUDENT ROUTES
     {
         name: "find-tutor",
@@ -35,11 +35,13 @@ const routes = [
     {
         name: "student-trial-lesson",
         path: "/student/trial-lesson",
-        component: require("../components/Student/Lessons/StudentTrialLessonClass.vue").default,
+        component:
+            require("../components/Student/Lessons/StudentTrialLessonClass.vue")
+                .default,
     },
 
     // ==================================================================================================================
-    
+
     //TUTOR ROUTES
     {
         name: "tutor-dashboard",
@@ -68,6 +70,35 @@ const routes = [
     },
 
     // ========================================================================================
+
+    // ADMIN ROUTES
+    {
+        name: "admin-dashboard",
+        path: "/admin/dashboard",
+        component:
+            require("../components/Admin/Dashboard.vue").default,
+    },
+    {
+        name: "all-users",
+        path: "/admin/dashboard/users",
+        component:
+            require("../components/Admin/Users/AllUsers.vue").default,
+    },
+    {
+        name: "all-lessons",
+        path: "/admin/dashboard/lessons",
+        component:
+            require("../components/Admin/Lessons.vue").default,
+    },
+    {
+        name: "tutor-review",
+        path: "/admin/tutor/review",
+        component:
+            require("../components/Admin/Tutor/TutorReview.vue").default,
+    },
+
+
+    // ------------------------------------------------------------------
 
     //fallback route
     {

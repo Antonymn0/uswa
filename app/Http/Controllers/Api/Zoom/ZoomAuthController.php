@@ -47,6 +47,7 @@ class ZoomAuthController extends Controller
 
         // save token to database
         $zoom_oauth = ZoomOauth::where('user_id', $request->state)->first(); // state = local user_id
+        $zoom_oauth = ZoomOauth::where('user_id', $request->state)->first(); // state = local user_id
         if(! empty($zoom_oauth)) $zoom_oauth->update($data);
         else  ZoomOauth::create($data); 
 

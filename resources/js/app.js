@@ -1,6 +1,7 @@
 require("./bootstrap");
-import { createApp, h } from "vue";
-
+import { createApp, h } from "vue"
+    ;
+import moment from "moment";
 window.axios = require("axios");
 
 import router from "./app/Router/index.js";
@@ -19,5 +20,6 @@ axios.interceptors.request.use(
         );
 
 const app = createApp({});
+
 app.component("App", App).use(router).use(store).mount("#app");
 
