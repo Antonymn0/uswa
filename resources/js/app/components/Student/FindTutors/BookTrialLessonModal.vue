@@ -59,9 +59,10 @@
                       </ul>
                     </span> 
                    
-                    </div>        
+                    </div>   
+                    <span class="text-success small p-2 m-2" v-if="this.success.book_trial">{{this.success.book_trial}}</span>
                    <span class="small text-danger text-center">{{this.errors.error}}</span> <br>
-              <button class="btn btn-danger mb-2" @click.prevent="bookTrialLesson()">Book lesson</button>
+              <button class="btn btn-danger mb-2" @click.prevent="bookTrialLesson()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.book_lesson"></span> Book lesson</button>
             </div>            
             </div>
         </div>
@@ -134,6 +135,7 @@ export default {
             },
             errors:{},
             success:{},
+            spinner:{}
         }
     },
     methods:{
@@ -148,7 +150,6 @@ export default {
         },
         bookTrialLesson(){
             this.errors = {};
-
             this.testTimeLimit() ;
             this.validateDate();
 
@@ -168,9 +169,11 @@ export default {
                 form_data.append('tutor_id', this.tutor.id);
                 form_data.append('tutor_confirm', 'pending');
                 form_data.append('tutor_timezone', this.tutor.timezone);           
-            
+            if(!confirm('Book a trial lesson with this tutor?')) return;
+            this.spinner.book_lesson = true;
             axios.post('/api/student/trial-lesson', form_data)
             .then(response => {
+                this.spinner= {}
                 this.success.book_trial = "Success, Your trial lesson has been booked successfully!";
                 setTimeout(() => {
                     document.getElementById('closetrial').click();
@@ -182,6 +185,7 @@ export default {
                 }, 2500);
             })
             .catch(error => {
+              this.spinner= {}
               console.log(error.response);
               this.errors.error = "Error: Something went wrong. Please try again later."
             });

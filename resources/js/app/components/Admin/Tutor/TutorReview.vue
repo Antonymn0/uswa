@@ -42,7 +42,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="reviewmodalLabel">Tutor review</h5>
+            <h5 class="modal-title" id="reviewmodalLabel">Tutor account review</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -79,13 +79,17 @@
                     <p> <span>Higher education certificate: </span> <span> <a :href="current_user.higher_education_certificate_upload" target="blank"> <img :src="current_user.teaching_certificate_upload" alt="teaching-cert" style="width:40px; height:40px"> </a> </span></p>
                     
                     <p> <span>Has introduction video: </span>  <span v-if="current_user.introduction_video" class="text-pimary">Yes </span> <span class="text-danger" v-else> No </span> </p>
-                    <p> <span>Introduction video: </span> <span> <a :href="current_user.introduction_video" target="blank">Link</a> </span> </p>
+                    <p> <span>Introduction video: </span>
+                        <span v-if="current_user.introduction_video"> <a :href="current_user.introduction_video" class="underline" target="blank">Uploaded </a> </span> 
+                        <span v-if="current_user.introduction_video_url"> <a :href="current_user.introduction_video_url" class="underline" target="blank">Linked </a> </span> 
+                     </p>
                 </div>
                 </div>                        
                 <p>
                     <label for="remarks"></label>
                     <textarea name="" id="remarks" cols="10" rows="5" placeholder="Remarks" class="border p-2 rounded w-100" v-model="decline_reason"></textarea>
                     <small class="small text-muted">Type any remarks for the tutor incase of a revert.</small>
+                    <small class="small text-danger">{{this.errors.decline_reason}}</small>
                 </p>
                 </div>
                 <div class="text-center py-2">
@@ -141,12 +145,14 @@ export default {
             this.current_user = user;
         },
         approveTutor(id){
+            this.errors ={}
+            this.success ='';
             if(! confirm("Are you sure you want to approve this tutor account?")) return;
             this.spinner.approve=true;
             axios.get('/api/admin/approve-tutor/' + id + '/' + 'complete')
             .then(response=>{
                 this.spinner.approve=false;
-                this.success = "Success, Account approved!"
+                this.success = "Success, Account approved!"                
                 console.log(response);
             })
             .catch(error=>{
@@ -156,13 +162,16 @@ export default {
             })
         },
         revertToTutor(id){
+            this.errors ={}
+            this.success ='';
+            if(! this.decline_reason) {this.errors.decline_reason = 'Please provide a decline reason'; return;}
             if(! confirm("Are you sure you want to revert this tutor account?")) return;
             this.spinner.revert=true;
             axios.get('/api/admin/revert/tutor/' + id + '/' + this.decline_reason)
             .then(response=>{
                 this.spinner.revert=false;
-                this.success = "Success,  Account reverted!"
-                console.log(response);
+                this.success = "Success,  Account reverted!";
+                this.decline_reason = '';
             })
             .catch(error=>{
                 this.spinner.approve=false;

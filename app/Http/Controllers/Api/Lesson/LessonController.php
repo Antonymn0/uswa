@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Lesson;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Lesson;
+use App\Models\Notification;
 use App\Events\Lesson\lessonCreated;
 use App\Events\Lesson\lessonUpdated;
 use App\Events\Lesson\lessonDestroyed;
@@ -36,9 +37,17 @@ class LessonController extends Controller
      */
     public function store(ValidateLessonRequest $request)
     {
-        $data = $request->validated();     
-
+        $data = $request->validated(); 
         $lesson= Lesson::create($data);
+
+        $Notification = Notification::create([
+            'sender' => $request->student_id,
+            'recipient' => $request->tutor_id,
+            'title' => 'New  lesson created' ,
+            'body' => 'A new lesson has been created  for you. Please check you dashboard for more.',
+            'status' => 'sent'
+        ]);
+
         return response()->json([
             'success'=> true,
             'message'=> 'Lesson created successfuly',

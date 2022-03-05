@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TrialLesson;
 use App\Models\User;
+use App\Models\Notification;
+use App\Events\TrialLesson\trialLessonAccepted;
+use App\Events\TrialLesson\trialLessonDeclined;
 
 class TutorTrialLessonController extends Controller
 {
@@ -30,6 +33,18 @@ class TutorTrialLessonController extends Controller
         $trail_lesson -> update([
             'tutor_confirm' => 'accepted'
         ]);
+
+        $student = User::findOrfail($trail_lesson->student_id);
+        event(new trialLessonAccepted($trail_lesson, $student));
+
+        $Notification = Notification::create([
+            'sender' => $trail_lesson->tutor_id,
+            'recipient' => $trail_lesson->student_id,
+            'title' => 'Trial lesson request accepted' ,
+            'body' => 'Your trial lesson request has been accepted. Please check your dashboard for more.',
+            'status' => 'sent'
+        ]); 
+
         return response()->json([
             'success' => true,
             'message' => 'Success, trial lesson confirmed',
@@ -44,6 +59,18 @@ class TutorTrialLessonController extends Controller
             'tutor_confirm' => 'declined',
             'decline_reason' => $request->decline_reason,
         ]);
+
+        $student = User::findOrfail($trail_lesson->student_id);
+        event(new trialLessonDeclined($trail_lesson, $student));
+
+        $Notification = Notification::create([
+            'sender' => $trail_lesson->tutor_id,
+            'recipient' => $trail_lesson->student_id,
+            'title' => 'Trial lesson request declined' ,
+            'body' => 'Your trial lesson request has been declined. Reason: ' . $request->decline_reason,
+            'status' => 'sent'
+        ]);
+
         return response()->json([
             'success' => true,
             'message' => 'Success,  lesson declined',

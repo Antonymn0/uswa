@@ -11,7 +11,7 @@ Route::group(['middleware'=>['auth:api']],function(){
      
     Route::get('/admin/get-tutors','Api\Admin\TutorController@getReviewTutors');    
     Route::get('/admin/approve-tutor/{user_id}/{key_word}','Api\Admin\TutorController@approveTutor');    
-    Route::get('/admin/revert/tutor/{user_id}/{key_word}','Api\Admin\TutorController@revertTutor');    
+    Route::get('/admin/revert/tutor/{user_id}/{message}','Api\Admin\TutorController@revertTutor');    
     
 });
 

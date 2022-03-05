@@ -45,6 +45,24 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\Lesson\lessonDestroyedListener',
         ],
         
+        // TrialLesson events
+        'App\Events\TrialLesson\trialLessonCreated' => [
+            'App\Listeners\TrialLesson\trialLessonCreatedListener',
+        ],
+        'App\Events\TrialLesson\trialLessonUpdated' => [
+            'App\Listeners\TrialLesson\trialLessonUpdatedListener',
+        ],
+        'App\Events\TrialLesson\trialLessonDestroyed' => [
+            'App\Listeners\TrialLesson\trialLessonDestroyedListener',
+        ],
+        'App\Events\TrialLesson\trialLessonAccepted' => [
+            'App\Listeners\TrialLesson\trialLessonAcceptedListener',
+        ],
+        'App\Events\TrialLesson\trialLessonDeclined' => [
+            'App\Listeners\TrialLesson\trialLessonDeclinedListener',
+        ],
+        
+        
         
 
     ];

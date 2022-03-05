@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Api\TrialLesson;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TrialLesson;
+use App\Models\Notification;
+use App\Models\User;
 use App\Http\Requests\TrialLesson\ValidateTrialLesson;
+use App\Events\TrialLesson\trialLessonCreated;
 
 class TrialLessonContoller extends Controller
 {
@@ -28,8 +31,25 @@ class TrialLessonContoller extends Controller
     public function store(ValidateTrialLesson $request)
     {
         $data = $request->validated();
-        $trialLesson = TrialLesson::create($data);
-        return $trialLesson;
+
+        $trial_lesson = TrialLesson::create($data);
+
+        $tutor = User::findOrfail($request->tutor_id);
+        event(new trialLessonCreated($trial_lesson, $tutor));
+
+        $Notification = Notification::create([
+            'sender' => $request->student_id,
+            'recipient' => $request->tutor_id,
+            'title' => 'New Trial lesson request' ,
+            'body' => 'You have recieved a new student request. Please check you dashboard for more.',
+            'status' => 'sent'
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Trial lesson created',
+            'data' =>true
+        ],201);
     }
 
     /**

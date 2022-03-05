@@ -48,11 +48,11 @@
                             <div class="modal-header">
                                 
                                 <h5 class="modal-title" id="exampleModalLabel">Decline lesson</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" id="close-decline" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">                                
-                                <label for="reason">Reason </label>
-                                <small class="alert-success p-2 rounded my-1" v-if="this.success.success">{{this.success.success}}</small> 
+                                <label for="reason">Reason &nbsp; &nbsp;</label>
+                                <small class="text-success p-3 rounded my-1" v-if="this.success.success">{{this.success.success}}</small> 
                                 <textarea  id="reason" cols="10" class="form-control" placeholder='Decline reason' rows="5" v-model="this.decline_reason"></textarea>
                                 <small class="text-danger">{{this.errors.decline_reason}}</small>
                             </div>
@@ -196,12 +196,12 @@ export default {
             });
         },
         acceptTrialLesson(trial_lesson){
-            // if(trial_lesson.tutor_decline !== null) {alert('Lesson already declined!'); return;}
-            if(trial_lesson.status == 'accepted') {alert('Lesson already accepted and scheduled!'); return;}
+            if(trial_lesson.decline_reason !== null) {alert('Lesson already declined!'); return;}
+            if(trial_lesson.tutor_confirm == 'accepted') {alert('Request already accepted and scheduled!'); return;}
             if(! confirm('Accept to meet with  ' + this.capitalize(trial_lesson.get_student.first_name) + ' on the specified date and time?')) return;
             axios.get('/api/tutor/confirm-trial-lesson/' + trial_lesson.id)
             .then(response =>{
-                this.scheduleZoomMeeting(trial_lesson);
+                // this.scheduleZoomMeeting(trial_lesson);
                 this.fetchTrialLessons();
                 setTimeout(() => {
                     this.errors ={};
@@ -227,8 +227,7 @@ export default {
                 this.success.shedule_meeting = 'Success, meeting scheduled!'               
                 
             })
-            .catch(error=>{
-                
+            .catch(error=>{                
                 if(error.response.status == 500) this.refreshZoomAuthToken();            
                 delete this.spinner.schedule_meeting;
                 this.errors.shedule_meeting = 'Failed to schedule meeting!';
@@ -273,7 +272,8 @@ export default {
         declineTrialLesson(trial_lesson){
             this.errors={};
             this.success={};
-            if(trial_lesson.tutor_decline !== null) {alert('Lesson already declined!'); return;}
+            if(!this.decline_reason) return;
+            if(trial_lesson.decline_reason ) {alert('Lesson already declined!'); return;}
             if(! this.decline_reason) this.errors.decline_reason ="Please provide a reason";
             if( Object.keys(this.errors).length) return;
             if(! confirm('Decline  this trial lesson?')) return;

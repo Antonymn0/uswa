@@ -17,7 +17,7 @@
          <router-link :to="{name: 'find-tutor'}" class="px-3" v-if="getUser.role !== 'tutor' ">Find a tutor</router-link>          
          <router-link :to="{name: 'register-tutor'}" class="px-3"  v-if="getUser.role !== 'tutor' && getUser.role !== 'student' ">Become a tutor</router-link>          
           <router-link :to="{name: 'home'}" class="px-1" >Home</router-link>
-          <router-link :to="{name: 'admin-dashboard'}" class="px-1" >Admin</router-link> 
+
         </ul>
       </div>  
       
@@ -43,7 +43,9 @@
         <div class="d-flex" v-if="isLogedIn && this.getUser.role !== 'admin' ">
           <span class="" v-if="getUser.role == 'student' "> <StudentMessages /></span>
           <span class="" v-if="getUser.role == 'tutor' "> <TutorMessages /></span>
-          <span class=""> <Notifications /></span>
+          <span class="" v-if="getUser.role == 'admin' "> <AdminNotifications /></span>
+          <span class="" v-if="getUser.role == 'student' "> <StudentNotifications /></span>
+          <span class="" v-if="getUser.role == 'tutor' "> <TutorNotifications /></span>
         </div>
         <div class="px-3 desktop">
             <router-link :to="{name: 'login'}" class="px-1" v-if="! isLogedIn">Login</router-link>
@@ -95,7 +97,9 @@ import Footer from "./Footer.vue";
 import Profile from "../Profile/Profile.vue";
 import StudentMessages from "../Chats/StudentMessages.vue";
 import TutorMessages from "../Chats/TutorMessages.vue";
-import Notifications from "../UserNotifications/Notifications.vue";
+import AdminNotifications from "../UserNotifications/AdminNotifications.vue";
+import TutorNotifications from "../UserNotifications/TutorNotifications.vue";
+import StudentNotifications from "../UserNotifications/StudentNotifications.vue";
 import VerifyEmail from "../Notifications/EmailUnverified.vue";
 import TutorSignupProcessNotification from "../Notifications/TutorSignupProcessNotification.vue";
 
@@ -109,7 +113,9 @@ export default {
     Profile,
     StudentMessages,
     TutorMessages,
-    Notifications,
+    AdminNotifications,
+    StudentNotifications,
+    TutorNotifications,
     VerifyEmail,
     TutorSignupProcessNotification,
     AdminDashboard,

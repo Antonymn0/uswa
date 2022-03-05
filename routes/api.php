@@ -41,6 +41,8 @@ Route::group(['middleware'=>['auth:api']],function(){
     Route::get('/user/parmanently-delete/{id}','Api\User\UserController@parmanentlyDelete');  
     Route::apiResource('/user','Api\User\UserController');
     Route::get('/user/search/{email}','Api\User\UserController@searchUserByEmail');
+
+    Route::apiResource('/notifications','Api\Notification\NotificationController');
 });
 
   // Import students routes file
@@ -60,9 +62,11 @@ Route::group(['middleware'=>['auth:api']],function(){
   // Import assignments routes file
   require __DIR__.'/admin/lessons.php';
 
-  // Import admin turor routes file
+  // Import admin tutor routes file
   require __DIR__.'/admin/tutors.php';
 
+  // Import notifications routes file
+  require __DIR__.'/notifications/notifications.php';
 
 // Fall back route
 Route::fallback(function() {
