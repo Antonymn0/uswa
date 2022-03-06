@@ -38,7 +38,6 @@ class ZoomAuthController extends Controller
             ]);        
         $token = json_decode($response->getBody()->getContents());
         $data = [
-            'user_id' => $request->state,
              'provider' => 'zoom', 
              'token_type' => $token->token_type, 
              'refresh_token' => $token->refresh_token,
@@ -46,8 +45,7 @@ class ZoomAuthController extends Controller
             ];
 
         // save token to database
-        $zoom_oauth = ZoomOauth::where('user_id', $request->state)->first(); // state = local user_id
-        $zoom_oauth = ZoomOauth::where('user_id', $request->state)->first(); // state = local user_id
+        $zoom_oauth = ZoomOauth::where('provider', 'zoom')->first(); // first record
         if(! empty($zoom_oauth)) $zoom_oauth->update($data);
         else  ZoomOauth::create($data); 
 

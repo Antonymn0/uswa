@@ -15,7 +15,6 @@ class CreateZoomOauthsTable extends Migration
     {
         Schema::create('zoom_oauths', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->required()->index(); // references users table
             $table->string('provider')->required();
             $table->text('token')->required();
             $table->text('refresh_token')->required();

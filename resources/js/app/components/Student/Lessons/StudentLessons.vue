@@ -170,8 +170,8 @@ export default {
             if(string) return string.charAt(0).toUpperCase() + string.slice(1);
         },
         cancelTrialLesson(trial_lesson){
-            if(trial_lesson.tutor_confirm !== null){alert('Cannot cancel this lesson'); return;}
-            if(! confirm('Do you want to cancle this trial lesson. \n If you cancel, you and the tutor will no longer be able to see view this lesson.')) return;
+            if(trial_lesson.tutor_confirm !== 'pending'){alert('Cannot cancel this trial lesson'); return;}
+            if(! confirm('Do you want to cancle this trial lesson. \n If you cancel, you and the tutor will no longer be able to view this lesson.')) return;
             axios.get('/api/student/cancel-trial-lesson/' + trial_lesson.id)
             .then(response =>{
                 this.success.cancel_lesson =" Success, Lesson canceled";
