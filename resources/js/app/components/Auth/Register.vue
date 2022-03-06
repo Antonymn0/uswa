@@ -28,7 +28,8 @@
 
         <div class="container d-flex" >
             <button type="button" class="cancelbtn m-2 rounded form-control" @click.prevent="()=>{this.$router.push({name: 'home'})}">Cancel</button>
-            <button type="button" class="cancelbtn m-2 rounded form-control" @click.prevent="()=>{this.$router.push({name: 'login'})}">Go to Login</button>
+            <button type="button" class="cancelbtn m-2 rounded form-control" @click.prevent="()=>{this.$router.push({name: 'login'})}">Go to Login</button> OR
+            <button type="button" class="cancelbtn m-2 rounded form-control" @click.prevent="()=>{this.$router.push({name: 'register-tutor'})}">Become a tutor</button>
             
         </div>
         </form>

@@ -45,14 +45,15 @@ class UserController extends Controller
         $user_data = Utilities::createNamesFromFullName($data);
         $user_data['password']  = Hash::make($data['password']);        
 
-        $new_user= User::create($user_data);
-        // event(new userCreated($new_user));
+        $new_user= User::create($user_data);       
 
         $user =   Auth::attempt([
             'email' => $new_user->email,
             'password' => $data['password'],
             ]);
         $token = auth()->user()->createToken('token')->accessToken;
+
+        event(new userCreated($new_user));
 
         return response()->json([
             'success'=> true,
