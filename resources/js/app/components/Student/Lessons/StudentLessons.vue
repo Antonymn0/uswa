@@ -199,7 +199,6 @@ export default {
         fetchLessons(){
             axios.get('/api/students/fetch-lessons')
             .then(response =>{
-                console.log(response.data.data.data);
                 this.current_lessons = response.data.data.data;
             })
             .catch(error=>{

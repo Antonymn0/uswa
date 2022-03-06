@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Notification;
+use App\Events\User\tutorAccountApproved;
+use App\Events\User\tutorAccountDeclined;
 
 class TutorController extends Controller
 {
@@ -32,6 +34,8 @@ class TutorController extends Controller
             'registration' => $keyword
         ]);
 
+        event(new tutorAccountApproved($tutor));
+
         $Notification = Notification::create([
             'sender' => $request->user()->id,
             'recipient' => $tutor->id,
@@ -55,6 +59,8 @@ class TutorController extends Controller
         $tutor->update([
             'revert_reason' => $message
         ]);
+
+        event(new tutorAccountDeclined($tutor));
 
         $Notification = Notification::create([
             'sender' => $request->user()->id,

@@ -88,7 +88,7 @@
                 <p>
                     <label for="remarks"></label>
                     <textarea name="" id="remarks" cols="10" rows="5" placeholder="Remarks" class="border p-2 rounded w-100" v-model="decline_reason"></textarea>
-                    <small class="small text-muted">Type any remarks for the tutor incase of a revert.</small>
+                    <small class="small text-muted">Type any remarks for the tutor incase of a revert.</small> <br>
                     <small class="small text-danger">{{this.errors.decline_reason}}</small>
                 </p>
                 </div>
@@ -152,13 +152,12 @@ export default {
             axios.get('/api/admin/approve-tutor/' + id + '/' + 'complete')
             .then(response=>{
                 this.spinner.approve=false;
-                this.success = "Success, Account approved!"                
-                console.log(response);
+                this.success = "Success, Account approved!" 
             })
             .catch(error=>{
                 this.spinner.approve=false;
                 this.errors.approve = "Error, failed to approve account"
-                console.log(error);
+                console.log(error.response);
             })
         },
         revertToTutor(id){
@@ -176,7 +175,7 @@ export default {
             .catch(error=>{
                 this.spinner.approve=false;
                 this.errors.revert = "Error, failed to revert account"
-                console.log(error);
+                console.log(error.response);
             })
         },
         fetchTutors(){

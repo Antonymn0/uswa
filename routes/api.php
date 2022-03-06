@@ -28,6 +28,8 @@ if (App::environment('production')) {
 // register route 
 Route::post('/register','Api\User\UserController@store');
 
+//  check if db empty to register admin 
+Route::get('/admin/check-db','Api\Admin\AdminController@checkIfDBEmpty');
 
 // -------------------Protected routes -----------------
 Route::group(['middleware'=>['auth:api']],function(){
@@ -44,6 +46,8 @@ Route::group(['middleware'=>['auth:api']],function(){
 
     Route::apiResource('/notifications','Api\Notification\NotificationController');
 });
+
+
 
   // Import students routes file
   require __DIR__.'/students/students.php';

@@ -75,7 +75,7 @@ methods:{
                 this.$store.commit('setToken', response.data.token);
                 this.$store.commit('setUser', response.data.user);
                 this.spinner=false;            
-                this.$router.push({name: 'register-tutor-signup'})
+                this.$router.push({name: 'login'})
             }
             this.spinner=false; 
         })

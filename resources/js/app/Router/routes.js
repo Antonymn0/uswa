@@ -73,6 +73,12 @@ const routes = [
 
     // ADMIN ROUTES
     {
+        name: "admin-register",
+        path: "/admin/register",
+        component:
+            require("../components/Admin/Register/Register.vue").default,
+    },
+    {
         name: "admin-dashboard",
         path: "/admin/dashboard",
         component:

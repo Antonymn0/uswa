@@ -55,6 +55,16 @@ data(){
     }
 },
 methods:{
+    checkIfDBEmpty(){
+      axios.get('/api/admin/check-db')
+        .then(response=>{
+            console.log('Db not empty');
+        })
+        .catch(error=>{ 
+          if(error.response.status) this.$router.push({name: 'admin-register'});       
+            console.log(error.response);
+        })
+    },
     registerUser(){
         this.validateForm();
         if(Object.keys(this.errors).length) return;
@@ -66,7 +76,7 @@ methods:{
             form_data.append('password_again', this.form.password_again);
             form_data.append('role', this.form.role);
         this.spinner =true;
-        axios.post('api/register', form_data ,{
+        axios.post('/api/register', form_data ,{
           headers:{
             'accept':'application/json'
           }
@@ -101,6 +111,9 @@ methods:{
         if(this.form.password !== this.form.password_again) this.errors.password_again = "Password does not match";
         if(this.form.password.length < 4) this.errors.password = "Password must be atleast 4 characters";
     }
+},
+mounted(){
+  this.checkIfDBEmpty();
 }
 
 }
