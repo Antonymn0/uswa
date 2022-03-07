@@ -3,6 +3,8 @@
   <div class="row pb-1 pt-5 mx-4 top">
     <div  class="col-md-6">
       <div class="px-auto pt-3">
+        <!-- {{pranth_results}} <br> -->
+        <!-- <button class="btn btn-secondary" @click.prevent="testPranth(this.test_string)">Balanced parathenssis</button>         -->
         <span class="bold mx-auto">
          Speak a new language with confidence
         </span> <br>
@@ -215,7 +217,32 @@ export default {
   components:{
     
   },
+  data(){
+    return{
+      pranth_results:'',
+      test_string: ' [ {} {[()]} ([] )]' 
+    }
+  },
   methods:{
+    testPranth(string){
+      var opening_brackets = '{[(';
+      var closing_brackets = ')]}';
+      
+      var opening_stack =[];
+      var closing_stack =[];
+      for(var i=0; i<string.length; i++){
+        if(opening_brackets.includes(string[i])) opening_stack.push(string[i]);
+        if(closing_brackets.includes(string[i])) closing_stack.push(string[i]);
+      }
+      // closing_stack.reverse(); // align the indexes
+      console.log(opening_stack);
+      console.log(closing_stack);
+
+      if(opening_stack.length == closing_stack.length) console.log("Brackets balanced");
+      else console.log("Brackets not balanced");
+
+      this.pranth_results = string;
+    },
     checkAuth(){
       axios.get('/api/check-user-authenticated')
       .then(response => {

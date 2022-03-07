@@ -18,9 +18,9 @@ export default {
         }
     },
     methods:{       
-        is_account_registration_complete(){
+        is_account_registration_complete(){           
             this.show_message = false;
-            setTimeout(() => {                                              
+            setInterval(() => {                                              
                 if(this.getUser.registration == 'complete') return;
                 if(this.getUser.role !== 'tutor') return;
                 else this.show_message = true
@@ -30,7 +30,7 @@ export default {
     computed:{
         ...mapGetters([ 'getUser']),       
     },
-    mounted(){
+    mounted(){        
        this.is_account_registration_complete(); 
     }
 }

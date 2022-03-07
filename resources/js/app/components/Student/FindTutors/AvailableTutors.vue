@@ -6,9 +6,10 @@
       <div class="mobile-outer " v-for="(tutor, index) in this.current_tutors" :key="index">
           <div class="mobile   ">              
             <div class="bg-white  inner rounded">
-                <div class="d-flex justify-content-cente">
-                    <div class="px-3">
-                        <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem;">
+                <div class="d-flex ">
+                    <div class="px-2 pt-3">
+                        <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem;" v-if="!tutor.image">                        
+                        <img :src="tutor.image" alt="" style="width:5rem;"  v-if="tutor.image">  
                     </div>
                     <div class="pl-2">
                         <h5>

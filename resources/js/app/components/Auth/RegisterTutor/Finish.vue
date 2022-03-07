@@ -111,7 +111,6 @@ export default {
                 this.spinner=false; 
             })
             .catch(error=>{
-                console.log(error.response.data);
                 this.spinner=false; 
                 if(error.response.status == 422){
                     this.errors.signup = `Something is wrong with the data provided. \n Please go back and fix the following errors.`;
@@ -122,7 +121,6 @@ export default {
                 console.log(error.response);
             })
 
-            // this.$router.push({name: 'tutor-dashboard'});
         }
     }
 }

@@ -65,7 +65,8 @@
                       <router-link :to="{name: 'tutor-dashboard'}" v-if="getUser.role == 'tutor'">Dashboard</router-link>
                     </a> 
                   </li>
-                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdropProfile">Profile</a></li>
+                  <li v-if=" isLogedIn && this.getUser.role == 'student'"><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdropProfile" >Profile</a></li>
+                  <li v-if=" isLogedIn && this.getUser.role == 'tutor'"><a class="dropdown-item" href="#"  ><router-link :to="{name: 'register-tutor-signup'}"  >Profile</router-link></a></li>
                   <li><a class="dropdown-item" href="#"><Logout /></a></li>
               </ul>
             </div>        
