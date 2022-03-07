@@ -2252,7 +2252,7 @@ components: { vueCountriesCities },
         },
         phone:{
             get() { return this.$store.state.signupProcess_about.about.phone;},           
-            set(value) {  this.$store.commit('set_phone', value); }
+            // set(value) {  this.$store.commit('set_phone', value); }
         },
         over18:{
             get() { return this.$store.state.signupProcess_about.about.over18;},           
