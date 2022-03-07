@@ -58,7 +58,7 @@ export default {
                 form_data.append('language', this.$store.state.signupProcess_about.about.language);
                 form_data.append('level', this.$store.state.signupProcess_about.about.level);
                 form_data.append('subject', this.$store.state.signupProcess_about.about.subject);
-                form_data.append('phone', this.$store.state.signupProcess_about.about.phone);
+                // form_data.append('phone', this.$store.state.signupProcess_about.about.phone);
                 form_data.append('over18', this.$store.state.signupProcess_about.about.over18);
                 form_data.append('description', this.$store.state.signupProcess_about.about.description);
 
