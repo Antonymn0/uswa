@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import {mapGetters,  mapActions } from "vuex";
+import {mapGetters } from "vuex";
 
 import MobileNav from "../Navigation/MobileNav.vue";
 import Logout from "../Auth/Logout.vue";

@@ -10,7 +10,7 @@
       </div>
       <div class="modal-body ">
           <small class="my-2">All assignments associated with this lesson will apppear here.  </small>
-          <div class="row pt-3" v-if="lesson.get_assignments">
+          <div class="row pt-3" v-if="this.lesson.get_assignments">
             <div class="col-md-6"> 
             <div class="p-2">
                 <h6 class="ps-3 fw-bold">Tutor</h6>                
@@ -31,7 +31,7 @@
             </div>
             <div v-else>
               <p class="text-muted small py-5 text-center">
-                  No asignments for this lesson
+                  No asignments available for this lesson
               </p>
             </div>
           <div> 

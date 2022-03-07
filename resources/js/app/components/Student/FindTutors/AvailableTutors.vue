@@ -13,19 +13,22 @@
                     </div>
                     <div class="pl-2">
                         <h5>
-                            {{tutor.first_name}} {{tutor.last_name}}
-                            <span> &nbsp; <country-flag country='ke' size='1rem'/> &nbsp;</span> 
-                            <span>&nbsp;<i class="bi bi-shield-fill-check text-primary" ></i> </span> 
+                            {{this.capitalize(tutor.first_name)}} 
+                            <span class="float-end"> &nbsp; 
+                                <country-flag country='ke' size='.7rem'/> &nbsp;
+                                <i class="bi bi-shield-fill-check text-primary" ></i>
+                            </span>                            
                         </h5>
+                        <span class="clearfix w-100"></span>
                         <div class=" d-flex align-items-center justify-content-between " >                           
-                            <span><i class="bi bi-mortarboard-fill text-secondary"></i> &nbsp; {{tutor.language}} </span>
-                            <span ><i class="bi bi-suit-heart-fill text-muted" style="font-size:1.5rem" @click.prevent="toggleFavourite($event, tutor)"></i> </span>
+                            <span class="small"><i class="bi bi-mortarboard-fill text-secondary"></i> &nbsp; {{tutor.language}} </span> 
+                            <span class="small float-end" ><i class="bi bi-suit-heart-fill text-muted" style="font-size:1.5rem" @click.prevent="toggleFavourite($event, tutor)"></i> </span>
                         </div>
 
                         <div class="">
                             <div class="p-1 d-flex justify-content-between">
-                                 <span> <i class="bi bi-star-fill text-warning"></i> 5</span>
-                               <small>  15 reviews</small> 
+                                <span  data-bs-toggle="modal" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)"> <i class="bi bi-star-fill text-warning"></i> {{this.calculateStarRating(tutor.reviews)}}</span> &nbsp; &nbsp; &nbsp;
+                                <span > <a  data-bs-toggle="modal" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)">{{Object.keys(tutor.reviews).length}} reviews </a>   </span> 
                             </div>
                             <div class="d-flex justify-content-between px-2">
                                  <span ><i class="bi bi-circle-fill text-success" style="font-size:.7rem"></i> </span>
@@ -36,16 +39,16 @@
                 </div>
                 <!-- ------------------------------- -->
                 <div class="d-flex  small p-2">
-                    <span> <i class="bi bi-person-fill"></i> 12 Actve students</span>
+                    <span> <i class="bi bi-person-fill"></i> 12 Active students</span>
                     <span class=""> &nbsp; | &nbsp;</span> 
                     <span>102 Lessons </span>
                 </div>
                 <!-- ------------------------------------- -->
                 <div class="d-flex  small p-2 speaks">
                     <span class="fw-bold">Speaks: &nbsp; </span> 
-                    <span>{{tutor.language}} </span> <span class="alert-success px-1 rounded">{{tutor.level}}</span>  
+                    <span> {{tutor.language}} &nbsp;</span> <span class="alert-success rounded"> {{tutor.level}} </span>  
                     <span class="">  &nbsp; | &nbsp;</span>
-                    <span>{{tutor.subject}}</span><span class="alert-primary px-1 rounded">{{tutor.subject_level}}</span>  
+                    <span>{{tutor.subject}} </span> <span class="alert-primary  rounded"> {{tutor.subject_level}} </span>  
                 </div>
                 <!-- -------------------------- -->
                 <div class="px-2">
@@ -53,8 +56,8 @@
                     <span>{{tutor.description}}  </span>
                 </div>
                 <div class="d-flex align-items-center py-2">                    
-                    <span> <button class="btn btn-danger rounded" @click.prevent="updateCurrent_tutor(tutor)" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Watch intro</button> &nbsp; </span> 
-                    <span> <button class="btn btn-danger  rounded"  @click.prevent="updateCurrent_tutor(tutor)" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial lesson</button> &nbsp; </span> 
+                    <span> <button class="btn btn-danger rounded" @click.prevent="updateCurrent_tutor(tutor)" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Intro</button> &nbsp; </span> 
+                    <span> <button class="btn btn-danger  rounded"  @click.prevent="updateCurrent_tutor(tutor)" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book  lesson</button> &nbsp; </span> 
                     <span> <button class='btn btn-primary '  @click.prevent="updateCurrent_tutor(tutor)"  data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span> 
                 </div>
             </div>
@@ -72,23 +75,27 @@
     <BookTialLessonModal :tutor="this.current_tutor"/>
     <SendMessage :tutor="this.current_tutor"/>
     <IntroVideo :tutor="this.current_tutor"/>
+    <Reviews :tutor="this.current_tutor"/>
 </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 import BookTialLessonModal from "./BookTrialLessonModal.vue";
 import CountryFlag from 'vue-country-flag-next';
 import SendMessage from "./SendMessage";
 import IntroVideo from "./IntroVideo.vue";
-import axios from 'axios';
+import Reviews from "../../Reviews/Reviews.vue";
 
 export default {
     components: {
         CountryFlag,
         BookTialLessonModal,
         SendMessage,
-        IntroVideo
+        IntroVideo,
+        Reviews
     },
     data(){
         return{
@@ -106,6 +113,9 @@ export default {
         updateCurrent_tutor(tutor){
             this.current_tutor = tutor;
         },
+        capitalize(string){
+          if(string)  return string.charAt(0).toUpperCase() + string.slice(1);
+        },
         toggleFavourite(event, tutor){
             if(event.target.classList.contains('text-danger')){
                 event.target.classList.remove('text-danger');
@@ -113,8 +123,33 @@ export default {
             }else{
                event.target.classList.remove('text-muted'); 
                event.target.classList.add('text-danger'); 
-            }          
-            
+            }              
+        },
+        calculateStarRating(reviews){
+            // Formular used: AR = 1*a+2*b+3*c+4*d+5*e/(R) 
+            let one_star = 0;
+            let two_star = 0;
+            let three_star = 0;
+            let four_star = 0;
+            let five_star = 0;
+            let total_ratings = 0;
+            let avarage_rating = 0;
+
+            if(! Object.keys(reviews).length) return; // if reviews empty return
+            reviews.forEach(review=>{
+                if(review.stars == 1) one_star +=1;
+                if(review.stars == 2) two_star +=1;
+                if(review.stars == 3) three_star +=1;
+                if(review.stars == 4) four_star +=1;
+                if(review.stars == 5) five_star +=1;
+            });
+            total_ratings = one_star + two_star +three_star + four_star + five_star;
+            console.log(three_star);
+
+            avarage_rating = (1*one_star) + (2*two_star) + (3*three_star)  + (4*four_star) + (5*five_star);
+
+            return ( avarage_rating/total_ratings ).toFixed(1);
+
         },
         fetchAvailableTutors(){
             setTimeout(() => {
@@ -122,7 +157,8 @@ export default {
                 .then(response=>{
                     if(response.status == 200){  
                         this.tutors =response.data.data.data;   
-                        this.current_tutors = this.tutors;  
+                        this.current_tutors = this.tutors; 
+                        console.log(this.current_tutors); 
                     }                
                 })
                 .catch(error=>{               

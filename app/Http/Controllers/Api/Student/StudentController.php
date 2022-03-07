@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\TutorSchedule;
 use App\Models\TrialLesson;
+use App\Models\Review;
 
 
 class StudentController extends Controller
@@ -24,7 +25,8 @@ class StudentController extends Controller
     */
     public function fetch_available_tutors(){
         $tutors = User::with('tutorSchedule')
-        ->where('role', 'tutor')->paginate(env('API_PAGINATION', 10));
+                ->with('reviews')
+                ->where('role', 'tutor')->paginate(env('API_PAGINATION', 10));
          return response()->json([
             'success'=> true,
             'message'=> 'A list of available tutors',

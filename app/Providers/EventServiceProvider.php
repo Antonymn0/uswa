@@ -37,9 +37,14 @@ class EventServiceProvider extends ServiceProvider
         ],
 
 
-        // email verification  events
+        // Email verification  events
         'App\Events\EmailVerification\SendEmailVerificationLink' => [
             'App\Listeners\EmailVerification\SendEmailVerificationLinkListener',
+        ],
+
+        // User reviews  events
+        'App\Events\Review\reviewCreated' => [
+            'App\Listeners\Review\reviewCreatedListener',
         ],
 
         // Lesson events

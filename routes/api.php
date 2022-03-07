@@ -72,6 +72,9 @@ Route::group(['middleware'=>['auth:api']],function(){
   // Import notifications routes file
   require __DIR__.'/notifications/notifications.php';
 
+  // Import reviews routes file
+  require __DIR__.'/reviews/reviews.php';
+
 // Fall back route
 Route::fallback(function() {
 return response()->json([

@@ -37,7 +37,7 @@
                     <div class="mb-0 py-2">
                         <a v-if="! this.zoom_user_auth_token" :href="'https://zoom.us/oauth/authorize?response_type=code&client_id=' + this.CLIENT_ID + '&state=' + this.ZOOM_STATE + '&redirect_uri=' + this.REDIRECT_URI" class="btn btn-secondary btn-sm m-2" >Link with zoom</a>  
                         <button class="btn btn-sm btn-secondary m-1" v-if="this.zoom_user_auth_token && !trial_lesson.meeting_link " @click.prevent="this.acceptTrialLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.schedule_meeting" role="status" aria-hidden="true" ></span> Accept and shcedule meeting </button>
-                        <button class="btn btn-sm btn-secondary m-1" v-if="! trial_lesson.meeting_link" data-bs-toggle="modal" :data-bs-target="'#declineModal' + index">Decline</button>
+                        <button class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.status == 'pending'" data-bs-toggle="modal" :data-bs-target="'#declineModal' + index">Decline</button>
                         <a :href="trial_lesson.meeting_link" class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.meeting_link" >Launch meeting</a>
                     </div>
                     <!-- -------------------------decline lesson  modal---------------------------- -->
@@ -89,7 +89,7 @@
                       <p class="fw-bold">
                         <span>{{this.capitalize(lesson.lesson_type)}} lessons with tutor {{this.capitalize(lesson.get_lesson_student.first_name)}} </span> 
                         <span class="float-end">
-                            <a :href="lesson.meeting_link" class="btn btn-secondary btn-sm my-1">Classroom</a> <br>
+                            <a :href="lesson.meeting_link" v-if="lesson.meeting_link" class="btn btn-secondary btn-sm my-1">Classroom</a> <br>
                              <a class="btn btn-secondary btn-sm my-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>
                                
                         </span>
@@ -304,7 +304,7 @@ export default {
         fetchLessons(){
             axios.get('/api/tutor/fetch-lessons')
             .then(response =>{
-                this.current_lessons = response.data.data.data;
+                this.current_lessons = response.data.data.data;;
             })
             .catch(error=>{
                 console.log(error.response);

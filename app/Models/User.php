@@ -10,6 +10,7 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Conversation;
 use App\Models\TrialLesson;
+use App\Models\Review;
 class User extends Authenticatable
 {
     use HasApiTokens; 
@@ -57,6 +58,11 @@ class User extends Authenticatable
     // eloquent relation
      public function getLesson(){
         return $this->hasMany(Lesson::class,'user_id', 'id');
+    }
+
+    // eloquent relation
+     public function reviews(){
+        return $this->hasMany(Review::class,'reviewee_id', 'id');
     }
 
    

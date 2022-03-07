@@ -10,7 +10,7 @@
       </div>
       <div class="modal-body ">
           <small class="my-2">All assignments associated with this lesson will apppear here.  </small>
-          <div class="row py-3" v-if="lesson.get_assignments">
+          <div class="row py-3" v-if="Object.keys(this.lesson.get_assignments).length">
             <div class="col-md-6"> 
             <div class="p-2">
                 <h6 class="ps-3 fw-bold">Tutor</h6>                
@@ -31,13 +31,13 @@
             </div>
             <div v-else>
               <p class="text-muted small py-5 text-center">
-                  No asignments for this lesson
+                  No asignments available for this lesson
               </p>
             </div>
           <div> 
             <!-- ---------------------- upload assignment  ------------------ -->
             <div class=" text-center">
-                <button class="btn btn-secondary btn-sm w-50 mt-2 " id="ass-btn" @click.prevent="toggelAssignmentUploadView()">Upload assignment</button> 
+                <button class="btn btn-secondary btn-sm w-50 mt-2 " id="ass-btn" v-if="Object.keys(this.lesson.get_assignments).length" @click.prevent="toggelAssignmentUploadView()">Upload assignment</button> 
                 <hr>  
             </div>           
            <div class="border p-3 mt-5 rounded shadow hidden" id="assUpload">                  

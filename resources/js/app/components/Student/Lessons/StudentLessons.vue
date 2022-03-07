@@ -1,8 +1,6 @@
 <template>
   
 <div class="p-3">
-  <div>my lessons</div>
-
  <div class="bg-white mt-3 ">
     <h4 class="alert-secondary w-100 py-3 px-3">Trial lessons <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchTrialLessons()">Refresh</button> </span></h4>
     <small class="alert-success p-2 mx-4 rounded my-3" v-if="this.success.cancel_lesson">{{this.success.cancel_lesson}}</small> 
@@ -36,10 +34,10 @@
 
                     <div class="mb-0 py-2">
                         <a v-if="! this.zoom_user_auth_token" :href="'https://zoom.us/oauth/authorize?response_type=code&client_id=' + this.CLIENT_ID + '&state=' + this.ZOOM_STATE + '&redirect_uri=' + this.REDIRECT_URI" class="btn btn-secondary btn-small m-2" >Link with zoom</a>  
-                        <button class="btn btn-sm btn-secondary m-1" v-if="! trial_lesson.meeting_link" @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel request </button>
+                        <button class="btn btn-sm btn-secondary m-1" v-if="! trial_lesson.status == 'pending'" @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel request </button>
                         <!-- <button class="btn btn-sm btn-secondary m-1" v-if="! trial_lesson.meeting_link" @click.prevent="this.openTrialLesson()">Open </button> -->
                         <a :href="trial_lesson.meeting_link"   class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.meeting_link" >Launch meeting</a>
-                        <button class="btn btn-sm btn-secondary m-1"  v-if=" trial_lesson.meeting_link" @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lesson </button>
+                        <button class="btn btn-sm btn-secondary m-1"   @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lesson </button>
                     </div>                   
                 </div>
             </div>              
@@ -51,7 +49,7 @@
      </div>  
   </div>
 
-<!-- ----------------------------------------trial lessons-------------------------------------------------------------------------- -->
+<!-- ----------------------------------------Inprogress lessons-------------------------------------------------------------------------- -->
 
  <div class="bg-white mt-3 ">
       <h4 class="alert-secondary w-100 py-3 px-3">In progress <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchLessons()">Refresh</button> </span></h4>
@@ -70,7 +68,7 @@
                     <p class="fw-bold">
                         <span>{{this.capitalize(lesson.lesson_type)}} lesson with tutor {{this.capitalize(lesson.get_lesson_tutor.first_name)}} </span> 
                         <span class="float-end">
-                            <a :href="lesson.meeting_link" class="btn btn-secondary btn-sm my-1">Classroom</a> <br>
+                            <a :href="lesson.meeting_link" class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link">Classroom</a> <br>
                              <a class="btn btn-secondary btn-sm my-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>
                         </span>
                       </p>
@@ -81,10 +79,11 @@
                         <span class="py-2">Remaining : </span> <span> {{lesson.remaining_duration}}hrs </span>
                     
                     <p class="pt-2 mb-0 small" >
-                    Learning at Uswa is absolutely free-flow and self-paced. You  are in total control of your learning process. <br> 
-                    You can take lessons anytime anywhere in the world.  Happy learning..                   
+                        Learning at Uswa is absolutely free-flow and self-paced. You  are in total control of your learning process. <br> 
+                        You can take lessons anytime anywhere in the world.  Happy learning..                   
                     </p>
-                    <span class="py-3 small">Date started : {{lesson.lessons_start_date}}</span> <br>
+                    <p class="py-3 small">Date started : {{lesson.lessons_start_date}}</p> 
+                    <a href="#" class="text-primary text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
                   </div>
               </div>              
           </div>
@@ -94,7 +93,38 @@
             <p class="text-muted small text-center p-5"> You currently have no ongoing lessons</p>
           </div>
       </div>
-
+<!-- --------------------------Review------------------------------------------ -->
+<!-- -------  review modal ----------- -->
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel2">Write a review</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="stars d-flex align-items-center mb-0"> 
+            <span>Stars: </span>
+            <span> <i class="bi bi-star-fill 1 text-muted" id="1" @click.prevent="updateStars(1)"></i> </span>
+            <span> <i class="bi bi-star-fill 2 text-muted" id="2" @click.prevent="updateStars(2)"></i> </span>
+            <span> <i class="bi bi-star-fill 3 text-muted" id="3" @click.prevent="updateStars(3)"></i> </span>
+            <span> <i class="bi bi-star-fill 4 text-muted" id="4" @click.prevent="updateStars(4)"></i> </span>
+            <span> <i class="bi bi-star-fill 5 text-muted" id="5" @click.prevent="updateStars(5)"></i> </span> <br> 
+        </p>
+        <p class="text-danger small"> {{errors.stars}} </p>
+        <textarea  id="" cols="10" rows="5" v-model="this.review" class="w-100 border rounded p-2" placeholder="Write a review"></textarea>
+        <small class="text-danger">{{errors.review}}</small>
+      </div>
+      
+      <div class="modal-footer">
+        <small class="text-success w-100 text-end">{{this.success.review_submited}}</small>
+        <small class="text-danger w-100 text-end">{{this.errors.review_submited}}</small>
+        <button class="btn btn-primary"  @click.prevent="submitReview(this.current_lesson)"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.submiting"></span> Submit</button>
+        <button class="btn btn-danger" id="back-btn" data-bs-dismiss="modal" aria-label="Close">Back </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ------------------------------------------------------------------------------------------------------------------------ -->
 
@@ -154,6 +184,8 @@ export default {
             success:{},
             errors:{},
             spinner:{},
+            stars:null,
+            review: null,
             zoom_user_auth_token: null ,
             spinner:{},  
             ZOOM_STATE: this.$store.state.user.user.id, 
@@ -205,7 +237,26 @@ export default {
                 console.log(error.response);
             })
         },
+        updateStars(star_num){
+            this.stars = star_num;
+            this.toggleStarViewColor(star_num);
+        },
+        toggleStarViewColor(star_num){
+            var stars = document.getElementsByClassName('bi-star-fill');
+            for(var i =0; i<stars.length; i++ ){
+                stars[i].classList.remove('text-warning');
+                stars[i].classList.add('text-muted');
+            }
+            if(star_num == 6) return; //reset value
+            for(var i =0; i<stars.length; i++ ){
+                stars[i].classList.remove('text-muted');
+                stars[i].classList.add('text-warning');
+                if(stars[i].classList.contains(star_num)) return;
+            }
 
+            console.log(stars);
+
+        },
         getZoomCredentials(){ // get credential  from .env on server.        
         axios.get('/api/zoom/get-credentials ')
         .then(response => {
@@ -324,6 +375,46 @@ export default {
             console.log(error.response);
         }); 
     },
+    submitReview(lesson){
+            this.validateReviewForm();
+            if(Object.keys(this.errors).length) return;
+            if(! confirm("Submit this Review?")) return;
+
+            var form_data = new FormData();
+            form_data.append('reviewer_id', lesson.student_id );
+            form_data.append('reviewee_id', lesson.tutor_id );
+            form_data.append('body', this.review);
+            form_data.append('stars', this.stars);
+
+            this.spinner.submiting = true
+            axios.post('/api/reviews', form_data)
+            .then(response=>{                
+                if(response.status == 201){
+                    this.success.review_submited= "Success, Review submited."
+                    this.spinner={}
+                }
+                setTimeout(() => {
+                    this.stars = null;
+                    this.review = null;
+                    this.toggleStarViewColor(6);
+                    this.errors = {}
+                    this.success = {}
+                    this.spinner={}                    
+                    document.getElementById('back-btn').click();
+                }, 3000);
+                
+            })
+            .catch(error=>{
+                this.spinner={}                
+                console.log(error.response.data.message);
+                if(error.response.status == 422) this.errors.review_submited = error.response.data.message;
+            });            
+        },
+        validateReviewForm(){
+            this.errors ={}
+            if(! this.stars) this.errors.stars = 'Please select number of stars';
+            if(! this.review) this.errors.review = 'This field is required';
+        }
 
 
 },

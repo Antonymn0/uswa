@@ -187,7 +187,7 @@ class ZoomAuthController extends Controller
     */
     public function  getZoomUserToken(Request $request){
         $user = $request->user();
-        $token =  ZoomOauth::where('user_id', $user->id)->first();
+        $token =  ZoomOauth::first();
         return response()->json([
                 'success'=>  true,
                 'message' => 'Users zoom token',
