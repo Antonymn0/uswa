@@ -75,6 +75,9 @@ Route::group(['middleware'=>['auth:api']],function(){
   // Import reviews routes file
   require __DIR__.'/reviews/reviews.php';
 
+  // Import local_account routes file
+  require __DIR__.'/transactions/local_account.php';
+
 // Fall back route
 Route::fallback(function() {
 return response()->json([

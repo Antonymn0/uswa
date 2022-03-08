@@ -57,6 +57,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Lesson\lessonDestroyed' => [
             'App\Listeners\Lesson\lessonDestroyedListener',
         ],
+
+        // Lesson events
+        'App\Events\Transaction\TransactionCreated' => [
+            'App\Listeners\Transaction\transactionCreatedListener',
+        ],
+        
         
         // TrialLesson events
         'App\Events\TrialLesson\trialLessonCreated' => [

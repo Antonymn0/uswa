@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\TutorSchedule\TutorScheduleController;
+use App\Http\Controllers\Api\Payments\LocalAccountController;
 use Illuminate\Support\Facades\Auth;
 use App\Events\User\userCreated;
 use App\Events\User\userUpdated;
@@ -33,8 +34,7 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * Store a newly created resource in storage.     *
      * @param  \Illuminate\Http\Request\ValidateUser  $request
      * @return \Illuminate\Http\Response
      */
@@ -46,12 +46,12 @@ class UserController extends Controller
         $user_data['password']  = Hash::make($data['password']);        
 
         $new_user= User::create($user_data);       
+        $credentials= [ 'email' => $new_user->email,  'password' => $data['password'] ];
 
-        $user =   Auth::attempt([
-            'email' => $new_user->email,
-            'password' => $data['password'],
-            ]);
-        $token = auth()->user()->createToken('token')->accessToken;
+        $this->createLocalAccount($new_user); // create local transction account
+
+        $user =   Auth::attempt($credentials); // login user
+        $token = auth()->user()->createToken('token')->accessToken;        
 
         event(new userCreated($new_user));
 
@@ -202,6 +202,22 @@ class UserController extends Controller
             'message' => 'Search user by email results!',
             'data' => $user
         ], 200);
+    }
+
+    /**
+     * Create a new local account for transaction management and record keeping
+    */
+    public function createLocalAccount($user){
+        $data = [
+            'user_id' => $user->id,
+            'date_created' => now(),
+            'balance_before' => 0,
+            'available_balance' => 0
+        ];
+
+        $request = new Request($data); //create new request object
+
+        (new LocalAccountController)->store($request);
     }
 
 }

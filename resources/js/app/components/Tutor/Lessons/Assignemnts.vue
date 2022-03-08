@@ -2,7 +2,7 @@
 
 <!-- ------------- Twin assignment  modals -------------  -->
 <div class="modal fade" id="exampleModalToggle" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+  <div class="modal-dialog modal-dialog-centered modal-lg"> 
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title fw-bold" id="exampleModalToggleLabel">Assignments</h5>

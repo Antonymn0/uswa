@@ -75,34 +75,36 @@ const routes = [
     {
         name: "admin-register",
         path: "/admin/register",
-        component:
-            require("../components/Admin/Register/Register.vue").default,
+        component: require("../components/Admin/Register/Register.vue").default,
     },
     {
         name: "admin-dashboard",
         path: "/admin/dashboard",
-        component:
-            require("../components/Admin/Dashboard.vue").default,
+        component: require("../components/Admin/Dashboard.vue").default,
     },
     {
         name: "all-users",
         path: "/admin/dashboard/users",
-        component:
-            require("../components/Admin/Users/AllUsers.vue").default,
+        component: require("../components/Admin/Users/AllUsers.vue").default,
     },
     {
         name: "all-lessons",
         path: "/admin/dashboard/lessons",
-        component:
-            require("../components/Admin/Lessons.vue").default,
+        component: require("../components/Admin/Lessons.vue").default,
     },
     {
         name: "tutor-review",
         path: "/admin/tutor/review",
-        component:
-            require("../components/Admin/Tutor/TutorReview.vue").default,
+        component: require("../components/Admin/Tutor/TutorReview.vue").default,
     },
 
+    // =======================================================================
+    // ACCOUNT ROUTES
+    {
+        name: "account",
+        path: "/account",
+        component: require("../components/LocalAccount/Account.vue").default,
+    },
 
     // ------------------------------------------------------------------
 

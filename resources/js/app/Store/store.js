@@ -1,6 +1,7 @@
 
 import { createStore } from 'vuex';
 import { token } from './modules/token/token.js';
+import { account } from './modules/account/account.js';
 import { user } from './modules/user/user.js';
 import { signupProcess_about } from "./modules/tutorSignupProcess/signupProcess_about.js";
 import { signupProcess_profilePhoto } from "./modules/tutorSignupProcess/signupProcess_profilePhoto.js";
@@ -13,6 +14,7 @@ import { tutors} from "./modules/tutors/tutors.js";
 const store = createStore({
     modules: {
         token,
+        account,
         user,
         signupProcess_about,
         signupProcess_profilePhoto,

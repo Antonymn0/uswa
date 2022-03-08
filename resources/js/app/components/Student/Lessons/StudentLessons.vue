@@ -174,7 +174,9 @@ export default {
         return{
             current_trial_lessons:{},
             current_lessons:{},
-            current_lesson:{},
+            current_lesson:{
+                    get_assignments:{}
+                    },
             decline_reason:null,       
             refresh_interval:{},
             zoom_meetings:{},

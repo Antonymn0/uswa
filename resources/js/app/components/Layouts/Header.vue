@@ -17,7 +17,6 @@
          <router-link :to="{name: 'find-tutor'}" class="px-3" v-if="getUser.role !== 'tutor' ">Find a tutor</router-link>          
          <router-link :to="{name: 'register-tutor'}" class="px-3"  v-if="getUser.role !== 'tutor' && getUser.role !== 'student' ">Become a tutor</router-link>          
           <router-link :to="{name: 'home'}" class="px-1" >Home</router-link>
-
         </ul>
       </div>  
       
@@ -32,14 +31,27 @@
         </a> 
         </span>
     </div>
+    <!-- --------------------Acc bal--------------------- -->
+    <div class="text-muted" v-if="isLogedIn">
+      <router-link :to="{name: 'account'}" v-if="getUser.role !== 'admin'">
+        <div class="border btn btn-default py-2">
+          <span class="fw-bold"> Bal: </span>
+          <span class="text-muted"> $</span>
+          <span class="text-muted">{{this.getAccount.available_balance}} </span>
+        </div> 
+      </router-link>           
+    </div>
+    <!-- --------------------------------------------------- -->
 
-    <!-- -------------------------- -->
+    <!-- ---------Dashboard----------------- -->
     <div class="d-flex align-items-center">        
         <div class="px-2 desktop" v-if=" isLogedIn && this.getUser.role !== 'admin'">
           <router-link :to="{name: 'student-dashboard'}" v-if="getUser.role == 'student'">Dashboard</router-link> &nbsp;
           <router-link :to="{name: 'tutor-dashboard'}" v-if="getUser.role == 'tutor'">Dashboard</router-link>
         </div>
-      
+     <!-- --------------------------------------------------   -->
+
+     <!-- ------------------- Components -------------------------- -->
         <div class="d-flex" v-if="isLogedIn && this.getUser.role !== 'admin' ">
           <span class="" v-if="getUser.role == 'student' "> <StudentMessages /></span>
           <span class="" v-if="getUser.role == 'tutor' "> <TutorMessages /></span>
@@ -47,13 +59,17 @@
           <span class="" v-if="getUser.role == 'student' "> <StudentNotifications /></span>
           <span class="" v-if="getUser.role == 'tutor' "> <TutorNotifications /></span>
         </div>
+        <!-- ---------------------------------------------------------------------- -->
+
+        <!-- ---------------------- Mobile login ------------------------------------ -->
         <div class="px-3 desktop">
             <router-link :to="{name: 'login'}" class="px-1" v-if="! isLogedIn">Login</router-link>
             <router-link :to="{name: 'register'}" class="px-1" v-if="! isLogedIn">Register</router-link>            
+<!-- ----------------------------------------------------------------------------- -->
 
+<!-- ----------------- Drop down --------------------------------------  -->
             <div class="dropdown mx-2">   
               <a v-if=" isLogedIn" class="d-flex align-items-center " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-
               {{getUser.first_name}} &nbsp; 
                <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.5rem" v-if="! getUser.image"></i>
                <img v-else :src="getUser.image" alt="profile picture" style="width:40px; height:40px; border-radius:50%">
@@ -72,7 +88,7 @@
             </div>        
         </div>
         <MobileNav /> 
-        </div>
+      </div>
   </div>
   </div>
   </div>
@@ -138,7 +154,7 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(['isLogedIn', 'getUser']),    
+    ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),    
   },
 mounted(){     
     this.showHomePage();

@@ -20,9 +20,9 @@ class CreateUsersTable extends Migration
            $table->string('middle_name')->nullable();
            $table->string('last_name')->required();
            $table->string('username')->nullable()->unique();
-           $table->string('email')->requried();
-           $table->string('role')->requried();
-           $table->string('password')->requried();
+           $table->string('email')->required();
+           $table->string('role')->required();
+           $table->string('password')->required();
 
            $table->string('phone')->nullable();
            $table->string('address')->nullable();

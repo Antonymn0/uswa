@@ -63,7 +63,6 @@ export default {
             .then(response=>{
                 this.notifications = response.data.data.data;
                 this.current_notifications = this.notifications;
-                console.log(response.data.data);
             })
             .catch(error=>{
                 console.log(error.response);
