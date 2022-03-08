@@ -53,7 +53,7 @@ class UserController extends Controller
         $user =   Auth::attempt($credentials); // login user
         $token = auth()->user()->createToken('token')->accessToken;        
 
-        event(new userCreated($new_user));
+        // event(new userCreated($new_user));
 
         return response()->json([
             'success'=> true,
