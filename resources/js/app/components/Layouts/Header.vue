@@ -37,7 +37,7 @@
         <div class="border btn btn-default py-2">
           <span class="fw-bold"> Bal: </span>
           <span class="text-muted"> $</span>
-          <span class="text-muted">{{this.getAccount.available_balance}} </span>
+          <span class="text-muted">{{this.getAccount.available[0].amount}} </span>
         </div> 
       </router-link>           
     </div>
@@ -139,7 +139,7 @@ export default {
   },
   data(){
     return{
-     user: this.getUser,
+      //
     }
   },
   methods:{
@@ -151,7 +151,8 @@ export default {
       //       if(this.user.role == 'tutor') this.$router.push({name: 'tutor-trial-lesson'});
       //     } else this.$router.push({name: 'home'});        
       //   }, 200);       
-    }
+    },
+
   },
   computed:{
     ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),    

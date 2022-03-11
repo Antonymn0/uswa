@@ -78,10 +78,16 @@ Route::group(['middleware'=>['auth:api']],function(){
   // Import local_account routes file
   require __DIR__.'/transactions/local_account.php';
 
+  // Import stripe pay routes
+  require __DIR__.'/transactions/stripe_pay.php';
+
+
+
+
 // Fall back route
 Route::fallback(function() {
-return response()->json([
-    'success'=> false,
-    'message' => 'No such route found on this server',
-    ], 404);
+  return response()->json([
+      'success'=> false,
+      'message' => 'No such route found on this server',
+      ], 404);
 });

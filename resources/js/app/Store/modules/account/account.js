@@ -1,6 +1,8 @@
 export const account = {
     state: () => ({
-        account: {},
+        account: {
+            'available': [  {'amount':0} ], // intialize account balance
+        },
     }),
 
     actions: {},

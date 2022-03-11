@@ -80,6 +80,9 @@ class CreateUsersTable extends Migration
            $table->string('availability')->nullable();
            $table->text('revert_reason')->nullable();
 
+           $table->string('stripe_account_id')->nullable()->unique();
+           $table->string('stripe_account_type')->nullable();
+
 
             $table->rememberToken();
             $table->timestamps();
