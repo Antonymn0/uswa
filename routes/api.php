@@ -81,6 +81,9 @@ Route::group(['middleware'=>['auth:api']],function(){
   // Import stripe pay routes
   require __DIR__.'/transactions/stripe_pay.php';
 
+  // Import stripe pay routes
+  require __DIR__.'/transactions/paypal.php';
+
 
 
 

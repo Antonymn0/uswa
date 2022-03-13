@@ -26,7 +26,8 @@ class StudentController extends Controller
     public function fetch_available_tutors(){
         $tutors = User::with('tutorSchedule')
                 ->with('reviews')
-                ->where('role', 'tutor')->paginate(env('API_PAGINATION', 10));
+                ->where('role', 'tutor')
+                ->paginate(env('API_PAGINATION', 10));
          return response()->json([
             'success'=> true,
             'message'=> 'A list of available tutors',

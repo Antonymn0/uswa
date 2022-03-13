@@ -9,21 +9,32 @@
                 <h4>Availbale balance  </h4> 
                 <p class="py-3 text-center">
                    <span class="m-0">$</span>
-                   <span class="m-0" v-if="this.getAccount">{{this.getAccount.available[0].amount}}</span>
-                   <span class="m-0" v-else>0</span>
+                   <!-- <span class="m-0" v-if="this.getAccount">{{this.getAccount.available[0].amount}}</span> -->
+                   <span class="m-0" >0</span>
                 </p>
             </div>
             <div class="pt-3 pb-2">                 
-                <button class="btn btn-lg btn-secondary m-2 px-3 w-75"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" v-if="! this.getUser.stripe_account_id">  Link with Stripe </button>
-                <button class="btn btn-lg btn-secondary m-2 px-3 w-75"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">  Link with Paypal </button>
+                
+                <button class="btn btn-lg btn-secondary m-2 px-3 w-75"   @click.prevent="this.getPaypalAccessToken()"> Get paypal token </button>
+                <small class="text-success" v-if="this.success.signup_link"> <br>{{this.success.signup_link}}</small>
+                <small class="text-danger" v-if="this.errors.signup_link"> <br> {{this.errors.signup_link}}</small>
+                <button class="btn btn-lg btn-secondary m-2 px-3 w-75"   @click.prevent="this.generateSigupLink()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.signup_link"></span>  Link with paypal </button>
+              
+               <small class="text-success" v-if="this.success.charge_object"> <br>{{this.success.charge_object}}</small>
+                <small class="text-danger" v-if="this.errors.charge_object"> <br> {{this.errors.charge_object}}</small>
+                <button class="btn btn-lg btn-secondary m-2 px-3 w-75"   @click.prevent="this.createPaypalChargeObject()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.charge_object"></span> Create Paypal charge object</button>
+               
+                <div class="w-75 mx-auto" id="paypal-button-container"></div>
+               
                <br> <button class="btn btn-lg btn-secondary m-2 px-5"> Topup </button>
                 <button class="btn btn-lg btn-secondary m-2 px-5"> Withdraw</button> <br>
 
+                <button class="btn btn-lg btn-secondary m-2 px-3 w-75"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" v-if="! this.getUser.stripe_account_id">  Link with Stripe </button>
                 <small class="text-success p-2">{{this.success.create_charge}}</small>
-                <button class="btn btn-lg btn-secondary m-2 px-5" @click.prevent="createChargeObject()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.create_charge"></span> Create Charge object</button>
+                <button class="btn btn-lg btn-secondary m-2 px-5" @click.prevent="createChargeObject()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.create_charge"></span> Create stripe Charge object</button>
                 <br>
                 <small class="text-success p-2">{{this.success.checkout_session}}</small>
-                <button class="btn btn-lg btn-secondary m-2 px-5" @click.prevent="createCheckoutSession()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.checkout_session"></span> Checkout</button>
+                <button class="btn btn-lg btn-secondary m-2 px-5" @click.prevent="createCheckoutSession()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.checkout_session"></span> stripe Checkout</button>
             </div> 
             <!-- ------------------------------------------------------ -->
             <div class="pt-5">
@@ -434,13 +445,54 @@ export default {
         fetchAccount(){
             axios.get('/api/get-stripe-account-balance')
                 .then(response=>{
-                this.$store.commit('set_account', response.data);
-                console.log(response.data);
+                    this.$store.commit('set_account', response.data);
+                    console.log(response.data);
                 })
                 .catch(error=>{
                     console.log(error.response);
                 });
          },
+        getPaypalAccessToken(){
+            axios.get('/api/get-paypal-access-token')
+            .then(response=>{
+                console.log(response.data);
+            })
+            .catch(error=>{
+                console.log(error.response);
+            });
+        },
+        generateSigupLink(){
+            this.success={}
+            this.errors={}
+            this.spinner.signup_link = true;
+            axios.get('/api/generate-sigup-link')
+            .then(response=>{
+                this.success.signup_link = 'Success, redirecting...';
+                this.spinner={}
+                window.location.href= response.data.links[1].href;
+            })
+            .catch(error=>{
+                this.spinner={}
+                this.errors.signup_link = 'Error, cannot connect with Paypal. Please try again';
+                console.log(error.response);
+            });
+        },
+        createPaypalChargeObject(){
+            this.success={}
+            this.errors={}
+            this.spinner.charge_object = true;
+            axios.get('/api/paypal-payment')
+            .then(response=>{
+                this.spinner={}
+                this.success.charge_object = 'Success, Paypal Charge object created'
+                console.log(response.data);
+
+            })
+            .catch(error=>{
+                this.errors.charge_object = 'Error, could not create charge object!'
+                console.log(error.response);
+            });
+        },
         registerStripeConnectAccount(){
             this.errors={}
             if(!this.selected_country_code) {this.errors.selected_country="Please select your country"; return;}
@@ -472,6 +524,7 @@ export default {
                     console.log(error.response);
                 });
             }
+            
     },
     computed:{
         ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),    
@@ -479,6 +532,36 @@ export default {
     mounted(){
         this.fetchAccount();
         this.fetchTransactionHistory();
+
+function loadAsync(url, callback) {
+  var s = document.createElement('script');
+  s.setAttribute('src', url); s.onload = callback;
+  document.head.insertBefore(s, document.head.firstElementChild);
+}
+        loadAsync('https://www.paypal.com/sdk/js?client-id=sb&currency=USD', function() {
+  paypal.Buttons({
+
+    // Set up the transaction
+    createOrder: function(data, actions) {
+        return actions.order.create({
+            purchase_units: [{
+                amount: {
+                    value: '0.01'
+                }
+            }]
+        });
+    },
+
+    // Finalize the transaction
+    onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+            // Show a success message to the buyer
+            alert('Transaction completed by ' + details.payer.name.given_name);
+        });
+    }
+
+  }).render('#paypal-button-container');
+});
     }
 
 }

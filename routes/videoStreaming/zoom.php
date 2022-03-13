@@ -5,19 +5,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-// get zoom credentials
-Route::get('/zoom/get-credentials','Api\Zoom\ZoomAuthController@getZoomCredentials')->name('zoom.get.credentials');
 
-// get zoom meetings
-Route::get('/zoom/meeting/get','Api\Zoom\ZoomAuthController@getMeetings')->name('zoom.meeting.get');
-
-// update zoom meeting
-Route::get('/zoom/meeting/update/{meeting_id}','Api\Zoom\ZoomAuthController@updateZoomMeeting')->name('zoom.meeting.update');
 
 
 
 // video streaming chat routes
 Route::group(['middleware'=>['auth:api']],function(){
+    // get zoom credentials
+    Route::get('/zoom/get-credentials','Api\Zoom\ZoomAuthController@getZoomCredentials')->name('zoom.get.credentials');
+
+    // get zoom meetings
+    Route::get('/zoom/meeting/get','Api\Zoom\ZoomAuthController@getMeetings')->name('zoom.meeting.get');
+
+    // update zoom meeting
+    Route::get('/zoom/meeting/update/{meeting_id}','Api\Zoom\ZoomAuthController@updateZoomMeeting')->name('zoom.meeting.update');
 
     //get zoom user token
     Route::get('/zoom/user-auth-token','Api\Zoom\ZoomAuthController@getZoomUserToken')->name('zoom.get.user.token');
@@ -33,5 +34,9 @@ Route::group(['middleware'=>['auth:api']],function(){
     
     
 });
-// update trial lesson meeting link
-    Route::post('/update-tial-lesson-link/{id}','Api\TrialLesson\TrialLessonContoller@updateMeetingLink')->name('update.trial.meeting.link');
+
+    // update trial lesson meeting link
+    Route::post('/update-trial-lesson-link/{id}','Api\TrialLesson\TrialLessonContoller@updateMeetingLink')->name('update.trial.meeting.link');
+    
+    // handle zoom webhooks
+    Route::post('/zoom/webhooks','Api\Zoom\ZoomWebhooksController@handleWebhooks')->name('handle.zoom.webhooks');

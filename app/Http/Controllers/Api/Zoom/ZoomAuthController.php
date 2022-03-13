@@ -60,7 +60,7 @@ class ZoomAuthController extends Controller
     public function createZoomMeeting(Request $request){        
         
             $client = new Client(['base_uri' => 'https://zoom.us']);
-            $accessToken = ZoomOauth::where('user_id', $request->user()->id)->first()->token;
+            $accessToken = ZoomOauth::where('provider', 'zoom')->first()->token;
             
             $response = $client->request('POST', '/v2/users/me/meetings', [
                 "headers" => [
@@ -80,9 +80,7 @@ class ZoomAuthController extends Controller
                 'success'=>  true,
                 'message' => 'Success, zoom meeting created',
                 'data'=> $data
-            ],200);
-            
-     
+            ],200);     
     }
 
     /**
@@ -199,7 +197,7 @@ class ZoomAuthController extends Controller
      * refresh zoom token
      */
     public function refreshZoomAuthToken(Request $request){
-        $zoom_oauth = ZoomOauth::where('user_id', $request->user()->id)->first();
+        $zoom_oauth = ZoomOauth::where('provider', 'zoom')->first(); // first record
         $client = new Client(['base_uri' => 'https://zoom.us']);
            
         $response = $client->request('POST', '/oauth/token', [

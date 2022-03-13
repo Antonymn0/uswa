@@ -37,7 +37,7 @@
                         <button class="btn btn-sm btn-secondary m-1" v-if="! trial_lesson.status == 'pending'" @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel request </button>
                         <!-- <button class="btn btn-sm btn-secondary m-1" v-if="! trial_lesson.meeting_link" @click.prevent="this.openTrialLesson()">Open </button> -->
                         <a :href="trial_lesson.meeting_link"   class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.meeting_link" >Launch meeting</a>
-                        <button class="btn btn-sm btn-secondary m-1"   @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lesson </button>
+                        <button class="btn btn-sm btn-secondary m-1"   @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lessons </button>
                     </div>                   
                 </div>
             </div>              
@@ -340,7 +340,7 @@ export default {
 
         axios.get('/api/zoom/meeting/create', form_data)
         .then(response => {
-            this.updateMeetingLink(lesson.id, response.data.data.join_url);
+            this.updateMeetingLink(lesson.id,response.data.data.id, response.data.data.join_url);
             console.log(response.data.data.join_url);
         })
         .catch(error=>{            
@@ -353,9 +353,10 @@ export default {
             console.log(error.response);
         });
     },
-    updateMeetingLink(lesson_id, link){
+    updateMeetingLink(lesson_id, meeting_id, link){
         let form_data = new FormData();
         form_data.append('meeting_link', link);
+        form_data.append('meeting_id', meeting_id);
         axios.post('/api/update-lesson-link/' + lesson_id , form_data )
         .then(response => {
             console.log(response);
@@ -417,15 +418,13 @@ export default {
             if(! this.stars) this.errors.stars = 'Please select number of stars';
             if(! this.review) this.errors.review = 'This field is required';
         }
-
-
-},
-mounted(){
-    this.fetchTrialLessons();
-    this.fetchLessons();
-    this.fetchZoomAuthToken();
-    this.getZoomCredentials();
-}
+   },
+    mounted(){
+        this.fetchTrialLessons();
+        this.fetchLessons();
+        this.fetchZoomAuthToken();
+        this.getZoomCredentials();
+    }
 
 }
 </script>

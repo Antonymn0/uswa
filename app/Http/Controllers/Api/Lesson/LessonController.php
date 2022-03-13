@@ -115,7 +115,8 @@ class LessonController extends Controller
     public function updateMeetingLink(Request $request, $id ){
         $trial_lesson = Lesson::findOrFail($id);
         $trial_lesson->update([
-            'meeting_link' => $request->meeting_link
+            'meeting_link' => $request->meeting_link,
+            'meeting_id' => $request->meeting_id
         ]);
 
         return response()->json([

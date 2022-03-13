@@ -31,7 +31,7 @@
                     <p class="mb-0" v-if="trial_lesson.decline_reason !== null">
                         <span class="py-2 fw-normal">Declined:  </span> <span class="text-danger">true </span> <br>
                         <span class="py-2">Decline reason:  </span> <span> {{trial_lesson.decline_reason}}</span>
-                    </p>                   
+                    </p>                  
 
                     <p class="pt-2 mb-0"  v-if="trial_lesson.decline_reason == null">{{this.capitalize(trial_lesson.get_student.first_name)}} is eager to start learning {{this.capitalize(trial_lesson.lesson_type)}} with you.</p>
                     <div class="mb-0 py-2">
@@ -39,7 +39,9 @@
                         <button class="btn btn-sm btn-secondary m-1" v-if="this.zoom_user_auth_token && !trial_lesson.meeting_link " @click.prevent="this.acceptTrialLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.schedule_meeting" role="status" aria-hidden="true" ></span> Accept and shcedule meeting </button>
                         <button class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.status == 'pending'" data-bs-toggle="modal" :data-bs-target="'#declineModal' + index">Decline</button>
                         <a :href="trial_lesson.meeting_link" class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.meeting_link" >Launch meeting</a>
-                    </div>
+                       
+                  
+                   </div>
                     <!-- -------------------------decline lesson  modal---------------------------- -->
                         <!-- Modal -->
                         <div class="modal fade" :id="'declineModal' + index" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -186,10 +188,12 @@ export default {
         capitalize(string) {
             if(string) return string.charAt(0).toUpperCase() + string.slice(1);
         },
-        updateMeetingLink(lesson_id, link){
+        updateMeetingLink(lesson_id, meeting_id, meeting_link){
+            console.log(meeting_id);
             let form_data = new FormData();
-            form_data.append('meeting_link', link);
-            axios.post('/api/update-tial-lesson-link/' + lesson_id , form_data )
+            form_data.append('meeting_link', meeting_link);
+            form_data.append('meeting_id', meeting_id);
+            axios.post('/api/update-trial-lesson-link/' + lesson_id , form_data )
             .then(response => {
                console.log(response);
             })
@@ -201,9 +205,10 @@ export default {
             if(trial_lesson.decline_reason !== null) {alert('Lesson already declined!'); return;}
             if(trial_lesson.tutor_confirm == 'accepted') {alert('Request already accepted and scheduled!'); return;}
             if(! confirm('Accept to meet with  ' + this.capitalize(trial_lesson.get_student.first_name) + ' on the specified date and time?')) return;
+          this.spinner.schedule_meeting = true;
             axios.get('/api/tutor/confirm-trial-lesson/' + trial_lesson.id)
             .then(response =>{
-                // this.scheduleZoomMeeting(trial_lesson);
+                this.scheduleZoomMeeting(trial_lesson);
                 this.fetchTrialLessons();
                 setTimeout(() => {
                     this.errors ={};
@@ -225,14 +230,15 @@ export default {
 
             axios.get('/api/zoom/meeting/create', form_data)
             .then(response => {
-                this.updateMeetingLink(trial_lesson.id, response.data.data.join_url)
-                this.success.shedule_meeting = 'Success, meeting scheduled!'               
-                
+                console.log(response.data.data);
+                this.updateMeetingLink(trial_lesson.id, response.data.data.id, response.data.data.join_url);
+                this.fetchTrialLessons();
+                this.success.shedule_meeting = 'Success, meeting scheduled!' ;
             })
-            .catch(error=>{                
-                if(error.response.status == 500) this.refreshZoomAuthToken();            
+            .catch(error=>{             
                 delete this.spinner.schedule_meeting;
-                this.errors.shedule_meeting = 'Failed to schedule meeting!';
+                this.errors.shedule_meeting = 'Failed to schedule meeting!';              
+                if(error.response.status == 500) this.refreshZoomAuthToken(); 
                 console.log(error.response);
             });
         },
@@ -254,7 +260,7 @@ export default {
             .then(response => {
                 setTimeout(() => {
                     delete this.errors.token_expired;
-                }, 200);
+                }, 2500);
                 
             })
             .catch(error=>{   

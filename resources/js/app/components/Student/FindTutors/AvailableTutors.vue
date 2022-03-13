@@ -64,8 +64,7 @@
         </div> 
       </div>  
 
-        <div class="clearfix"></div> 
-      
+        <div class="clearfix"></div>       
       </div>
       <div v-else>
         <p class="text-center text-muted py-5">No turtors found currently</p>
