@@ -2,13 +2,18 @@
     <div>
         <h4>Availability</h4>        
         <div>
-            <div class="my-5 ">
+            <div class="mt-5 ">
                 <label for="timezone" class="form-label"><h5>Set your timezone</h5></label>               
-                <select  id="timezone"  v-model="timezone" class="bg-white w-100 p-2 border rounded text-muted">
+                <select  id="timezone"  v-model="timezone" class="bg-white w-100 p-3 border rounded text-muted">
                     <option value="" selected> -Select- </option>
                     <option :value="item.value" id="timezone" v-for="(item,index) in this.timezones" :key="index"> {{item.value}}</option>
                 </select> 
                 <small class="text-danger">{{this.errors.timezone}}</small>
+            </div>
+             <div class="form-group py-5 mb-4">
+                <label class="form-label" for="disabledFieldsetCheck" > <h5> Set your hourly rate in USD: </h5> </label>
+                <input class="bg-white w-100 p-3 border rounded text-muted" type="number" min="5" id="disabledFieldsetCheck" v-model="hourly_rate">
+                 <small class="text-danger">{{this.errors.hourly_rate}}</small>
             </div>
             <div class="schedule">
                 <h5>Set your working Schedule</h5>
@@ -1680,6 +1685,10 @@ export default {
             get() { return this.$store.state.signupProcess_availability.availability.timezone; },  
             set(value) { this.$store.commit('set_timezone', value); }
         },
+        hourly_rate:{
+            get() { return this.$store.state.signupProcess_availability.availability.hourly_rate; },  
+            set(value) { this.$store.commit('set_hourly_rate', value); }
+        },
         monday:{
             get() { return this.$store.state.signupProcess_availability.availability.monday; },
             set(value) { this.$store.commit('set_monday', is_available, from, to); }
@@ -1731,6 +1740,8 @@ export default {
 
             if(! this.monday.is_available && ! this.tuesday.is_available && ! this.wednesday.is_available && ! this.thursday.is_available && ! this.thursday.is_available && ! this.friday.is_available && ! this.saturday.is_available && ! this.sunday.is_available) this.errors.availability ="Please set up your available days."
             if(! this.timezone) this.errors.timezone = "Please setup your timezone";
+            if(! this.hourly_rate) this.errors.hourly_rate = "Please setup your hourly rate";
+            if( this.hourly_rate < 5) this.errors.hourly_rate = "Minimum hourly rate is 5 usd";
         }
     }
 }

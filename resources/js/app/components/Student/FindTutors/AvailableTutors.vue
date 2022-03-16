@@ -32,7 +32,7 @@
                             </div>
                             <div class="d-flex justify-content-between px-2">
                                  <span ><i class="bi bi-circle-fill text-success" style="font-size:.7rem"></i> </span>
-                               <span> $ 10/ hr &nbsp;</span> 
+                               <span> $ {{tutor.hourly_rate}} /hr &nbsp;</span> 
                             </div>
                         </div>
                     </div>
@@ -157,7 +157,6 @@ export default {
                     if(response.status == 200){  
                         this.tutors =response.data.data.data;   
                         this.current_tutors = this.tutors; 
-                        console.log(this.current_tutors); 
                     }                
                 })
                 .catch(error=>{               

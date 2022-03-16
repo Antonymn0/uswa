@@ -117,11 +117,11 @@ class LocalAccountController extends Controller
      */
     public function getAccountBalance(Request $request){
 
-        // $account = LocalAccount::where('user_id', $request->user()->id )->first();
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => 'local Account fetched',
-        //     'data' => $account
-        // ],200);
+        $account = LocalAccount::where('user_id', $request->user()->id )->first();
+        return response()->json([
+            'success' => true,
+            'message' => 'local Account fetched',
+            'data' => $account
+        ],200);
     }
 }

@@ -20,9 +20,9 @@ class CreateTransactionHistoriesTable extends Migration
             $table->string('transaction_type')->required(); 
             $table->string('payment_method')->required();
             $table->double('amount_transacted')->required();
-            $table->string('transacted_from')->required();   // from where ?
-            $table->string('transacted_to')->required();     //  to where?
-            $table->double('commision_charged')->required();
+            $table->string('transacted_from')->required();   // from where ? payer_id
+            $table->string('transacted_to')->required();     //  to where?  merchant_id
+            $table->double('commision_charged')->nullable();
             $table->double('balance_before')->required();
             $table->double('balance_after')->required();
             $table->timestamp('transaction_date')->required();

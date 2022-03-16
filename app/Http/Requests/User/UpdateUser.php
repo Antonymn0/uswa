@@ -76,6 +76,8 @@ class UpdateUser extends FormRequest
             'higher_education_certificate_upload' => ['mimes:jpg,jpeg,png,svg', 'nullable'],
             'has_higher_education_certificate' => ['string', 'nullable'],
 
+            'hourly_rate' => [ 'nullable','regex:/^[0-9]+(\.[0-9]{1,2})?$/'],
+
             'introduction_video' => [ 'nullable','mimes:mp4'],
             'introduction_video_url' => ['string', 'nullable'],
             'schedule' => ['string', 'nullable'],

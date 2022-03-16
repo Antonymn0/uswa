@@ -52,7 +52,7 @@
                     <span class="fw-bold"> Note: </span>
                     <span> 
                       <ul>
-                        <li>All trial lessons are limited to 1hr and below. </li>
+                        <li>All trial lessons are limited to 1hr. </li>
                         <li>This is to help you test the tutor and see if you like them. </li>
                         <li>If you dont like the tutor you can always find another. </li>
                         <li>We emphasize you to watch the tutor introduction video before booking a lesson with them. </li>
@@ -72,6 +72,8 @@
 
 <script>
 import moment from "moment";
+import {mapGetters } from "vuex";
+
 export default {
     props:['tutor'],
   
@@ -138,6 +140,9 @@ export default {
             spinner:{}
         }
     },
+    computed:{
+        ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),    
+    },
     methods:{
         testTimeLimit(){
             delete this.errors.time_limit ;
@@ -153,10 +158,13 @@ export default {
             this.testTimeLimit() ;
             this.validateDate();
 
+            if(this.getAccount.available_balance < this.tutor.hourly_rate)
+            { alert('Insufficient account balance! \nYour account must have a balance of atleast $' + this.tutor.hourly_rate + ' to cover for the cost of your first lesson.'); return;}
+
             if(!this.date) this.errors.date = "Date field is required";
             if(!this.time.from) this.errors.time_limit = "Time selection is required";
             if(!this.time.to) this.errors.time_limit = "Time selection is required";            
-            if(!this.lesson_type) this.errors.lesson_type = "Language selection is required";            
+            if(!this.lesson_type) this.errors.lesson_type = "Language selection is required";  
 
             if(Object.keys(this.errors).length) return;
             var form_data = new FormData();

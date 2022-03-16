@@ -31,24 +31,12 @@ export default {
             if(this.getUser.role == 'student') this.$router.push({name: 'student-dashboard'});
             if(this.getUser.role == 'tutor') this.$router.push({name: 'tutor-dashboard'});
             if(this.getUser.role == 'admin') this.$router.push({name: 'all-users'});
-
-            this.fetchAccount(); // fetch user local account for balance
           }
       })
       .catch(error=>{
         console.log(error.response);
       })
     },
-    fetchAccount(){
-        axios.get('/api/get-account-balance')
-            .then(response=>{
-              this.$store.commit('set_account', response.data.data);
-              console.log('Account fetched');
-            })
-            .catch(error=>{
-                console.log(error.response);
-            });
-    }
 
   },
   mounted(){

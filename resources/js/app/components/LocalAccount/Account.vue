@@ -9,8 +9,8 @@
                 <h4>Availbale balance  </h4> 
                 <p class="py-3 text-center">
                    <span class="m-0">$</span>
-                   <!-- <span class="m-0" v-if="this.getAccount">{{this.getAccount.available[0].amount}}</span> -->
-                   <span class="m-0" >0</span>
+                   <span class="m-0" v-if="this.getAccount.available_balance">{{this.getAccount.available_balance}}</span>
+                   <span class="m-0" v-else >0</span>
                 </p>
             </div>
             <div class="pt-3 pb-2">                 
@@ -145,6 +145,8 @@ export default {
             transactions:{},
             current_transactions:{},
             current_transaction:{},
+            paypal_client_id:'',
+            paypal_sdk_url:'',
             spinner:{},
             errors:{},
             success:{},
@@ -523,45 +525,84 @@ export default {
                 .catch(error=>{
                     console.log(error.response);
                 });
-            }
+            },
+        
+        
             
     },
     computed:{
         ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),    
     },
     mounted(){
-        this.fetchAccount();
+        // this.fetchAccount();
         this.fetchTransactionHistory();
 
-function loadAsync(url, callback) {
-  var s = document.createElement('script');
-  s.setAttribute('src', url); s.onload = callback;
-  document.head.insertBefore(s, document.head.firstElementChild);
-}
-        loadAsync('https://www.paypal.com/sdk/js?client-id=sb&currency=USD', function() {
-  paypal.Buttons({
+        function loadAsync(url, callback) {
+            var s = document.createElement('script');
+            s.setAttribute('src', url); s.onload = callback;
+            document.head.insertBefore(s, document.head.firstElementChild);
+        }
+        loadAsync('https://www.paypal.com/sdk/js?client-id=AalFMXbKmnN80ihnJboG9c846n91sd-bw66_I7qHPx_s4zEuP6OJM13-0LBjabA99frPSkYD7hQxCRU9&intent=authorize&disable-funding=credit,card', function() {
+            paypal.Buttons({
+                // Set up the transaction
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                currency_code: "USD",
+                                value: '2.0'
+                            },
+                            payee: {
+                                merchant_id :  'VMJSV3L3DRE9A'
+                            },
+                        }],
+                        application_context: {
+                            shipping_preference: 'NO_SHIPPING',
+                        }, 
+                    });
+                },
 
-    // Set up the transaction
-    createOrder: function(data, actions) {
-        return actions.order.create({
-            purchase_units: [{
-                amount: {
-                    value: '0.01'
-                }
-            }]
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                // Authorize the transaction
+                actions.order.authorize().then(function(authorization) {
+                    // Get the authorization id
+                    var authorizationID = authorization.purchase_units[0].payments.authorizations[0].id
+                    
+                    axios.post('/api/update/local-account/', authorization )
+                    .then(response=>{                        
+                        console.log(authorizationID);
+                        console.log(response);
+                    })
+                    .catch(error=>{                       
+                        console.log(error.response);
+                    });
+                            
+                    return;
+                    alert('You have authorized this transaction. Order ID:  ' + data.orderID + ', Authorization ID: ' + authorizationID); // Optional message given to purchaser
+
+                    // ------------------------------------------------------------------
+                   
+
+                    // ----------------------------------------------------------------
+
+
+                    // Call  server to validate and capture the transaction
+                    // var form_data = new FormData();
+                    // form_data.append('orderID', data.orderID);
+                    // form_data.append('authorizationID', authorizationID);
+                    // axios.post('/api/capture-authorized-payment', form_data )
+                    // .then(response=>{                        
+                    //     console.log(response);
+                    // })
+                    // .catch(error=>{                       
+                    //     console.log(error.response);
+                    // });
+                });
+            }
+
+        }).render('#paypal-button-container');
         });
-    },
-
-    // Finalize the transaction
-    onApprove: function(data, actions) {
-        return actions.order.capture().then(function(details) {
-            // Show a success message to the buyer
-            alert('Transaction completed by ' + details.payer.name.given_name);
-        });
-    }
-
-  }).render('#paypal-button-container');
-});
     }
 
 }

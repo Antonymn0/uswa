@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api\Payments\Paypal;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PaypalAuthToken;
-
+use Illuminate\Support\Facades\Log;
+use App\Models\LocalAccount;
+use App\Models\TransactionHistory;
 class PaypalController extends Controller
 {
     /**
@@ -94,7 +96,7 @@ class PaypalController extends Controller
             'headers' => [
                     'Accept' => 'application/json',
                     'Accept-Language' => 'en_US',
-                    'Authorization' => 'Bearer  b' . $token
+                    'Authorization' => 'Bearer ' . $token
                 ],
             'json' => $body,
             ]
@@ -134,6 +136,89 @@ class PaypalController extends Controller
         );
         $data = json_decode($response->getBody());
         return $data;
+    }
+
+    /**
+     * Capture authorized payment
+     */
+    public function captureAuthorizedPAyment(Request $request)
+    {
+        $uri = 'https://api-m.sandbox.paypal.com/v2/payments/authorizations/' . $request->authorizationID . '/capture';
+        $token= PaypalAuthToken::first()->token;
+
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', $uri, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $token,
+                'PayPal-Request-Id' => uniqid()
+                ], 
+            'json'=>[
+                'payment_instruction' =>  [
+                    'disbursement_mode' =>  'INSTANT',
+                    'platform_fees' =>  [[
+                        'amount' =>  [
+                            'currency_code' =>  'USD',
+                            'value' =>  '1'
+                        ]
+                    ]]
+                ],
+            ],  
+        ]);
+
+        $data = json_decode($response->getBody());
+        return $data;
+    }
+
+    /**
+     * update local account after an authorization is successful
+    */
+    public function updateLocalAccount(Request $request){
+        
+        // Log::info($request->intent);
+        // Log::info($request->payer['payer_id']);
+        // Log::info($request->payer['email_address']);
+        // Log::info($request->purchase_units[0]['payments']['authorizations'][0]['id']);        
+        // Log::info($request->purchase_units[0]['payments']['authorizations'][0]['amount']['currency_code']);
+        // Log::info($request->purchase_units[0]['payments']['authorizations'][0]['amount']['value']);
+        // Log::info($request->purchase_units[0]['payee']['email_address']);
+        // Log::info($request->purchase_units[0]['payee']['merchant_id']);
+
+        
+        $user = $request->user();
+        $account = LocalAccount::where('user_id', $user->id)->first();
+         // update local account balance
+        $acc_data = [
+            'last_transaction_date' => now(),
+            'last_transaction_method' => 'paypal',
+            'last_amount_transacted' => $request->purchase_units[0]['payments']['authorizations'][0]['amount']['value'],
+            'balance_before' => $account->available_balance,
+            'available_balance' => $account->available_balance + $request->purchase_units[0]['payments']['authorizations'][0]['amount']['value'],
+            'balance_after' => $account->available_balance + $request->purchase_units[0]['payments']['authorizations'][0]['amount']['value'],
+        ];
+        
+
+        // record transaction in db
+        $trans_data =[
+            'user_id' => $user->id,
+            'transaction_id' => $request->purchase_units[0]['payments']['authorizations'][0]['id'],
+            'transaction_type' => 'authorise:paypal',
+            'payment_method' => 'paypal',
+            'amount_transacted' => $request->purchase_units[0]['payments']['authorizations'][0]['amount']['value'],
+            'transacted_from' => $request->payer['email_address'],
+            'transacted_to' => $request->purchase_units[0]['payee']['email_address'] ,
+            'commision_charged' => 0 ,
+            'balance_before' => $account->available_balance,
+            'balance_after' => $account->available_balance + $request->purchase_units[0]['payments']['authorizations'][0]['amount']['value'],
+            'transaction_date' => now(),
+            'remarks' => 'Authorise paypal to hold funds for  lessons. ' ,
+        ];
+
+        $transaction = TransactionHistory::create($trans_data); 
+          
+        $account->update($acc_data);  // update  
+
+        return $account;
     }
 
 }

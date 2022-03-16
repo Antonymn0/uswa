@@ -85,6 +85,8 @@ export default {
 
                 // availability
                 form_data.append('timezone', this.$store.state.signupProcess_availability.availability.timezone);
+                form_data.append('hourly_rate', this.$store.state.signupProcess_availability.availability.hourly_rate);
+
                 form_data.append('monday', JSON.stringify(this.$store.state.signupProcess_availability.availability.monday));
                 form_data.append('tuesday', JSON.stringify(this.$store.state.signupProcess_availability.availability.tuesday));
                 form_data.append('wednesday', JSON.stringify(this.$store.state.signupProcess_availability.availability.wednesday));

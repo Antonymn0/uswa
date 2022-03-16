@@ -1,8 +1,6 @@
 export const account = {
     state: () => ({
-        account: {
-            'available': [  {'amount':0} ], // intialize account balance
-        },
+        account: {available:0},
     }),
 
     actions: {},
@@ -21,4 +19,16 @@ export const account = {
             return state.account;
         },
     },
+
+    actions: {
+        fetchLocalAccount(context) {
+            axios.get("/api/local-account/balance")
+            .then((response) => {
+                context.commit("set_account", response.data.data);
+            })
+            .catch((error) => {
+                console.log(error.response);
+            });
+        }
+    }
 };

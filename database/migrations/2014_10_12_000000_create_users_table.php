@@ -74,6 +74,8 @@ class CreateUsersTable extends Migration
            $table->string('introduction_video')->nullable();
            $table->string('introduction_video_url')->nullable();
 
+           $table->double('hourly_rate')->nullable();
+
            $table->string('zoom_linked')->nullable();
            $table->string('zoom_id')->nullable();
 

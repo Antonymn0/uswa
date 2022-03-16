@@ -90,7 +90,6 @@ class LessonController extends Controller
             'message'=> 'Lesson updatedsuccessfully', 
             'data'=>$lesson
             ], 200);
-
     }
 
     /**

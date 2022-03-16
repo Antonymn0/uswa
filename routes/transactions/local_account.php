@@ -11,5 +11,8 @@ Route::group(['middleware'=>['auth:api']],function(){
 
     //transaction history routes     
     Route::post('/transaction','Api\Payments\TransactionHistoryController@store'); 
+
+    //fetch local account balance    
+    Route::get('/local-account/balance','Api\Payments\LocalAccountController@getAccountBalance'); 
         
 });

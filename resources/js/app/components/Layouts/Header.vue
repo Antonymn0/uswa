@@ -37,12 +37,11 @@
         <div class="border btn btn-default py-2">
           <span class="fw-bold"> Bal: </span>
           <span class="text-muted"> $</span>
-          <span class="text-muted">{{this.getAccount.available[0].amount}} </span>
+          <span class="text-muted">{{this.getAccount.available_balance}} </span>
         </div> 
       </router-link>           
     </div>
     <!-- --------------------------------------------------- -->
-
     <!-- ---------Dashboard----------------- -->
     <div class="d-flex align-items-center">        
         <div class="px-2 desktop" v-if=" isLogedIn && this.getUser.role !== 'admin'">
@@ -106,7 +105,7 @@
 </template>
 
 <script>
-import {mapGetters } from "vuex";
+import {mapGetters, mapActions } from "vuex";
 
 import MobileNav from "../Navigation/MobileNav.vue";
 import Logout from "../Auth/Logout.vue";
@@ -155,10 +154,12 @@ export default {
 
   },
   computed:{
-    ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),    
+    ...mapGetters(['isLogedIn', 'getUser', 'getAccount']), 
+  
   },
 mounted(){     
     this.showHomePage();
+    this.$store.dispatch('fetchLocalAccount');
     }
 }
 </script>

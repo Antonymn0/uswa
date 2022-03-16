@@ -4,6 +4,7 @@ export const signupProcess_availability = {
     state: () => ({
         availability: {
             timezone: null,
+            hourly_rate: null,
 
             monday: {
                 is_available: false,
@@ -47,6 +48,9 @@ export const signupProcess_availability = {
     mutations: {
         set_timezone(state, timezone) {
             state.availability.timezone = timezone;
+        },
+        set_hourly_rate(state, hourly_rate) {
+            state.availability.hourly_rate = hourly_rate;
         },
         set_monday(state, is_available, from, to) {
             state.monday.is_available = is_available;

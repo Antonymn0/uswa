@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// -------------- Protected routes -----------------
+// --------------PAYPAL Protected routes -----------------
 Route::group(['middleware'=>['auth:api']],function(){
  
    //get paypal access token    
@@ -14,4 +14,11 @@ Route::group(['middleware'=>['auth:api']],function(){
 
    //generate signup link   
     Route::get('/paypal-payment','Api\Payments\Paypal\PaypalController@createChargeObject'); 
+   
+   //capture authorized payment   
+    Route::post('/capture-authorized-payment','Api\Payments\Paypal\PaypalController@captureAuthorizedPAyment'); 
+   
+   //update local account  
+    Route::post('/update/local-account','Api\Payments\Paypal\PaypalController@updateLocalAccount'); 
 });
+
