@@ -35,9 +35,13 @@
                     <div class="mb-0 py-2">
                         <a v-if="! this.zoom_user_auth_token" :href="'https://zoom.us/oauth/authorize?response_type=code&client_id=' + this.CLIENT_ID + '&state=' + this.ZOOM_STATE + '&redirect_uri=' + this.REDIRECT_URI" class="btn btn-secondary btn-small m-2" >Link with zoom</a>  
                         <button class="btn btn-sm btn-secondary m-1" v-if="! trial_lesson.status == 'pending'" @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel request </button>
-                        <!-- <button class="btn btn-sm btn-secondary m-1" v-if="! trial_lesson.meeting_link" @click.prevent="this.openTrialLesson()">Open </button> -->
                         <a :href="trial_lesson.meeting_link"   class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.meeting_link" >Launch meeting</a>
                         <button class="btn btn-sm btn-secondary m-1"   @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lessons </button>
+                        <span>
+                            Impressed by the tutor? 
+                             <span class="btn btn-secondary m-1" @click="processPayment()">Yes</span>
+                             <span class="btn btn-secondary m-1">No</span>
+                        </span>
                     </div>                   
                 </div>
             </div>              
@@ -417,6 +421,18 @@ export default {
             this.errors ={}
             if(! this.stars) this.errors.stars = 'Please select number of stars';
             if(! this.review) this.errors.review = 'This field is required';
+        },
+        processPayment(){ // process paypal payments
+            if(!confirm("By clicking yes, You authorise payments to be moved to the tutor as payments")) return;
+            // Call  server to capture the transaction
+            
+            axios.get('/api/capture-authorized-payment',)
+            .then(response=>{                        
+                console.log(response);
+            })
+            .catch(error=>{                       
+                console.log(error.response);
+            });
         }
    },
     mounted(){

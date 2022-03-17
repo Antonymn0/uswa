@@ -8,6 +8,7 @@ use App\Models\PaypalAuthToken;
 use Illuminate\Support\Facades\Log;
 use App\Models\LocalAccount;
 use App\Models\TransactionHistory;
+use App\Models\User;
 class PaypalController extends Controller
 {
     /**
@@ -58,36 +59,40 @@ class PaypalController extends Controller
    /**
     * Generate paypal seller/merchant onboarding link
     */
-   public function generateSignupLink(){
+   public function generateSignupLink(Request $request){
+        $user = $request->user();
         $uri = 'https://api-m.sandbox.paypal.com/v2/customer/partner-referrals';
         $token= PaypalAuthToken::first()->token;
         $body =  [
-            "tracking_id"=> "<Tracking-ID>",
+            "tracking_id"=> '$user->id',
             "operations"=> [
-                        [
-                            "operation"=> "API_INTEGRATION",
-                            "api_integration_preference"=> [
-                            "rest_api_integration"=> [
-                                "integration_method"=> "PAYPAL",
-                                "integration_type"=> "THIRD_PARTY",
-                                "third_party_details"=> [
-                                "features"=> [
-                                    "PAYMENT",
-                                    "REFUND"
-                                ]
-                                ]
-                            ]
-                            ]
+                [
+                    "operation"=> "API_INTEGRATION",
+                    "api_integration_preference"=> [
+                    "rest_api_integration"=> [
+                        "integration_method"=> "PAYPAL",
+                        "integration_type"=> "THIRD_PARTY",
+                        "third_party_details"=> [
+                        "features"=> [
+                            "PAYMENT",
+                            "REFUND"
                         ]
+                        ]
+                    ]
+                    ]
+                ]
             ],
+             "partner_configuration_override"=> [
+                "return_url"=> "https://38d9-197-232-61-216.ngrok.io",
+             ],
             "products"=> [
-            "EXPRESS_CHECKOUT"
+                "EXPRESS_CHECKOUT"
             ],
             "legal_consents"=> [
-            [
-                "type"=> "SHARE_DATA_CONSENT",
-                "granted"=> true
-            ]
+                [
+                    "type"=> "SHARE_DATA_CONSENT",
+                    "granted"=> true
+                ]
             ]
         ];
 
@@ -142,8 +147,18 @@ class PaypalController extends Controller
      * Capture authorized payment
      */
     public function captureAuthorizedPAyment(Request $request)
-    {
-        $uri = 'https://api-m.sandbox.paypal.com/v2/payments/authorizations/' . $request->authorizationID . '/capture';
+    { 
+        $commision_rate = 10; // 10% commision
+        $user = $request->user();
+        $payment_on_hold = TransactionHistory::where('user_id', $user->id)
+                                                ->where('status', 'onhold')
+                                                ->first();
+        if(!empty($$payment_on_hold)) return $payment_on_hold;
+
+        $commisson_amount = $commision_rate/100 * $payment_on_hold->amount_transacted ; // calculate commision
+
+        // capture/process payment 
+        $uri = 'https://api-m.sandbox.paypal.com/v2/payments/authorizations/' . $payment_on_hold->transaction_id . '/capture';
         $token= PaypalAuthToken::first()->token;
 
         $client = new \GuzzleHttp\Client();
@@ -159,7 +174,7 @@ class PaypalController extends Controller
                     'platform_fees' =>  [[
                         'amount' =>  [
                             'currency_code' =>  'USD',
-                            'value' =>  '1'
+                            'value' =>  $commisson_amount
                         ]
                     ]]
                 ],
@@ -167,6 +182,38 @@ class PaypalController extends Controller
         ]);
 
         $data = json_decode($response->getBody());
+
+        $account = LocalAccount::where('user_id', $user->id)->first();
+
+        // update local account balance
+        $acc_data = [
+            'last_transaction_date' => now(),
+            'last_transaction_method' => 'paypal',
+            'last_amount_transacted' => $payment_on_hold->amount_transacted,
+            'balance_before' => $account->available_balance,
+            'available_balance' => $account->available_balance - $payment_on_hold->amount_transacted,
+            'balance_after' => $account->available_balance - $payment_on_hold->amount_transacted,
+        ];
+
+         // record transaction in db
+        $trans_data =[
+            'user_id' => $user->id,
+            'transaction_id' => $data->id,
+            'transaction_type' => 'transfer funds',
+            'payment_method' => 'paypal',
+            'amount_transacted' => $payment_on_hold->amount_transacted,
+            'transacted_from' => $payment_on_hold->transacted_from,
+            'transacted_to' =>  $payment_on_hold->transacted_to,
+            'commision_charged' => $commisson_amount ,
+            'balance_before' => $account->available_balance,
+            'balance_after' => $account->available_balance - $payment_on_hold->amount_transacted,
+            'transaction_date' => now(),
+            'remarks' => 'Transafer paypemnts to tutor ' ,
+            'status' => 'Complete',
+        ];
+        $account->update($acc_data);  // update
+        $transaction = TransactionHistory::create($trans_data); // record history
+
         return $data;
     }
 
@@ -187,7 +234,7 @@ class PaypalController extends Controller
         
         $user = $request->user();
         $account = LocalAccount::where('user_id', $user->id)->first();
-         // update local account balance
+        // update local account balance
         $acc_data = [
             'last_transaction_date' => now(),
             'last_transaction_method' => 'paypal',
@@ -211,7 +258,8 @@ class PaypalController extends Controller
             'balance_before' => $account->available_balance,
             'balance_after' => $account->available_balance + $request->purchase_units[0]['payments']['authorizations'][0]['amount']['value'],
             'transaction_date' => now(),
-            'remarks' => 'Authorise paypal to hold funds for  lessons. ' ,
+            'remarks' => 'Authorise paypal to hold funds for  lessons ' ,
+            'status' => 'onhold',
         ];
 
         $transaction = TransactionHistory::create($trans_data); 

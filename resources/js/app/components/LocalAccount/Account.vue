@@ -534,7 +534,7 @@ export default {
         ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),    
     },
     mounted(){
-        // this.fetchAccount();
+        this.fetchAccount();
         this.fetchTransactionHistory();
 
         function loadAsync(url, callback) {
@@ -587,17 +587,6 @@ export default {
                     // ----------------------------------------------------------------
 
 
-                    // Call  server to validate and capture the transaction
-                    // var form_data = new FormData();
-                    // form_data.append('orderID', data.orderID);
-                    // form_data.append('authorizationID', authorizationID);
-                    // axios.post('/api/capture-authorized-payment', form_data )
-                    // .then(response=>{                        
-                    //     console.log(response);
-                    // })
-                    // .catch(error=>{                       
-                    //     console.log(error.response);
-                    // });
                 });
             }
 

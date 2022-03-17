@@ -27,6 +27,7 @@ class CreateTransactionHistoriesTable extends Migration
             $table->double('balance_after')->required();
             $table->timestamp('transaction_date')->required();
             $table->text('remarks')->nullable();
+            $table->string('status')->nullable();
 
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
