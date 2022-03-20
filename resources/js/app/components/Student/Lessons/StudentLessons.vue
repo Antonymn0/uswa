@@ -337,6 +337,7 @@ export default {
 
     },
     async scheduleZoomMeeting(lesson){
+        await this.refreshZoomAuthToken();
         var form_data = new FormData();
         form_data.append('topic', lesson.lesson_type);
         form_data.append('type', 2);
