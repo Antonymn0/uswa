@@ -13,7 +13,7 @@ Route::group(['middleware'=>['auth:api']],function(){
     Route::get('/generate-sigup-link','Api\Payments\Paypal\PaypalController@generateSignupLink'); 
 
    //charge object   
-    Route::get('/paypal-payment','Api\Payments\Paypal\PaypalController@disburseFunds'); 
+    Route::get('/paypal-payment','Api\Payments\Paypal\PaypalController@withdrawFunds'); 
    
    //capture authorized payment   
     Route::get('/capture-authorized-payment','Api\Payments\Paypal\PaypalController@captureAuthorizedPAyment'); 

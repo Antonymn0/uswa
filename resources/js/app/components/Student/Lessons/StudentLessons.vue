@@ -29,19 +29,20 @@
                         <span class="py-2 fw-normal">Declined:  </span> <span class="text-danger">true </span> <br>
                         <span class="py-2">Decline reason:  </span> <span> {{trial_lesson.decline_reason}}</span>
                     </p>
-                   <p class="py-2 mb-0 mt-2" v-if="trial_lesson.tutor_confirm == 'pending' ">This trial lesson request has not been accepted yet. You will recieve a notification when {{this.capitalize(trial_lesson.get_tutor.first_name)}} responds.</p>
-                   <p class="py-2 mb-0 mt-2" v-if="trial_lesson.tutor_confirm == 'accepted' "> {{this.capitalize(trial_lesson.get_tutor.first_name)}} has accepted the trial request. Your lesson is scheduled on the set date.</p>
+                   <p class="py-2 mb-0 mt-2 small" v-if="trial_lesson.tutor_confirm == 'pending' ">This trial lesson request has not been accepted yet. You will recieve a notification when {{this.capitalize(trial_lesson.get_tutor.first_name)}} responds.</p>
+                   <p class="py-2 mb-0 mt-2 small" v-if="trial_lesson.tutor_confirm == 'accepted' "> {{this.capitalize(trial_lesson.get_tutor.first_name)}} has accepted the trial request. Your lesson is scheduled on the set date.</p>
 
                     <div class="mb-0 py-2">
                         <a v-if="! this.zoom_user_auth_token" :href="'https://zoom.us/oauth/authorize?response_type=code&client_id=' + this.CLIENT_ID + '&state=' + this.ZOOM_STATE + '&redirect_uri=' + this.REDIRECT_URI" class="btn btn-secondary btn-small m-2" >Link with zoom</a>  
-                        <button class="btn btn-sm btn-secondary m-1" v-if="! trial_lesson.status == 'pending'" @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel request </button>
+                        <button class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.tutor_confirm == 'pending' " @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel request </button>
                         <a :href="trial_lesson.meeting_link"  class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.meeting_link " >Launch meeting</a>
-                        <button class="btn btn-sm btn-secondary m-1"   @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lessons </button>
-                        <span>
+                       
+                        <span v-if="trial_lesson.tutor_confirm == 'accepted' ">
                             Impressed by the tutor?  <br>
-                             <span class="btn btn-secondary m-1" @click="processPayment(trial_lesson)">Yes</span>
-                             <span class="btn btn-secondary m-1" @click.prevent="notImpressedbyTutor(trial_lesson)">No</span>
-                        </span>
+                             <span class="btn btn-sm btn-secondary m-1" @click="processPayment(trial_lesson)">Yes</span>
+                             <span class="btn btn-sm btn-secondary m-1" @click.prevent="notImpressedbyTutor(trial_lesson)">No</span>
+                        </span> <br>
+                         <button class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.tutor_confirm == 'accepted' "  @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lessons </button>
                     </div>                   
                 </div>
             </div>              
@@ -424,7 +425,7 @@ export default {
         },
         processPayment(trial_lesson){ 
             // process paypal payments
-            if(!confirm("By clicking yes, You also authorise funds to be moved from your account to tutor's as payments")) return;
+            if(!confirm("By clicking yes, You accept lessons from this tutor and also authorise funds to be moved from your account to the tutor as payments for this session.")) return;
 
             var form_data = new FormData();
             form_data.append('trial_lesson', JSON.stringify(trial_lesson));
@@ -439,7 +440,7 @@ export default {
             });
         },
         notImpressedbyTutor(trial_lesson){
-            if(!confirm('You can always find yourself another tutor from the pool. \n This trial record will be discarded for now and will no longer be available. \n proceed?')) return;
+            if(!confirm('We are sorry to hear this '+ this.getUser.first_name +', \n You can always find yourself another tutor from the pool. \n Make sure to watch the tutors introduction video first. \n This trial record will be discarded for now and will no longer be available. \n Proceed?')) return;
             axios.get('/api/student/cancel-trial-lesson/' + trial_lesson.id)
             .then(response =>{
                 this.success.cancel_lesson ="Success, Trial lesson discarded";

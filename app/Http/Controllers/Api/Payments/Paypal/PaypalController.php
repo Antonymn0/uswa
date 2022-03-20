@@ -147,10 +147,14 @@ class PaypalController extends Controller
    /**
     * Create charge object for payment processing
     */
-    public function createChargeObject(Request $request, $tutor){ 
-        $tutor_local_account = LocalAccount::where('user_id', $tutor->id)->first();
+    public function withdrawFunds(Request $request){ 
+        $tutor =  $request->user();
+        $tutor_local_account = LocalAccount::where('user_id', $request->user()->id)->first();
+
         if(empty($tutor_local_account)) return;
         if($tutor_local_account->available_balance < 50) return; // dont withdraw accounts less than 50 balance
+
+        $this-> getAccessToken(); // refresh paypal access token
 
         $token= PaypalAuthToken::first()->token;
         $uri = 'https://api-m.sandbox.paypal.com/v2/checkout/orders';
@@ -202,7 +206,7 @@ class PaypalController extends Controller
             'balance_before' => $tutor_local_account->available_balance,
             'balance_after' => 0,
             'transaction_date' => now(),
-            'remarks' => 'Disburse funds to tutor ' ,
+            'remarks' => 'Withraw:funds ' ,
             'status' => 'Complete',
         ];
         $tutor_local_account->update($acc_data);
@@ -216,14 +220,7 @@ class PaypalController extends Controller
      */
     public function captureAuthorizedPAyment(Request $request, $transaction, $transaction_id)
     { 
-        // $commision_rate = 10; // 10% uswa commision
         $user = $request->user();
-        // $payment_on_hold = TransactionHistory::where('user_id', $user->id)
-        //                                         ->where('status', 'onhold')
-        //                                         ->first();
-        // if(!empty($$payment_on_hold)) return $payment_on_hold;
-
-        // $commisson_amount = $commision_rate/100 * $payment_on_hold->amount_transacted ; // calculate commision
 
         // capture/process payment 
         $uri = 'https://api-m.sandbox.paypal.com/v2/payments/authorizations/' . $transaction_id . '/capture';
@@ -276,7 +273,7 @@ class PaypalController extends Controller
             'balance_before' => $account->available_balance,
             'balance_after' => $account->available_balance + $transaction->amount_transacted,
             'transaction_date' => now(),
-            'remarks' => 'Transafer payments to the Uswa tutor ' ,
+            'remarks' => 'Top up Uswa acc ' ,
             'status' => 'Complete',
         ];
         $account->update($acc_data);  // update
@@ -293,17 +290,7 @@ class PaypalController extends Controller
      * update local account after a payment authorization is successful
     */
     public function updateLocalAccount(Request $request){
-        
-        // Log::info($request->intent);
-        // Log::info($request->payer['payer_id']);
-        // Log::info($request->payer['email_address']);
-        // Log::info($request->purchase_units[0]['payments']['authorizations'][0]['id']);        
-        // Log::info($request->purchase_units[0]['payments']['authorizations'][0]['amount']['currency_code']);
-        // Log::info($request->purchase_units[0]['payments']['authorizations'][0]['amount']['value']);
-        // Log::info($request->purchase_units[0]['payee']['email_address']);
-        // Log::info($request->purchase_units[0]['payee']['merchant_id']);
-
-        
+ 
         $user = $request->user();
         $account = LocalAccount::where('user_id', $user->id)->first();
         // update local account balance
@@ -316,7 +303,6 @@ class PaypalController extends Controller
             'balance_after' => $account->available_balance + $request->purchase_units[0]['payments']['authorizations'][0]['amount']['value'],
         ];
         
-
         // record transaction in db
         $trans_data =[
             'user_id' => $user->id,
@@ -330,8 +316,8 @@ class PaypalController extends Controller
             'balance_before' => $account->available_balance,
             'balance_after' => $account->available_balance + $request->purchase_units[0]['payments']['authorizations'][0]['amount']['value'],
             'transaction_date' => now(),
-            'remarks' => 'Authorise paypal to hold funds on behalf of Uswa ' ,
-            'status' => 'onhold',
+            'remarks' => 'Authorise:paypal ' ,
+            'status' => 'Complete',
         ];
 
         $transaction = TransactionHistory::create($trans_data);           
@@ -346,18 +332,5 @@ class PaypalController extends Controller
         return $account;
     }
 
-    /**
-     * Disburse funds to tutors
-     */
-    public function disburseFunds(Request $request){
-        $tutors = User::where('role', 'tutor')->get();
-        if(!count($tutors)) return 'Empty';
-
-        foreach ($tutors as $tutor) {
-            if(!empty($tutor->paypal_merchant_id)){
-               return $this->createChargeObject($request, $tutor);
-            }
-        }
-        return "Success";
-    }
+   
 }

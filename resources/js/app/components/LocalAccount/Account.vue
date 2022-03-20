@@ -1,44 +1,40 @@
 <template>
-  <div class="px-4 pe-5">
+  <div class="px-4 pe-5 text-secondary">
     <div class="row "> 
       <div class="col-sm-6">
         <div class="py-3 h-100">
           <div class="card p-3 text-center h-100">
             <!-- --------------------------------------- -->
-            <div class="fw-bold pt-5"> 
+            <div class="py-3 card mx-2 rounded shadow"> 
+            <div class="fw-bold pt-5 "> 
                 <h4>Availbale balance  </h4> 
-                <p class="py-3 text-center">
+                <p class="py-3 text-center fw-bold">
                    <span class="m-0">$</span>
-                   <span class="m-0" v-if="this.getAccount.available_balance">{{this.getAccount.available_balance}}</span>
+                   <span class="m-0 " v-if="this.getAccount.available_balance">{{this.getAccount.available_balance}}</span>
                    <span class="m-0" v-else >0</span>
                 </p>
             </div>
-            <div class="pt-3 pb-2">                 
-                
-                <button class="btn btn-lg btn-secondary m-2 px-3 w-75"   @click.prevent="this.getPaypalAccessToken()"> Get paypal token </button>
+            <div class="pt-3 pb-2"> 
+                <!-- <button class="btn btn-lg btn-secondary m-2 px-3 w-75"   @click.prevent="this.getPaypalAccessToken()"> Get paypal token </button> -->
                 <small class="text-success" v-if="this.success.signup_link"> <br>{{this.success.signup_link}}</small>
                 <small class="text-danger" v-if="this.errors.signup_link"> <br> {{this.errors.signup_link}}</small>
-                <button class="btn btn-lg btn-secondary m-2 px-3 w-75"   @click.prevent="this.generateSigupLink()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.signup_link"></span>  Link with paypal </button>
+                <button class="btn btn-lg btn-secondary m-2 px-3 w-75" v-if="this.getUser.role == 'tutor' && !this.getUser.paypal_merchant_id"  @click.prevent="this.generateSigupLink()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.signup_link"></span>  Link with paypal </button>
               
                <small class="text-success" v-if="this.success.charge_object"> <br>{{this.success.charge_object}}</small>
                 <small class="text-danger" v-if="this.errors.charge_object"> <br> {{this.errors.charge_object}}</small>
-                <button class="btn btn-lg btn-secondary m-2 px-3 w-75"   @click.prevent="this.createPaypalChargeObject()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.charge_object"></span>Disburse Funds</button>
                
-                <div class="w-75 mx-auto" id="paypal-button-container"></div>
-               
-               <br> <button class="btn btn-lg btn-secondary m-2 px-5"> Topup </button>
-                <button class="btn btn-lg btn-secondary m-2 px-5"> Withdraw</button> <br>
-
-                <button class="btn btn-lg btn-secondary m-2 px-3 w-75"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" v-if="! this.getUser.stripe_account_id">  Link with Stripe </button>
-                <small class="text-success p-2">{{this.success.create_charge}}</small>
-                <button class="btn btn-lg btn-secondary m-2 px-5" @click.prevent="createChargeObject()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.create_charge"></span> Create stripe Charge object</button>
-                <br>
-                <small class="text-success p-2">{{this.success.checkout_session}}</small>
-                <button class="btn btn-lg btn-secondary m-2 px-5" @click.prevent="createCheckoutSession()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.checkout_session"></span> stripe Checkout</button>
+               <span class="text-center">
+                <button class="btn btn-secondary p-2 btn-lg m-2 w-75" v-if="this.getUser.role == 'tutor' "  @click.prevent="this.withdrawFunds()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.charge_object"></span>Withdraw</button>
+                <div class=" mx-auto m-2 w-75" v-if="this.getUser.role == 'student' " >
+                    <label class=" text-secondary">Topup with: </label>
+                    <div id="paypal-button-container"></div> 
+                </div>  
+               </span>
+            </div> 
             </div> 
             <!-- ------------------------------------------------------ -->
             <div class="pt-5">
-                <h5> Latest transactions</h5>
+                <h4> Latest transactions</h4>
                 <div v-if="Object.keys(this.current_transactions).length"> 
                     <div class="border rounded px-2 py-1 my-1" v-for="(transaction, index) in  this.current_transactions" :key="index" v-show="index < 5">
                         <p class="d-flex mb-0 justify-content-between">
@@ -57,34 +53,7 @@
                 </div>              
             </div>  
           </div> 
-            <!-- -------------------------countries modal----------------------------------- -->
-                <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Link with Stripe</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body ">
-                        <div class="form-group py-3"> 
-                            <small class="alert-danger p-2 rounded m-2" v-if="this.errors.stripe_fail"> Your country {{this.selected_country_name}} <br> {{this.errors.stripe_fail}} <br></small>                
-                            <label for="country" class="fw-bold py-1"> Select Your country:</label>
-                            <select class="w-100 bg-white border rounded p-3" id="country" v-model="this.selected_country_code" > 
-                                <option :value="index" v-for="(country, index) in this.countries" :key="index" > {{country}} </option>
-                            </select> 
-                            <small class="text-danger p-2" v-if="this.errors.selected_country">{{this.errors.selected_country}}</small>   
-
-                        </div>
-                    </div>
-                    <div class="text-end p-3 float-end">
-                        <small class="text-success p-3" v-if="this.success.stripe_success">{{this.success.stripe_success}} <br> </small>
-                        <button type="button" class="btn btn-secondary m-1" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary m-1" @click.prevent="registerStripeConnectAccount()"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.link_with_stripe"></span>  Submit</button>
-                    </div>
-                    </div>
-                </div>
-                </div>
+           
           <!-- ------------------------------------------------------------------------- -->
         </div>
       </div>
@@ -413,36 +382,8 @@ export default {
         },
         capitalize(string) {
             if(string) return string.charAt(0).toUpperCase() + string.slice(1);
-        },
-        createChargeObject(){
-            this.errors={}
-            this.spinner.create_charge = true
-            axios.get('/api/create-stripe-charge-object')
-                .then(response=>{
-                    this.spinner={}
-                    this.success.create_charge = "Charge successful"
-                    // console.log(response.data);
-                })
-                .catch(error=>{
-                    this.spinner={}
-                    console.log(error.response);
-                });
-        },
-        createCheckoutSession(){
-            this.errors={}
-            this.spinner.checkout_session= true
-            axios.get('/api/create-stripe-checkout-session')
-            .then(response=>{
-                this.spinner={}
-                console.log(response.data);
-                this.success.checkout_session = "Session created, Redirecting....";
-                window.location.href= response.data.url;
-            })
-            .catch(error=>{
-                this.spinner={}
-                console.log(error.response);
-            });
-        },
+        },        
+        
         fetchAccount(){
            this.$store.dispatch('fetchLocalAccount');
          },
@@ -480,42 +421,27 @@ export default {
                 console.log(error.response);
             });
         },
-        createPaypalChargeObject(){
+        withdrawFunds(){
             this.success={}
             this.errors={}
+            if(this.getAccount.available_balance < 50) {alert('Cannot process withdrawal of funds less than $50!'); return;}
             this.spinner.charge_object = true;
             axios.get('/api/paypal-payment')
             .then(response=>{
                 this.spinner={}
-                this.success.charge_object = 'Success, Paypal Charge object created'
+                this.success.charge_object = 'Success, withdrawal successful'
                 console.log(response.data);
 
             })
             .catch(error=>{
-                this.errors.charge_object = 'Error, could not create charge object!'
+                this.success={}
+                this.errors={}
+                this.spinner={}
+                this.errors.charge_object = 'Error, could not withdraw funds!'
                 console.log(error.response);
             });
         },
-        registerStripeConnectAccount(){
-            this.errors={}
-            if(!this.selected_country_code) {this.errors.selected_country="Please select your country"; return;}
-            this.spinner.link_with_stripe = true
-            axios.get('/api/register-stripe-connect-account/'+ this.selected_country_code)
-            .then( response=>{   
-                this.spinner={}                          
-                this.success.stripe_success = "Success, redirecting...."; 
-                window.location.href = response.data.url; 
-            })
-            .catch(error=>{
-                this.spinner={} 
 
-                var sel = document.getElementById("country");
-                this.selected_country_name = sel.options[sel.selectedIndex].text;
-
-                this.errors.stripe_fail = error.response.data.message
-                console.log(error.response);
-            });
-        },
 
         fetchTransactionHistory(){
             axios.get('/api/get-transaction-history')
@@ -535,6 +461,13 @@ export default {
         loadPaypalCheckout(){
             this.loadAsync('https://www.paypal.com/sdk/js?client-id=' + this.paypal_client_id + '&intent=authorize&disable-funding=credit,card', function() {
                 paypal.Buttons({
+                    style: {
+                        layout:  'vertical',
+                        color:   'blue',
+                        shape:   'rect',
+                        label:   'paypal',
+                        height:50
+                    },
                     // Set up the transaction
                     createOrder: function(data, actions) {
                         return actions.order.create({
