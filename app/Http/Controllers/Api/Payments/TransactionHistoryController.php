@@ -34,10 +34,9 @@ class TransactionHistoryController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
      * @param  \Illuminate\Http\Request\ValidateTransactionHistoryRequest  $request
      * @return \Illuminate\Http\Response
-     */
+    */
     public function store(ValidateTransactionHistoryRequest $request)
     {
         $data = $request->validated(); 
@@ -113,6 +112,7 @@ class TransactionHistoryController extends Controller
      */
     public function getHistory(Request $request){
         $transaction_history = TransactionHistory::where('user_id', $request->user()->id)
+                                ->orderBy('created_at', 'desc')
                                 ->paginate(env('API_PAGINATION', 20));
 
         return response()->json([

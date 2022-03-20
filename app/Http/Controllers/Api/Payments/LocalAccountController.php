@@ -124,4 +124,43 @@ class LocalAccountController extends Controller
             'data' => $account
         ],200);
     }
+
+    /**
+     * transfer funds from student to tutor in local account
+    */
+    public function transferFundsFromStudentToTutor(Request $request){
+        $trial_lesson = json_decode($request->trial_lesson);
+        
+        $student_local_account = LocalAccount::where('user_id', $trial_lesson->student_id)->first();
+        $tutor_local_account = LocalAccount::where('user_id', $trial_lesson->tutor_id)->first();
+            
+        //process payment  transfer in local account
+        $student_data = [
+            'last_transaction_date' => now(),
+            'last_transaction_method' => 'Uswa:local',
+            'last_amount_transacted' => $trial_lesson->get_tutor->hourly_rate,
+            'balance_before' => $student_local_account->available_balance,
+            'available_balance' => $student_local_account->available_balance - $trial_lesson->get_tutor->hourly_rate, //subtract amount
+            'balance_after' => $student_local_account->available_balance - $trial_lesson->get_tutor->hourly_rate,
+        ];
+        $tutor_data = [
+            'last_transaction_date' => now(),
+            'last_transaction_method' => 'Uswa:local',
+            'last_amount_transacted' => $trial_lesson->get_tutor->hourly_rate,
+            'balance_before' => $tutor_local_account->available_balance,
+            'available_balance' => $tutor_local_account->available_balance + $trial_lesson->get_tutor->hourly_rate, //add amount
+            'balance_after' => $tutor_local_account->available_balance + $trial_lesson->get_tutor->hourly_rate,
+        ];
+
+        //update accounts
+        $student_local_account->update($student_data);
+        $tutor_local_account->update($tutor_data);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Success, funds trasfered locally from student to tutor.',
+            'data' => true
+        ], 200);
+
+    }
 }

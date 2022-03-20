@@ -35,12 +35,12 @@
                     <div class="mb-0 py-2">
                         <a v-if="! this.zoom_user_auth_token" :href="'https://zoom.us/oauth/authorize?response_type=code&client_id=' + this.CLIENT_ID + '&state=' + this.ZOOM_STATE + '&redirect_uri=' + this.REDIRECT_URI" class="btn btn-secondary btn-small m-2" >Link with zoom</a>  
                         <button class="btn btn-sm btn-secondary m-1" v-if="! trial_lesson.status == 'pending'" @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel request </button>
-                        <a :href="trial_lesson.meeting_link"   class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.meeting_link" >Launch meeting</a>
+                        <a :href="trial_lesson.meeting_link"  class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.meeting_link " >Launch meeting</a>
                         <button class="btn btn-sm btn-secondary m-1"   @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lessons </button>
                         <span>
-                            Impressed by the tutor? 
-                             <span class="btn btn-secondary m-1" @click="processPayment()">Yes</span>
-                             <span class="btn btn-secondary m-1">No</span>
+                            Impressed by the tutor?  <br>
+                             <span class="btn btn-secondary m-1" @click="processPayment(trial_lesson)">Yes</span>
+                             <span class="btn btn-secondary m-1" @click.prevent="notImpressedbyTutor(trial_lesson)">No</span>
                         </span>
                     </div>                   
                 </div>
@@ -72,7 +72,7 @@
                     <p class="fw-bold">
                         <span>{{this.capitalize(lesson.lesson_type)}} lesson with tutor {{this.capitalize(lesson.get_lesson_tutor.first_name)}} </span> 
                         <span class="float-end">
-                            <a :href="lesson.meeting_link" class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link">Classroom</a> <br>
+                            <a :href="lesson.meeting_link" disabled class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link && this.getAccount.available_balance > lesson.get_lesson_tutor.hourly_rate">Classroom</a> <br>
                              <a class="btn btn-secondary btn-sm my-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>
                         </span>
                       </p>
@@ -167,6 +167,7 @@
 
 <script>
 import moment from "moment";
+import {mapGetters } from "vuex";
 
 import Assignments from "./Assignemnts.vue";
 
@@ -209,7 +210,7 @@ export default {
         },
         cancelTrialLesson(trial_lesson){
             if(trial_lesson.tutor_confirm !== 'pending'){alert('Cannot cancel this trial lesson'); return;}
-            if(! confirm('Do you want to cancle this trial lesson. \n If you cancel, you and the tutor will no longer be able to view this lesson.')) return;
+            if(! confirm('Do you want to cancel this trial lesson. \n If you cancel, you and the tutor will no longer be able to view this lesson.')) return;
             axios.get('/api/student/cancel-trial-lesson/' + trial_lesson.id)
             .then(response =>{
                 this.success.cancel_lesson =" Success, Lesson canceled";
@@ -259,22 +260,21 @@ export default {
                 stars[i].classList.add('text-warning');
                 if(stars[i].classList.contains(star_num)) return;
             }
-
             console.log(stars);
-
         },
+
         getZoomCredentials(){ // get credential  from .env on server.        
-        axios.get('/api/zoom/get-credentials ')
-        .then(response => {
-            this.CLIENT_ID = response.data.data.client_id;
-            this.ZOOM_CLIENT_SECRET = response.data.data.client_secret
-            this.REDIRECT_URI = response.data.data.redirect_uri;
-            console.log(response.data.client_id); 
-        })
-        .catch(error=>{
-            console.log(error.response);
-        });
-    },
+            axios.get('/api/zoom/get-credentials ')
+            .then(response => {
+                this.CLIENT_ID = response.data.data.client_id;
+                this.ZOOM_CLIENT_SECRET = response.data.data.client_secret
+                this.REDIRECT_URI = response.data.data.redirect_uri;
+                console.log(response.data.client_id); 
+            })
+            .catch(error=>{
+                console.log(error.response);
+            });
+        },
     async createLesson(trial_lesson){
         this.spinner.create_lesson=true;
         var form_data = new FormData(); 
@@ -422,19 +422,39 @@ export default {
             if(! this.stars) this.errors.stars = 'Please select number of stars';
             if(! this.review) this.errors.review = 'This field is required';
         },
-        processPayment(){ // process paypal payments
-            if(!confirm("By clicking yes, You authorise payments to be moved to the tutor as payments")) return;
-            // Call  server to capture the transaction
-            
-            axios.get('/api/capture-authorized-payment',)
+        processPayment(trial_lesson){ 
+            // process paypal payments
+            if(!confirm("By clicking yes, You also authorise funds to be moved from your account to tutor's as payments")) return;
+
+            var form_data = new FormData();
+            form_data.append('trial_lesson', JSON.stringify(trial_lesson));
+
+            // Call  server to capture the transaction            
+            axios.post('/api/transfer-payments/', form_data)
             .then(response=>{                        
                 console.log(response);
             })
             .catch(error=>{                       
                 console.log(error.response);
             });
+        },
+        notImpressedbyTutor(trial_lesson){
+            if(!confirm('You can always find yourself another tutor from the pool. \n This trial record will be discarded for now and will no longer be available. \n proceed?')) return;
+            axios.get('/api/student/cancel-trial-lesson/' + trial_lesson.id)
+            .then(response =>{
+                this.success.cancel_lesson ="Success, Trial lesson discarded";
+                setTimeout(() => {
+                    this.success ={};
+                }, 2500);
+            })
+            .catch(error=>{
+                console.log(error.response);
+            })
         }
    },
+   computed:{
+        ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),    
+    },
     mounted(){
         this.fetchTrialLessons();
         this.fetchLessons();

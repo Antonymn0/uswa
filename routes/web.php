@@ -13,12 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// ------------------------------------------------------------------------------------------
+// ------------------------------- Redirect URLs-----------------------------------------------------------
+
 // zoom token call back route
 Route::get('/zoom/auth','Api\Zoom\ZoomAuthController@getZoomAuthToken')->name('zoom.callback.route');
+//Paypal patner onboarding redirectt  route  
+Route::get('/api/paypal-onboarding/redirect','Api\Payments\Paypal\PaypalController@handlePatnerOnboardingRedirect');
 
 // ----------------------------------------------------------------------------------------------------
 
+// paypal redirect p[ages]
+ 
+Route::get('/success', function() {
+    return view('paypal.paypal_success');
+});
+Route::get('/failed', function() {
+    return view('paypal.paypal_failed');
+});
 
 
 //default laravel auth routes (some turned off)
@@ -31,7 +42,6 @@ Auth::routes([
 
 //email verification routes
 Route::get('/verify-email/{email}','Api\Auth\EmailVerificationController@verifyEmail');
-
 
  
 Route::get('/', function() {

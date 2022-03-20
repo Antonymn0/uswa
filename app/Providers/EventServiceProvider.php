@@ -80,11 +80,22 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\TrialLesson\trialLessonDeclined' => [
             'App\Listeners\TrialLesson\trialLessonDeclinedListener',
         ],
-        
-        
-        
+
+        // Paypal events
+        'App\Events\PaypalPayments\paymentAuthorised' => [
+            'App\Listeners\PaypalPayments\paymentAuthorisedListener',
+        ],
+        'App\Events\PaypalPayments\paymentProcessed' => [
+            'App\Listeners\PaypalPayments\paymentProcessedListener',
+        ],     
+        'App\Events\PaypalPayments\paypalMerchantOnbordingSuccess' => [
+            'App\Listeners\PaypalPayments\paypalMerchantOnbordingSuccessListener',
+        ],     
+   
 
     ];
+
+    
 
     /**
      * Register any events for your application.

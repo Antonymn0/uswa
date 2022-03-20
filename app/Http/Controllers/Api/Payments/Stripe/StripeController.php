@@ -17,7 +17,7 @@ class StripeController extends Controller
         // create stripe connected account for the user
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
         $stripe_connected_account = $stripe->accounts->create([
-            'country' => 'US',
+            'country' => $country_code,
             'type' => 'express',
             'capabilities' => [
                 'card_payments' => ['requested' => true],

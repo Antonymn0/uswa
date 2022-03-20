@@ -13,12 +13,23 @@ Route::group(['middleware'=>['auth:api']],function(){
     Route::get('/generate-sigup-link','Api\Payments\Paypal\PaypalController@generateSignupLink'); 
 
    //charge object   
-    Route::get('/paypal-payment','Api\Payments\Paypal\PaypalController@createChargeObject'); 
+    Route::get('/paypal-payment','Api\Payments\Paypal\PaypalController@disburseFunds'); 
    
    //capture authorized payment   
     Route::get('/capture-authorized-payment','Api\Payments\Paypal\PaypalController@captureAuthorizedPAyment'); 
    
+ 
+   
    //update local account  
     Route::post('/update/local-account','Api\Payments\Paypal\PaypalController@updateLocalAccount'); 
+   
+   //update local account  
+    Route::get('/get-paypal-clientId','Api\Payments\Paypal\PaypalController@getClientId'); 
+
+   //transfer payments from student to tutor 
+    Route::post('/transfer-payments','Api\Payments\LocalAccountController@transferFundsFromStudentToTutor'); 
+   
+   
+
 });
 

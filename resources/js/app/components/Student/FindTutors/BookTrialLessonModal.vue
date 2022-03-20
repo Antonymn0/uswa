@@ -8,7 +8,7 @@
                 <button type="button" id="closetrial" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body px-2">  
-                <p class="alert-success p-2 m-2" v-if="this.success.book_trial">{{this.success.book_trial}}</p> 
+                
               <h5>Select date and time to meet with {{this.tutor.first_name}} {{this.tutor.last_name}}</h5>
                <div>
                  <p>
@@ -18,27 +18,27 @@
                  </p>
                  <p>
                    <label for="lesson_type">Language</label>
-                  <select  id="lesson_type" v-model="lesson_type" class="w-100 py-3 border text-muted rounded bg-white">
-                    <option selected value="">- Select -</option>
-                    <option  value="english">English</option>
-                    <option  value="german">German</option>
-                    <option  value="italian">Italian</option>
-                    <option  value="spanish">Spannish</option>
-                    <option  value="chinese">Chinese</option>
-                    <option  value="arabic">Arabic</option>
-                    <option  value="russian">russian</option>
-                  </select>
+                    <select  id="lesson_type" v-model="lesson_type" class="w-100 py-3 border text-muted rounded bg-white">
+                        <option selected value="">- Select -</option>
+                        <option  value="english">English</option>
+                        <option  value="german">German</option>
+                        <option  value="italian">Italian</option>
+                        <option  value="spanish">Spannish</option>
+                        <option  value="chinese">Chinese</option>
+                        <option  value="arabic">Arabic</option>
+                        <option  value="russian">russian</option>
+                    </select>
                     <small class="text-danger" v-if="this.errors.lesson_type"><i class="bi bi-exclamation-triangle"></i> {{this.errors.lesson_type}}</small>
                  </p>
                  
                   <p class="row py-2"> 
-                    <span class="p-3 col-sm-6">
+                    <span class=" col-sm-6">
                       <label for="from">From </label> <br>
                         <select name="" id="from" class="p-3 w-100 rounded bg-white border text-muted" v-model="this.time.from">
                             <option  v-bind="this.item" v-for="item in this.time_selector" :key="item" class="form-contro" > {{item}} </option>
                         </select>
                     </span>
-                    <span class="p-3 col-sm-6">
+                    <span class=" col-sm-6">
                       <label for="to">To</label> <br>
                         <select name="" id="to" class="p-3 w-100 rounded bg-white border text-muted" v-model="this.time.to" @change.prevent="testTimeLimit()">
                             <option  v-bind="this.item" v-for="item in this.time_selector" :key="item" class="form-contro"> {{item}} </option>
@@ -62,11 +62,40 @@
                     </div>   
                     <span class="text-success small p-2 m-2" v-if="this.success.book_trial">{{this.success.book_trial}}</span>
                    <span class="small text-danger text-center">{{this.errors.error}}</span> <br>
-              <button class="btn btn-danger mb-2" @click.prevent="bookTrialLesson()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.book_lesson"></span> Book lesson</button>
+                <button class="btn btn-danger m-2" @click.prevent="bookTrialLesson()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.book_lesson"></span> Book lesson</button>
+                <button class="btn btn-primary m-2" data-bs-target="#paypal-modal" data-bs-toggle="modal" data-bs-dismiss="modal" v-if="this.getAccount.available_balance < this.tutor.hourly_rate" @click.prevent="this.loadPaypalCheckout()">Topup account</button>
             </div>            
             </div>
         </div>
     </div>
+
+    <!-- second mini modal paypal -->
+    <div class="modal fade" id="paypal-modal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalToggleLabel2">Top up account</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body mx-auto">
+            <div class="w-auto mx-uato text-left py-3">
+                <label class="py-2  ">Topup with Paypal: </label>
+                <div @click.prevent="this.showPaypalSpinner()">
+                   <div class=" mx-auto" id="paypal-button-container" ></div>  
+                </div>
+               
+                <small class="text-primary" v-if="this.success.payment"> {{this.success.payment}} </small>
+                <small class="text-primary" v-if="this.spinner.paypal_processing"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.paypal_processing"></span> Processing...</small>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" data-bs-target="#staticBackdropTrial" data-bs-toggle="modal" data-bs-dismiss="modal"> <i class="bi bi-chevron-left"></i> Back </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   </div>
 </template>
 
@@ -131,13 +160,15 @@ export default {
                     ],
             date:null,
             lesson_type:null,
+            paypal_client_id:'',
             time:{
                 from:null,
                 to:null,
             },
             errors:{},
             success:{},
-            spinner:{}
+            spinner:{},
+            success:{}
         }
     },
     computed:{
@@ -152,6 +183,7 @@ export default {
         validateDate(){
             delete this.errors.date;
             if( moment(this.date).isBefore(moment()) ) this.errors.date = "Invalid date selection."
+            if( moment(this.date).isAfter(moment().add(5, 'days')) ) this.errors.date = "This activity should happen in 5 days max."
         },
         bookTrialLesson(){
             this.errors = {};
@@ -200,8 +232,71 @@ export default {
 
             
             
+        },
+       
+        fetchPaypalClientID(){
+            axios.get('/api/get-paypal-clientId')
+            .then(response=>{
+                this.paypal_client_id = response.data.data;
+            })
+            .catch(error=>{
+                console.log(error.response);
+            });
+        },
+        showPaypalSpinner(){
+            return this.spinner.paypal_processing = true;
+        },
+        loadAsync(url, callback) {
+            var s = document.createElement('script');
+            s.setAttribute('src', url); s.onload = callback;
+            document.head.insertBefore(s, document.head.firstElementChild);
+        },
+        loadPaypalCheckout(){ //paypal buttons            
+            this.loadAsync('https://www.paypal.com/sdk/js?client-id=' + this.paypal_client_id + '&intent=authorize&disable-funding=credit,card', function() {
+                paypal.Buttons({                    
+                    // Set up the transaction
+                    createOrder: function(data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    currency_code: "USD",
+                                    value: '10'
+                                },
+                                // payee: {
+                                //     merchant_id :  'VMJSV3L3DRE9A'
+                                // },
+                            }],
+                            application_context: {
+                                shipping_preference: 'NO_SHIPPING',
+                                SOLUTIONTYPE:'MARK'
+                            }, 
+                        });
+                    },   
+
+                    // Finalize the transaction
+                    onApprove: function(data, actions) {
+                        // Authorize the transaction
+                        actions.order.authorize().then(function(authorization) {
+                            // Get the authorization id
+                            var authorizationID = authorization.purchase_units[0].payments.authorizations[0].id
+                            axios.post('/api/update/local-account/', authorization )
+                            .then(response=>{      
+                                console.log(response); 
+                                console.log('Success, payment processed!');                 
+                                this.success.payment = 'Success, payment processed!';
+                            })
+                            .catch(error=>{                       
+                                console.log(error.response);
+                            });
+                        });
+                    }
+                }).render('#paypal-button-container');
+            });     
         }
 
+    },
+    mounted(){
+        this.fetchPaypalClientID();
     }
 }
 </script>

@@ -85,6 +85,10 @@ class CreateUsersTable extends Migration
            $table->string('stripe_account_id')->nullable()->unique();
            $table->string('stripe_account_type')->nullable();
 
+           $table->string('paypal_merchant_id')->nullable();
+           $table->string('paypal_consent_status')->nullable();
+           $table->string('paypal_permissions_granted')->nullable();
+
 
             $table->rememberToken();
             $table->timestamps();

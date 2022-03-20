@@ -35,7 +35,7 @@ class TutorTrialLessonController extends Controller
         ]);
 
         $student = User::findOrfail($trail_lesson->student_id);
-        event(new trialLessonAccepted($trail_lesson, $student));
+        // event(new trialLessonAccepted($trail_lesson, $student));
 
         $Notification = Notification::create([
             'sender' => $trail_lesson->tutor_id,

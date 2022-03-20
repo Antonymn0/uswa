@@ -22,7 +22,7 @@
               
                <small class="text-success" v-if="this.success.charge_object"> <br>{{this.success.charge_object}}</small>
                 <small class="text-danger" v-if="this.errors.charge_object"> <br> {{this.errors.charge_object}}</small>
-                <button class="btn btn-lg btn-secondary m-2 px-3 w-75"   @click.prevent="this.createPaypalChargeObject()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.charge_object"></span> Create Paypal charge object</button>
+                <button class="btn btn-lg btn-secondary m-2 px-3 w-75"   @click.prevent="this.createPaypalChargeObject()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.charge_object"></span>Disburse Funds</button>
                
                 <div class="w-75 mx-auto" id="paypal-button-container"></div>
                
@@ -40,8 +40,8 @@
             <div class="pt-5">
                 <h5> Latest transactions</h5>
                 <div v-if="Object.keys(this.current_transactions).length"> 
-                    <div class="border rounded px-2 py-1 my-1" v-for="(transaction, index) in  this.current_transactions" :key="index" >
-                        <p class="d-flex justify-content-between">
+                    <div class="border rounded px-2 py-1 my-1" v-for="(transaction, index) in  this.current_transactions" :key="index" v-show="index < 5">
+                        <p class="d-flex mb-0 justify-content-between">
                             <span>{{this.formatDate(transaction.transaction_date)}}</span>
                             <span>{{this.capitalize(transaction.transaction_type)}}</span>    
                             <span>
@@ -98,9 +98,9 @@
                         <h4>Transaction history  </h4> 
                         <p class="text-muted small"> All Your transaction history will apprear here</p>                    
                     </div>
-                    <div class="pt-3 px-2">   
+                    <div class="pt-3 px-1">   
                         <div v-if="Object.keys(this.current_transactions).length">          
-                            <div class="border rounded px-2 py-1 my-1" v-for="(transaction, index) in  this.current_transactions" :key="index">
+                            <div class="border small rounded px-1  my-1" v-for="(transaction, index) in  this.current_transactions" :key="index">
                                 <p class="d-flex justify-content-between mb-0">
                                     <span>{{this.formatDateTime(transaction.transaction_date)}}</span>
                                     <span>{{this.capitalize(transaction.transaction_type)}}</span>                    
@@ -111,15 +111,15 @@
                                         <span >To: </span> <span>{{this.capitalize(transaction.transacted_to)}}</span>
                                     </p>
                                     <p class="d-flex my-auto align-content-center pe-3">
-                                        <span class="m-0">Amount &nbsp; </span>
-                                        <span class="m-0"> $</span>
-                                        <span class="m-0">{{transaction.amount_transacted}}</span>
+                                        <span class="m-0">Amount: &nbsp; </span>
+                                        <span class="m-0 fw-bold"> $</span>
+                                        <span class="m-0 fw-bold">{{transaction.amount_transacted}}</span>
                                     </p>                                
                                 </div>
                             
-                                <p class="small text-start  ">
-                                    <span>Remarks: </span>
-                                    <span>{{this.capitalize(transaction.remarks)}}</span>
+                                <p class="small text-start mb-0  d-flex justify-content-between">
+                                    <span>Remarks: {{this.capitalize(transaction.remarks)}}</span>                                    
+                                    <span class="">Status:  {{transaction.status}}</span>
                                 </p>
                             </div>  
                         </div>  
@@ -421,7 +421,7 @@ export default {
                 .then(response=>{
                     this.spinner={}
                     this.success.create_charge = "Charge successful"
-                    console.log(response.data);
+                    // console.log(response.data);
                 })
                 .catch(error=>{
                     this.spinner={}
@@ -432,32 +432,24 @@ export default {
             this.errors={}
             this.spinner.checkout_session= true
             axios.get('/api/create-stripe-checkout-session')
-                .then(response=>{
-                    this.spinner={}
-                    console.log(response.data);
-                    this.success.checkout_session = "Session created, Redirecting...."
-                    console.log(response.data);
-                    window.location.href= response.data.url;
-                })
-                .catch(error=>{
-                    this.spinner={}
-                    console.log(error.response);
-                });
+            .then(response=>{
+                this.spinner={}
+                console.log(response.data);
+                this.success.checkout_session = "Session created, Redirecting....";
+                window.location.href= response.data.url;
+            })
+            .catch(error=>{
+                this.spinner={}
+                console.log(error.response);
+            });
         },
         fetchAccount(){
-            axios.get('/api/get-stripe-account-balance')
-                .then(response=>{
-                    this.$store.commit('set_account', response.data);
-                    console.log(response.data);
-                })
-                .catch(error=>{
-                    console.log(error.response);
-                });
+           this.$store.dispatch('fetchLocalAccount');
          },
         getPaypalAccessToken(){
             axios.get('/api/get-paypal-access-token')
             .then(response=>{
-                console.log(response.data);
+                // console.log(response.data);
             })
             .catch(error=>{
                 console.log(error.response);
@@ -476,6 +468,15 @@ export default {
             .catch(error=>{
                 this.spinner={}
                 this.errors.signup_link = 'Error, cannot connect with Paypal. Please try again';
+                console.log(error.response);
+            });
+        },
+        fetchPaypalClientID(){
+            axios.get('/api/get-paypal-clientId')
+            .then(response=>{
+                this.paypal_client_id = response.data.data;
+            })
+            .catch(error=>{
                 console.log(error.response);
             });
         },
@@ -526,72 +527,63 @@ export default {
                     console.log(error.response);
                 });
             },
-        
-        
+        loadAsync(url, callback) {
+            var s = document.createElement('script');
+            s.setAttribute('src', url); s.onload = callback;
+            document.head.insertBefore(s, document.head.firstElementChild);
+        },
+        loadPaypalCheckout(){
+            this.loadAsync('https://www.paypal.com/sdk/js?client-id=' + this.paypal_client_id + '&intent=authorize&disable-funding=credit,card', function() {
+                paypal.Buttons({
+                    // Set up the transaction
+                    createOrder: function(data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    currency_code: "USD",
+                                    value: '10'
+                                },
+                                // payee: {
+                                //     merchant_id :  'VMJSV3L3DRE9A'
+                                // },
+                            }],
+                            application_context: {
+                                shipping_preference: 'NO_SHIPPING',
+                                SOLUTIONTYPE:'MARK'
+                            }, 
+                        });
+                    },      
+
+                // Finalize the transaction
+                onApprove: function(data, actions) {
+                    // Authorize the transaction
+                    actions.order.authorize().then(function(authorization) {
+                        // Get the authorization id
+                        var authorizationID = authorization.purchase_units[0].payments.authorizations[0].id
+                        
+                        axios.post('/api/update/local-account/', authorization )
+                        .then(response=>{                        
+                            console.log(authorizationID);
+                            console.log(response);
+                        })
+                        .catch(error=>{                       
+                            console.log(error.response);
+                        });
+                    });
+                    }
+                }).render('#paypal-button-container');
+            });     
+        }
             
     },
     computed:{
         ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),    
     },
     mounted(){
+        this.fetchPaypalClientID();
         this.fetchAccount();
-        this.fetchTransactionHistory();
-
-        function loadAsync(url, callback) {
-            var s = document.createElement('script');
-            s.setAttribute('src', url); s.onload = callback;
-            document.head.insertBefore(s, document.head.firstElementChild);
-        }
-        loadAsync('https://www.paypal.com/sdk/js?client-id=AalFMXbKmnN80ihnJboG9c846n91sd-bw66_I7qHPx_s4zEuP6OJM13-0LBjabA99frPSkYD7hQxCRU9&intent=authorize&disable-funding=credit,card', function() {
-            paypal.Buttons({
-                // Set up the transaction
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                currency_code: "USD",
-                                value: '2.0'
-                            },
-                            payee: {
-                                merchant_id :  'VMJSV3L3DRE9A'
-                            },
-                        }],
-                        application_context: {
-                            shipping_preference: 'NO_SHIPPING',
-                        }, 
-                    });
-                },
-
-            // Finalize the transaction
-            onApprove: function(data, actions) {
-                // Authorize the transaction
-                actions.order.authorize().then(function(authorization) {
-                    // Get the authorization id
-                    var authorizationID = authorization.purchase_units[0].payments.authorizations[0].id
-                    
-                    axios.post('/api/update/local-account/', authorization )
-                    .then(response=>{                        
-                        console.log(authorizationID);
-                        console.log(response);
-                    })
-                    .catch(error=>{                       
-                        console.log(error.response);
-                    });
-                            
-                    return;
-                    alert('You have authorized this transaction. Order ID:  ' + data.orderID + ', Authorization ID: ' + authorizationID); // Optional message given to purchaser
-
-                    // ------------------------------------------------------------------
-                   
-
-                    // ----------------------------------------------------------------
-
-
-                });
-            }
-
-        }).render('#paypal-button-container');
-        });
+        this.fetchTransactionHistory();       
+        setTimeout(() => { this.loadPaypalCheckout() }, 1000);
     }
 
 }
