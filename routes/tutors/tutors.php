@@ -40,6 +40,9 @@ use Illuminate\Support\Facades\Route;
         
         // fetch lessons
         Route::get('/tutor/fetch-lessons','Api\Tutor\TutorLessonController@fetchLessons')->name('tutor.fetch.lesssons');
+        
+        // search lessons
+        Route::get('/search-tutors/{keyword}','Api\Student\StudentController@searchTutorByLanguage')->name('tutor.search.lesssons');
 
         
     });

@@ -20,8 +20,8 @@
                 </div>
 
                 <div class=" rouded mb-3 px-1 row" >
-                    <label for="country" class="form-label">Country / City</label>
-                    <vueCountriesCities id="country" @country='selectedCountry = $event' @city='selectedCity = $event'  @change="updateCountryCity()" class="text-muted"/>   
+                    <label for="country" class="form-label">Country / City</label>  <span class="small text-center">({{this.$store.state.signupProcess_about.about.country}} | {{this.$store.state.signupProcess_about.about.city}} )</span>
+                    <vueCountriesCities id="country" @country='selectedCountry = $event' @change="updateCountryCity()" @city='selectedCity = $event' @blur="updateCountryCity()"  class="text-muted"/>   
                     <small class="text-danger small">{{this.errors.country}}</small> 
                     <small class="text-danger small float-end">{{this.errors.city}}</small>            
                 </div>
@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <label for="timezone" class="form-label">Timezone</label>
-                        <select  id="timezone"  v-model="timezone" class="bg-white w-100 p-2 border rounded text-muted">
+                        <select  id="timezone"  v-model="this.timezone" class="bg-white w-100 p-2 border rounded text-muted">
                             <option value="" selected> -Select- </option>
                             <option :value="item.value" id="timezone" v-for="(item,index) in this.timezones" :key="index"> {{item.value}}</option>
                         </select>                      
@@ -100,7 +100,7 @@
 
                 <div class="text-center pt-3">
                     <button class="btn btn-secondary m-1">Cancel</button>
-                    <button class="btn btn-danger m-1" @click.prevent="this.nextStep()">Continue</button>
+                    <button class="btn btn-danger m-1" @click.prevent="this.submitForm()"><span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.submit_about"></span>  Continue</button>
                 </div>
            </form>
        </div>
@@ -111,6 +111,7 @@
 <script>
 import moment from 'moment-timezone';
 import vueCountriesCities from "vue-countries-cities";
+import {mapGetters } from "vuex";
 
 export default {
 components: { vueCountriesCities },
@@ -119,6 +120,7 @@ components: { vueCountriesCities },
             selectedCountry: '',
             selectedCity: '',
             errors:{},
+            spinner:{},
             timezone:null,
             currency:null,
             languages:{
@@ -2206,6 +2208,7 @@ components: { vueCountriesCities },
     },
     
     computed:{
+        ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),
         first_name:{
             get() { return this.$store.state.signupProcess_about.about.first_name; },
             set(value) { this.$store.commit('set_first_name', value); }
@@ -2265,8 +2268,11 @@ components: { vueCountriesCities },
     },
      methods:{
         updateCountryCity(){
-            this.$store.commit('set_country', this.selectedCountry);
-            this.$store.commit('set_city', this.selectedCity);
+            setTimeout(() => {
+               this.$store.commit('set_country', this.selectedCountry);
+                this.$store.commit('set_city', this.selectedCity); 
+            }, 50);
+            
         },
         timezone(){
             console.log(moment.tz.names()) ;
@@ -2275,38 +2281,79 @@ components: { vueCountriesCities },
         logFile(){
             console.log(this.$store.state.signupProcess_about.about);
         },
-        nextStep(){            
+        submitForm(){
             this.validateForm();
             if(Object.keys(this.errors).length) return;
+            this.spinner.submit_about = true;
+            var form_data = new FormData();
+                form_data.append('first_name', this.$store.state.signupProcess_about.about.first_name);
+                form_data.append('middle_name', this.$store.state.signupProcess_about.about.middle_name);
+                form_data.append('last_name', this.$store.state.signupProcess_about.about.last_name);
+                form_data.append('country', this.$store.state.signupProcess_about.about.country);
+                form_data.append('city', this.$store.state.signupProcess_about.about.city);
+                form_data.append('currency', this.$store.state.signupProcess_about.about.currency);
+                form_data.append('language', this.$store.state.signupProcess_about.about.language);
+                form_data.append('level', this.$store.state.signupProcess_about.about.level);
+                form_data.append('subject', this.$store.state.signupProcess_about.about.subject);
+                form_data.append('subject_level', this.$store.state.signupProcess_about.about.subject_level);
+                form_data.append('over18', this.$store.state.signupProcess_about.about.over18);
+                form_data.append('timezone', this.$store.state.signupProcess_about.about.timezone);
+                form_data.append('description', this.$store.state.signupProcess_about.about.description);
+                form_data.append('_method', 'PUT');
 
+            axios.post('/api/user/' + this.getUser.id , form_data)             
+            .then(response=>{
+                this.spinner = {}
+               this.nextStep();
+            })
+            .catch(error=>{   
+                this.spinner = {}             
+                console.log(error.response);
+            })
+        },
+        nextStep(){
             document.getElementById('about').classList.add('hidden');
             document.getElementById('photo').classList.remove('hidden');
         },
         validateForm(){
-            this.updateCountryCity();
             this.errors={};
-            if(! this.$store.state.signupProcess_about.about.first_name) this.errors.first_name = "First name field is required";            
-            if(! this.$store.state.signupProcess_about.about.middle_name) this.errors.middle_name = "Middle name field is required";           
-            if(! this.$store.state.signupProcess_about.about.last_name) this.errors.last_name = "Last name field is required";
+            if(! this.first_name) this.errors.first_name = "First name field is required";            
+            if(! this.last_name) this.errors.last_name = "Last name field is required";
            
-            if(! this.$store.state.signupProcess_about.about.country) this.errors.country = "County field is required";
-            if(! this.$store.state.signupProcess_about.about.city) this.errors.city = "City field is required";
+            if(! this.country) this.errors.country = "County field is required";
+            if(! this.city) this.errors.city = "City field is required";
             
-            if(! this.$store.state.signupProcess_about.about.timezone) this.errors.timezone = "timezone field is required";
-            if(! this.$store.state.signupProcess_about.about.currency) this.errors.currency = "Currency field is required";
+            if(! this.timezone) this.errors.timezone = "Timezone field is required";
+            if(! this.currency) this.errors.currency = "Currency field is required";
             
-            if(! this.$store.state.signupProcess_about.about.language) this.errors.language = "Language field is required";
-            if(! this.$store.state.signupProcess_about.about.level) this.errors.level = "Level field is required";
-            if(! this.$store.state.signupProcess_about.about.subject) this.errors.subject = "Subject field is required";
+            if(! this.language) this.errors.language = "Language field is required";
+            if(! this.level) this.errors.level = "Level field is required";
+            if(! this.subject) this.errors.subject = "Subject field is required";
+            if(! this.subject_level) this.errors.subject_level = "Subject field is required";
             
-            if(! this.$store.state.signupProcess_about.about.subject_level) this.errors.subject_level = "Level field is required";
-            if(! this.$store.state.signupProcess_about.about.over18) this.errors.over18 = "Confirm you are an adult";
+            if(! this.subject_level) this.errors.subject_level = "Level field is required";
+            if(! this.over18) this.errors.over18 = "Confirm you are an adult";
 
-            if(! this.$store.state.signupProcess_about.about.description) this.errors.description = "Please provide a short description of yourself";
+            if(! this.description) this.errors.description = "Please provide a short description of yourself";
+        },
+        populateFormFields(){
+            this.first_name  = this.getUser.first_name;
+            this.middle_name = this.getUser.middle_name;
+            this.last_name = this.getUser.last_name;
+            this.country = this.getUser.country;
+            this.city = this.getUser.city;
+            this.timezone = this.getUser.timezone;
+            this.currency = this.getUser.currency;
+            this.language = this.getUser.language;
+            this.level = this.getUser.level;
+            this.subject = this.getUser.subject;
+            this.subject_level = this.getUser.subject_level;
+            this.over18 = this.getUser.over18;
+            this.description = this.getUser.description;
         }
     },
     mounted(){
-       
+       this.populateFormFields();
     }
 
 }

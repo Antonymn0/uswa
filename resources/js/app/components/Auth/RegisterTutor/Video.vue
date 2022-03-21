@@ -43,19 +43,23 @@
       </div>
        <div class="text-center pt-3 mt-3 pb-2 border-top">
             <button class="btn btn-secondary m-1" @click.prevent="this.backStep()">Back</button>
-            <button class="btn btn-danger m-1" @click.prevent="this.nextStep()">Next</button>
+            <button class="btn btn-danger m-1" @click.prevent="this.submitForm()">  <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.submit_video"></span> Next</button>
         </div>
   </div>
 </template>
 
 <script>
+import {mapGetters,  mapActions } from "vuex";
+
 export default {
     data(){
         return{            
-           errors:{}                
+           errors:{} , 
+           spinner:{}              
         }
     },
     computed:{
+        ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),
         video_preview:{
             get() { return this.$store.state.signupProcess_video.video.video_preview; },
             set(value) { this.$store.commit('set_video_preview', value); }
@@ -89,6 +93,32 @@ export default {
                 this.video = null;
             }
         },
+        submitForm(){
+            this.validateForm();
+            if(Object.keys(this.errors).length) return;
+
+            this.spinner.submit_video = true;
+            var form_data = new FormData();
+                form_data.append('first_name', this.$store.state.signupProcess_about.about.first_name);
+                form_data.append('last_name', this.$store.state.signupProcess_about.about.last_name);
+                if(this.video_preview !== this.getUser.introduction_video){
+                    if(this.$store.state.signupProcess_video.video.video) form_data.append('introduction_video', this.$store.state.signupProcess_video.video.video);   
+                }
+               
+                if(this.video_url)  form_data.append('introduction_video_url', this.$store.state.signupProcess_video.video.video_url); 
+              
+               form_data.append('_method', 'PUT');
+
+            axios.post('/api/user/' + this.getUser.id , form_data)             
+            .then(response=>{
+                this.spinner = {}
+               this.nextStep();
+            })
+            .catch(error=>{   
+                this.spinner = {}             
+                console.log(error.response);
+            })
+        },
         videoLink(event){
             this.errors={};
             // sanitize youtube link
@@ -99,10 +129,6 @@ export default {
             this.video=null;
         },
         nextStep(){
-            console.log(this.video);
-            this.validateForm();
-            if(Object.keys(this.errors).length) return;
-
             document.getElementById('video').classList.add('hidden');
             document.getElementById('availability').classList.remove('hidden');
         },
@@ -118,12 +144,19 @@ export default {
         },
         
         validateForm(){
-            this.errors={};
-            if(!this.video && !this.video_url) this.errors.video = "Please select a video or paste a link in the box below.";
+            this.errors={};            
+            if(!this.video && !this.video_url && !this.video_preview) this.errors.video = "Please select a video or paste a link in the box below.";
+        },
+        populateFormFields(){
+            this.video_preview = this.getUser.introduction_video; 
+            this.video_url = this.getUser.introduction_video_url; 
+           
         }
-
+    },
+    mounted(){
+        this.populateFormFields();
+        }  
     
-    }
 }
 </script>
 

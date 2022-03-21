@@ -6,7 +6,7 @@
             <div class="mb-3 ">
                 <label for="institution" class="form-label">Institution </label>
                 <input type="text" class="form-control" id="institution" v-model="institution">
-                <small class="text-danger small p-2">{{this.errors.level}}</small>
+                <small class="text-danger small p-2">{{this.errors.institution}}</small>
             </div>
             <div class="mb-3 ">
                 <label for="level" class="form-label">Level </label>
@@ -60,19 +60,23 @@
         </div>
          <div class="text-center pt-5 pb-2">
             <button class="btn btn-secondary m-1" @click.prevent="this.backStep()">Back</button>
-            <button class="btn btn-danger m-1" @click.prevent="this.nextStep()">Next</button>
+            <button class="btn btn-danger m-1" @click.prevent="this.submitForm()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.submit_education"></span> Next</button>
         </div> 
     </div>
 </template>
 
 <script>
+import {mapGetters,  mapActions } from "vuex";
+
 export default {
     data(){
         return{
-            errors:{}
+            errors:{},
+            spinner:{}
         }
     },
     computed:{
+        ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),
         img_preview:{
             get() { return this.$store.state.signupProcess_education.education.img_preview; },
             set(value) { this.$store.commit('set_education_img_preview', value); }
@@ -116,11 +120,36 @@ export default {
             document.getElementById('certification').classList.remove('hidden');
         },
         nextStep(){
+            document.getElementById('education').classList.add('hidden');
+            document.getElementById('video').classList.remove('hidden');
+        },
+        submitForm(){
             this.validateForm();
             if(Object.keys(this.errors).length) return;
 
-            document.getElementById('education').classList.add('hidden');
-            document.getElementById('video').classList.remove('hidden');
+            this.spinner.submit_education = true;
+            var form_data = new FormData();
+                form_data.append('first_name', this.$store.state.signupProcess_about.about.first_name);
+                form_data.append('last_name', this.$store.state.signupProcess_about.about.last_name);
+                form_data.append('has_higher_education', this.$store.state.signupProcess_education.education.i_dont_have_certificate);
+                form_data.append('higher_education_level', this.$store.state.signupProcess_education.education.level);
+                form_data.append('higher_education_type', this.$store.state.signupProcess_education.education.type);
+                form_data.append('higher_education_study_from', this.$store.state.signupProcess_education.education.study_from);
+                form_data.append('higher_education_study_to', this.$store.state.signupProcess_education.education.study_to);
+                form_data.append('higher_education_specialty', this.$store.state.signupProcess_education.education.specialty);
+               if(this.img_preview !== this.getUser.higher_education_certificate_upload) form_data.append('higher_education_certificate_upload', this.$store.state.signupProcess_education.education.image);
+                form_data.append('higher_education_institution', this.$store.state.signupProcess_education.education.institution);            
+                form_data.append('_method', 'PUT');
+
+            axios.post('/api/user/' + this.getUser.id , form_data)             
+            .then(response=>{
+                this.spinner = {}
+               this.nextStep();
+            })
+            .catch(error=>{   
+                this.spinner = {}             
+                console.log(error.response);
+            })
         },
         fileUpload(event){             
             this.image = event.target.files[0];            
@@ -154,8 +183,22 @@ export default {
             if(! this.type) this.errors.type = "This field is required";
             if(! this.study_from) this.errors.study_from = "This field is required";
             if(! this.study_to) this.errors.study_to = "This field is required";
+        },
+        populateFormFields(){
+            this.i_dont_have_certificate = this.getUser.has_higher_education; 
+            this.level = this.getUser.higher_education_level; 
+            this.type = this.getUser.higher_education_type; 
+            this.specialty = this.getUser.higher_education_specialty; 
+            this.image = this.getUser.higher_education_certificate_upload; 
+            this.institution = this.getUser.higher_education_institution; 
+            this.study_from = this.getUser.higher_education_study_from;
+            this.study_to = this.getUser.higher_education_study_to;
+            this.img_preview = this.getUser.higher_education_certificate_upload;
         }
-    }
+    },
+    mounted(){
+        this.populateFormFields();
+        }
 }
 </script>
 

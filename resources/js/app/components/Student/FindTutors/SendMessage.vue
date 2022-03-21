@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import {mapGetters } from "vuex";
 export default {
     props:['tutor'],
     data(){
@@ -46,10 +47,17 @@ export default {
 			success:{},
         }
     },
+    computed:{
+        ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),    
+    },
     methods:{
         sendMessage(){
-            this.validateForm();
-            if(Object.keys(this.errors).length) return;
+          if(!this.isLogedIn) { 
+            document.getElementById('closeMessage').click();
+             this.$router.push({name: 'login'})
+         };
+          this.validateForm();
+          if(Object.keys(this.errors).length) return;
 
 			var form_data = new FormData();
 				form_data.append('message', this.message);

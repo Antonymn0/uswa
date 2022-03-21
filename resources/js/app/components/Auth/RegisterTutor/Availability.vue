@@ -4,7 +4,7 @@
         <div>
             <div class="mt-5 ">
                 <label for="timezone" class="form-label"><h5>Set your timezone</h5></label>               
-                <select  id="timezone"  v-model="timezone" class="bg-white w-100 p-3 border rounded text-muted">
+                <select  id="timezone"  v-model="this.timezone" class="bg-white w-100 p-3 border rounded text-muted">
                     <option value="" selected> -Select- </option>
                     <option :value="item.value" id="timezone" v-for="(item,index) in this.timezones" :key="index"> {{item.value}}</option>
                 </select> 
@@ -12,7 +12,7 @@
             </div>
              <div class="form-group py-5 mb-4">
                 <label class="form-label" for="disabledFieldsetCheck" > <h5> Set your hourly rate in USD: </h5> </label>
-                <input class="bg-white w-100 p-3 border rounded text-muted" type="number" min="5" id="disabledFieldsetCheck" v-model="hourly_rate">
+                <input class="bg-white w-100 p-3 border rounded text-muted"  type="number" min="5" id="disabledFieldsetCheck" v-model="hourly_rate">
                  <small class="text-danger">{{this.errors.hourly_rate}}</small>
             </div>
             <div class="schedule">
@@ -181,14 +181,14 @@
             <small class="text-danger">{{this.errors.timezone}}</small> <br>
             <small class="text-danger pb-5">{{this.errors.availability}}</small> <br>
             <button class="btn btn-secondary m-1" @click.prevent="this.backStep()">Back</button>
-            <button class="btn btn-danger m-1" @click.prevent="this.nextStep()">Next</button>    
+            <button class="btn btn-danger m-1" @click.prevent="this.submitForm()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.submit_availability"></span> Next</button>    
         </div> 
         </div>
 </template>
 
 <script>
 import moment from "moment";
-
+import {mapGetters } from "vuex";
 export default {
     data(){
         return{
@@ -1677,13 +1677,15 @@ export default {
                     ]
                 }
             ],
-            errors:{}
+            errors:{},
+            spinner:{}
         }
     },
     computed:{
+        ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),
         timezone:{
-            get() { return this.$store.state.signupProcess_availability.availability.timezone; },  
-            set(value) { this.$store.commit('set_timezone', value); }
+            get() { return this.$store.state.signupProcess_availability.availability.av_timezone; },  
+            set(value) { this.$store.commit('set_av_timezone', value); }
         },
         hourly_rate:{
             get() { return this.$store.state.signupProcess_availability.availability.hourly_rate; },  
@@ -1727,14 +1729,42 @@ export default {
             document.getElementById('availability').classList.add('hidden');
             document.getElementById('video').classList.remove('hidden');
         },
-        nextStep(){            
-            this.validateForm();
-            if(Object.keys(this.errors).length) return;
-
+        nextStep(){ 
             document.getElementById('availability').classList.add('hidden');
             document.getElementById('finish').classList.remove('hidden');
         },
-       
+        
+       submitForm(){           
+            this.validateForm();
+            if(Object.keys(this.errors).length) return;
+
+            this.spinner.submit_availability = true;
+            var form_data = new FormData();
+                form_data.append('first_name', this.getUser.first_name);
+                form_data.append('last_name', this.getUser.last_name);
+                form_data.append('timezone', this.$store.state.signupProcess_availability.availability.av_timezone);
+                form_data.append('hourly_rate', this.$store.state.signupProcess_availability.availability.hourly_rate);
+
+                form_data.append('monday', JSON.stringify(this.$store.state.signupProcess_availability.availability.monday));
+                form_data.append('tuesday', JSON.stringify(this.$store.state.signupProcess_availability.availability.tuesday));
+                form_data.append('wednesday', JSON.stringify(this.$store.state.signupProcess_availability.availability.wednesday));
+                form_data.append('thursday', JSON.stringify(this.$store.state.signupProcess_availability.availability.thursday));
+                form_data.append('friday', JSON.stringify(this.$store.state.signupProcess_availability.availability.friday));
+                form_data.append('saturday', JSON.stringify(this.$store.state.signupProcess_availability.availability.saturday));
+                form_data.append('sunday', JSON.stringify(this.$store.state.signupProcess_availability.availability.sunday));            
+                form_data.append('availability', true);            
+                form_data.append('_method', 'PUT');
+
+            axios.post('/api/user/' + this.getUser.id , form_data)             
+            .then(response=>{
+                this.spinner = {}
+                this.nextStep();
+            })
+            .catch(error=>{   
+                this.spinner = {}             
+                console.log(error.response);
+            })
+        },
         validateForm(){
             this.errors={};
 
@@ -1742,8 +1772,45 @@ export default {
             if(! this.timezone) this.errors.timezone = "Please setup your timezone";
             if(! this.hourly_rate) this.errors.hourly_rate = "Please setup your hourly rate";
             if( this.hourly_rate < 5) this.errors.hourly_rate = "Minimum hourly rate is 5 usd";
+        },
+        populateFormFields(){
+            this.timezone  =  this.getUser.timezone;
+            this.hourly_rate =  this.getUser.hourly_rate;
+
+            if(! this.getUser.tutor_schedule) return;
+
+            this.monday.is_available = this.getUser.tutor_schedule.monday ? true : false;
+            this.monday.from = this.getUser.tutor_schedule.monday_from;
+            this.monday.to = this.getUser.tutor_schedule.monday_to;
+
+            this.tuesday.is_available = this.getUser.tutor_schedule.tuesday ? true : false;
+            this.tuesday.from = this.getUser.tutor_schedule.tuesday_from;
+            this.tuesday.to = this.getUser.tutor_schedule.tuesday_to;
+
+            this.wednesday.is_available = this.getUser.tutor_schedule.wednesday ? true : false;
+            this.wednesday.from = this.getUser.tutor_schedule.wednesday_from;
+            this.wednesday.to = this.getUser.tutor_schedule.wednesday_to;
+
+            this.thursday.is_available = this.getUser.tutor_schedule.thursday ? true : false;
+            this.thursday.from = this.getUser.tutor_schedule.thursday_from;
+            this.thursday.to = this.getUser.tutor_schedule.thursday_to;
+
+            this.friday.is_available = this.getUser.tutor_schedule.friday ? true : false;
+            this.friday.from = this.getUser.tutor_schedule.friday_from;
+            this.friday.to = this.getUser.tutor_schedule.friday_to;
+
+            this.saturday.is_available = this.getUser.tutor_schedule.saturday ? true : false;
+            this.saturday.from = this.getUser.tutor_schedule.saturday_from;
+            this.saturday.to = this.getUser.tutor_schedule.saturday_to;
+
+            this.sunday.is_available = this.getUser.tutor_schedule.sunday ? true : false;
+            this.sunday.from = this.getUser.tutor_schedule.sunday_from;
+            this.sunday.to = this.getUser.tutor_schedule.sunday_to;
         }
-    }
+    },
+    mounted(){
+        this.populateFormFields();
+        }
 }
 </script>
 

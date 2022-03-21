@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\RefreshToken;
 use Laravel\Passport\Token;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -31,8 +32,7 @@ class AuthController extends Controller
                 ],200);
             } catch (\Throwable $th) {
                 return $th;
-            }
-           
+            }           
         }
         return response()->json([
             'success'=> false,
@@ -65,9 +65,11 @@ class AuthController extends Controller
     // check if user is authenticated and token still valid 
     public function checkIfUserAuthenticated(Request $request){
         if($request){
-            $user =  $request->user();
+            $current_user =  $request->user();
             $token =  $request->user()->token();
-            return response()->json([
+            $user = User::with('tutorSchedule')->where('id', $current_user->id)->first();
+
+            return  response()->json([
                 'success' => true,
                 'message' => 'User  valid and authenticated',
                 'user' => $user,           

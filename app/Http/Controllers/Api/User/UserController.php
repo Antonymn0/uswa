@@ -49,6 +49,7 @@ class UserController extends Controller
         $credentials= [ 'email' => $new_user->email,  'password' => $data['password'] ];
 
         $this->createLocalAccount($new_user); // create local transction account
+        if($new_user->role == 'tutor') (new TutorScheduleController)->store( $new_user->id); //create tutor schedule
 
         $user =   Auth::attempt($credentials); // login user
         $token = auth()->user()->createToken('token')->accessToken;        
@@ -118,9 +119,10 @@ class UserController extends Controller
         }  
 
         $user->update($data);
-        if(isset($request->monday) || isset($request->wednesday) || isset($request->friday)) (new TutorScheduleController)->store($request, $user->id); //save user schedule
 
-        event(new UserUpdated($user));
+        if($user->role == 'tutor' && isset($request->availability)) (new TutorScheduleController)->update($request, $user->id); //save user schedule
+
+        // event(new UserUpdated($user));
         return response()->json([
             'success'=> true, 
             'message'=>'User updated successfuly', 

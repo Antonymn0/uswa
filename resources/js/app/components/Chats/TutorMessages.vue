@@ -141,6 +141,7 @@ export default {
             this.current_message = message;
         },
         fetchMesages(){
+            if(!this.isLogedIn)  this.$router.push({name: 'login'});
             axios.get('/api/tutor/messages')
             .then(response => {
                 this.unread_threads = 0;
@@ -151,7 +152,8 @@ export default {
             })
             .catch(error => {  console.log(error.response);   });
         },
-        refreshCurrentMessage(){            
+        refreshCurrentMessage(){ 
+            if(!this.isLogedIn)  this.$router.push({name: 'login'});           
             axios.get('/api/tutor/get-message/' + this.current_message.id)
             .then(response => {                
                 if(response.status == 200){
@@ -161,7 +163,6 @@ export default {
             .catch(error => {  console.log(error.response);  });
         },
         toggleSeen(message){
-             console.log('Thread toggling...');
             axios.get('/api/student/update-seen/' + message.id)
             .then(response => {
                 console.log('Thread seen toggled');              
@@ -169,7 +170,7 @@ export default {
             .catch(error => {  console.log(error.response);   });
         },
         deleteConversation(id){
-            if(! confirm("Delete this conversation thread? \n All messages in the thread will be parmanently lost.")) return;
+            if(! confirm("Delete this conversation thread? \n All messages in this thread will be parmanently lost.")) return;
             axios.delete('/api/tutor/messages/' + id)
             .then(response => {
                 this.fetchMesages();            

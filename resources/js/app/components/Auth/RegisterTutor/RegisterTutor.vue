@@ -129,7 +129,7 @@ input[type=email], input[type=text], input[type=password] {
 
 /* Set a style for all buttons */
 button {
-  background-color: #04AA6D;
+  background-color: #f44336;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -147,7 +147,7 @@ button:hover {
 .cancelbtn {
   width: auto;
   padding: 10px 18px;
-  background-color: #f44336;
+  background-color:#04AA6D 
 }
 
 /* Center the avatar image inside this container */

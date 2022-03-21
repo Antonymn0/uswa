@@ -29,7 +29,7 @@
                 </div>   
             <div class="text-center pt-5 pb-2">
                 <button class="btn btn-secondary m-1" @click.prevent="this.backStep()">Back</button>
-                <button class="btn btn-danger m-1" @click.prevent="this.nextStep()">Next</button>
+                <button class="btn btn-danger m-1" @click.prevent="this.submitForm()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.submit_photo"></span> Next</button>
             </div>           
             </div>
         </div>         
@@ -37,14 +37,17 @@
 </template>
 
 <script>
+import {mapGetters } from "vuex";
 export default {
     data(){
         return{
             errors:{},
-            success:{}
+            success:{},
+            spinner:{}
         }
     },
     computed:{
+        ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),
         img_preview:{
             get() { return this.$store.state.signupProcess_profilePhoto.profilePhoto.img_preview; },
             set(value) { this.$store.commit('set_profile_img_preview', value); }
@@ -78,10 +81,30 @@ export default {
             this.img_preview = null;
             this.image = null;
         },
-        nextStep(){
+        submitForm(){
+            if(this.img_preview == this.getUser.image) {this.nextStep(); retun;};
+
             this.validateForm();
             if(Object.keys(this.errors).length) return;
 
+            this.spinner.submit_photo = true;
+            var form_data = new FormData();
+                form_data.append('first_name', this.$store.state.signupProcess_about.about.first_name);
+                form_data.append('last_name', this.$store.state.signupProcess_about.about.last_name);
+                form_data.append('image', this.$store.state.signupProcess_profilePhoto.profilePhoto.image);               
+                form_data.append('_method', 'PUT');
+
+            axios.post('/api/user/' + this.getUser.id , form_data)             
+            .then(response=>{
+                this.spinner = {}
+               this.nextStep();
+            })
+            .catch(error=>{   
+                this.spinner = {}             
+                console.log(error.response);
+            })
+        },
+        nextStep(){
             document.getElementById('photo').classList.add('hidden');
             document.getElementById('certification').classList.remove('hidden');
         },
@@ -92,7 +115,14 @@ export default {
         validateForm(){
             this.errors = {};
             if(!this.image) this.errors.image = 'Image is required';
-        }
+        },
+        populateFormFields(){
+            this.$store.commit('set_profile_img_preview', this.getUser.image);            
+        },
+       
+    },
+    mounted(){
+        this.populateFormFields();
     }
 }
 </script>

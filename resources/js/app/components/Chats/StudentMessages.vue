@@ -4,7 +4,6 @@
         <span  class="position-relative" @click.prevent="openStudentMessages()" style="cursor:pointer">
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" v-if="this.unread_threads > 0">
                 {{unread_threads}}
-                <span class="visually-hidden">unread messages</span>
             </span>
             <i class="bi bi-chat-dots text-dark " >  </i>
         </span>
@@ -17,7 +16,7 @@
             </span>
 
             <div id="messages" class="">             
-                <h4 class="border-bottom p-1">Messages (Student)<span class="btn btn-secondary btn-sm" @click.prevent="fetchMesages()">Refesh</span></h4>
+                <h4 class="border-bottom p-1">Messages <span class="btn btn-secondary btn-sm" @click.prevent="fetchMesages()">Refesh</span></h4>
                <div v-if="Object.keys(this.current_messages).length">
                     <ul class="list-unstyled pr-3 mr-3 pt-4" v-for="(message, index) in this.current_messages" :key="index">
                         <li class="border-bottom p-2">
@@ -154,6 +153,8 @@ export default {
             .catch(error => {  console.log(error.response);   });
         },
         fetchMesages(){
+            if(!this.isLogedIn)  this.$router.push({name: 'login'});
+            
             axios.get('/api/student/get-messages')
             .then(response => {
                 this.unread_threads = 0;
@@ -165,7 +166,8 @@ export default {
             })
             .catch(error => {  console.log(error.response);   });
         },
-        refreshCurrentMessage(){            
+        refreshCurrentMessage(){     
+            if(!this.isLogedIn)  this.$router.push({name: 'login'});
             axios.get('/api/student/get-message/' + this.current_message.id)
             .then(response => {                
                 if(response.status == 200){

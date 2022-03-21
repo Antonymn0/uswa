@@ -75,20 +75,20 @@
                     <p> <span> Description: </span> <span> {{this.capitalize(current_user.teaching_certificate_desription)}} </span> </p> 
 
                     <p> <span>Has higher education: </span> <span v-if="current_user.has_higher_education_certificate" class="text-pimary">Yes </span> <span class="text-danger" v-else> No </span>  </p>
-                    <p> <span>Institution: </span> </p>
+                    <p> <span>Institution: </span> <span> {{this.capitalize(current_user.higher_education_institution)}} </span> </p>
                     <p> <span>Higher education certificate: </span> <span> <a :href="current_user.higher_education_certificate_upload" target="blank"> <img :src="current_user.teaching_certificate_upload" alt="teaching-cert" style="width:40px; height:40px"> </a> </span></p>
                     
                     <p> <span>Has introduction video: </span>  <span v-if="current_user.introduction_video" class="text-pimary">Yes </span> <span class="text-danger" v-else> No </span> </p>
                     <p> <span>Introduction video: </span>
                         <span v-if="current_user.introduction_video"> <a :href="current_user.introduction_video" class="underline" target="blank">Uploaded </a> </span> 
                         <span v-if="current_user.introduction_video_url"> <a :href="current_user.introduction_video_url" class="underline" target="blank">Linked </a> </span> 
-                     </p>
+                    </p>
                 </div>
                 </div>                        
                 <p>
                     <label for="remarks"></label>
                     <textarea name="" id="remarks" cols="10" rows="5" placeholder="Remarks" class="border p-2 rounded w-100" v-model="decline_reason"></textarea>
-                    <small class="small text-muted">Type any remarks for the tutor incase of a revert.</small> <br>
+                    <small class="small text-muted">Type any remarks for the candidate incase of a revert.</small> <br>
                     <small class="small text-danger">{{this.errors.decline_reason}}</small>
                 </p>
                 </div>
@@ -164,7 +164,7 @@ export default {
             this.errors ={}
             this.success ='';
             if(! this.decline_reason) {this.errors.decline_reason = 'Please provide a decline reason'; return;}
-            if(! confirm("Are you sure you want to revert this tutor account?")) return;
+            if(! confirm("Are you sure you want to revert this candidate account?")) return;
             this.spinner.revert=true;
             axios.get('/api/admin/revert/tutor/' + id + '/' + this.decline_reason)
             .then(response=>{

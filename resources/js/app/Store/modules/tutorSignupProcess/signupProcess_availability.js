@@ -3,8 +3,8 @@ import moment from "moment";
 export const signupProcess_availability = {
     state: () => ({
         availability: {
-            timezone: null,
-            hourly_rate: null,
+            av_timezone: null,
+            hourly_rate: 5,
 
             monday: {
                 is_available: false,
@@ -46,8 +46,8 @@ export const signupProcess_availability = {
 
     getters: {},
     mutations: {
-        set_timezone(state, timezone) {
-            state.availability.timezone = timezone;
+        set_av_timezone(state, timezone) {
+            state.availability.av_timezone = timezone;
         },
         set_hourly_rate(state, hourly_rate) {
             state.availability.hourly_rate = hourly_rate;

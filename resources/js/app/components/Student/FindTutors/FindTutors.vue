@@ -13,7 +13,7 @@
             <span>
                 <img src="" alt="">
             </span>
-            <SearchTutor />
+            <SearchTutor @searchTutors="recieveSearchResults"/>
         </div> 
         <!-- -------------------------------------- -->
         <div class="pt-2 pb-3">
@@ -21,7 +21,7 @@
         </div> 
         <!-- -------------------------------  -->
         <div>
-            <AvailableTutors />
+            <AvailableTutors :search_tutors_results="this.tutors" :search_keyword="this.search_keyword"/>
         </div>
 
 
@@ -38,6 +38,18 @@ export default {
       SearchTutor,
       Infos,
       AvailableTutors
+    },
+    data(){
+        return{
+           tutors:{},
+           search_keyword:'' 
+        }
+    },
+    methods:{
+        recieveSearchResults(search_tutors, search_keyword){
+            this.tutors = search_tutors;
+            this.search_keyword = search_keyword;
+        }
     }
 }
 </script>

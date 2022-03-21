@@ -1,5 +1,5 @@
 <template>
-  <div> <h4> Tutor dashboard</h4> </div>
+  <h4 class="ps-3 pt-3">Dashboard </h4> 
   <div> <Lessons /></div>
 </template>
 

@@ -25,9 +25,9 @@ class UpdateUser extends FormRequest
     public function rules()
     {
         return [           
-            'first_name' => ['required', 'string'],
+            'first_name' => ['nullable', 'string'],
             'middle_name' => ['nullable', 'string'],
-            'last_name' => ['required', 'string'],
+            'last_name' => ['nullable', 'string'],
             'username' => ['nullable', 'string', 'string', Rule::unique('users')->ignore($this->user)],
             'phone' => ['nullable', 'string', Rule::unique('users')->ignore($this->user)],
             'address' => ['nullable', 'string'],
@@ -62,6 +62,7 @@ class UpdateUser extends FormRequest
             'description' => [ 'nullable', 'string'],
 
             'has_teaching_certificate' => ['string', 'nullable'],
+            'teaching_certificate' => ['string', 'nullable'],
             'teaching_certificate_upload' => ['mimes:svg,png,jpg,jpeg', 'nullable'],
             'teaching_certificate_subject' => ['string', 'nullable'],
             'teaching_certificate_year_of_study_from' => ['string', 'nullable'],
@@ -69,9 +70,11 @@ class UpdateUser extends FormRequest
             'teaching_certificate_description' => ['string', 'nullable'],
             'teaching_certificate_issued_by' => ['string', 'nullable'],
 
-            'higher_education' => ['string', 'nullable'],
+            'higher_education_institution' => ['string', 'nullable'],
             'higher_education_level' => ['string', 'nullable'],
             'higher_education_type' => ['string', 'nullable'],
+            'higher_education_study_from' => ['date', 'nullable'],
+            'higher_education_study_to' => ['date', 'nullable'],
             'higher_education_specialty' => ['string', 'nullable'],
             'higher_education_certificate_upload' => ['mimes:jpg,jpeg,png,svg', 'nullable'],
             'has_higher_education_certificate' => ['string', 'nullable'],

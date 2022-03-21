@@ -57,6 +57,7 @@ class CreateUsersTable extends Migration
            $table->string('over18')->nullable();
            $table->string('description')->nullable();
 
+           $table->string('teaching_certificate')->nullable();           
            $table->string('has_teaching_certificate')->nullable();           
            $table->string('teaching_certificate_upload')->nullable();
            $table->string('teaching_certificate_subject')->nullable();
@@ -65,8 +66,11 @@ class CreateUsersTable extends Migration
            $table->text('teaching_certificate_description')->nullable();
            $table->string('teaching_certificate_issued_by')->nullable();
 
+           $table->string('higher_education_institution')->nullable();
            $table->string('has_higher_education_certificate')->nullable();
            $table->string('higher_education_level')->nullable();
+           $table->string('higher_education_study_from')->nullable();
+           $table->string('higher_education_study_to')->nullable();
            $table->string('higher_education_type')->nullable();
            $table->string('higher_education_specialty')->nullable();
            $table->string('higher_education_certificate_upload')->nullable();

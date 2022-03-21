@@ -12,11 +12,11 @@ use App\Events\User\tutorAccountDeclined;
 class TutorController extends Controller
 {
     /**
-     * Fetch unreviewd tutor records
+     * Fetch unreviewed tutor records
      */
     public function getReviewTutors(Request $request){
         $tutors = User::where('role', 'tutor')
-            ->where('registration', 'reviewing')
+            ->where('registration', 'submited')
             ->paginate(env('API_PAGINATION', 10));
         return response()->json([
             'success' => true,
@@ -57,7 +57,8 @@ class TutorController extends Controller
     public function revertTutor(Request $request, $id, $message){
         $tutor = User::findOrFail($id);
         $tutor->update([
-            'revert_reason' => $message
+            'revert_reason' => $message,
+            'registration' => 'reverted'
         ]);
 
         event(new tutorAccountDeclined($tutor));
@@ -66,7 +67,7 @@ class TutorController extends Controller
             'sender' => $request->user()->id,
             'recipient' => $tutor->id,
             'title' => 'Account review declined' ,
-            'body' => $message,
+            'body' => 'Reason: ' . $message,
             'status' => 'sent'
         ]);
 

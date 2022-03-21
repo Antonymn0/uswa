@@ -20,7 +20,7 @@
             <input type="password" placeholder="Enter Password" v-model="form.password" required>
             <small class="text-danger">{{this.errors.password}}</small> <br>
 
-            <button type="submit"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner"></span> Login</button>
+            <button type="submit" class="btn btn-danger"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner"></span> Login</button>
             <label>
             <input type="checkbox" checked="checked" name="remember"> Remember me
             </label>
@@ -118,7 +118,7 @@ input[type=email], input[type=password] {
 
 /* Set a style for all buttons */
 button {
-  background-color: #04AA6D;
+  background-color: #dc3545;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -136,7 +136,7 @@ button:hover {
 .cancelbtn {
   width: auto;
   padding: 10px 18px;
-  background-color: #f44336;
+  background-color: #04AA6D
 }
 
 /* Center the avatar image inside this container */

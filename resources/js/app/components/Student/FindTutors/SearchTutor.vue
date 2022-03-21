@@ -2,7 +2,7 @@
   <div>
        <div class="mb-3 col-md-6">
             <label for="phone" class="form-label">Search Language or subject </label>
-            <span class="d-flex"><input type="text" class="form-control py-3 search-bar " id="phone" placeholder="Subject to learn" v-model="this.language"><button type="button" class="buton ">Search</button> </span>
+            <span class="d-flex"><input type="text" class="form-control py-3 search-bar " id="phone" placeholder="Subject to learn" v-model="this.search_language"><button type="button" class="buton " @click.prevent="this.searchTutor()">Search</button> </span>
             <span></span>                 
         </div>
 
@@ -13,7 +13,19 @@
 export default {
     data(){
         return{
-            language:null,
+            search_language:null,
+        }
+    },
+    methods:{
+        searchTutor(){
+            if(! this.search_language) return;
+            axios.get('/api/search-tutors/' +  this.language)             
+            .then(response=>{
+                this.$emit('searchTutors', response.data.data.data, this.search_language ); //pass results to parent
+            })
+            .catch(error=>{              
+                console.log(error.response);
+            })
         }
     }
 }

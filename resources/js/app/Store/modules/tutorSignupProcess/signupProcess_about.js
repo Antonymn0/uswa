@@ -1,7 +1,7 @@
 export const signupProcess_about = {
     state: () => ({
         about: {
-            first_name:null,
+            first_name: null,
             middle_name: null,
             last_name: null,
             country: null,

@@ -15,7 +15,36 @@ class TutorScheduleController extends Controller
      * @param  \App\Http\Requests\StoreTutorSheduleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($request, $user_id)
+    public function store( $user_id)    {
+       
+        $tutorSchedule = TutorSchedule::create([ 'user_id' => $user_id ]);
+
+        return $tutorSchedule;
+    }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $user= TutorSchedule::findOrFail($id);
+        return response()->json([
+            'success'=> true,
+            'message'=> 'Á single user retrieved successfully', 
+            'data'=>$user], 200);
+    }
+
+    /**
+     * update resource in storage.
+     *
+     * @param  \App\Http\Requests\StoreTutorSheduleRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update($request, $user_id)
     {
         $availability = $this->getAvailability($request);
         $data =[
@@ -52,13 +81,16 @@ class TutorScheduleController extends Controller
 
         $tutorSchedule = TutorSchedule::where('user_id', $user_id)->first();
 
-        if($tutorSchedule) $tutorSchedule ->update($data);
-        else $tutorSchedule = TutorSchedule::create($data);  
+        $tutorSchedule ->update($data);
 
         return $tutorSchedule;
     }
 
 
+
+    /**
+     * Extract tutor availability
+     */
     public function getAvailability($request){        
 
        return (object) [

@@ -40,7 +40,7 @@ export const signupProcess_certification = {
         set_study_to(state, payload) {
             state.certification.study_to = payload;
         },
-        set_i_dont_have_certificate(state, payload) {
+        set_i_dont_have_certificat(state, payload) {
             state.certification.i_dont_have_certificate = payload;
         },
     },

@@ -1,6 +1,6 @@
 <template>
   <div class="parent">
-      <h5> 20 Available english tutors </h5>
+      <h5>   {{this.capitalize(this.search_term)}} tutors </h5>
       <!-- ----------------------------------------------------------------------------------------------------- -->
       <div v-if="Object.keys(this.current_tutors).length">
       <div class="mobile-outer " v-for="(tutor, index) in this.current_tutors" :key="index">
@@ -46,14 +46,14 @@
                 <!-- ------------------------------------- -->
                 <div class="d-flex  small p-2 speaks">
                     <span class="fw-bold">Speaks: &nbsp; </span> 
-                    <span> {{tutor.language}} &nbsp;</span> <span class="alert-success rounded"> {{tutor.level}} </span>  
+                    <span> {{tutor.language}} &nbsp;</span> <span class="alert-success px-1 rounded"> {{ this.capitalize(tutor.level)}} </span>  
                     <span class="">  &nbsp; | &nbsp;</span>
-                    <span>{{tutor.subject}} </span> <span class="alert-primary  rounded"> {{tutor.subject_level}} </span>  
+                    <span>{{tutor.subject}} &nbsp; </span>  <span class="alert-primary px-1 rounded">  {{ this.capitalize(tutor.subject_level)}} </span>  
                 </div>
                 <!-- -------------------------- -->
                 <div class="px-2">
                     <span> Description: </span>
-                    <span>{{tutor.description}}  </span>
+                    <span>{{ this.capitalize(tutor.description)}}  </span>
                 </div>
                 <div class="d-flex align-items-center py-2">                    
                     <span> <button class="btn btn-danger rounded" @click.prevent="updateCurrent_tutor(tutor)" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Intro</button> &nbsp; </span> 
@@ -81,6 +81,7 @@
 
 <script>
 import axios from 'axios';
+import {mapGetters } from "vuex";
 
 import BookTialLessonModal from "./BookTrialLessonModal.vue";
 import CountryFlag from 'vue-country-flag-next';
@@ -89,6 +90,10 @@ import IntroVideo from "./IntroVideo.vue";
 import Reviews from "../../Reviews/Reviews.vue";
 
 export default {
+   props:[
+       'search_tutors_results',
+       'search_keyword'
+   ],
     components: {
         CountryFlag,
         BookTialLessonModal,
@@ -98,15 +103,28 @@ export default {
     },
     data(){
         return{
-            current_tutors: this.$store.state.tutors.tutors,
-            current_tutor:{}
+            current_tutors: {},
+            current_tutor:{},
+            search_term:'Available'
         }
     },
     computed:{
+        ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),
         tutors:{
             get() { return this.$store.state.tutors.tutors; },
             set(value) { this.$store.commit('set_tutors', value); }
-        },
+        },       
+    },
+    watch:{
+        search_tutors_results(){
+            this.current_tutors = this.search_tutors_results;
+            this.search_term = this.search_keyword;
+            if(! Object.keys(this.current_tutors).length ) {
+                setTimeout(() => {
+                    this.fetchAvailableTutors();
+                }, 3000);
+            }
+        }
     },
     methods:{
         updateCurrent_tutor(tutor){
@@ -116,6 +134,7 @@ export default {
           if(string)  return string.charAt(0).toUpperCase() + string.slice(1);
         },
         toggleFavourite(event, tutor){
+            if(!this.isLogedIn) this.$router.push({name: 'login'});
             if(event.target.classList.contains('text-danger')){
                 event.target.classList.remove('text-danger');
                 event.target.classList.add('text-muted');

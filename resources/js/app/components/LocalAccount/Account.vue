@@ -7,7 +7,7 @@
             <!-- --------------------------------------- -->
             <div class="py-3 card mx-2 rounded shadow"> 
             <div class="fw-bold pt-5 "> 
-                <h4>Availbale balance  </h4> 
+                <h4>Available balance  </h4> 
                 <p class="py-3 text-center fw-bold">
                    <span class="m-0">$</span>
                    <span class="m-0 " v-if="this.getAccount.available_balance">{{this.getAccount.available_balance}}</span>
@@ -18,7 +18,7 @@
                 <!-- <button class="btn btn-lg btn-secondary m-2 px-3 w-75"   @click.prevent="this.getPaypalAccessToken()"> Get paypal token </button> -->
                 <small class="text-success" v-if="this.success.signup_link"> <br>{{this.success.signup_link}}</small>
                 <small class="text-danger" v-if="this.errors.signup_link"> <br> {{this.errors.signup_link}}</small>
-                <button class="btn btn-lg btn-secondary m-2 px-3 w-75" v-if="this.getUser.role == 'tutor' && !this.getUser.paypal_merchant_id"  @click.prevent="this.generateSigupLink()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.signup_link"></span>  Link with paypal </button>
+                <button class="btn btn-lg btn-secondary m-2 px-3 w-75" v-if=" !this.getUser.paypal_merchant_id && this.getUser.role == 'tutor'  "  @click.prevent="this.generateSigupLink()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.signup_link"></span>  Link with paypal </button>
               
                <small class="text-success" v-if="this.success.charge_object"> <br>{{this.success.charge_object}}</small>
                 <small class="text-danger" v-if="this.errors.charge_object"> <br> {{this.errors.charge_object}}</small>

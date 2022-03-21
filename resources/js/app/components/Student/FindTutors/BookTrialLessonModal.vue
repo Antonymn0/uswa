@@ -186,10 +186,13 @@ export default {
             if( moment(this.date).isAfter(moment().add(5, 'days')) ) this.errors.date = "This activity should happen in 5 days max."
         },
         bookTrialLesson(){
+            if(!this.isLogedIn) { 
+                document.getElementById('closetrial').click();
+                this.$router.push({name: 'login'})
+            };
             this.errors = {};
             this.testTimeLimit() ;
             this.validateDate();
-
             if(this.getAccount.available_balance < this.tutor.hourly_rate)
             { alert('Insufficient account balance! \nYour account must have a balance of atleast $' + this.tutor.hourly_rate + ' to cover for the cost of your first lesson.'); return;}
 

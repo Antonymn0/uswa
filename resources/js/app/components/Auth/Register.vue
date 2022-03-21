@@ -26,7 +26,7 @@
            
         </div>
 
-        <div class="container d-flex" >
+        <div class="container d-flex align-items-center" >
             <button type="button" class="cancelbtn m-2 rounded form-control" @click.prevent="()=>{this.$router.push({name: 'home'})}">Cancel</button>
             <button type="button" class="cancelbtn m-2 rounded form-control" @click.prevent="()=>{this.$router.push({name: 'login'})}">Go to Login</button> OR
             <button type="button" class="cancelbtn m-2 rounded form-control" @click.prevent="()=>{this.$router.push({name: 'register-tutor'})}">Become a tutor</button>
@@ -142,7 +142,7 @@ input[type=email], input[type=text], input[type=password] {
 
 /* Set a style for all buttons */
 button {
-  background-color: #04AA6D;
+  background-color: #dc3545;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -160,7 +160,7 @@ button:hover {
 .cancelbtn {
   width: auto;
   padding: 10px 18px;
-  background-color: #f44336;
+  background-color:#04AA6D
 }
 
 /* Center the avatar image inside this container */
