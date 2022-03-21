@@ -38,7 +38,7 @@ export const signupProcess_about = {
         set_timezone(state, payload) {
             state.about.timezone = payload;
         },
-        set_currency(state, payload) {
+        set_about_currency(state, payload) {
             state.about.currency = payload;
         },
         set_language(state, payload) {

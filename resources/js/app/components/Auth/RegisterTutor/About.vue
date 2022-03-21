@@ -37,7 +37,7 @@
                     </div>
                     <div class="mb-3 col-md-6">
                         <label for="currency" class="form-label">Currency</label>
-                        <select  id="currency" v-model="currency" class="w-100 p-2 border rounded bg-white text-muted">
+                        <select  id="currency" v-model="this.currency" class="w-100 p-2 border rounded bg-white text-muted">
                             <option value="" selected> -Select- </option>
                             <option :value="index" v-for="(item, index) in this.currencies" :key="index">{{item}}</option>
                         </select>
@@ -2235,7 +2235,7 @@ components: { vueCountriesCities },
         },
         currency:{
             get() { return this.$store.state.signupProcess_about.about.currency;},           
-            set(value) {  this.$store.commit('set_currency', value); }
+            set(value) {  this.$store.commit('set_about_currency', value); }
         },
         language:{
             get() { return this.$store.state.signupProcess_about.about.language;},           
