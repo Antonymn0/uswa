@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review</button>
+        <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal" v-if="this.isLogedIn">Write a review</button>
         <button class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
       </div>
     </div>
@@ -96,6 +96,7 @@ export default {
             this.toggleStarViewColor(star_num);
         },
         toggleStarViewColor(star_num){
+          if(!this.isLogedIn)  this.$router.push({name: 'login'});
             var stars = document.getElementsByClassName('bi-star-fill');
             for(var i =0; i<stars.length; i++ ){
                 stars[i].classList.remove('text-warning');
@@ -109,6 +110,8 @@ export default {
             }
         },
         submitReview(){
+           if(!this.isLogedIn)  this.$router.push({name: 'login'});
+
             this.validateForm();
             if(Object.keys(this.errors).length) return;
             if(! confirm("Submit this Review?")) return;

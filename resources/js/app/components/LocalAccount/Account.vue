@@ -15,10 +15,10 @@
                 </p>
             </div>
             <div class="pt-3 pb-2"> 
-                <!-- <button class="btn btn-lg btn-secondary m-2 px-3 w-75"   @click.prevent="this.getPaypalAccessToken()"> Get paypal token </button> -->
+                <button class="btn btn-lg btn-secondary m-2 px-3 w-75"   @click.prevent="this.getPaypalAccessToken()"> Get paypal token </button>
                 <small class="text-success" v-if="this.success.signup_link"> <br>{{this.success.signup_link}}</small>
                 <small class="text-danger" v-if="this.errors.signup_link"> <br> {{this.errors.signup_link}}</small>
-                <button class="btn btn-lg btn-secondary m-2 px-3 w-75" v-if=" !this.getUser.paypal_merchant_id && this.getUser.role == 'tutor'  "  @click.prevent="this.generateSigupLink()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.signup_link"></span>  Link with paypal </button>
+                <button class="btn btn-lg btn-secondary m-2 px-3 w-75" v-if=" !this.getUser.paypal_merchant_id  "  @click.prevent="this.generateSigupLink()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.signup_link"></span>  Link with paypal </button>
               
                <small class="text-success" v-if="this.success.charge_object"> <br>{{this.success.charge_object}}</small>
                 <small class="text-danger" v-if="this.errors.charge_object"> <br> {{this.errors.charge_object}}</small>

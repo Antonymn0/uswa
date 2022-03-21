@@ -92,7 +92,9 @@ class PaypalController extends Controller
     * Generate paypal seller/merchant onboarding link
     */
    public function generateSignupLink(Request $request){
+        $this->getAccessToken();
         $user = $request->user();
+
         $uri = 'https://api-m.sandbox.paypal.com/v2/customer/partner-referrals';
         $token= PaypalAuthToken::first()->token;
         $body =  [

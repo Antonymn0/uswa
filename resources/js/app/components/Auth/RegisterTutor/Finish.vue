@@ -66,7 +66,7 @@ export default {
                 if(response.status == 200){   
                     this.spinner=false;  
                     this.success.signup = "Congratulations!. Your data has been submitted and is being reviewed. \n You will be redirected to dashboard shortly." ;
-                    setTimeout(() => {this.$router.push({name: 'tutor-dashboard'})}, 3000); //redirect to home page                   
+                    setTimeout(() => {this.$router.push({name: 'tutor-dashboard'})}, 3500); //redirect to home page                   
                 }
                 this.spinner=false; 
             })

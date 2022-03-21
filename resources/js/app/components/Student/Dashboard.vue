@@ -2,7 +2,7 @@
   <div>
       <h4 class="ps-3 pt-3">Dashboard </h4>  
       <div> <myLessons /> </div>    
-      </div>
+  </div>
 </template>
 
 <script>
