@@ -180,7 +180,8 @@ export default {
     methods:{  
         updateCurrentLesson(lesson)   {
             this.current_lesson = lesson;
-        },   
+        }, 
+          
         formatDate(date){
             if (date) return moment(String(date)).format('ll');            
         },

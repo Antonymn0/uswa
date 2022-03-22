@@ -15,13 +15,13 @@
                 <a href="javascript:void(0)" class="closebtn hidden"  @click.prevent="closeThread()"><i class="bi bi-arrow-left text-dark " ></i></a>
             </span>
             <div id="messages" class="">             
-                <h4 class="border-bottom p-1">Messages (Tutor)<span class="btn btn-secondary btn-sm" @click.prevent="fetchMesages()">Refesh</span></h4>
+                <h4 class="border-bottom p-2 d-flex align-content-center justify-content-between"> <span>Messages </span>  <span class="btn btn-secondary btn-sm me-3 p-0" @click.prevent="fetchMesages()"> <i class="bi bi-arrow-clockwise"></i> </span></h4>
                <div v-if="Object.keys(this.current_messages).length">
                     <ul class="list-unstyled pr-3 mr-3 pt-4" v-for="(message, index) in this.current_messages" :key="index">
                         <li class="border-bottom p-2">
                             <div class="d-flex position-relative " style="cursor:pointer">
-                                <span @click.prevent="[toggleThread(message.conversation_thread), toggleMessage(message), showThread(), toggleSeen(message) ]">  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.5rem"></i></span>
-                                <span class="ml-2" @click.prevent="[toggleThread(message.conversation_thread), toggleMessage(message), showThread(), toggleSeen(message) ]">
+                                <span @click.prevent="[toggleMessage(message), toggleThread(message.conversation_thread),  showThread(), toggleSeen(message) ]">  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.5rem"></i></span>
+                                <span class="ml-2" @click.prevent="[toggleMessage(message), toggleThread(message.conversation_thread),  showThread(), toggleSeen(message) ]" style="cursor:pointer">
                                     <h5 class="m-0 position-relative"> 
                                         {{message.message_sender.first_name}} {{ message.message_sender.last_name.charAt(0).toUpperCase()}}
                                         <span class="position-absolute top-0 start-100 text-white  bg-danger small" v-if="!message.tutor_seen" style="font-size:.6rem; padding:.2rem .45rem; border-radius:50rem"> 1 </span>
@@ -41,21 +41,21 @@
                 </div>             
             </div>
 
-            <!-- -----------------------------Threads--------------------------------------- -->
+            <!-- ----------------------------- Conversation Thread --------------------------------------- -->
             <div id="thread" class="mr-3 hidden">
                 <div  v-if="Object.keys(this.current_message).length">
                 <h4 class="d-flex align-items-center border-bottom">
                     <span><i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.7rem"></i>  </span>                   
-                    <span>{{this.current_message.message_sender.first_name}}  {{ this.current_message.message_sender.last_name.charAt(0).toUpperCase()}} </span> 
+                    <span v-if="Object.keys(this.current_message).length">{{this.capitalize(this.current_message.message_sender.first_name)}}  {{ this.current_message.message_sender.last_name.charAt(0).toUpperCase()}} </span> 
                 </h4>
 
                 <div v-for="(text, index) in this.current_message_thread" :key="index">
                     <div class="w-100">
-                        <div class="charts float-end">                            
-                            <p class="mb-0">{{text.message}}</p>
+                        <div class="charts " :class="[text.sender == this.getUser.id ? 'float-end' : '']">                            
+                            <p class="mb-0">{{this.capitalize(text.message)}}</p>
                             <p class="text-end  mb-0 small text-muted">
                             <span class="mx-2"> {{formatDate(text.created_at)}} </span>
-                                <span class="ml-2"><i class="bi bi-check-all "></i></span>  
+                                <span class="ml-2" v-if="text.recipient !== this.getUser.id"><i class="bi bi-check-all "></i></span>   
                             </p>                        
                         </div>
                     </div>
@@ -101,9 +101,10 @@ export default {
     },
     methods:{
         formatDate(date){
-            if (date) {
-                return moment(String(date)).format('ll') + ' ' + moment(String(date)).format('LT');
-            }
+            if (date)      return moment(String(date)).format('ll') + ' ' + moment(String(date)).format('LT');
+        },
+        capitalize(string){
+          if(string)  return string.charAt(0).toUpperCase() + string.slice(1);
         },
         openTutorMessages() {
             document.getElementById("mySidenav").style.width = "550px";            
@@ -139,6 +140,7 @@ export default {
         },
         toggleMessage(message){
             this.current_message = message;
+            console.log(this.current_message.message_sender.first_name);
         },
         fetchMesages(){
             if(!this.isLogedIn)  this.$router.push({name: 'login'});
@@ -155,7 +157,8 @@ export default {
         refreshCurrentMessage(){ 
             if(!this.isLogedIn)  this.$router.push({name: 'login'});           
             axios.get('/api/tutor/get-message/' + this.current_message.id)
-            .then(response => {                
+            .then(response => {
+                console.log(response)  ;              
                 if(response.status == 200){
                     this.current_message_thread = response.data.data.conversation_thread;                   
                 }    console.log(response.data.data.conversation_thread);                           
@@ -205,11 +208,12 @@ export default {
         }
     },
     computed:{
-        ...mapGetters(["isLogedIn"]),    
+        ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),    
     },
     mounted(){
         // this.refreshConversation();
         // this.fetchMesages();
+        this.fetchMesages();
     }
 }
 </script>
@@ -249,12 +253,12 @@ export default {
 .sidenav {
   height: 100%; /* 100% Full-height */
   width: 0; /* 0 width - change this with JavaScript */
-  max-width: 100%;
+  max-width: 95%;
   position: fixed; /* Stay in place */
   z-index: 10; /* Stay on top */
   top: 0; /* Stay at the top */
   right:0;
-  right: -1rem;
+  right: -5rem;
   background-color: #fff;
   color:#1f2027; /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */

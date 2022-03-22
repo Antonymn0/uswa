@@ -56,9 +56,11 @@ export default {
             document.getElementById('closeMessage').click();
              this.$router.push({name: 'login'})
          };
+         
           this.validateForm();
           if(Object.keys(this.errors).length) return;
-
+      if(!confirm("Start a conversation with this tutor " + this.tutor.first_name + '?' ));
+      
 			var form_data = new FormData();
 				form_data.append('message', this.message);
 				form_data.append('sender', this.$store.state.user.user.id);

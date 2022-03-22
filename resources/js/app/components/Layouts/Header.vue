@@ -8,15 +8,15 @@
 <div class="border-bottom"> 
   <div class="parent-header d-flex justify-content-between align-items-center  border-bottom px-3">
     <div class="d-flex justify-content-start align-items-center">
-      <div class="d-flex py-4 "> 
+      <div class="d-flex py-4 ps-5"> 
         <span v-if="getUser.role == 'admin'"> <router-link :to="{name: 'all-users'}"><img src="http://127.0.0.1:8000/images/logo.svg" alt="uswa-logo" style="width:150px; ">  </router-link>  </span>  
         <span v-else> <router-link :to="{name: 'home'}"><img src="http://127.0.0.1:8000/images/logo.svg" alt="uswa-logo" style="width:150px; ">  </router-link>  </span>  
       </div>
       <div class="pl-3 desktop " v-if="getUser.role !== 'admin' " >
-         <ul class="list-unstyled d-flex" >
-         <router-link :to="{name: 'find-tutor'}" class="px-3" v-if="getUser.role !== 'tutor' ">Find a tutor</router-link>          
-         <router-link :to="{name: 'register-tutor'}" class="px-3"  v-if="getUser.role !== 'tutor' && getUser.role !== 'student' ">Become a tutor</router-link>          
-          <router-link :to="{name: 'home'}" class="px-1" >Home</router-link>
+        <ul class="list-unstyled my-auto py-auto d-flex align-items-center"  >
+         <li> <router-link :to="{name: 'find-tutor'}" class="px-3" v-if="getUser.role !== 'tutor' ">Find a tutor</router-link> </li>           
+         <li> <router-link :to="{name: 'register-tutor'}" class="px-3"  v-if="getUser.role !== 'tutor' && getUser.role !== 'student' ">Become a tutor</router-link> </li>           
+         <li> <router-link :to="{name: 'home'}" class="px-1" >Home</router-link></li> 
         </ul>
       </div>  
       
