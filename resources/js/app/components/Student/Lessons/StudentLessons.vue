@@ -3,9 +3,14 @@
 <div class="p-3">
  <div class="bg-white mt-3 ">
     <h4 class="alert-secondary w-100 py-3 px-3">Trial lessons <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchTrialLessons()">Refresh</button> </span></h4>
-    <small class="alert-success p-2 mx-4 rounded my-3" v-if="this.success.cancel_lesson">{{this.success.cancel_lesson}}</small> 
-    <small class="alert-success p-2 mx-4 rounded my-3" v-if="this.success.create_lesson">{{this.success.create_lesson}}</small> 
     <p class="mb-0 px-3"> Your Trial lesson requests to tutors will appear here.</p>
+    <p class="text-center mb-0 py-2">
+        <small class="alert-success p-2 mx-4 rounded my-3" v-if="this.success.cancel_lesson">{{this.success.cancel_lesson}}</small> 
+        <small class="alert-success p-2 mx-4 rounded my-3" v-if="this.success.create_lesson">{{this.success.create_lesson}}</small> 
+        <small class="alert-danger  p-2 mx-4 rounded my-3 " v-if="this.errors.process_payment"> {{this.errors.process_payment}}</small> 
+        <small class="alert-success p-2 mx-4 rounded my-3" v-if="this.success.process_payment"> {{this.success.process_payment}}</small> 
+    </p>
+     
     <div v-if="Object.keys(this.current_trial_lessons).length"> 
     <div class="row px-3 m-1">               
         <div class="col-md-4 row p-2"  v-for="(trial_lesson, index) in this.current_trial_lessons" :key="index">              
@@ -26,23 +31,39 @@
                     <!-- <span class="py-2">Expired: </span> <span> false</span> <br> -->
                     
                     <p class="mb-0" v-if="trial_lesson.decline_reason !== null">
-                        <span class="py-2 fw-normal">Declined:  </span> <span class="text-danger">true </span> <br>
+                        <span class="py-2 fw-normal">Declined:  </span> <span class="text-danger">True </span> <br>
                         <span class="py-2">Decline reason:  </span> <span> {{trial_lesson.decline_reason}}</span>
                     </p>
                    <p class="py-2 mb-0 mt-2 small" v-if="trial_lesson.tutor_confirm == 'pending' ">This trial lesson request has not been accepted yet. You will recieve a notification when {{this.capitalize(trial_lesson.get_tutor.first_name)}} responds.</p>
                    <p class="py-2 mb-0 mt-2 small" v-if="trial_lesson.tutor_confirm == 'accepted' "> {{this.capitalize(trial_lesson.get_tutor.first_name)}} has accepted the trial request. Your lesson is scheduled on the set date.</p>
 
-                    <div class="mb-0 py-2">
+                    <div class="mb-0 py-2 ">
                         <a v-if="! this.zoom_user_auth_token" :href="'https://zoom.us/oauth/authorize?response_type=code&client_id=' + this.CLIENT_ID + '&state=' + this.ZOOM_STATE + '&redirect_uri=' + this.REDIRECT_URI" class="btn btn-secondary btn-small m-2" >Link with zoom</a>  
                         <button class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.tutor_confirm == 'pending' " @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel request </button>
-                        <a :href="trial_lesson.meeting_link"  class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.meeting_link " >Launch meeting</a>
-                       
-                        <span v-if="trial_lesson.tutor_confirm == 'accepted' ">
+                      
+                         
+
+                        <span v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.participant_joined_at && trial_lesson.participant_left_at && !trial_lesson.is_student_impressed">
                             Impressed by the tutor?  <br>
                              <span class="btn btn-sm btn-secondary m-1" @click="processPayment(trial_lesson)">Yes</span>
                              <span class="btn btn-sm btn-secondary m-1" @click.prevent="notImpressedbyTutor(trial_lesson)">No</span>
-                        </span> <br>
-                         <button class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.tutor_confirm == 'accepted' "  @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lessons </button>
+                       <br> </span> 
+                        <button class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.is_student_impressed"  @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lessons </button>
+                         <span class="overflow-auto"> 
+                            <a :href="trial_lesson.meeting_link" target="blank" class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.meeting_link " >Launch meeting</a> 
+                            <div class="dropdown small " v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.participant_joined_at && trial_lesson.participant_left_at"> 
+                                <span class="text-primary underline" style="cursor:pointer"  type="button"  data-bs-toggle="dropdown" aria-expanded="false" :id="'trial_M_details' + trial_lesson.id" >  Duration: {{this.calculateTimeDiff(trial_lesson.meeting_started_at, trial_lesson.meeting_ended_at) }} mins </span>
+                                <p class="p-3 border small dropdown-menu small text-muted rounded" :aria-labelledby="'trial_M_details' + trial_lesson.id" v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.participant_joined_at && trial_lesson.participant_left_at">
+                                    <span class="fw-bold">Meeting Details</span>   <br>
+                                    <span class="mb-2 small"> Date: {{this.formatDate(trial_lesson.meeting_started_at) }}</span> <br>
+                                    <span class="my-1 small"> Start: {{this.formatDateTime(trial_lesson.meeting_started_at) }}</span> <br>
+                                     <span class="my-1 small">Joined: {{this.formatDateTime(trial_lesson.participant_joined_at) }}</span>  <br>
+                                    <span class="my-1 small">Left: {{this.formatDateTime(trial_lesson.participant_left_at) }}</span>  <br> 
+                                    <span class="my-1 small">End: {{this.formatDateTime(trial_lesson.meeting_ended_at) }}</span> <br>
+                                    <span class="mt-3 small">Duration: {{this.calculateTimeDiff(trial_lesson.meeting_started_at, trial_lesson.meeting_ended_at) }} mins</span>
+                                </p>
+                            </div>
+                        </span>
                     </div>                   
                 </div>
             </div>              
@@ -55,7 +76,6 @@
   </div>
 
 <!-- ----------------------------------------Inprogress lessons-------------------------------------------------------------------------- -->
-
  <div class="bg-white mt-3 ">
       <h4 class="alert-secondary w-100 py-3 px-3">In progress <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchLessons()">Refresh</button> </span></h4>
       <div v-if="Object.keys(this.current_lessons).length"> 
@@ -73,7 +93,8 @@
                     <p class="fw-bold">
                         <span>{{this.capitalize(lesson.lesson_type)}} lesson with tutor {{this.capitalize(lesson.get_lesson_tutor.first_name)}} </span> 
                         <span class="float-end">
-                            <a :href="lesson.meeting_link" disabled class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link && this.getAccount.available_balance > lesson.get_lesson_tutor.hourly_rate">Classroom</a> <br>
+                            <a :href="lesson.meeting_link" disabled class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link && this.getAccount.available_balance > lesson.get_lesson_tutor.hourly_rate">Classroom</a>
+                            <button v-else class="btn btn-secondary btn-sm my-1" data-bs-target="#paypal-modal" data-bs-toggle="modal" data-bs-dismiss="modal" > Insuficient funds</button> <br>
                              <a class="btn btn-secondary btn-sm my-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>
                         </span>
                       </p>
@@ -163,7 +184,32 @@
 
    <div> <Assignments :lesson="this.current_lesson"/> </div>
   </div>
-
+ <!-- second mini modal paypal -->
+    <div class="modal fade" id="paypal-modal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalToggleLabel2">Top up account</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body mx-auto">
+            <div class="w-auto mx-uato text-left py-3">
+                <label class="py-2  ">Topup $10 with Paypal: </label>
+                <div @click.prevent="this.showPaypalSpinner()">
+                   <div class=" mx-auto" id="paypal-button-container" ></div>  
+                </div>
+               
+                <small class="text-primary" v-if="this.success.payment"> {{this.success.payment}} </small>
+                <small class="text-primary" v-if="this.spinner.paypal_processing"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.paypal_processing"></span> Processing...</small>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" data-bs-target="#staticBackdropTrial" data-bs-toggle="modal" data-bs-dismiss="modal"> <i class="bi bi-chevron-left"></i> Back </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -185,6 +231,7 @@ export default {
                     },
             decline_reason:null,       
             refresh_interval:{},
+            paypal_client_id:'',
             zoom_meetings:{},
             CLIENT_ID: null,
             ZOOM_CLIENT_SECRET: null,
@@ -205,6 +252,23 @@ export default {
         },
         formatDate(date){
             if (date) return moment(String(date)).format('ll');            
+        },
+        formatDateTime(date){
+            if (date) {return moment(String(date)).format('LT');}            
+        },
+        calculateTimeDiff(start_time, end_time){ 
+            let duration = 0;
+            if(! start_time || !end_time ) return 'Unknown';
+
+            duration = moment(start_time).diff(moment(end_time), 'minutes');
+            if(duration < 1) duration = 1;
+            return duration;
+            
+        },
+        showMeetingDetails(el_id){
+            let el = document.getElementById(el_id);
+            if(el.classList.contains('hidden')) el.classList.remove('hidden');
+            else el.classList.add('hidden');
         },
         capitalize(string) {
             if(string) return string.charAt(0).toUpperCase() + string.slice(1);
@@ -337,7 +401,6 @@ export default {
 
     },
     async scheduleZoomMeeting(lesson){
-        await this.refreshZoomAuthToken();
         var form_data = new FormData();
         form_data.append('topic', lesson.lesson_type);
         form_data.append('type', 2);
@@ -347,13 +410,12 @@ export default {
         axios.get('/api/zoom/meeting/create', form_data)
         .then(response => {
             this.updateMeetingLink(lesson.id,response.data.data.id, response.data.data.join_url);
+            this.fetchTrialLessons();
+            this.fetchLessons();
             console.log(response.data.data.join_url);
+
         })
-        .catch(error=>{            
-            if(error.response.status == 500) {
-                this.refreshZoomAuthToken(); 
-                this.scheduleZoomMeeting(lesson);
-                }           
+        .catch(error=>{  
             delete this.spinner.schedule_meeting;
             this.errors.shedule_meeting = 'Failed to schedule meeting!';
             console.log(error.response);
@@ -425,7 +487,8 @@ export default {
             if(! this.review) this.errors.review = 'This field is required';
         },
         processPayment(trial_lesson){ 
-            // process paypal payments
+             if(trial_lesson.get_tutor.hourly_rate > this.getAccount.available_balance) { alert('Insufficient funds!'); return}
+            // process paypal payments if impressed
             if(!confirm("By clicking yes, You accept lessons from this tutor and also authorise funds to be moved from your account to the tutor as payments for this session.")) return;
 
             var form_data = new FormData();
@@ -433,10 +496,13 @@ export default {
 
             // Call  server to capture the transaction            
             axios.post('/api/transfer-payments/', form_data)
-            .then(response=>{                        
+            .then(response=>{   
+                this.success.process_payment = 'Success, payment processed. \n Please  go ahead and schedule your lessons with the tutor!'                     
                 console.log(response);
+
             })
-            .catch(error=>{                       
+            .catch(error=>{  
+                this.errors.process_payment = 'Error, Failed to process payment!'  ;                   
                 console.log(error.response);
             });
         },
@@ -452,6 +518,63 @@ export default {
             .catch(error=>{
                 console.log(error.response);
             })
+        },
+        fetchPaypalClientID(){
+            axios.get('/api/get-paypal-clientId')
+            .then(response=>{
+                this.paypal_client_id = response.data.data;
+                this.loadPaypalCheckout();
+            })
+            .catch(error=>{
+                console.log(error.response);
+            });
+        },
+        loadAsync(url, callback) {
+            var s = document.createElement('script');
+            s.setAttribute('src', url); s.onload = callback;
+            document.head.insertBefore(s, document.head.firstElementChild);
+        },
+        loadPaypalCheckout(){ //paypal buttons            
+            this.loadAsync('https://www.paypal.com/sdk/js?client-id=' + this.paypal_client_id + '&intent=authorize&disable-funding=credit,card', function() {
+                paypal.Buttons({                    
+                    // Set up the transaction
+                    createOrder: function(data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    currency_code: "USD",
+                                    value: '10'
+                                },
+                                // payee: {
+                                //     merchant_id :  'VMJSV3L3DRE9A'
+                                // },
+                            }],
+                            application_context: {
+                                shipping_preference: 'NO_SHIPPING',
+                                SOLUTIONTYPE:'MARK'
+                            }, 
+                        });
+                    },   
+
+                    // Finalize the transaction
+                    onApprove: function(data, actions) {
+                        // Authorize the transaction
+                        actions.order.authorize().then(function(authorization) {
+                            // Get the authorization id
+                            var authorizationID = authorization.purchase_units[0].payments.authorizations[0].id
+                            axios.post('/api/update/local-account/', authorization )
+                            .then(response=>{      
+                                console.log(response); 
+                                console.log('Success, payment processed!');                 
+                                this.success.payment = 'Success, payment processed!';
+                            })
+                            .catch(error=>{                       
+                                console.log(error.response);
+                            });
+                        });
+                    }
+                }).render('#paypal-button-container');
+            });     
         }
    },
    computed:{
@@ -462,11 +585,15 @@ export default {
         this.fetchLessons();
         this.fetchZoomAuthToken();
         this.getZoomCredentials();
+        this.fetchPaypalClientID();
+        
     }
 
 }
 </script>
 
 <style>
-
+    .dropdown{
+        width:auto !important;
+    }
 </style>

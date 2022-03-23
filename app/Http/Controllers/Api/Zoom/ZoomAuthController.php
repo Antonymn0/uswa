@@ -58,7 +58,7 @@ class ZoomAuthController extends Controller
      * 
     */
     public function createZoomMeeting(Request $request){        
-        
+            $this->refreshZoomAuthToken($request);
             $client = new Client(['base_uri' => 'https://zoom.us']);
             $accessToken = ZoomOauth::where('provider', 'zoom')->first()->token;
             
@@ -87,6 +87,7 @@ class ZoomAuthController extends Controller
      * Get a list of all zoom meeetings
     */
     public function getMeetings(){
+        $this->refreshZoomAuthToken($request);
         $accessToken = ZoomOauth::where('provider', 'zoom')->first()->token;
         $client = new Client(['base_uri' => 'https://zoom.us/oauth/token']);  
         $request = [
@@ -113,6 +114,7 @@ class ZoomAuthController extends Controller
      * Update zoom meeting
      */
     public function updateZoomMeeting($meeting_id){
+        $this->refreshZoomAuthToken($request);
         $accessToken = ZoomOauth::where('provider', 'zoom')->first()->token;
         $client = new Client(['base_uri' => 'https://zoom.us']);  
         
@@ -143,6 +145,7 @@ class ZoomAuthController extends Controller
      * @param $meeting_id
      */
     public function deleteZoomMeeting(Request $request, $meeting_id){
+        $this->refreshZoomAuthToken($request);
         $accessToken = ZoomOauth::where('provider', 'zoom')->first()->token;
         $client = new Client(['base_uri' => 'https://zoom.us']);  
         

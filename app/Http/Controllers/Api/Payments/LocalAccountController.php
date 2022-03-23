@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Payments;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\LocalAccount;
+use App\Models\TrialLesson;
 use App\Http\Requests\Payments\ValidateLocalAccountRequest;
 
 class LocalAccountController extends Controller
@@ -129,7 +130,7 @@ class LocalAccountController extends Controller
      * transfer funds from student to tutor in local account
     */
     public function transferFundsFromStudentToTutor(Request $request){
-        $trial_lesson = json_decode($request->trial_lesson);
+        $trial_lesson = json_decode($request->trial_lesson);        
         
         $student_local_account = LocalAccount::where('user_id', $trial_lesson->student_id)->first();
         $tutor_local_account = LocalAccount::where('user_id', $trial_lesson->tutor_id)->first();
@@ -152,7 +153,10 @@ class LocalAccountController extends Controller
             'balance_after' => $tutor_local_account->available_balance + $trial_lesson->get_tutor->hourly_rate,
         ];
 
+        $trial_lesson  = TrialLesson::findOrfail($trial_lesson->id); //fetch fresh record to update
+        
         //update accounts
+        $trial_lesson->update([ 'is_student_impressed' => true ]);
         $student_local_account->update($student_data);
         $tutor_local_account->update($tutor_data);
 
