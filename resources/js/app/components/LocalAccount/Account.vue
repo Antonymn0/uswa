@@ -494,7 +494,7 @@ export default {
                         // Get the authorization id
                         var authorizationID = authorization.purchase_units[0].payments.authorizations[0].id
                         
-                        axios.post('/api/update/local-account/', authorization )
+                        axios.post('https://a851-197-232-61-201.ngrok.io/api/update/local-account/', authorization )
                         .then(response=>{                        
                             console.log(authorizationID);
                             console.log(response);
@@ -506,8 +506,7 @@ export default {
                     }
                 }).render('#paypal-button-container');
             });     
-        }
-            
+        }            
     },
     computed:{
         ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),    
