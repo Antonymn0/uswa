@@ -258,7 +258,7 @@ export default {
   z-index: 10; /* Stay on top */
   top: 0; /* Stay at the top */
   right:0;
-  right: -5rem;
+  right: -2rem;
   background-color: #fff;
   color:#1f2027; /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
