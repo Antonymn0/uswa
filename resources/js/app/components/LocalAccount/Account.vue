@@ -494,7 +494,7 @@ export default {
                         // Get the authorization id
                         var authorizationID = authorization.purchase_units[0].payments.authorizations[0].id
                         
-                        axios.post('https://uswa.com/api/update/local-account/', authorization )
+                        axios.post('https://uswa-app.herokuapp.com/api/update/local-account/', authorization )
                         .then(response=>{                        
                             console.log(authorizationID);
                             console.log(response);
