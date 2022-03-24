@@ -93,9 +93,10 @@
                     <p class="fw-bold">
                         <span>{{this.capitalize(lesson.lesson_type)}} lesson with tutor {{this.capitalize(lesson.get_lesson_tutor.first_name)}} </span> 
                         <span class="float-end">
-                            <a :href="lesson.meeting_link" disabled class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link && this.getAccount.available_balance > lesson.get_lesson_tutor.hourly_rate">Classroom</a>
+                            <a :href="lesson.meeting_link" target="blank" class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link && this.getAccount.available_balance > lesson.get_lesson_tutor.hourly_rate">Classroom</a> 
                             <button v-else class="btn btn-secondary btn-sm my-1" data-bs-target="#paypal-modal" data-bs-toggle="modal" data-bs-dismiss="modal" > Insuficient funds</button> <br>
-                             <a class="btn btn-secondary btn-sm my-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>
+                            <a class="btn btn-secondary btn-sm my-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>  <br>
+                            <button class="btn btn-secondary btn-sm " @click.prevent="this.sendTutorPayments(lesson)">Process payments</button>
                         </span>
                       </p>
                         
@@ -400,53 +401,63 @@ export default {
         //
 
     },
-    async scheduleZoomMeeting(lesson){
-        var form_data = new FormData();
-        form_data.append('topic', lesson.lesson_type);
-        form_data.append('type', 2);
-        form_data.append('start_time', lesson.start_date);
-        form_data.append('duration', lesson.duration);
-
-        axios.get('/api/zoom/meeting/create', form_data)
-        .then(response => {
-            this.updateMeetingLink(lesson.id,response.data.data.id, response.data.data.join_url);
-            this.fetchTrialLessons();
-            this.fetchLessons();
-            console.log(response.data.data.join_url);
-
-        })
-        .catch(error=>{  
-            delete this.spinner.schedule_meeting;
-            this.errors.shedule_meeting = 'Failed to schedule meeting!';
-            console.log(error.response);
-        });
-    },
-    updateMeetingLink(lesson_id, meeting_id, link){
-        let form_data = new FormData();
-        form_data.append('meeting_link', link);
-        form_data.append('meeting_id', meeting_id);
-        axios.post('/api/update-lesson-link/' + lesson_id , form_data )
-        .then(response => {
-            console.log(response);
+    sendTutorPayments(lesson){
+        // process payments fopr the lesson 
+        axios.get('/api/students/send-tutor-payments/' + lesson.id)
+        .then(response =>{
+            this.current_trial_lessons = response.data.data.data;
         })
         .catch(error=>{
-            console.log(error);
-        });
-    },
-    async refreshZoomAuthToken() { // refreshcurrent user's zoom auth token
-        this.errors.token_expired = "Refreshing zoom... Please try again!"
-        axios.get('/api/zoom/user-auth-token/refresh')
-        .then(response => {
-            setTimeout(() => {
-                delete this.errors.token_expired;
-            }, 200);            
-        })
-        .catch(error=>{   
-            this.errors.token_expired = "Failed to authenticate zoom Please try again!"         
             console.log(error.response);
-        }); 
-    },
-    submitReview(lesson){
+        })
+        },
+        async scheduleZoomMeeting(lesson){
+            var form_data = new FormData();
+            form_data.append('topic', lesson.lesson_type);
+            form_data.append('type', 2);
+            form_data.append('start_time', lesson.start_date);
+            form_data.append('duration', lesson.duration);
+
+            axios.get('/api/zoom/meeting/create', form_data)
+            .then(response => {
+                this.updateMeetingLink(lesson.id,response.data.data.id, response.data.data.join_url);
+                this.fetchTrialLessons();
+                this.fetchLessons();
+                console.log(response.data.data.join_url);
+
+            })
+            .catch(error=>{  
+                delete this.spinner.schedule_meeting;
+                this.errors.shedule_meeting = 'Failed to schedule meeting!';
+                console.log(error.response);
+            });
+        },
+        updateMeetingLink(lesson_id, meeting_id, link){
+            let form_data = new FormData();
+            form_data.append('meeting_link', link);
+            form_data.append('meeting_id', meeting_id);
+            axios.post('/api/update-lesson-link/' + lesson_id , form_data )
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error=>{
+                console.log(error);
+            });
+        },
+        async refreshZoomAuthToken() { // refreshcurrent user's zoom auth token
+            this.errors.token_expired = "Refreshing zoom... Please try again!"
+            axios.get('/api/zoom/user-auth-token/refresh')
+            .then(response => {
+                setTimeout(() => {
+                    delete this.errors.token_expired;
+                }, 200);            
+            })
+            .catch(error=>{   
+                this.errors.token_expired = "Failed to authenticate zoom Please try again!"         
+                console.log(error.response);
+            }); 
+        },
+        submitReview(lesson){
             this.validateReviewForm();
             if(Object.keys(this.errors).length) return;
             if(! confirm("Submit this Review?")) return;
@@ -487,7 +498,7 @@ export default {
             if(! this.review) this.errors.review = 'This field is required';
         },
         processPayment(trial_lesson){ 
-             if(trial_lesson.get_tutor.hourly_rate > this.getAccount.available_balance) { alert('Insufficient funds!'); return}
+             if(trial_lesson.get_tutor.hourly_rate > this.getAccount.available_balance) { alert('Insufficient funds! \n Please top up your account and try again!'); return}
             // process paypal payments if impressed
             if(!confirm("By clicking yes, You accept lessons from this tutor and also authorise funds to be moved from your account to the tutor as payments for this session.")) return;
 

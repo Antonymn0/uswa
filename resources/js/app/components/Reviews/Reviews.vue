@@ -9,28 +9,31 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div v-for="(review, index) in this.tutor.reviews" :key="index" class="card p-2 my-2">
-            <h5>
-                <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2rem" v-if="! review.reviewer_image"></i>
-               <img v-else :src="review.reviewer_image" alt="profile picture" style="width:30px; height:30px; border-radius:50%">
-               &nbsp; {{review.reviewer_name}}
-                </h5>
-            <p>{{this.capitalize(review.body)}}</p>
-            <p class="small text-muted  d-flex justify-content-between m-0 mb-0 p-0">
-                <span class="m-0">
-                    <span class="m-0"> <i class="bi bi-star-fill " :class="[review.stars <= 1 ? 'text-muted' : 'text-warning' ]"></i> </span>
-                    <span class="m-0"> <i class="bi bi-star-fill " :class="[review.stars <= 2 ? 'text-muted' : 'text-warning' ]"></i> </span>
-                    <span class="m-0"> <i class="bi bi-star-fill " :class="[review.stars <= 3 ? 'text-muted' : 'text-warning' ]"></i> </span>
-                    <span class="m-0"> <i class="bi bi-star-fill " :class="[review.stars <= 4 ? 'text-muted' : 'text-warning' ]"></i> </span>
-                    <span class="m-0"> <i class="bi bi-star-fill" :class="[review.stars <= 5 ? 'text-muted' : 'text-warning' ]"></i> </span>
-                </span>
-                
-
-                <span class="m-0">{{this.formatDate(review.created_at)}} </span> </p>            
+        <div v-if="this.tutor.reviews">
+          <div v-for="(review, index) in this.tutor.reviews" :key="index" class="card p-2 my-2">
+              <h5>
+                  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2rem" v-if="! review.reviewer_image"></i>
+                <img v-else :src="review.reviewer_image" alt="profile picture" style="width:30px; height:30px; border-radius:50%">
+                &nbsp; {{review.reviewer_name}}
+                  </h5>
+              <p>{{this.capitalize(review.body)}}</p>
+              <p class="small text-muted  d-flex justify-content-between m-0 mb-0 p-0">
+                  <span class="m-0">
+                      <span class="m-0"> <i class="bi bi-star-fill " :class="[review.stars <= 1 ? 'text-muted' : 'text-warning' ]"></i> </span>
+                      <span class="m-0"> <i class="bi bi-star-fill " :class="[review.stars <= 2 ? 'text-muted' : 'text-warning' ]"></i> </span>
+                      <span class="m-0"> <i class="bi bi-star-fill " :class="[review.stars <= 3 ? 'text-muted' : 'text-warning' ]"></i> </span>
+                      <span class="m-0"> <i class="bi bi-star-fill " :class="[review.stars <= 4 ? 'text-muted' : 'text-warning' ]"></i> </span>
+                      <span class="m-0"> <i class="bi bi-star-fill" :class="[review.stars <= 5 ? 'text-muted' : 'text-warning' ]"></i> </span>
+                  </span>              
+                  <span class="m-0">{{this.formatDate(review.created_at)}} </span> </p>            
+          </div>
+        </div>
+        <div>
+          <p class="small text-muted text-center py-5"> This tutor has no reviews yet</p>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal" v-if="this.isLogedIn">Write a review</button>
+        <!-- <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal" v-if="this.isLogedIn">Write a review</button> -->
         <button class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
       </div>
     </div>

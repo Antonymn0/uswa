@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\TrialLesson;
 use App\Models\Lesson;
+use App\Models\LessonPayment;
+use Carbon\Carbon;
 
 class ZoomWebhooksController extends Controller
 {
@@ -48,7 +50,6 @@ class ZoomWebhooksController extends Controller
                 # code...
                 return;
         }
-
         
     }
 
@@ -84,11 +85,16 @@ class ZoomWebhooksController extends Controller
             ]);
         }
         if(! empty($lesson)){
-            $lesson->update([
-                'meeting_started_at' =>  date("Y-m-d H:i:s", ($request->event_ts / 1000) )
-            ]);
-        }
-        
+            $data = [
+                'lesson_id' => $lesson->id,
+                'meeting_id' =>$request->payload['object']['id'],
+                'meeting_uuid' => $request->payload['object']['uuid'],
+                'meeting_started_at' => date("Y-m-d H:i:s", ($request->event_ts / 1000) ),               
+                'paid' => false,
+            ];
+            
+            $lesson_payment = LessonPayment::create($data);            
+        }        
     }
 
     /**
@@ -103,9 +109,11 @@ class ZoomWebhooksController extends Controller
             ]);
         }        
         if(! empty($lesson)){
-            $lesson->update([
-                'meeting_ended_at' =>  date("Y-m-d H:i:s", ($request->event_ts / 1000) )
-            ]);
+            $lesson_meeting = LessonPayment::where('meeting_uuid',  $request->payload['object']['uuid'])->first();
+
+            $data =['meeting_ended_at' => date("Y-m-d H:i:s", ($request->event_ts / 1000) ) ];         
+
+            $lesson_meeting->update($data); // update record       
         }        
     }
 
@@ -121,15 +129,15 @@ class ZoomWebhooksController extends Controller
             ]);
         }        
         if(! empty($lesson)){
-            $lesson->update([
-                'participant_joined_at' =>  date("Y-m-d H:i:s", ($request->event_ts / 1000) )
-            ]);
+            $lesson_meeting = LessonPayment::where('meeting_uuid',  $request->payload['object']['uuid'])->first();
+            $data =[ 'participant_joined_at' =>  date("Y-m-d H:i:s", ($request->event_ts / 1000) ) ];
+            $lesson_meeting->update($data); // update record
         }        
     }
 
     /**
-     * Handle meeting  participant left webhook event
-     */
+    * Handle meeting  participant left webhook event
+    */
     public function handleParticipantLeft($request){
         $trial_lesson = TrialLesson::where('meeting_id', $request->payload['object']['id'])->first();
         $lesson = Lesson::where('meeting_id', $request->payload['object']['id'])->first();
@@ -140,10 +148,19 @@ class ZoomWebhooksController extends Controller
             ]);
         }
         if(! empty($lesson)){
-            $lesson->update([
+            $lesson_meeting = LessonPayment::where('meeting_uuid',  $request->payload['object']['uuid'])->first();
+
+            $meeting_start = Carbon::parse( $lesson_meeting->participant_joined_at);
+            $meeting_end = Carbon::parse( date("Y-m-d H:i:s", ($request->event_ts / 1000) ));
+            $duration = $meeting_end->diffInMinutes($meeting_start) ;
+            Log::info( $duration);
+            $data =[
                 'participant_left_at' => date("Y-m-d H:i:s", ($request->event_ts / 1000) )  ,
-                'participant_left_meeting_reason' =>  $request->payload['object']['participant']['leave_reason']
-            ]);
+                'participant_left_reason' =>  $request->payload['object']['participant']['leave_reason'],
+                'meeting_duration' => $duration
+                ];
+            $lesson_meeting->update($data); // update record
+            
         }
     }
 

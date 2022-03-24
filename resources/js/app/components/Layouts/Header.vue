@@ -57,6 +57,7 @@
           <span class="" v-if="getUser.role == 'admin' "> <AdminNotifications /></span>
           <span class="" v-if="getUser.role == 'student' "> <StudentNotifications /></span>
           <span class="" v-if="getUser.role == 'tutor' "> <TutorNotifications /></span>
+          <span class="" > <Lectures /></span>
         </div>
         <!-- ---------------------------------------------------------------------- -->
 
@@ -80,9 +81,10 @@
                       <router-link :to="{name: 'tutor-dashboard'}" v-if="getUser.role == 'tutor'">Dashboard</router-link>
                     </a> 
                   </li>
-                  <li v-if=" isLogedIn && this.getUser.role == 'student'"><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdropProfile" >Profile</a></li>
+                  <li v-if=" isLogedIn && this.getUser.role == 'student'"><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdropProfile" >Profile</a></li> 
                   <li v-if=" isLogedIn && this.getUser.role == 'tutor'"><a class="dropdown-item" href="#"  ><router-link :to="{name: 'register-tutor-signup'}"  >Profile</router-link></a></li>
-                  <li><a class="dropdown-item" href="#"><Logout /></a></li>
+                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#lecturesModal"> Lectures </a> </li>
+                  <li><a class="dropdown-item" href="#"> <Logout /> </a> </li>
               </ul>
             </div>        
         </div>
@@ -112,6 +114,7 @@ import Logout from "../Auth/Logout.vue";
 import Footer from "./Footer.vue";
 import Profile from "../Profile/Profile.vue";
 import StudentMessages from "../Chats/StudentMessages.vue";
+
 import TutorMessages from "../Chats/TutorMessages.vue";
 import AdminNotifications from "../UserNotifications/AdminNotifications.vue";
 import TutorNotifications from "../UserNotifications/TutorNotifications.vue";
@@ -120,6 +123,7 @@ import VerifyEmail from "../Notifications/EmailUnverified.vue";
 import TutorSignupProcessNotification from "../Notifications/TutorSignupProcessNotification.vue";
 
 import AdminDashboard from "../Admin/Dashboard.vue";
+import Lectures from "../Tutor/Lessons/Lectures.vue";
 
 export default {
   components:{
@@ -135,6 +139,7 @@ export default {
     VerifyEmail,
     TutorSignupProcessNotification,
     AdminDashboard,
+    Lectures
   },
   data(){
     return{

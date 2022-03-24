@@ -28,7 +28,7 @@
                         <div class="">
                             <div class="p-1 d-flex justify-content-between">
                                 <span  data-bs-toggle="modal" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)"> <i class="bi bi-star-fill text-warning"></i> {{this.calculateStarRating(tutor.reviews)}}</span> &nbsp; &nbsp; &nbsp;
-                                <span > <a  data-bs-toggle="modal" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)">{{Object.keys(tutor.reviews).length}} reviews </a>   </span> 
+                                <span > <a  data-bs-toggle="modal" class="text-primary" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)">{{Object.keys(tutor.reviews).length}} Reviews </a>   </span> 
                             </div>
                             <div class="d-flex justify-content-between px-2">
                                  <span ><i class="bi bi-circle-fill text-success" style="font-size:.7rem"></i> </span>
@@ -39,7 +39,7 @@
                 </div>
                 <!-- ------------------------------- -->
                 <div class="d-flex  small p-2">
-                    <span> <i class="bi bi-person-fill"></i> 12 Active students</span>
+                    <span> <i class="bi bi-person-fill"></i> 1 Active students</span>
                     <span class=""> &nbsp; | &nbsp;</span> 
                     <span>102 Lessons </span>
                 </div>

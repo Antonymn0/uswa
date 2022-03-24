@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\LessonPayment;
 
 class Lesson extends Model
 {
@@ -29,6 +30,11 @@ class Lesson extends Model
     // eloquent relation
      public function getAssignments(){
         return $this->hasMany(Assignment::class, 'lesson_id', 'id');
+    }
+
+    // eloquent relation
+    public function meetings(){
+        return $this->hasMany(LessonPayment::class,'lesson_id', 'id');
     }
 
 }

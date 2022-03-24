@@ -17,17 +17,8 @@
                         <route-link :to="{name: 'find-tutor'}" class="nav-link" @click.prevent="pushRoutes('find-tutor')" v-if="getUser.role !== 'tutor' ">Find a Tutor </route-link>
                         <router-link :to="{name: 'register-tutor'}" class="px-3"  @click.prevent="pushRoutes('register-tutor')" v-if="getUser.role !== 'tutor' && getUser.role !== 'student' ">Become a tutor</router-link>
                     </li>
-
-                   
-                    
-                    <li class="nav-item">
-                        <route-link :to="{name: ''}" class="nav-link" @click.prevent="pushRoutes('')">Help </route-link>
-                    </li>   
-
-                    <li class="nav-item">
-                        <route-link :to="{name: ''}" class="nav-link" @click.prevent="pushRoutes('')">FAQs </route-link>
-                    </li>                   
-                    
+                  
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#lecturesModal"> Lectures </a> </li>
                     <li class="dropdown-item  pt-2">                          
                         <button type="submit" class="btn-danger mx-auto text-white" @click.prevent="this.closeNav()"> 
                             <span> <router-link :to="{name: 'login'}" class="px-1 text-white"  v-if="! isLogedIn" >Login</router-link></span>                            

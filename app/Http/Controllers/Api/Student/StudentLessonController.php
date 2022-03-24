@@ -16,6 +16,7 @@ class StudentLessonController extends Controller
 
         $lesson = Lesson::with('getLessonTutor')
             ->with('getAssignments')
+            ->with('meetings')
             ->where('student_id', $user->id)
             ->paginate(env('API_PAGINATION', 10));
 

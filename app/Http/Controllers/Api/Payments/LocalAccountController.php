@@ -134,6 +134,14 @@ class LocalAccountController extends Controller
         
         $student_local_account = LocalAccount::where('user_id', $trial_lesson->student_id)->first();
         $tutor_local_account = LocalAccount::where('user_id', $trial_lesson->tutor_id)->first();
+
+        if($student_local_account->available_balance < $trial_lesson->get_tutor->hourly_rate ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Insufficient funds',
+                'data' => false
+            ],500);
+            }
             
         //process payment  transfer in local account
         $student_data = [

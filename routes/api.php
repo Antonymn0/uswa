@@ -55,8 +55,6 @@ Route::group(['middleware'=>['auth:api']],function(){
   // Import tutors routes file
   require __DIR__.'/tutors/tutors.php';
 
- 
-
   // Import Zoom video streaming  routes file
   require __DIR__.'/videoStreaming/zoom.php';
 
@@ -83,6 +81,9 @@ Route::group(['middleware'=>['auth:api']],function(){
 
   // Import stripe pay routes
   require __DIR__.'/transactions/paypal.php';
+
+  // Import lectures routes
+  require __DIR__.'/lectures/lectures.php';
 
 
 

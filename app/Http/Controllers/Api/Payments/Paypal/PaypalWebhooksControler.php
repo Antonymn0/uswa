@@ -10,7 +10,7 @@ class PaypalWebhooksControler extends Controller
 {
   
   public function handleWebhooks(){
-        Log::info('$request');
+        Log::info($request);
       return response()->json([
           'success' => true
       ],200);
