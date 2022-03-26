@@ -223,7 +223,8 @@ class PaypalController extends Controller
     public function captureAuthorizedPAyment(Request $request, $transaction, $transaction_id)
     { 
         $user = $request->user();
-
+        $this-> getAccessToken(); // refresh paypal access token
+        
         // capture/process payment 
         $uri = 'https://api-m.sandbox.paypal.com/v2/payments/authorizations/' . $transaction_id . '/capture';
         $token= PaypalAuthToken::first()->token;

@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware'=>['auth:api']],function(){
 
     //Assignment routes
-    Route::apiResource('/lectures','Api\Lecture\LectureController');    
+    Route::apiResource('/lectures','Api\Lecture\LectureController');  
+
+    //mark lecture complete
+    Route::apiResource('/lecture/completed','Api\StudentCompletedLecture\StudentCompletedLectureController');   
     
 });

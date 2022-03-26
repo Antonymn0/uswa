@@ -14,6 +14,9 @@ Route::group(['middleware'=>['auth:api']],function(){
 
     //fetch local account balance    
     Route::get('/local-account/balance','Api\Payments\LocalAccountController@getAccountBalance'); 
+    
+    //send tutor lecture payments locally    
+    Route::get('/students/send-tutor-payments/{lesson_id}','Api\Payments\LocalAccountController@sendTutorLecturePayments'); 
    
     //fetch local account balance    
     Route::apiResource('/lesson-payments','Api\LessonPayment\LessonPaymentController'); 

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\LocalAccount;
 use App\Models\TrialLesson;
+use App\Models\Lesson;
+use App\Models\StudentCompletedLecture;
 use App\Http\Requests\Payments\ValidateLocalAccountRequest;
 
 class LocalAccountController extends Controller
@@ -174,5 +176,73 @@ class LocalAccountController extends Controller
             'data' => true
         ], 200);
 
+    }
+
+    /**
+     * Send tutor payment for completed lectures
+     */
+    public function sendTutorLecturePayments(Request $request, $lesson_id){
+        $lesson = Lesson::findOrFail($lesson_id); // get fresh record
+        $user = $request->user();
+
+        $lectures = StudentCompletedLecture::where('lesson_id', $lesson->id)
+                                        ->where('student_id', $user->id)
+                                        ->where('tutor_id', $lesson->tutor_id)
+                                        ->where('payment_status', 'unpaid')
+                                        ->get();
+
+        $lecture_count = count($lectures);
+        $total_amount_due = 0;
+        foreach ($lectures as $lec) {
+            $total_amount_due += $lec->amount_due; // calculate total amount dues for all unpaid lectures
+        }
+
+        $student_local_account = LocalAccount::where('user_id', $user->id)->first();
+        $tutor_local_account = LocalAccount::where('user_id', $lesson->tutor_id)->first();
+
+        if($student_local_account->available_balance < $total_amount_due)
+            { // if less funds return success false
+                return response()->json([
+                    'success' =>false,
+                    'message' => "Insufficent funds",
+                    'data'=> [
+                        'total_amount_due' => $total_amount_due,
+                        'lecture_count' => $lecture_count,
+                    ]
+                ],402);
+            }
+        
+        //process/update payment  transfer in local account
+        $student_data = [
+            'last_transaction_date' => now(),
+            'last_transaction_method' => 'Uswa:local',
+            'last_amount_transacted' => $total_amount_due,
+            'balance_before' => $student_local_account->available_balance,
+            'available_balance' => $student_local_account->available_balance -$total_amount_due, //subtract amount
+            'balance_after' => $student_local_account->available_balance - $total_amount_due,
+        ];
+
+        $tutor_data = [
+            'last_transaction_date' => now(),
+            'last_transaction_method' => 'Uswa:local',
+            'last_amount_transacted' => $total_amount_due,
+            'balance_before' => $tutor_local_account->available_balance,
+            'available_balance' => $tutor_local_account->available_balance + $total_amount_due, //add amount
+            'balance_after' => $tutor_local_account->available_balance + $total_amount_due,
+        ];
+
+        $student_local_account->update($student_data);
+        $tutor_local_account->update($tutor_data);
+        
+        // update lecture payment status
+        foreach ($lectures as $lec) {
+            $lec->update([ 'payment_status' => 'paid' ]); 
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment transfered from student to tutor localy',
+            'data' => true
+        ], 200);        
     }
 }

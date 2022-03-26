@@ -42,7 +42,10 @@ class CreateLessonsTable extends Migration
             $table->string('postponed_to')->nullable(); 
             $table->string('postponed_reason')->nullable(); 
             
-            $table->string('student_score')->nullable(); 
+            $table->string('student_score')->nullable();
+            $table->integer('previous_lecture')->nullable(); 
+            $table->integer('current_lecture')->nullable(); 
+            $table->integer('next_lecture')->nullable(); 
 
             $table->string('student_remarks')->nullable(); 
             $table->string('tutor_remarks')->nullable(); 

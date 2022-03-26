@@ -58,6 +58,9 @@ use Illuminate\Support\Facades\Route;
        
         //update lesson meeting link
         Route::post('/update-lesson-link/{lesson_id}','Api\Lesson\LessonController@updateMeetingLink')->name('student.update.meting-link.lesssons');
+       
+        //Delete lesson
+        Route::delete('/lesson/delete/{lesson_id}','Api\Lesson\LessonController@destroy')->name('delete.lesson');
 
     });
 

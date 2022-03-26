@@ -8,8 +8,6 @@ use App\Models\User;
 use App\Models\TutorSchedule;
 use App\Models\TrialLesson;
 use App\Models\Review;
-
-
 class StudentController extends Controller
 {
     /*
@@ -27,7 +25,7 @@ class StudentController extends Controller
         $tutors = User::with('tutorSchedule')
                 ->with('reviews')
                 ->where('role', 'tutor')
-                ->where('registration', 'complete')
+                ->where('registration', 'complete')                
                 ->paginate(env('API_PAGINATION', 10));
          return response()->json([
             'success'=> true,
@@ -41,7 +39,8 @@ class StudentController extends Controller
         $user = $request->user();
         
         $trail_lesson = TrialLesson::with('getTutor') 
-            ->where('student_id', $user->id)           
+            ->where('student_id', $user->id)  
+            ->orderBy('created_at', 'desc')       
             ->paginate(env('API_PAGINATION', 10));
 
         return response()->json([

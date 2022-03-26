@@ -10,20 +10,18 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <small class="alert alert-success p-2 " v-if="this.success.lecture_delete">{{this.success.lecture_delete}}</small>
-                <small class="alert alert-danger p-2 " v-if="this.errors.lecture_delete">{{this.errors.lecture_delete}}</small>
+                <small class="alert alert-success p-2 text-center" v-if="this.success.lecture_delete">{{this.success.lecture_delete}}</small>
+                <small class="alert alert-danger p-2 text-center" v-if="this.errors.lecture_delete">{{this.errors.lecture_delete}}</small>
                 <div>
                     <span class="d-flex justify-content-between">
                     <h4>Your course lectures</h4> 
-                    <button class="btn btn-success" data-bs-target="#addModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal"> <i class="bi bi-plus-lg"></i> New</button>
+                    <button class="btn btn-success" data-bs-target="#addModal2" data-bs-toggle="modal" data-bs-dismiss="modal"> <i class="bi bi-plus-lg"></i> New</button>
                     </span>                        
-                    <p class="text-muted small">All your set course lectures will appear here. <br>
-                        Idealy, a lecture shoud last between 1-2hrs
-                     </p> 
+                   
                         <div class="table responsive" v-if="Object.keys(this.lectures).length">
                             <table class="table table-sm p-2">
                                 <thead class="p-2">
-                                    <th>Index</th>
+                                    <th>#</th>
                                     <th>Name</th>
                                     <th>Duration</th>
                                     <th>Description</th>
@@ -75,8 +73,8 @@
                             <small class="text-danger">{{this.errors.lecture_name}}</small>
                         </div>
                         <div class="form-group p-2">
-                            <label for="duration">Duration: <small class="text-muted"> (in hrs)</small> </label>
-                            <input type="number" id="duration" min='1' class="form-control" v-model="lecture_duration">
+                            <label for="duration">Duration: <small class="text-muted"> (hrs)</small> </label>
+                            <input type="number" id="duration" min='1' max="2" class="form-control" v-model="lecture_duration">
                             <small class="text-danger">{{this.errors.lecture_duration}}</small>
                         </div>
                         <div class="form-group p-2">
@@ -125,6 +123,9 @@
                         </div>
                     </form>
                 </div>
+                 <p class="text-muted small">All your set course lectures will appear here. <br>
+                        Idealy, a lecture shoud last between 1-2hrs
+                     </p> 
             </div>
             <div class="text-end px-3 pb-2"> 
                 <small class="text-danger">{{this.errors.lecture_updated}}</small> 

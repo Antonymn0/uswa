@@ -43,7 +43,9 @@ use Illuminate\Support\Facades\Route;
         
         // search lessons
         Route::get('/search-tutors/{keyword}','Api\Student\StudentController@searchTutorByLanguage')->name('tutor.search.lesssons');
-
+        
+        // Mark lesson complete
+        Route::get('/lesson/mark-complete/{lesson_id}','Api\Tutor\TutorLessonController@markLessonComplete')->name('mark.lessson.complete');
         
     });
 

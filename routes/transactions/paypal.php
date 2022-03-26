@@ -26,9 +26,8 @@ Route::group(['middleware'=>['auth:api']],function(){
    //update local account  
     Route::get('/get-paypal-clientId','Api\Payments\Paypal\PaypalController@getClientId'); 
 
-   //transfer payments from student to tutor 
-    Route::post('/transfer-payments','Api\Payments\LocalAccountController@transferFundsFromStudentToTutor'); 
-   
+   //transfer payments from student to tutor locally
+    Route::post('/transfer-payments','Api\Payments\LocalAccountController@transferFundsFromStudentToTutor');  
    
 
 });

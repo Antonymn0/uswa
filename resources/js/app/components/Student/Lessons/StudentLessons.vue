@@ -41,8 +41,6 @@
                         <a v-if="! this.zoom_user_auth_token" :href="'https://zoom.us/oauth/authorize?response_type=code&client_id=' + this.CLIENT_ID + '&state=' + this.ZOOM_STATE + '&redirect_uri=' + this.REDIRECT_URI" class="btn btn-secondary btn-small m-2" >Link with zoom</a>  
                         <button class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.tutor_confirm == 'pending' " @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel request </button>
                       
-                         
-
                         <span v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.participant_joined_at && trial_lesson.participant_left_at && !trial_lesson.is_student_impressed">
                             Impressed by the tutor?  <br>
                              <span class="btn btn-sm btn-secondary m-1" @click="processPayment(trial_lesson)">Yes</span>
@@ -78,43 +76,56 @@
 <!-- ----------------------------------------Inprogress lessons-------------------------------------------------------------------------- -->
  <div class="bg-white mt-3 ">
       <h4 class="alert-secondary w-100 py-3 px-3">In progress <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchLessons()">Refresh</button> </span></h4>
-      <div v-if="Object.keys(this.current_lessons).length"> 
-      <div class="row px-4 ">      
-          <div class="col-md-4 row p-3"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'ongoing'">              
-              <div class="border rounded p-3">
-                  <div>
-                    <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
-                        <h6 class="py-2 fw-bold"> 
-                            <span>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
-                            {{this.capitalize(lesson.get_lesson_tutor.first_name)}}
-                        </h6>
-                        <span class="small"> Status: {{lesson.status}}...</span>
-                    </span>                    
-                    <p class="fw-bold">
-                        <span>{{this.capitalize(lesson.lesson_type)}} lesson with tutor {{this.capitalize(lesson.get_lesson_tutor.first_name)}} </span> 
-                        <span class="float-end">
-                            <a :href="lesson.meeting_link" target="blank" class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link && this.getAccount.available_balance > lesson.get_lesson_tutor.hourly_rate">Classroom</a> 
-                            <button v-else class="btn btn-secondary btn-sm my-1" data-bs-target="#paypal-modal" data-bs-toggle="modal" data-bs-dismiss="modal" > Insuficient funds</button> <br>
-                            <a class="btn btn-secondary btn-sm my-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>  <br>
-                            <button class="btn btn-secondary btn-sm " @click.prevent="this.sendTutorPayments(lesson)">Process payments</button>
-                        </span>
-                      </p>
+      <small class="alert-danger p-2" v-if="this.errors.insuficient_funds">{{this.errors.insuficient_funds}}</small>
+      <small class="alert-success p-2" v-if="this.success.payment_success">{{this.success.payment_success}}</small>
+      <div v-if="Object.keys(this.current_lessons).length > 1"> 
+        <div class="row px-4 ">      
+            <div class="col-md-4 row p-3"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'ongoing'">              
+                <div class="border rounded p-3">
+                    <div>
+                        <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
+                            <h6 class="py-2 fw-bold"> 
+                                <span>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
+                                {{this.capitalize(lesson.get_lesson_tutor.first_name)}}
+                            </h6>
+                            <span class="small"> Status: {{lesson.status}}...</span>
+                        </span>                    
+                        <p class="fw-bold">
+                            <span class="m-0">{{this.capitalize(lesson.lesson_type)}} lesson with tutor {{this.capitalize(lesson.get_lesson_tutor.first_name)}} </span> 
+                            <span class=" m-0 d-flex justify-content-end" style="overflow:auto">
+                                <a :href="lesson.meeting_link" target="blank" class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link && this.getAccount.available_balance > lesson.get_lesson_tutor.hourly_rate && !checkIfLectureUnpaid()">Classroom</a> 
+                                <button v-if="this.getAccount.available_balance <= lesson.get_lesson_tutor.hourly_rate" class="btn btn-default border btn-sm m-1" data-bs-target="#paypal-modal" data-bs-toggle="modal" data-bs-dismiss="modal" > Insuficient funds</button> <br>
+                                <a class="btn btn-secondary btn-sm m-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>  <br>
+                                <button class="btn btn-secondary btn-sm my-1" v-if="checkIfLectureUnpaid() && this.getAccount.available_balance > lesson.get_lesson_tutor.hourly_rate" @click.prevent="this.sendTutorLecturePayments(lesson)">Pay tutor</button>
+                            </span>
+                        </p>
+                        <!-- -------------------- Lectures------------------------  -->
+                        <div>
+                            <h5>Lectures</h5>
+                            <p v-for="(lecture, index) in lesson.lectures" :key="index" class="row pt-2 pb- rounded  lec-hover  mb-1 ">
+                                <span class="col-1 m-0 align-middle "><i class="bi bi-patch-check-fill" v-if="this.isLectureComplete(lecture, lesson)"></i> </span>
+                                <span class=" col-7 m-0 align-middle">  {{this.capitalize(lecture.lecture_name)}}</span>
+                                <span class=" col-2 m-0 align-middle">{{lecture.lecture_duration}}<small>hrs </small> </span>                           
+                                <span class="dropdown small col-1 m-0 align-middle  " > 
+                                    <span class=" col-1 m-0 align-middle text-end" style="cursor:pointer; font-size:1.5rem"  type="button"  data-bs-toggle="dropdown" aria-expanded="false" :id="'trial_M_details' + lecture.id" > <i class="bi bi-three-dots three-dot"></i></span>
+                                    <p class="p-3 border small dropdown-menu small text-muted rounded" :aria-labelledby="'trial_M_details' + lecture.id" >
+                                        <span class="fw-bold m-0">Description</span>  <br>
+                                        <span class="m-0">{{this.capitalize(lecture.lecture_description)}}</span>                                   
+                                    </p>
+                                </span>
+                            </p>
+                        </div>                       
                         
-                        <span class="py-2">Duration: </span> <span>{{lesson.lesson_total_duration}}hrs </span>
-                        <br>
-                        <span class="py-2">Covered : </span> <span> {{lesson.covered_duration}}hrs </span> <br>
-                        <span class="py-2">Remaining : </span> <span> {{lesson.remaining_duration}}hrs </span>
-                    
-                    <p class="pt-2 mb-0 small" >
-                        Learning at Uswa is absolutely free-flow and self-paced. You  are in total control of your learning process. <br> 
-                        You can take lessons anytime anywhere in the world.  Happy learning..                   
-                    </p>
-                    <p class="py-3 small">Date started : {{lesson.lessons_start_date}}</p> 
-                    <a href="#" class="text-primary text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
-                  </div>
-              </div>              
-          </div>
-          </div>
+                        <p class="pt-2 mb-0 small" >
+                            Learning at Uswa is absolutely free-flow and self-paced. You  are in total control of your learning process. <br> 
+                            You can take lessons anytime anywhere in the world.  Happy learning..                   
+                        </p>
+                        <!-- <p class="py-3 small">Date started : {{lesson.lessons_start_date}}</p>  -->
+                        <a href="#" class="text-primary mt-3 float-end shadow text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
+                    </div>
+                </div>              
+            </div>
+            </div>
           </div>
           <div v-else>
             <p class="text-muted small text-center p-5"> You currently have no ongoing lessons</p>
@@ -169,17 +180,15 @@
                         <span class="small"> Status: {{lesson.status}}</span>
                         </span>                       
                     <p class="fw-bold">{{this.capitalize(lesson.lesson_type)}} lessons with tutor {{this.capitalize(lesson.get_lesson_tutor.first_name)}}</p>
-                    <span class="py-2">Date started: {{this.formatDate(lesson.lessons_start_date)}}</span> <br>
-                    <span class="py-2">Date completed: </span> <span> {{this.formatDate(lesson.lessons_end_date)}}</span> <br>
+                    <span class="py-2">Date started: {{this.formatDate(lesson.created_at)}}</span> <br>
+                    <span class="py-2">Date completed: </span> <span> {{this.formatDate(lesson.updated_at)}}</span> <br>
                     <span class="py-2">Total Duration: </span><span>{{lesson.lesson_total_duration}}hr </span>  &nbsp; &nbsp;                      
                     <span>Score: </span> <span>{{lesson.student_score}}%</span>
 
                       <p class="pt-2 mb-0">This was completed in a total duration of {{lesson.lesson_total_duration}}hrs.</p>
                   </div>
               </div>              
-          </div>
-
-         
+          </div>         
       </div>
   </div>
 
@@ -227,9 +236,8 @@ export default {
         return{
             current_trial_lessons:{},
             current_lessons:{},
-            current_lesson:{
-                    get_assignments:{}
-                    },
+            current_lesson:{ get_assignments:{} },
+            completed_lectures:{},
             decline_reason:null,       
             refresh_interval:{},
             paypal_client_id:'',
@@ -248,6 +256,9 @@ export default {
         }
     },
     methods:{
+        capitalize(string) {
+            if(string) return string.charAt(0).toUpperCase() + string.slice(1);
+        },
         updateCurrentLesson(lesson)   {
             this.current_lesson = lesson;
         },
@@ -279,6 +290,7 @@ export default {
             if(! confirm('Do you want to cancel this trial lesson. \n If you cancel, you and the tutor will no longer be able to view this lesson.')) return;
             axios.get('/api/student/cancel-trial-lesson/' + trial_lesson.id)
             .then(response =>{
+                this.fetchTrialLessons();
                 this.success.cancel_lesson =" Success, Lesson canceled";
                 setTimeout(() => {
                     this.success ={};
@@ -292,6 +304,23 @@ export default {
             if(!confirm('Open trial lesson window?')) return;
             this.$router.push({name: 'student-trial-lesson'});
         },
+      
+        isLectureComplete(lecture, lesson){ //determine if the lecture is 'marked' completed or otherwise
+            var css_class = false;
+            this.completed_lectures.forEach(lec=>{                
+                if(lec.lecture_id == lecture.id && lec.lesson_id == lesson.id)   css_class = true;
+            });
+            return css_class;
+        },
+        checkIfLectureUnpaid(){ //if any lecture is unpaid set true
+            var unpaid = false;
+            this.completed_lectures.forEach(lec=>{                
+                if(lec.payment_status == 'unpaid')   unpaid = true;
+            });
+            console.log(unpaid);
+            return unpaid;
+           
+        },
         fetchTrialLessons(){
             axios.get('/api/students/fetch-lessons/trial')
             .then(response =>{
@@ -304,6 +333,7 @@ export default {
         fetchLessons(){
             axios.get('/api/students/fetch-lessons')
             .then(response =>{
+                this.completed_lectures = response.data.data.data[0].completed_lectures; // load completed lectures to local data
                 this.current_lessons = response.data.data.data;
             })
             .catch(error=>{
@@ -346,7 +376,7 @@ export default {
         var form_data = new FormData(); 
             form_data.append('lesson_date', trial_lesson.lesson_date);
             form_data.append('start_time', trial_lesson.start_time);
-            form_data.append('lesson_type', 3);
+            form_data.append('lesson_type', trial_lesson.lesson_type);
             form_data.append('student_id', trial_lesson.student_id);
             form_data.append('student_timezone', this.$store.state.user.user.timezone);
             form_data.append('tutor_id', trial_lesson.tutor_id);
@@ -373,6 +403,15 @@ export default {
             if(error.response.status == 422) { alert('Lessons already created!'); return; }            
             console.log(error.response);
         });
+    },
+    deleteLesson(lesson){
+        axios.delete('/api/lesson/delete/{lesson_id/' + lesson.id)
+        .then(response=>{
+            console.log(response);
+        })
+        .catch(error=>{
+            console.log(error.response);
+        })
     },
      fetchZoomAuthToken() { // fetch current user's zoom auth token
        axios.get('/api/zoom/user-auth-token')
@@ -401,20 +440,33 @@ export default {
         //
 
     },
-    sendTutorPayments(lesson){
-        // process payments fopr the lesson 
+    sendTutorLecturePayments(lesson){
+        // process payments fopr the lectures 
+        if(this.getAccount.available_balance < lesson.get_lesson_tutor.hourly_rate) {alert('Cannot process payments. Insufficient funds '); return;}
+        if(!confirm('Process payments for the completed lectures?')) return;
         axios.get('/api/students/send-tutor-payments/' + lesson.id)
         .then(response =>{
-            this.current_trial_lessons = response.data.data.data;
+            this.success.payment_success = 'Success, Payment processed';
+            this.$store.dispatch('fetchLocalAccount');
+            this.fetchLessons();
+            console.log(response.data);
         })
         .catch(error=>{
-            console.log(error.response);
-        })
+            if(error.response.status == 402){
+                this.$store.dispatch('fetchLocalAccount');
+                alert(`Insufficient funds to process payment. \n You have $${error.response.data.data.total_amount_due} arrears for ${error.response.data.data.lecture_count} unpaid lectures. \n \n Please top up your account and try again. `);
+                this.errors.insuficient_funds = 'Failed, insufficient funds';
+                setTimeout(() => {
+                    this.errors={}
+                }, 3500);
+            }
+            console.log(error.response.data.data);
+            })
         },
         async scheduleZoomMeeting(lesson){
             var form_data = new FormData();
             form_data.append('topic', lesson.lesson_type);
-            form_data.append('type', 2);
+            form_data.append('type', 3);
             form_data.append('start_time', lesson.start_date);
             form_data.append('duration', lesson.duration);
 
@@ -424,9 +476,9 @@ export default {
                 this.fetchTrialLessons();
                 this.fetchLessons();
                 console.log(response.data.data.join_url);
-
             })
             .catch(error=>{  
+                this.deleteLesson(lesson);
                 delete this.spinner.schedule_meeting;
                 this.errors.shedule_meeting = 'Failed to schedule meeting!';
                 console.log(error.response);
@@ -507,8 +559,10 @@ export default {
 
             // Call  server to capture the transaction            
             axios.post('/api/transfer-payments/', form_data)
-            .then(response=>{   
+            .then(response=>{                
                 this.success.process_payment = 'Success, payment processed. \n Please  go ahead and schedule your lessons with the tutor!'                     
+                this.$store.dispatch('fetchLocalAccount');
+                this.fetchTrialLessons();
                 console.log(response);
 
             })
@@ -606,5 +660,14 @@ export default {
 <style>
     .dropdown{
         width:auto !important;
+    }
+    .lec-hover{
+        border:1px solid rgb(223, 219, 219);
+    }
+    .lec-hover:hover{
+        border:1px solid rgb(180, 177, 177);
+    }
+    .three-dot:hover{
+         color: rgb(116, 114, 114);
     }
 </style>
