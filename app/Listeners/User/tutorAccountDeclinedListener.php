@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\User\TutorAccountDeclinedMail;
 
-class tutorAccountDeclinedListener
+class tutorAccountDeclinedListener implements ShouldQueue
 {
     /**
      * Create the event listener.

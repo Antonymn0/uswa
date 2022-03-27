@@ -9,16 +9,16 @@
             <div class="fw-bold pt-5 "> 
                 <h4>Available balance  </h4> 
                 <p class="py-3 text-center fw-bold">
-                   <span class="m-0">$</span>
+                   <span class="m-0">$ </span>
                    <span class="m-0 " v-if="this.getAccount.available_balance">{{this.getAccount.available_balance}}</span>
                    <span class="m-0" v-else >0</span>
                 </p>
             </div>
             <div class="pt-3 pb-2"> 
-                <button class="btn btn-lg btn-secondary m-2 px-3 w-75"   @click.prevent="this.getPaypalAccessToken()"> Get paypal token </button>
+                <!-- <button class="btn btn-lg btn-secondary m-2 px-3 w-75"   @click.prevent="this.getPaypalAccessToken()"> Get paypal token </button> -->
                 <small class="text-success" v-if="this.success.signup_link"> <br>{{this.success.signup_link}}</small>
                 <small class="text-danger" v-if="this.errors.signup_link"> <br> {{this.errors.signup_link}}</small>
-                <button class="btn btn-lg btn-secondary m-2 px-3 w-75" v-if=" !this.getUser.paypal_merchant_id  "  @click.prevent="this.generateSigupLink()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.signup_link"></span>  Link with paypal </button>
+                <button class="btn btn-lg btn-secondary m-2 px-3 w-75" v-if=" !this.getUser.paypal_merchant_id && this.getUser.role == 'tutor' "  @click.prevent="this.generateSigupLink()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.signup_link"></span>  Link with paypal </button>
               
                <small class="text-success" v-if="this.success.charge_object"> <br>{{this.success.charge_object}}</small>
                 <small class="text-danger" v-if="this.errors.charge_object"> <br> {{this.errors.charge_object}}</small>
@@ -26,7 +26,7 @@
                <span class="text-center">
                 <button class="btn btn-secondary p-2 btn-lg m-2 w-75" v-if="this.getUser.role == 'tutor' "  @click.prevent="this.withdrawFunds()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.charge_object"></span>Withdraw</button>
                 <div class=" mx-auto m-2 w-75" v-if="this.getUser.role == 'student' " >
-                    <label class=" text-secondary">Topup with: </label>
+                    <label class=" text-secondary">Topup with $10 via paypal: </label>
                     <div id="paypal-button-container"></div> 
                 </div>  
                </span>
@@ -424,7 +424,10 @@ export default {
         withdrawFunds(){
             this.success={}
             this.errors={}
+            if(!this.getUser.paypal_merchant_id) { alert('Please link your paypal account first in order to process withdrawal'); return;}
             if(this.getAccount.available_balance < 50) {alert('Cannot process withdrawal of funds less than $50!'); return;}
+            
+            if(! confirm('Do you want to withdraw funds?')) return;
             this.spinner.charge_object = true;
             axios.get('/api/paypal-payment')
             .then(response=>{

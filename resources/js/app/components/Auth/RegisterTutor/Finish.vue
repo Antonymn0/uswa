@@ -65,8 +65,8 @@ export default {
                 console.log(response.data)
                 if(response.status == 200){   
                     this.spinner=false;  
-                    this.success.signup = "Congratulations!. Your data has been submitted and is being reviewed. \n You will be redirected to dashboard shortly." ;
-                    setTimeout(() => {this.$router.push({name: 'tutor-dashboard'})}, 3500); //redirect to home page                   
+                    this.success.signup = `Congratulations!. \n Your data has been submitted and is being reviewed. \n You will recieve a notification when reviewed. \n You will be redirected to dashboard shortly.` ;
+                    setTimeout(() => {this.$router.push({name: 'tutor-dashboard'})}, 5000); //redirect to home page                   
                 }
                 this.spinner=false; 
             })
@@ -80,7 +80,6 @@ export default {
                 }
                 console.log(error.response);
             })
-
         }
     }
 }

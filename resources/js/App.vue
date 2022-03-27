@@ -31,6 +31,8 @@ export default {
             if(this.getUser.role == 'student') this.$router.push({name: 'student-dashboard'});
             if(this.getUser.role == 'tutor') this.$router.push({name: 'tutor-dashboard'});
             if(this.getUser.role == 'admin') this.$router.push({name: 'all-users'});
+
+            this.$store.dispatch('fetchLocalAccount');
           }
       })
       .catch(error=>{

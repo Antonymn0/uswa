@@ -6,7 +6,7 @@ use App\Events\User\userDestroyed;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class userDestroyedListener
+class userDestroyedListener implements ShouldQueue
 {
     /**
      * Create the event listener.

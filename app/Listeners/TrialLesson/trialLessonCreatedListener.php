@@ -9,7 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TrialLesson\TrialLessonCreatedMail;
 
-class trialLessonCreatedListener
+class trialLessonCreatedListener implements ShouldQueue
 {
     /**
      * Create the event listener.

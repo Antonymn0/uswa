@@ -23,7 +23,7 @@
                                 <span @click.prevent="[toggleMessage(message), toggleThread(message.conversation_thread),  showThread(), toggleSeen(message) ]">  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.5rem"></i></span>
                                 <span class="ml-2" @click.prevent="[toggleMessage(message), toggleThread(message.conversation_thread),  showThread(), toggleSeen(message) ]" style="cursor:pointer">
                                     <h5 class="m-0 position-relative"> 
-                                        {{message.message_sender.first_name}} {{ message.message_sender.last_name.charAt(0).toUpperCase()}}
+                                        {{this.capitalize(message.message_sender.first_name)}} {{ message.message_sender.last_name.charAt(0).toUpperCase()}}
                                         <span class="position-absolute top-0 start-100 text-white  bg-danger small" v-if="!message.tutor_seen" style="font-size:.6rem; padding:.2rem .45rem; border-radius:50rem"> 1 </span>
                                     </h5>
                                     <p class="m-0"> {{lastInThread(message.conversation_thread)}} </p>
@@ -129,7 +129,7 @@ export default {
         },
         lastInThread(conversation_thread){
             let last_in_thread = {...conversation_thread.slice(-1)[0]};
-            return  last_in_thread.message;
+            return this.capitalize(last_in_thread.message);
         },
         lastInThreadTime(conversation_thread){
             let last_in_thread = {...conversation_thread.slice(-1)[0]};

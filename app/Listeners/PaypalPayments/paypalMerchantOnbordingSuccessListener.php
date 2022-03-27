@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\PaypalPayments\UswaPaypalOnboardingSuccess;
 
 
-class paypalMerchantOnbordingSuccessListener
+class paypalMerchantOnbordingSuccessListener implements ShouldQueue
 {
    
 

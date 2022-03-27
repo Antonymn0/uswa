@@ -6,7 +6,7 @@ use App\Events\Review\reviewCreated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class reviewCreatedListener
+class reviewCreatedListener implements ShouldQueue
 {
     /**
      * Create the event listener.

@@ -89,7 +89,7 @@
                 <small class="text-danger">{{this.errors.lecture_submited}}</small> 
                 <small class="text-success">{{this.success.lecture_submited}}</small> <br>
                 <button class="btn btn-danger m-2" id="back-btn-lec" data-bs-target="#lecturesModal" data-bs-toggle="modal" data-bs-dismiss="modal">Back </button>
-                <button class="btn btn-primary m-2" @click.prevent="submitForm()"> <span class="spinner spinner-border spinner-border-sm" v-if="this.spinner.submit"></span> Sumbit</button>
+                <button class="btn btn-success m-2" @click.prevent="submitForm()"> <span class="spinner spinner-border spinner-border-sm" v-if="this.spinner.submit"></span> Sumbit</button>
               </div>
             </div>
         </div>

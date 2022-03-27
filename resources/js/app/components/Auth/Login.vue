@@ -63,6 +63,7 @@ methods:{
         this.spinner=true;
         axios.post('api/login', form_data )
         .then(response=>{
+          console.log(response);
             this.$store.commit('setToken', response.data.token);
             this.$store.commit('setUser', response.data.user);
             axios.defaults.headers.common['Authorization'] = response.data.token;
@@ -75,7 +76,7 @@ methods:{
         .catch(error=>{
           this.spinner=false;
             if(error.response.status == 401){
-              this.$store.commit('unsetUser', error.response.data);
+              this.$store.commit('unsetUser', user=null);
               this.errors.credentials = error.response.data.message;
             }
             console.log(error.response);

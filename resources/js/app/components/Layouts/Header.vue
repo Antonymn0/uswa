@@ -83,8 +83,8 @@
                   </li>
                   <li v-if=" isLogedIn && this.getUser.role == 'student'"><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdropProfile" >Profile</a></li> 
                   <li v-if=" isLogedIn && this.getUser.role == 'tutor'"><a class="dropdown-item" href="#"  ><router-link :to="{name: 'register-tutor-signup'}"  >Profile</router-link></a></li>
-                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#lecturesModal"> Lectures </a> </li>
-                  <li><a class="dropdown-item" href="#"> <Logout /> </a> </li>
+                  <li v-if="this.getUser.role == 'tutor'"> <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#lecturesModal"> Lectures </a> </li>
+                  <li> <a class="dropdown-item" href="#"> <Logout /> </a> </li>
               </ul>
             </div>        
         </div>
@@ -149,12 +149,12 @@ export default {
   methods:{
     showHomePage(){ 
       this.$router.push({name: 'home'});
-      // setTimeout(() => {
-      //     if(window.zoom_success){ // handle zoom redirection if exists
-      //       if(this.user.role == 'student') this.$router.push({name: 'student-trial-lesson'});
-      //       if(this.user.role == 'tutor') this.$router.push({name: 'tutor-trial-lesson'});
-      //     } else this.$router.push({name: 'home'});        
-      //   }, 200);       
+      setTimeout(() => {
+          if(window.zoom_success){ // handle zoom redirection if exists
+            if(this.user.role == 'student') this.$router.push({name: 'student-trial-lesson'});
+            if(this.user.role == 'tutor') this.$router.push({name: 'tutor-trial-lesson'});
+          } else this.$router.push({name: 'home'});        
+        }, 200);       
     },
 
   },
@@ -164,7 +164,7 @@ export default {
   },
 mounted(){     
     this.showHomePage();
-    this.$store.dispatch('fetchLocalAccount');
+     
     }
 }
 </script>

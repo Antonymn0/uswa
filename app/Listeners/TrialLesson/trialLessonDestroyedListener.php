@@ -6,7 +6,7 @@ use App\Events\TrialLesson\trialLessonDestroyed;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class trialLessonDestroyedListener
+class trialLessonDestroyedListener implements ShouldQueue
 {
     /**
      * Create the event listener.

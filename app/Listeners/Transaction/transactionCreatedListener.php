@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\Transaction\TransactionProcessed;
 use App\Mail\Transaction\WithdrawalSuccessful;
 
-class transactionCreatedListener
+class transactionCreatedListener implements ShouldQueue
 {
     /**
      * Create the event listener.

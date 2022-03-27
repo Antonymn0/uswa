@@ -18,6 +18,7 @@ class CreateLocalAccountsTable extends Migration
             $table->integer('user_id')->required()->index()->unique();
             $table->timestamp('date_created')->required();
             $table->double('balance_before')->required();
+            $table->double('comission')->nullable();
             $table->double('available_balance')->required();
             $table->timestamp('last_transaction_date')->nullable();
             $table->double('last_amount_transacted')->nullable();

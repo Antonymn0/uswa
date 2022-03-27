@@ -5,8 +5,7 @@
   <div class="bg-white  ">      
       <h4 class="alert-secondary w-100 py-3 px-3">Trial lessons <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchTrialLessons()">Refresh</button> </span></h4>
         <p class="px-3 small">
-            Request for trial lessons from students will appear here. You can either choose to accept requests or decline. <br>
-            Please note that students can cancel the lessons if they are not satisfied during the trial or if there is no response.
+            Request for trial lessons from students will appear here. You can either choose to accept requests or decline.
         </p>
         <small class="alert-success p-2" v-if="this.success.shedule_meeting">{{this.success.shedule_meeting}}</small>
       <small class="alert-danger p-2" v-if="this.success.shedule_meeting">{{this.errors.meeting_sheduled}}</small>
@@ -67,7 +66,8 @@
                     <!-- ------------------------------------------------------------- -->
                 </div>
             </div>              
-        </div>              
+        </div> 
+        <p class="text-muted text-center p-2 small mb-0">Tip: Students can cancel the lessons if they are not satisfied during the trial or if there is no response</p>             
       </div>
   </div>
 
@@ -78,7 +78,7 @@
      <small class="alert-danger text-center p-2 rounded" v-if="this.errors.mark_complete"> {{this.errors.mark_complete}} </small>
      <small class="alert-success text-center p-2 rounded" v-if="this.success.lesson_complete"> {{this.success.lesson_complete}} </small>
      <small class="alert-danger text-center p-2 rounded" v-if="this.errors.lesson_complete"> {{this.errors.lesson_complete}} </small>
-     <div v-if="Object.keys(this.current_lessons).length "> 
+     <div v-if="Object.keys(this.current_lessons).length  "> 
       <div class="row p-3 ">            
           <div class="col-md-4 row p-2"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'ongoing'">         
               <div class="border rounded p-3">
@@ -103,7 +103,7 @@
                    <!-- --------------------- Lectures---------------------------------------------------       -->
                     <div>
                         <h5>Lectures  </h5>
-                        <p v-for="(lecture, index) in lesson.lectures" :key="index" class="row pt-2 pb- rounded align-middle lec-hover  mb-1 " >
+                        <p v-for="(lecture, index) in lesson.lectures" :key="index" class="row small pt-2 pb- rounded align-middle lec-hover  mb-1 " >
                             <span class="col-1 m-0 align-middle "><i class="bi bi-patch-check-fill" v-if="this.isLectureComplete(lecture, lesson)"></i> </span>
                            <span class="col-7 m-0 align-middle">
                                <span class=" dropdown  " > 
@@ -125,18 +125,18 @@
                         </p>
                         <button class="btn btn-sm btn-primary form-control my-1" v-if="isAllLecturesComplete(lesson.lectures, this.completed_lectures, lesson)" @click.prevent="markLessonComplete( lesson)"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.lesson_complete"></span> Mark this lesson complete </button>
                     </div>
-
-                    <p class="pt-2 mb-0 small text-muted">
-                       You and your students are in total control of planning your lessons. <br>
-                       Teach from anywhere anytime.
-                    </p>
+                   
                   </div>
               </div>              
           </div>
       </div>
+       <p class="p-2  small text-center text-muted">
+           Tip:  You and your students are in total control of planning your lessons. 
+            Teach from anywhere anytime.
+        </p>
       </div>
-      <div v-else>
-            <p class="text-muted small text-center p-5"> You currently have no ongoing lessons</p>
+      <div v-else >
+            <p class="text-muted small  text-center p-5"> You currently have no ongoing lessons</p>
         </div>
   </div>
 
@@ -161,14 +161,20 @@
                       <span class="py-2">Date started: {{this.formatDate(lesson.created_at)}}</span> <br>
                       <span class="py-2">Date completed: </span> <span> {{this.formatDate(lesson.updated_at)}}</span> <br>
                       <span class="py-2">Course Duration: </span><span>{{lesson.lesson_total_duration}}hrs </span>  <br>                      
-                        <span>Student score: </span> <span>{{lesson.student_score}}%</span>
+                      <span>Student score: </span> <span>{{lesson.student_score}}%</span>
 
                       <p class="pt-2 mb-0 small">This course was taught in a total duration of {{lesson.lesson_total_duration}}hrs.</p>
                   </div>
               </div>              
               </div>              
           </div>
-
+            <p class="p-3 mb-0 small text-muted "> 
+               Tip: <br>
+                <i class="bi bi-dot"></i> Completed lessons will appear here <br>
+                <i class="bi bi-dot"></i>  Complete more lessons with your students. <br>
+                <i class="bi bi-dot"></i>  Always aim to get a 5 star review   <br>       
+                <i class="bi bi-dot"></i>  This will increase your rating   <br>       
+            </p> 
       </div>
   </div>
         <div> <Assignments :lesson="this.current_lesson"/> </div>

@@ -6,7 +6,7 @@ use App\Events\TrialLesson\trialLessonUpdated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class trialLessonUpdatedListener
+class trialLessonUpdatedListener implements ShouldQueue
 {
     /**
      * Create the event listener.

@@ -133,7 +133,7 @@ export default {
         },
         lastInThread(conversation_thread){
             let last_in_thread = {...conversation_thread.slice(-1)[0]};
-            return  last_in_thread.message;
+            return  this.capitalize(last_in_thread.message);
         },
         lastInThreadTime(conversation_thread){
             let last_in_thread = {...conversation_thread.slice(-1)[0]};

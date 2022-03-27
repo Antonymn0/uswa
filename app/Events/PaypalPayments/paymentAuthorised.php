@@ -14,7 +14,7 @@ class paymentAuthorised
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $User;
+    public $user;
     public $transaction;
     /**
      * Create a new event instance.

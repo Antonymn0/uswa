@@ -44,7 +44,7 @@ export default {
                 this.user = this.getUser;
                 if(this.user.email_verified_at) return;
                 else this.email_verified = false
-            }, 4000);            
+            }, 5000);            
         }
     },
     computed:{

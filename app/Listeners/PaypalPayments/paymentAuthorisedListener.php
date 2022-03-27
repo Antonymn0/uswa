@@ -9,7 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PaypalPayments\UswaPaymentAuthorised;
 
-class paymentAuthorisedListener
+class paymentAuthorisedListener implements ShouldQueue
 {
     /**
      * Create the event listener.

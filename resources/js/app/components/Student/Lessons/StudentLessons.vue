@@ -43,22 +43,22 @@
                       
                         <span v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.participant_joined_at && trial_lesson.participant_left_at && !trial_lesson.is_student_impressed">
                             Impressed by the tutor?  <br>
-                             <span class="btn btn-sm btn-secondary m-1" @click="processPayment(trial_lesson)">Yes</span>
-                             <span class="btn btn-sm btn-secondary m-1" @click.prevent="notImpressedbyTutor(trial_lesson)">No</span>
+                             <span class="btn btn-sm btn-primary m-1" @click="processPayment(trial_lesson)">Yes</span>
+                             <span class="btn btn-sm btn-danger m-1" @click.prevent="notImpressedbyTutor(trial_lesson)">No</span>
                        <br> </span> 
-                        <button class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.is_student_impressed"  @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lessons </button>
+                        <button class="btn btn-sm btn-success m-1" v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.is_student_impressed"  @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lessons </button>
                          <span class="overflow-auto"> 
-                            <a :href="trial_lesson.meeting_link" target="blank" class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.meeting_link " >Launch meeting</a> 
+                            <a :href="trial_lesson.meeting_link" target="blank" class="btn btn-sm alert-primary m-1" v-if="trial_lesson.meeting_link " >Launch meeting</a> 
                             <div class="dropdown small " v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.participant_joined_at && trial_lesson.participant_left_at"> 
                                 <span class="text-primary underline" style="cursor:pointer"  type="button"  data-bs-toggle="dropdown" aria-expanded="false" :id="'trial_M_details' + trial_lesson.id" >  Duration: {{this.calculateTimeDiff(trial_lesson.meeting_started_at, trial_lesson.meeting_ended_at) }} mins </span>
                                 <p class="p-3 border small dropdown-menu small text-muted rounded" :aria-labelledby="'trial_M_details' + trial_lesson.id" v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.participant_joined_at && trial_lesson.participant_left_at">
                                     <span class="fw-bold">Meeting Details</span>   <br>
                                     <span class="mb-2 small"> Date: {{this.formatDate(trial_lesson.meeting_started_at) }}</span> <br>
                                     <span class="my-1 small"> Start: {{this.formatDateTime(trial_lesson.meeting_started_at) }}</span> <br>
-                                     <span class="my-1 small">Joined: {{this.formatDateTime(trial_lesson.participant_joined_at) }}</span>  <br>
-                                    <span class="my-1 small">Left: {{this.formatDateTime(trial_lesson.participant_left_at) }}</span>  <br> 
+                                     <!-- <span class="my-1 small">Joined: {{this.formatDateTime(trial_lesson.participant_joined_at) }}</span>  <br>
+                                    <span class="my-1 small">Left: {{this.formatDateTime(trial_lesson.participant_left_at) }}</span>  <br>  -->
                                     <span class="my-1 small">End: {{this.formatDateTime(trial_lesson.meeting_ended_at) }}</span> <br>
-                                    <span class="mt-3 small">Duration: {{this.calculateTimeDiff(trial_lesson.meeting_started_at, trial_lesson.meeting_ended_at) }} mins</span>
+                                    <span class="mt-2 border-top small">Duration: {{this.calculateTimeDiff(trial_lesson.meeting_started_at, trial_lesson.meeting_ended_at) }} mins</span>
                                 </p>
                             </div>
                         </span>
@@ -78,7 +78,7 @@
       <h4 class="alert-secondary w-100 py-3 px-3">In progress <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchLessons()">Refresh</button> </span></h4>
       <small class="alert-danger p-2" v-if="this.errors.insuficient_funds">{{this.errors.insuficient_funds}}</small>
       <small class="alert-success p-2" v-if="this.success.payment_success">{{this.success.payment_success}}</small>
-      <div v-if="Object.keys(this.current_lessons).length > 1"> 
+      <div v-if="Object.keys(this.current_lessons).length"> 
         <div class="row px-4 ">      
             <div class="col-md-4 row p-3"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'ongoing'">              
                 <div class="border rounded p-3">
@@ -94,9 +94,9 @@
                             <span class="m-0">{{this.capitalize(lesson.lesson_type)}} lesson with tutor {{this.capitalize(lesson.get_lesson_tutor.first_name)}} </span> 
                             <span class=" m-0 d-flex justify-content-end" style="overflow:auto">
                                 <a :href="lesson.meeting_link" target="blank" class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link && this.getAccount.available_balance > lesson.get_lesson_tutor.hourly_rate && !checkIfLectureUnpaid()">Classroom</a> 
-                                <button v-if="this.getAccount.available_balance <= lesson.get_lesson_tutor.hourly_rate" class="btn btn-default border btn-sm m-1" data-bs-target="#paypal-modal" data-bs-toggle="modal" data-bs-dismiss="modal" > Insuficient funds</button> <br>
+                                <button v-if="this.getAccount.available_balance <= lesson.get_lesson_tutor.hourly_rate" class="btn btn-default text-muted border btn-sm m-1" data-bs-target="#paypal-modal" data-bs-toggle="modal" data-bs-dismiss="modal" > Insuficient funds</button> <br>
                                 <a class="btn btn-secondary btn-sm m-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>  <br>
-                                <button class="btn btn-secondary btn-sm my-1" v-if="checkIfLectureUnpaid() && this.getAccount.available_balance > lesson.get_lesson_tutor.hourly_rate" @click.prevent="this.sendTutorLecturePayments(lesson)">Pay tutor</button>
+                                <button class="btn btn-warning btn-sm my-1" v-if="checkIfLectureUnpaid() && this.getAccount.available_balance > lesson.get_lesson_tutor.hourly_rate" @click.prevent="this.sendTutorLecturePayments(lesson)">Pay tutor</button>
                             </span>
                         </p>
                         <!-- -------------------- Lectures------------------------  -->
@@ -114,12 +114,7 @@
                                     </p>
                                 </span>
                             </p>
-                        </div>                       
-                        
-                        <p class="pt-2 mb-0 small" >
-                            Learning at Uswa is absolutely free-flow and self-paced. You  are in total control of your learning process. <br> 
-                            You can take lessons anytime anywhere in the world.  Happy learning..                   
-                        </p>
+                        </div>  
                         <!-- <p class="py-3 small">Date started : {{lesson.lessons_start_date}}</p>  -->
                         <a href="#" class="text-primary mt-3 float-end shadow text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
                     </div>
@@ -127,7 +122,11 @@
             </div>
             </div>
           </div>
-          <div v-else>
+          <p class="p-3 mb-0 small" >
+            Learning at Uswa is absolutely free-flow and self-paced. You  are in total control of your learning process. 
+            You can take lessons anytime anywhere.                   
+        </p>
+          <div v-if="! Object.keys(this.current_lessons).length ">
             <p class="text-muted small text-center p-5"> You currently have no ongoing lessons</p>
           </div>
       </div>
@@ -137,7 +136,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalToggleLabel2">Write a review</h5>
+        <h5 class="modal-title" id="exampleModalToggleLabel2">Review this tutor </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -168,7 +167,7 @@
 
 <div class="bg-white mt-3 ">
       <h4 class="alert-secondary w-100 py-3 px-3">Completed <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchLessons()">Refresh</button> </span></h4>
-      <div class="row p-3 "> 
+      <div class="row p-3 " > 
           <div class="col-md-4 row p-2"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'completed'">              
               <div class="border rounded p-3">
                   <div>
@@ -185,10 +184,11 @@
                     <span class="py-2">Total Duration: </span><span>{{lesson.lesson_total_duration}}hr </span>  &nbsp; &nbsp;                      
                     <span>Score: </span> <span>{{lesson.student_score}}%</span>
 
-                      <p class="pt-2 mb-0">This was completed in a total duration of {{lesson.lesson_total_duration}}hrs.</p>
+                    <p class="pt-2 mb-0">This was completed in a total duration of {{lesson.lesson_total_duration}}hrs.</p>
                   </div>
               </div>              
-          </div>         
+          </div>
+          <p class="p-3 small text-muted text-center"> Completed lessons will appear here </p>         
       </div>
   </div>
 
@@ -204,8 +204,8 @@
         </div>
         <div class="modal-body mx-auto">
             <div class="w-auto mx-uato text-left py-3">
-                <label class="py-2  ">Topup $10 with Paypal: </label>
-                <div @click.prevent="this.showPaypalSpinner()">
+                <label class="py-2  ">Topup your account with $10 via Paypal: </label>
+                <div class="h-100 bg dark" @click.prevent="this.showPaypalSpinner()">
                    <div class=" mx-auto" id="paypal-button-container" ></div>  
                 </div>
                
@@ -372,6 +372,7 @@ export default {
             });
         },
     async createLesson(trial_lesson){
+        if(! confirm('Schedule lessons with this tutor?')) return;
         this.spinner.create_lesson=true;
         var form_data = new FormData(); 
             form_data.append('lesson_date', trial_lesson.lesson_date);
@@ -443,13 +444,15 @@ export default {
     sendTutorLecturePayments(lesson){
         // process payments fopr the lectures 
         if(this.getAccount.available_balance < lesson.get_lesson_tutor.hourly_rate) {alert('Cannot process payments. Insufficient funds '); return;}
-        if(!confirm('Process payments for the completed lectures?')) return;
+        if(!confirm('Process payment arrears for the completed lectures?')) return;
         axios.get('/api/students/send-tutor-payments/' + lesson.id)
         .then(response =>{
             this.success.payment_success = 'Success, Payment processed';
             this.$store.dispatch('fetchLocalAccount');
             this.fetchLessons();
-            console.log(response.data);
+            setTimeout(() => {
+                    this.success={}
+                }, 3500);
         })
         .catch(error=>{
             if(error.response.status == 402){
@@ -630,6 +633,7 @@ export default {
                             axios.post('/api/update/local-account/', authorization )
                             .then(response=>{      
                                 console.log(response); 
+                                this.$store.dispatch('fetchLocalAccount');
                                 console.log('Success, payment processed!');                 
                                 this.success.payment = 'Success, payment processed!';
                             })

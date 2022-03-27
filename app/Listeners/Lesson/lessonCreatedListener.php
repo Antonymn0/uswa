@@ -6,7 +6,7 @@ use App\Events\Lesson\lessonCreated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class lessonCreatedListener
+class lessonCreatedListener implements ShouldQueue
 {
     /**
      * Create the event listener.

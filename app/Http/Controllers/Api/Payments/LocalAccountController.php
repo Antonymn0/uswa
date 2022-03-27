@@ -192,10 +192,14 @@ class LocalAccountController extends Controller
                                         ->get();
 
         $lecture_count = count($lectures);
-        $total_amount_due = 0;
+        $amount_due = 0;
+
         foreach ($lectures as $lec) {
-            $total_amount_due += $lec->amount_due; // calculate total amount dues for all unpaid lectures
+            $amount_due += $lec->amount_due; // calculate total amount dues for all unpaid lectures
         }
+
+        $uswa_fee = (10/100) * $amount_due; // 10% uswa tutor fee
+        $total_amount_due = $amount_due - $uswa_fee; // amount due after fee deduction
 
         $student_local_account = LocalAccount::where('user_id', $user->id)->first();
         $tutor_local_account = LocalAccount::where('user_id', $lesson->tutor_id)->first();
@@ -216,17 +220,18 @@ class LocalAccountController extends Controller
         $student_data = [
             'last_transaction_date' => now(),
             'last_transaction_method' => 'Uswa:local',
-            'last_amount_transacted' => $total_amount_due,
+            'last_amount_transacted' => $amount_due,
             'balance_before' => $student_local_account->available_balance,
-            'available_balance' => $student_local_account->available_balance -$total_amount_due, //subtract amount
-            'balance_after' => $student_local_account->available_balance - $total_amount_due,
+            'available_balance' => $student_local_account->available_balance -$amount_due, //subtract amount
+            'balance_after' => $student_local_account->available_balance - $amount_due,
         ];
 
         $tutor_data = [
             'last_transaction_date' => now(),
             'last_transaction_method' => 'Uswa:local',
-            'last_amount_transacted' => $total_amount_due,
+            'last_amount_transacted' => $total_amount_due ,
             'balance_before' => $tutor_local_account->available_balance,
+            'comission' => $uswa_fee,
             'available_balance' => $tutor_local_account->available_balance + $total_amount_due, //add amount
             'balance_after' => $tutor_local_account->available_balance + $total_amount_due,
         ];
