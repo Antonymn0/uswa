@@ -433,7 +433,7 @@ export default {
             .then(response=>{
                 this.spinner={}
                 this.success.charge_object = 'Success, withdrawal successful'
-                console.log(response.data);
+                this.$store.dispatch('fetchLocalAccount');
 
             })
             .catch(error=>{
@@ -449,6 +449,7 @@ export default {
         fetchTransactionHistory(){
             axios.get('/api/get-transaction-history')
                 .then(response=>{ 
+                    console.log(response);
                     this.transactions =  response.data.data.data;
                     this.current_transactions = this.transactions; 
                 })
@@ -501,6 +502,7 @@ export default {
                         .then(response=>{                        
                             console.log(authorizationID);
                             console.log(response);
+                            window.location.reload();
                         })
                         .catch(error=>{                       
                             console.log(error.response);
@@ -518,7 +520,7 @@ export default {
         this.fetchPaypalClientID();
         this.fetchAccount();
         this.fetchTransactionHistory();       
-        setTimeout(() => { this.loadPaypalCheckout() }, 1000);
+        setTimeout(() => { if(this.getUser.role == 'student' ) this.loadPaypalCheckout() }, 1000);
     }
 
 }

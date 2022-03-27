@@ -22,7 +22,7 @@ if (App::environment('production')) {
 //Login route
   Route::post('/login','Api\Auth\AuthController@login');
 
-  //email verifivation routes
+  //email verifivation route
   Route::post('/send-email-verification-link','Api\Auth\EmailVerificationController@sendVerificationLink'); 
 
 // register route 

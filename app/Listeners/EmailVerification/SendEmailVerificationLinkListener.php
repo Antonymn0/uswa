@@ -10,6 +10,8 @@ use App\Mail\EmailVerification\VerifyEmail;
 
 class SendEmailVerificationLinkListener implements shouldQueue
 {
+    use  InteractsWithQueue;
+    
     /**
      * Create the event listener.
      *

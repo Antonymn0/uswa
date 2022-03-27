@@ -1,5 +1,5 @@
 <template>
-  <h4 class="p-3 my-4">Dashboard <span class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#lecturesModal">Create lectures</span></h4> 
+  <h4 class="p-3 my-4">Dashboard <span class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#lecturesModal">Define lectures</span></h4> 
   <div> <Lessons /></div>
   <div> <Lectures/></div>
 </template>

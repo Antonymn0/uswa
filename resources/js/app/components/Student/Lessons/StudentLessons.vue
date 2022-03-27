@@ -102,18 +102,21 @@
                         <!-- -------------------- Lectures------------------------  -->
                         <div>
                             <h5>Lectures</h5>
-                            <p v-for="(lecture, index) in lesson.lectures" :key="index" class="row pt-2 pb- rounded  lec-hover  mb-1 ">
-                                <span class="col-1 m-0 align-middle "><i class="bi bi-patch-check-fill" v-if="this.isLectureComplete(lecture, lesson)"></i> </span>
-                                <span class=" col-7 m-0 align-middle">  {{this.capitalize(lecture.lecture_name)}}</span>
-                                <span class=" col-2 m-0 align-middle">{{lecture.lecture_duration}}<small>hrs </small> </span>                           
-                                <span class="dropdown small col-1 m-0 align-middle  " > 
-                                    <span class=" col-1 m-0 align-middle text-end" style="cursor:pointer; font-size:1.5rem"  type="button"  data-bs-toggle="dropdown" aria-expanded="false" :id="'trial_M_details' + lecture.id" > <i class="bi bi-three-dots three-dot"></i></span>
-                                    <p class="p-3 border small dropdown-menu small text-muted rounded" :aria-labelledby="'trial_M_details' + lecture.id" >
-                                        <span class="fw-bold m-0">Description</span>  <br>
-                                        <span class="m-0">{{this.capitalize(lecture.lecture_description)}}</span>                                   
-                                    </p>
-                                </span>
-                            </p>
+                            <div v-if="Object.keys(lesson.lectures).length">                           
+                                <p v-for="(lecture, index) in lesson.lectures" :key="index" class="row pt-2 pb- rounded  lec-hover  mb-1 ">
+                                    <span class="col-1 m-0 align-middle "><i class="bi bi-patch-check-fill" v-if="this.isLectureComplete(lecture, lesson)"></i> </span>
+                                    <span class=" col-7 m-0 align-middle">  {{this.capitalize(lecture.lecture_name)}}</span>
+                                    <span class=" col-2 m-0 align-middle">{{lecture.lecture_duration}}<small>hrs </small> </span>                           
+                                    <span class="dropdown small col-1 m-0 align-middle  " > 
+                                        <span class=" col-1 m-0 align-middle text-end" style="cursor:pointer; font-size:1.5rem"  type="button"  data-bs-toggle="dropdown" aria-expanded="false" :id="'trial_M_details' + lecture.id" > <i class="bi bi-three-dots three-dot"></i></span>
+                                        <p class="p-3 border small dropdown-menu small text-muted rounded" :aria-labelledby="'trial_M_details' + lecture.id" >
+                                            <span class="fw-bold m-0">Description</span>  <br>
+                                            <span class="m-0">{{this.capitalize(lecture.lecture_description)}}</span>                                   
+                                        </p>
+                                    </span>
+                                </p>
+                            </div>
+                            <p class="text-muted small p-2"> This tutor hasnt defined any lectures yet. Defined lectures for this lesson will appear here</p>
                         </div>  
                         <!-- <p class="py-3 small">Date started : {{lesson.lessons_start_date}}</p>  -->
                         <a href="#" class="text-primary mt-3 float-end shadow text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
@@ -633,6 +636,7 @@ export default {
                             axios.post('/api/update/local-account/', authorization )
                             .then(response=>{      
                                 console.log(response); 
+                                window.location.reload()
                                 this.$store.dispatch('fetchLocalAccount');
                                 console.log('Success, payment processed!');                 
                                 this.success.payment = 'Success, payment processed!';
@@ -644,6 +648,14 @@ export default {
                     }
                 }).render('#paypal-button-container');
             });     
+        },
+        shedulefetchRefresh(){
+            setInterval(() => {
+                this.fetchLessons();
+            }, 5000);
+            setInterval(() => {
+                this.fetchTrialLessons();
+            }, 30000);
         }
    },
    computed:{
@@ -655,6 +667,7 @@ export default {
         this.fetchZoomAuthToken();
         this.getZoomCredentials();
         this.fetchPaypalClientID();
+        this.shedulefetchRefresh();
         
     }
 

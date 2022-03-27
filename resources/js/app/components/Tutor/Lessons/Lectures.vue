@@ -14,7 +14,7 @@
                 <small class="alert alert-danger p-2 text-center" v-if="this.errors.lecture_delete">{{this.errors.lecture_delete}}</small>
                 <div>
                     <span class="d-flex justify-content-between">
-                    <h4>Your course lectures</h4> 
+                    <h6 class="fw-bold">Define your course lectures</h6> 
                     <button class="btn btn-success" data-bs-target="#addModal2" data-bs-toggle="modal" data-bs-dismiss="modal"> <i class="bi bi-plus-lg"></i> New</button>
                     </span>                        
                    
@@ -69,22 +69,30 @@
                     <form action="" ref="form">
                         <div class="form-group p-2">
                             <label for="name">Lecture name:</label>
-                            <input type="text" id="name" class="form-control" v-model="lecture_name">
+                            <input type="text" id="name" class="form-control" v-model="lecture_name" placeholder="Lecture name">
                             <small class="text-danger">{{this.errors.lecture_name}}</small>
                         </div>
                         <div class="form-group p-2">
                             <label for="duration">Duration: <small class="text-muted"> (hrs)</small> </label>
-                            <input type="number" id="duration" min='1' max="2" class="form-control" v-model="lecture_duration">
+                            <input type="number" id="duration" min='1' max="1" class="form-control" v-model="lecture_duration" placeholder="Duration in hrs">
                             <small class="text-danger">{{this.errors.lecture_duration}}</small>
                         </div>
                         <div class="form-group p-2">
                             <label for="description">Description:</label>
-                            <textarea name=""  id="description"  class="form-control" cols="5" rows="3" v-model="lecture_description"></textarea>
+                            <textarea name=""  id="description"  class="form-control" cols="5" rows="3" v-model="lecture_description" placeholder="(eg) Introduction to english"></textarea>
                             <small class="text-danger">{{this.errors.lecture_description}}</small>
                         </div>
                     </form>
                 </div>
+                <p class="text-muted small p-2">
+                    Tip: <br>                    
+                    <i class="bi bi-dot"></i> Define your lectures in small chunks of 1hr each <br>
+                    <i class="bi bi-dot"></i> Lectures should not exceed  1hr limit<br>
+                    <i class="bi bi-dot"></i> Your defined hourly rate will be applied on these lectures <br>
+                   <i class="bi bi-dot"></i>  Students are billed on 1hr flat rate 
+                </p>
             </div>
+              
             <div class="text-end px-3 pb-2"> 
                 <small class="text-danger">{{this.errors.lecture_submited}}</small> 
                 <small class="text-success">{{this.success.lecture_submited}}</small> <br>
@@ -123,9 +131,7 @@
                         </div>
                     </form>
                 </div>
-                 <p class="text-muted small">All your set course lectures will appear here. <br>
-                        Idealy, a lecture shoud last between 1-2hrs
-                     </p> 
+                
             </div>
             <div class="text-end px-3 pb-2"> 
                 <small class="text-danger">{{this.errors.lecture_updated}}</small> 

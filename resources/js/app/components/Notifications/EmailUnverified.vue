@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="bg-secondary text-white py-2 px-3 border-bottom " v-if="! email_verified">
-        <span>{{this.user.first_name }}, You have not yet verified your email address. Please click this button to:
+        <span>{{this.capitalize(this.user.first_name) }}, You have not yet verified your email address. Please click this button to:
             <button class="btn btn-secondary px-4 rounded " style="background-color:#394e4e;" @click.prevent="sendEmailverificationLink()">Verify</button>
         </span> <br>        
         <small class="text-white" v-if="this.show_message">  We have sent a verification link to '{{email}}' . Please check your email inbox to verify.</small>
@@ -21,11 +21,14 @@ export default {
         }
     },
     methods:{
+        capitalize(string) {
+            if(string) return string.charAt(0).toUpperCase() + string.slice(1);
+        },
         sendEmailverificationLink(){
             this.email = this.getUser.email;
             var form_data = new FormData();
             form_data.append('email', this.email);
-            axios.post('api/send-email-verification-link', form_data)
+            axios.post('/api/send-email-verification-link', form_data)
             .then(response=>{
                 if(response.status == 200){
                   this.show_message = true;

@@ -103,34 +103,36 @@
                    <!-- --------------------- Lectures---------------------------------------------------       -->
                     <div>
                         <h5>Lectures  </h5>
-                        <p v-for="(lecture, index) in lesson.lectures" :key="index" class="row small pt-2 pb- rounded align-middle lec-hover  mb-1 " >
-                            <span class="col-1 m-0 align-middle "><i class="bi bi-patch-check-fill" v-if="this.isLectureComplete(lecture, lesson)"></i> </span>
-                           <span class="col-7 m-0 align-middle">
-                               <span class=" dropdown  " > 
-                                    <span class="  m-0 align-middle three-dot"  style="cursor:pointer "  type="button"  data-bs-toggle="dropdown" aria-expanded="false" :id="'trial_M_details' + lecture.id" >{{this.capitalize(lecture.lecture_name)}}</span>
-                                    <p class="p-3 border small dropdown-menu small text-muted rounded" :aria-labelledby="'trial_M_details' + lecture.id" >
-                                        <span class="fw-bold m-0">Description</span>  <br>
-                                        <span class="m-0">{{this.capitalize(lecture.lecture_description)}}</span>                                   
+                        <div v-if="Object.keys(lesson.lectures).length">
+                            <p v-for="(lecture, index) in lesson.lectures" :key="index" class="row small pt-2 pb- rounded align-middle lec-hover  mb-1 " >
+                                <span class="col-1 m-0 align-middle "><i class="bi bi-patch-check-fill" v-if="this.isLectureComplete(lecture, lesson)"></i> </span>
+                            <span class="col-7 m-0 align-middle">
+                                <span class=" dropdown  " > 
+                                        <span class="  m-0 align-middle three-dot"  style="cursor:pointer "  type="button"  data-bs-toggle="dropdown" aria-expanded="false" :id="'trial_M_details' + lecture.id" >{{this.capitalize(lecture.lecture_name)}}</span>
+                                        <p class="p-3 border small dropdown-menu small text-muted rounded" :aria-labelledby="'trial_M_details' + lecture.id" >
+                                            <span class="fw-bold m-0">Description</span>  <br>
+                                            <span class="m-0">{{this.capitalize(lecture.lecture_description)}}</span>                                   
+                                        </p>
+                                    </span>
+                                </span>                             
+                                <span class=" col-2 m-0 align-middle">{{lecture.lecture_duration}}<small>hrs </small> </span>                         
+                                <span class=" small col-1 m-0 align-middle  " > 
+                                    <span class="  m-0 align-middle" style="cursor:pointer; font-size:1.5rem"  type="button"  data-bs-toggle="dropdown" aria-expanded="false" :id="'trial_Mo_details' + lecture.id" > <i class="bi bi-three-dots three-dot"></i></span>
+                                    <p class="p-3 border small dropdown-menu small text-muted rounded" :aria-labelledby="'trial_Mo_details' + lecture.id" >
+                                        <span class="fw-bold m-0 btn btn-sm btn-success" @click.prevent="markLectureComplete(lecture, lesson)">Complete</span>  <br>                                                               
                                     </p>
                                 </span>
-                            </span> 
-                            
-                            <span class=" col-2 m-0 align-middle">{{lecture.lecture_duration}}<small>hrs </small> </span>                         
-                            <span class=" small col-1 m-0 align-middle  " > 
-                                <span class="  m-0 align-middle" style="cursor:pointer; font-size:1.5rem"  type="button"  data-bs-toggle="dropdown" aria-expanded="false" :id="'trial_Mo_details' + lecture.id" > <i class="bi bi-three-dots three-dot"></i></span>
-                                <p class="p-3 border small dropdown-menu small text-muted rounded" :aria-labelledby="'trial_Mo_details' + lecture.id" >
-                                    <span class="fw-bold m-0 btn btn-sm btn-success" @click.prevent="markLectureComplete(lecture, lesson)">Complete</span>  <br>                                                               
-                                </p>
-                            </span>
-                        </p>
-                        <button class="btn btn-sm btn-primary form-control my-1" v-if="isAllLecturesComplete(lesson.lectures, this.completed_lectures, lesson)" @click.prevent="markLessonComplete( lesson)"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.lesson_complete"></span> Mark this lesson complete </button>
+                            </p>
+                            <button class="btn btn-sm btn-primary form-control my-1" v-if="isAllLecturesComplete(lesson.lectures, this.completed_lectures, lesson)" @click.prevent="markLessonComplete( lesson)"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.lesson_complete"></span> Mark this lesson complete </button> 
+                        </div>                       
+                           <p class="text-muted small p-5"> You havent defined any lectures yet. Click<span class="text-primary underline" data-bs-toggle="modal" data-bs-target="#lecturesModal" style="cursor:pointer">here to define</span> </p>
                     </div>
                    
                   </div>
               </div>              
           </div>
       </div>
-       <p class="p-2  small text-center text-muted">
+       <p class="p-2  small text-center text-muted" v-show="Object.keys(this.current_lessons).length >1 ">
            Tip:  You and your students are in total control of planning your lessons. 
             Teach from anywhere anytime.
         </p>
@@ -435,10 +437,13 @@ export default {
                 console.log(error.response);
             })
         },
-        scheduleRefresh(){
-            setInterval(this.fetchTrialLessons , 10000);
-
-            setInterval( this.fetchLessons(), 20000);
+        shedulefetchRefresh(){
+            setInterval(() => {
+                this.fetchLessons();
+            }, 5000);
+            setInterval(() => {
+                this.fetchTrialLessons();
+            }, 30000);
         }
     },
     mounted(){
@@ -447,6 +452,7 @@ export default {
         this.scheduleRefresh()
         this.getZoomCredentials();
         this.fetchZoomAuthToken();
+        this.shedulefetchRefresh();
     }
 }
 </script>

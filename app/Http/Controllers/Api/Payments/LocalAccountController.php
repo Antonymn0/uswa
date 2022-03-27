@@ -9,6 +9,7 @@ use App\Models\TrialLesson;
 use App\Models\Lesson;
 use App\Models\StudentCompletedLecture;
 use App\Http\Requests\Payments\ValidateLocalAccountRequest;
+use App\Models\TransactionHistory;
 
 class LocalAccountController extends Controller
 {
@@ -191,7 +192,7 @@ class LocalAccountController extends Controller
                                         ->where('payment_status', 'unpaid')
                                         ->get();
 
-        $lecture_count = count($lectures);
+        $lecture_count = count($lectures); // no of lectures
         $amount_due = 0;
 
         foreach ($lectures as $lec) {
@@ -199,24 +200,24 @@ class LocalAccountController extends Controller
         }
 
         $uswa_fee = (10/100) * $amount_due; // 10% uswa tutor fee
-        $total_amount_due = $amount_due - $uswa_fee; // amount due after fee deduction
+        $final_amount_due = $amount_due - $uswa_fee; // amount due after fee deduction
 
         $student_local_account = LocalAccount::where('user_id', $user->id)->first();
         $tutor_local_account = LocalAccount::where('user_id', $lesson->tutor_id)->first();
 
-        if($student_local_account->available_balance < $total_amount_due)
+        if($student_local_account->available_balance < $final_amount_due)
             { // if less funds return success false
                 return response()->json([
                     'success' =>false,
                     'message' => "Insufficent funds",
                     'data'=> [
-                        'total_amount_due' => $total_amount_due,
+                        'final_amount_due' => $final_amount_due,
                         'lecture_count' => $lecture_count,
                     ]
                 ],402);
             }
         
-        //process/update payment  transfer in local account
+        //update payment  in student local account
         $student_data = [
             'last_transaction_date' => now(),
             'last_transaction_method' => 'Uswa:local',
@@ -226,18 +227,58 @@ class LocalAccountController extends Controller
             'balance_after' => $student_local_account->available_balance - $amount_due,
         ];
 
+        // Update payment in tutor local account
         $tutor_data = [
             'last_transaction_date' => now(),
             'last_transaction_method' => 'Uswa:local',
-            'last_amount_transacted' => $total_amount_due ,
+            'last_amount_transacted' => $final_amount_due ,
             'balance_before' => $tutor_local_account->available_balance,
             'comission' => $uswa_fee,
-            'available_balance' => $tutor_local_account->available_balance + $total_amount_due, //add amount
-            'balance_after' => $tutor_local_account->available_balance + $total_amount_due,
+            'available_balance' => $tutor_local_account->available_balance + $final_amount_due, //add amount
+            'balance_after' => $tutor_local_account->available_balance + $final_amount_due,
+        ];
+
+        //build student transaction history data
+        $student_trans_hist_data =[
+            'user_id' => $user->id,
+            'transaction_id' => (time() +11),
+            'transaction_type' => 'local',
+            'payment_method' => 'Uswa:local',
+            'amount_transacted' => $amount_due,
+            'transacted_from' => 'You',
+            'transacted_to' =>  'Tutor',
+            'commision_charged' => 0,
+            'balance_before' => $student_local_account->available_balance,
+            'balance_after' => $student_local_account->available_balance - $amount_due,
+            'transaction_date' => now(),
+            'remarks' => 'Pay tutor ' ,
+            'status' => 'Complete',
+        ];
+
+        //build tutor transaction history data
+        $tutor_trans_hist_data =[
+            'user_id' => $tutor_local_account->user_id,
+            'transaction_id' => (time() +22),
+            'transaction_type' => 'Uswa:local',
+            'payment_method' => 'local',
+            'amount_transacted' => $final_amount_due,
+            'transacted_from' => 'Student',
+            'transacted_to' =>  'You',
+            'commision_charged' => $uswa_fee,
+            'balance_before' => $tutor_local_account->available_balance,
+            'balance_after' => $tutor_local_account->available_balance + $final_amount_due,
+            'transaction_date' => now(),
+            'remarks' => 'Paid by student ' ,
+            'status' => 'Complete',
         ];
 
         $student_local_account->update($student_data);
         $tutor_local_account->update($tutor_data);
+
+        // save transaction history data
+        $student_transaction_history = TransactionHistory::create($student_trans_hist_data); 
+        $tutor_transaction_history = TransactionHistory::create($tutor_trans_hist_data); 
+
         
         // update lecture payment status
         foreach ($lectures as $lec) {
@@ -246,7 +287,7 @@ class LocalAccountController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Payment transfered from student to tutor localy',
+            'message' => 'Payment transfered from student to tutor locally',
             'data' => true
         ], 200);        
     }

@@ -324,14 +324,13 @@ class PaypalController extends Controller
         ];
 
         $transaction = TransactionHistory::create($trans_data);           
-        // $account->update($acc_data);  // update  
-
-        // event(new paymentAuthorised($user, $transaction));
+        $account->update($acc_data);  // update 
 
         $transaction_id = $request->purchase_units[0]['payments']['authorizations'][0]['id'];
-
         $this->captureAuthorizedPAyment($request, $transaction, $transaction_id );
 
+        event(new paymentAuthorised($user, $transaction));
+        
         return $account;
     }
 
