@@ -449,7 +449,6 @@ export default {
     mounted(){
         this.fetchTrialLessons();
         this.fetchLessons();
-        this.scheduleRefresh()
         this.getZoomCredentials();
         this.fetchZoomAuthToken();
         this.shedulefetchRefresh();
