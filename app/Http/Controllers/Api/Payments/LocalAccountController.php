@@ -176,7 +176,6 @@ class LocalAccountController extends Controller
             'message' => 'Success, funds trasfered locally from student to tutor.',
             'data' => true
         ], 200);
-
     }
 
     /**
