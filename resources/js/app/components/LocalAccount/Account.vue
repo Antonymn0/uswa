@@ -26,7 +26,29 @@
                <span class="text-center">
                 <button class="btn btn-secondary p-2 btn-lg m-2 w-75" v-if="this.getUser.role == 'tutor' "  @click.prevent="this.withdrawFunds()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.charge_object"></span>Withdraw</button>
                 <div class=" mx-auto m-2 w-75" v-if="this.getUser.role == 'student' " >
-                    <label class=" text-secondary">Topup with $10 via paypal: </label>
+                    <label class=" text-secondary">Topup via  paypal: </label>
+                    <div class="py-2 small">
+                        <span>
+                            <input type="radio" name="amount" id="5" value='5' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
+                            <label for="5"> $5 </label> &nbsp;
+                        </span>
+                        <span> 
+                            <input type="radio" name="amount" id="10" value='10' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
+                            <label for="10"> $10 </label> &nbsp;
+                        </span>
+                        <span>
+                            <input type="radio" name="amount" id="20" value='20' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
+                            <label for="20"> $20 </label> &nbsp;
+                        </span>
+                        <span>
+                            <input type="radio" name="amount" id="50" value='50' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
+                            <label for="50"> $50 </label> &nbsp;
+                        </span>
+                        <span>
+                            <input type="radio" name="amount" id="100" value='100' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
+                            <label for="100"> $100 </label> &nbsp;
+                        </span>                        
+                    </div>
                     <div id="paypal-button-container"></div> 
                 </div>  
                </span>
@@ -119,6 +141,7 @@ export default {
             spinner:{},
             errors:{},
             success:{},
+            topup_amount:10,
             selected_country_code:null,
             selected_country_name:null,
             countries:{
@@ -449,7 +472,6 @@ export default {
         fetchTransactionHistory(){
             axios.get('/api/get-transaction-history')
                 .then(response=>{ 
-                    console.log(response);
                     this.transactions =  response.data.data.data;
                     this.current_transactions = this.transactions; 
                 })
@@ -463,7 +485,9 @@ export default {
             document.head.insertBefore(s, document.head.firstElementChild);
         },
         loadPaypalCheckout(){
+            var amount = this.topup_amount;
             this.loadAsync('https://www.paypal.com/sdk/js?client-id=' + this.paypal_client_id + '&intent=authorize&disable-funding=credit,card', function() {
+                
                 paypal.Buttons({
                     style: {
                         layout:  'vertical',
@@ -472,17 +496,15 @@ export default {
                         label:   'paypal',
                         height:50
                     },
+
                     // Set up the transaction
                     createOrder: function(data, actions) {
                         return actions.order.create({
                             purchase_units: [{
                                 amount: {
                                     currency_code: "USD",
-                                    value: '10'
-                                },
-                                // payee: {
-                                //     merchant_id :  'VMJSV3L3DRE9A'
-                                // },
+                                    value: amount
+                                },                                
                             }],
                             application_context: {
                                 shipping_preference: 'NO_SHIPPING',
@@ -494,13 +516,9 @@ export default {
                 // Finalize the transaction
                 onApprove: function(data, actions) {
                     // Authorize the transaction
-                    actions.order.authorize().then(function(authorization) {
-                        // Get the authorization id
-                        var authorizationID = authorization.purchase_units[0].payments.authorizations[0].id
-                        
+                    actions.order.authorize().then(function(authorization) {                        
                         axios.post('/api/update/local-account/', authorization )
-                        .then(response=>{                        
-                            console.log(authorizationID);
+                        .then(response=>{     
                             console.log(response);
                             window.location.reload();
                         })

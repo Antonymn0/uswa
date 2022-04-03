@@ -1,6 +1,6 @@
 <template>
   
-<div class="p-3">
+<div class="p-3 px-5">
 
   <div class="bg-white  ">      
       <h4 class="alert-secondary w-100 py-3 px-3">Trial lessons <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchTrialLessons()">Refresh</button> </span></h4>

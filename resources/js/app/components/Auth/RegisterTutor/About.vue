@@ -20,7 +20,7 @@
                 </div>
 
                 <div class=" rouded mb-3 px-1 row" >
-                    <label for="country" class="form-label">Country / City</label>  <span class="small text-center">({{this.$store.state.signupProcess_about.about.country}} | {{this.$store.state.signupProcess_about.about.city}} )</span>
+                    <label for="country" class="form-label">Country & State</label>  <span class="small text-center">({{this.$store.state.signupProcess_about.about.country}} | {{this.$store.state.signupProcess_about.about.city}} )</span>
                     <vueCountriesCities id="country" @country='selectedCountry = $event' @change="updateCountryCity()" @city='selectedCity = $event' @blur="updateCountryCity()"  class="text-muted"/>   
                     <small class="text-danger small">{{this.errors.country}}</small> 
                     <small class="text-danger small float-end">{{this.errors.city}}</small>            
@@ -31,7 +31,7 @@
                         <label for="timezone" class="form-label">Timezone</label>
                         <select  id="timezone"  v-model="this.timezone" class="bg-white w-100 p-2 border rounded text-muted">
                             <option value="" selected> -Select- </option>
-                            <option :value="item.value" id="timezone" v-for="(item,index) in this.timezones" :key="index"> {{item.value}}</option>
+                            <option :value="item.value" id="timezone" v-for="(item,index) in this.timezones" :key="index"> {{item.value}} &nbsp; {{item.offset}}</option>
                         </select>                      
                         <small class="text-danger small">{{this.errors.timezone}}</small>
                     </div>
@@ -795,7 +795,7 @@ components: { vueCountriesCities },
                 {
                     "value": "SA Pacific Standard Time",
                     "abbr": "SPST",
-                    "offset": -5,
+                    "offset": '-5',
                     "isdst": false,
                     "text": "(UTC-05:00) Bogota, Lima, Quito",
                     "utc": [
@@ -814,7 +814,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Eastern Standard Time",
                     "abbr": "EST",
-                    "offset": -5,
+                    "offset": '-5',
                     "isdst": false,
                     "text": "(UTC-05:00) Eastern Time (US & Canada)",
                     "utc": [
@@ -839,7 +839,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Eastern Daylight Time",
                     "abbr": "EDT",
-                    "offset": -4,
+                    "offset": '-4',
                     "isdst": true,
                     "text": "(UTC-04:00) Eastern Daylight Time (US & Canada)",
                     "utc": [
@@ -864,7 +864,7 @@ components: { vueCountriesCities },
                 {
                     "value": "US Eastern Standard Time",
                     "abbr": "UEDT",
-                    "offset": -5,
+                    "offset": '-5',
                     "isdst": false,
                     "text": "(UTC-05:00) Indiana (East)",
                     "utc": [
@@ -876,7 +876,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Venezuela Standard Time",
                     "abbr": "VST",
-                    "offset": -4.5,
+                    "offset": '-4.5',
                     "isdst": false,
                     "text": "(UTC-04:30) Caracas",
                     "utc": [
@@ -886,7 +886,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Paraguay Standard Time",
                     "abbr": "PYT",
-                    "offset": -4,
+                    "offset": '-4',
                     "isdst": false,
                     "text": "(UTC-04:00) Asuncion",
                     "utc": [
@@ -896,7 +896,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Atlantic Standard Time",
                     "abbr": "ADT",
-                    "offset": -3,
+                    "offset": '-3',
                     "isdst": true,
                     "text": "(UTC-04:00) Atlantic Time (Canada)",
                     "utc": [
@@ -911,7 +911,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Central Brazilian Standard Time",
                     "abbr": "CBST",
-                    "offset": -4,
+                    "offset": '-4',
                     "isdst": false,
                     "text": "(UTC-04:00) Cuiaba",
                     "utc": [
@@ -922,7 +922,7 @@ components: { vueCountriesCities },
                 {
                     "value": "SA Western Standard Time",
                     "abbr": "SWST",
-                    "offset": -4,
+                    "offset": '-4',
                     "isdst": false,
                     "text": "(UTC-04:00) Georgetown, La Paz, Manaus, San Juan",
                     "utc": [
@@ -961,7 +961,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Pacific SA Standard Time",
                     "abbr": "PSST",
-                    "offset": -4,
+                    "offset": '-4',
                     "isdst": false,
                     "text": "(UTC-04:00) Santiago",
                     "utc": [
@@ -972,7 +972,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Newfoundland Standard Time",
                     "abbr": "NDT",
-                    "offset": -2.5,
+                    "offset": '-2.5',
                     "isdst": true,
                     "text": "(UTC-03:30) Newfoundland",
                     "utc": [
@@ -982,7 +982,7 @@ components: { vueCountriesCities },
                 {
                     "value": "E. South America Standard Time",
                     "abbr": "ESAST",
-                    "offset": -3,
+                    "offset": '-3',
                     "isdst": false,
                     "text": "(UTC-03:00) Brasilia",
                     "utc": [
@@ -992,7 +992,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Argentina Standard Time",
                     "abbr": "AST",
-                    "offset": -3,
+                    "offset": '-3',
                     "isdst": false,
                     "text": "(UTC-03:00) Buenos Aires",
                     "utc": [
@@ -1105,7 +1105,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Morocco Standard Time",
                     "abbr": "MDT",
-                    "offset": 1,
+                    "offset": +1,
                     "isdst": true,
                     "text": "(UTC) Casablanca",
                     "utc": [
@@ -1140,7 +1140,7 @@ components: { vueCountriesCities },
                 {
                     "value": "British Summer Time",
                     "abbr": "BST",
-                    "offset": 1,
+                    "offset": '+1',
                     "isdst": true,
                     "text": "(UTC+01:00) Edinburgh, London",
                     "utc": [
@@ -1153,7 +1153,7 @@ components: { vueCountriesCities },
                 {
                     "value": "GMT Standard Time",
                     "abbr": "GDT",
-                    "offset": 1,
+                    "offset": '+1',
                     "isdst": true,
                     "text": "(UTC) Dublin, Lisbon",
                     "utc": [
@@ -1191,7 +1191,7 @@ components: { vueCountriesCities },
                 {
                     "value": "W. Europe Standard Time",
                     "abbr": "WEDT",
-                    "offset": 2,
+                    "offset": '+2',
                     "isdst": true,
                     "text": "(UTC+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna",
                     "utc": [
@@ -1217,7 +1217,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Central Europe Standard Time",
                     "abbr": "CEDT",
-                    "offset": 2,
+                    "offset": '+2',
                     "isdst": true,
                     "text": "(UTC+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague",
                     "utc": [
@@ -1233,7 +1233,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Romance Standard Time",
                     "abbr": "RDT",
-                    "offset": 2,
+                    "offset": '+2',
                     "isdst": true,
                     "text": "(UTC+01:00) Brussels, Copenhagen, Madrid, Paris",
                     "utc": [
@@ -1247,7 +1247,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Central European Standard Time",
                     "abbr": "CEDT",
-                    "offset": 2,
+                    "offset": '+2',
                     "isdst": true,
                     "text": "(UTC+01:00) Sarajevo, Skopje, Warsaw, Zagreb",
                     "utc": [
@@ -1260,7 +1260,7 @@ components: { vueCountriesCities },
                 {
                     "value": "W. Central Africa Standard Time",
                     "abbr": "WCAST",
-                    "offset": 1,
+                    "offset": '+1',
                     "isdst": false,
                     "text": "(UTC+01:00) West Central Africa",
                     "utc": [
@@ -1283,7 +1283,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Namibia Standard Time",
                     "abbr": "NST",
-                    "offset": 1,
+                    "offset": '+1',
                     "isdst": false,
                     "text": "(UTC+01:00) Windhoek",
                     "utc": [
@@ -1293,7 +1293,7 @@ components: { vueCountriesCities },
                 {
                     "value": "GTB Standard Time",
                     "abbr": "GDT",
-                    "offset": 3,
+                    "offset": '+3',
                     "isdst": true,
                     "text": "(UTC+02:00) Athens, Bucharest",
                     "utc": [
@@ -1306,7 +1306,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Middle East Standard Time",
                     "abbr": "MEDT",
-                    "offset": 3,
+                    "offset": '+3',
                     "isdst": true,
                     "text": "(UTC+02:00) Beirut",
                     "utc": [
@@ -1316,7 +1316,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Egypt Standard Time",
                     "abbr": "EST",
-                    "offset": 2,
+                    "offset": '+2',
                     "isdst": false,
                     "text": "(UTC+02:00) Cairo",
                     "utc": [
@@ -1326,7 +1326,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Syria Standard Time",
                     "abbr": "SDT",
-                    "offset": 3,
+                    "offset": '+3',
                     "isdst": true,
                     "text": "(UTC+02:00) Damascus",
                     "utc": [
@@ -1336,7 +1336,7 @@ components: { vueCountriesCities },
                 {
                     "value": "E. Europe Standard Time",
                     "abbr": "EEDT",
-                    "offset": 3,
+                    "offset": '+3',
                     "isdst": true,
                     "text": "(UTC+02:00) E. Europe",
                     "utc": [
@@ -1360,7 +1360,7 @@ components: { vueCountriesCities },
                 {
                     "value": "South Africa Standard Time",
                     "abbr": "SAST",
-                    "offset": 2,
+                    "offset": '+2',
                     "isdst": false,
                     "text": "(UTC+02:00) Harare, Pretoria",
                     "utc": [
@@ -1381,7 +1381,7 @@ components: { vueCountriesCities },
                 {
                     "value": "FLE Standard Time",
                     "abbr": "FDT",
-                    "offset": 3,
+                    "offset": '+3',
                     "isdst": true,
                     "text": "(UTC+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius",
                     "utc": [
@@ -1399,7 +1399,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Turkey Standard Time",
                     "abbr": "TDT",
-                    "offset": 3,
+                    "offset": '+3',
                     "isdst": false,
                     "text": "(UTC+03:00) Istanbul",
                     "utc": [
@@ -1409,7 +1409,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Israel Standard Time",
                     "abbr": "JDT",
-                    "offset": 3,
+                    "offset": '+3',
                     "isdst": true,
                     "text": "(UTC+02:00) Jerusalem",
                     "utc": [
@@ -1419,7 +1419,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Libya Standard Time",
                     "abbr": "LST",
-                    "offset": 2,
+                    "offset": '+2',
                     "isdst": false,
                     "text": "(UTC+02:00) Tripoli",
                     "utc": [
@@ -1429,7 +1429,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Jordan Standard Time",
                     "abbr": "JST",
-                    "offset": 3,
+                    "offset": '+3',
                     "isdst": false,
                     "text": "(UTC+03:00) Amman",
                     "utc": [
@@ -1439,7 +1439,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Arabic Standard Time",
                     "abbr": "AST",
-                    "offset": 3,
+                    "offset": '+3',
                     "isdst": false,
                     "text": "(UTC+03:00) Baghdad",
                     "utc": [
@@ -1449,7 +1449,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Kaliningrad Standard Time",
                     "abbr": "KST",
-                    "offset": 3,
+                    "offset": '+3',
                     "isdst": false,
                     "text": "(UTC+02:00) Kaliningrad",
                     "utc": [
@@ -1459,7 +1459,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Arab Standard Time",
                     "abbr": "AST",
-                    "offset": 3,
+                    "offset": '+3',
                     "isdst": false,
                     "text": "(UTC+03:00) Kuwait, Riyadh",
                     "utc": [
@@ -1473,7 +1473,7 @@ components: { vueCountriesCities },
                 {
                     "value": "E. Africa Standard Time",
                     "abbr": "EAST",
-                    "offset": 3,
+                    "offset": '+3',
                     "isdst": false,
                     "text": "(UTC+03:00) Nairobi",
                     "utc": [
@@ -1496,7 +1496,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Moscow Standard Time",
                     "abbr": "MSK",
-                    "offset": 3,
+                    "offset": '+3',
                     "isdst": false,
                     "text": "(UTC+03:00) Moscow, St. Petersburg, Volgograd, Minsk",
                     "utc": [
@@ -1510,7 +1510,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Samara Time",
                     "abbr": "SAMT",
-                    "offset": 4,
+                    "offset": '+4',
                     "isdst": false,
                     "text": "(UTC+04:00) Samara, Ulyanovsk, Saratov",
                     "utc": [
@@ -1522,7 +1522,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Iran Standard Time",
                     "abbr": "IDT",
-                    "offset": 4.5,
+                    "offset": '+4.5',
                     "isdst": true,
                     "text": "(UTC+03:30) Tehran",
                     "utc": [
@@ -1532,7 +1532,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Arabian Standard Time",
                     "abbr": "AST",
-                    "offset": 4,
+                    "offset": '+4',
                     "isdst": false,
                     "text": "(UTC+04:00) Abu Dhabi, Muscat",
                     "utc": [
@@ -1544,7 +1544,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Azerbaijan Standard Time",
                     "abbr": "ADT",
-                    "offset": 5,
+                    "offset": '+5',
                     "isdst": true,
                     "text": "(UTC+04:00) Baku",
                     "utc": [
@@ -1554,7 +1554,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Mauritius Standard Time",
                     "abbr": "MST",
-                    "offset": 4,
+                    "offset": '+4',
                     "isdst": false,
                     "text": "(UTC+04:00) Port Louis",
                     "utc": [
@@ -1566,7 +1566,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Georgian Standard Time",
                     "abbr": "GET",
-                    "offset": 4,
+                    "offset": '+4',
                     "isdst": false,
                     "text": "(UTC+04:00) Tbilisi",
                     "utc": [
@@ -1576,7 +1576,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Caucasus Standard Time",
                     "abbr": "CST",
-                    "offset": 4,
+                    "offset": '+4',
                     "isdst": false,
                     "text": "(UTC+04:00) Yerevan",
                     "utc": [
@@ -1586,7 +1586,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Afghanistan Standard Time",
                     "abbr": "AST",
-                    "offset": 4.5,
+                    "offset": '+4.5',
                     "isdst": false,
                     "text": "(UTC+04:30) Kabul",
                     "utc": [
@@ -1596,7 +1596,7 @@ components: { vueCountriesCities },
                 {
                     "value": "West Asia Standard Time",
                     "abbr": "WAST",
-                    "offset": 5,
+                    "offset": '+5',
                     "isdst": false,
                     "text": "(UTC+05:00) Ashgabat, Tashkent",
                     "utc": [
@@ -1616,7 +1616,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Yekaterinburg Time",
                     "abbr": "YEKT",
-                    "offset": 5,
+                    "offset": '+5',
                     "isdst": false,
                     "text": "(UTC+05:00) Yekaterinburg",
                     "utc": [
@@ -1626,7 +1626,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Pakistan Standard Time",
                     "abbr": "PKT",
-                    "offset": 5,
+                    "offset": '+5',
                     "isdst": false,
                     "text": "(UTC+05:00) Islamabad, Karachi",
                     "utc": [
@@ -1636,7 +1636,7 @@ components: { vueCountriesCities },
                 {
                     "value": "India Standard Time",
                     "abbr": "IST",
-                    "offset": 5.5,
+                    "offset": '+5.5',
                     "isdst": false,
                     "text": "(UTC+05:30) Chennai, Kolkata, Mumbai, New Delhi",
                     "utc": [
@@ -1647,7 +1647,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Sri Lanka Standard Time",
                     "abbr": "SLST",
-                    "offset": 5.5,
+                    "offset": '+5.5',
                     "isdst": false,
                     "text": "(UTC+05:30) Sri Jayawardenepura",
                     "utc": [
@@ -1657,7 +1657,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Nepal Standard Time",
                     "abbr": "NST",
-                    "offset": 5.75,
+                    "offset": '+5.75',
                     "isdst": false,
                     "text": "(UTC+05:45) Kathmandu",
                     "utc": [
@@ -1667,7 +1667,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Central Asia Standard Time",
                     "abbr": "CAST",
-                    "offset": 6,
+                    "offset": '+6',
                     "isdst": false,
                     "text": "(UTC+06:00) Nur-Sultan (Astana)",
                     "utc": [
@@ -1683,7 +1683,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Bangladesh Standard Time",
                     "abbr": "BST",
-                    "offset": 6,
+                    "offset": '+6',
                     "isdst": false,
                     "text": "(UTC+06:00) Dhaka",
                     "utc": [
@@ -1694,7 +1694,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Myanmar Standard Time",
                     "abbr": "MST",
-                    "offset": 6.5,
+                    "offset": '+6.5',
                     "isdst": false,
                     "text": "(UTC+06:30) Yangon (Rangoon)",
                     "utc": [
@@ -1705,7 +1705,7 @@ components: { vueCountriesCities },
                 {
                     "value": "SE Asia Standard Time",
                     "abbr": "SAST",
-                    "offset": 7,
+                    "offset": '+7',
                     "isdst": false,
                     "text": "(UTC+07:00) Bangkok, Hanoi, Jakarta",
                     "utc": [
@@ -1724,7 +1724,7 @@ components: { vueCountriesCities },
                 {
                     "value": "N. Central Asia Standard Time",
                     "abbr": "NCAST",
-                    "offset": 7,
+                    "offset": '+7',
                     "isdst": false,
                     "text": "(UTC+07:00) Novosibirsk",
                     "utc": [
@@ -1736,7 +1736,7 @@ components: { vueCountriesCities },
                 {
                     "value": "China Standard Time",
                     "abbr": "CST",
-                    "offset": 8,
+                    "offset": '+8',
                     "isdst": false,
                     "text": "(UTC+08:00) Beijing, Chongqing, Hong Kong, Urumqi",
                     "utc": [
@@ -1748,7 +1748,7 @@ components: { vueCountriesCities },
                 {
                     "value": "North Asia Standard Time",
                     "abbr": "NAST",
-                    "offset": 8,
+                    "offset": +8,
                     "isdst": false,
                     "text": "(UTC+08:00) Krasnoyarsk",
                     "utc": [
@@ -1758,7 +1758,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Singapore Standard Time",
                     "abbr": "MPST",
-                    "offset": 8,
+                    "offset": '+8',
                     "isdst": false,
                     "text": "(UTC+08:00) Kuala Lumpur, Singapore",
                     "utc": [
@@ -1774,7 +1774,7 @@ components: { vueCountriesCities },
                 {
                     "value": "W. Australia Standard Time",
                     "abbr": "WAST",
-                    "offset": 8,
+                    "offset": '+8',
                     "isdst": false,
                     "text": "(UTC+08:00) Perth",
                     "utc": [
@@ -1785,7 +1785,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Taipei Standard Time",
                     "abbr": "TST",
-                    "offset": 8,
+                    "offset": '+8',
                     "isdst": false,
                     "text": "(UTC+08:00) Taipei",
                     "utc": [
@@ -1795,7 +1795,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Ulaanbaatar Standard Time",
                     "abbr": "UST",
-                    "offset": 8,
+                    "offset": '+8',
                     "isdst": false,
                     "text": "(UTC+08:00) Ulaanbaatar",
                     "utc": [
@@ -1806,7 +1806,7 @@ components: { vueCountriesCities },
                 {
                     "value": "North Asia East Standard Time",
                     "abbr": "NAEST",
-                    "offset": 8,
+                    "offset": '+8',
                     "isdst": false,
                     "text": "(UTC+08:00) Irkutsk",
                     "utc": [
@@ -1816,7 +1816,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Japan Standard Time",
                     "abbr": "JST",
-                    "offset": 9,
+                    "offset": '+9',
                     "isdst": false,
                     "text": "(UTC+09:00) Osaka, Sapporo, Tokyo",
                     "utc": [
@@ -1830,7 +1830,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Korea Standard Time",
                     "abbr": "KST",
-                    "offset": 9,
+                    "offset": '+9',
                     "isdst": false,
                     "text": "(UTC+09:00) Seoul",
                     "utc": [
@@ -1841,7 +1841,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Cen. Australia Standard Time",
                     "abbr": "CAST",
-                    "offset": 9.5,
+                    "offset": '+9.5',
                     "isdst": false,
                     "text": "(UTC+09:30) Adelaide",
                     "utc": [
@@ -1852,7 +1852,7 @@ components: { vueCountriesCities },
                 {
                     "value": "AUS Central Standard Time",
                     "abbr": "ACST",
-                    "offset": 9.5,
+                    "offset": '+9.5',
                     "isdst": false,
                     "text": "(UTC+09:30) Darwin",
                     "utc": [
@@ -1862,7 +1862,7 @@ components: { vueCountriesCities },
                 {
                     "value": "E. Australia Standard Time",
                     "abbr": "EAST",
-                    "offset": 10,
+                    "offset": '+10',
                     "isdst": false,
                     "text": "(UTC+10:00) Brisbane",
                     "utc": [
@@ -1873,7 +1873,7 @@ components: { vueCountriesCities },
                 {
                     "value": "AUS Eastern Standard Time",
                     "abbr": "AEST",
-                    "offset": 10,
+                    "offset": '+10',
                     "isdst": false,
                     "text": "(UTC+10:00) Canberra, Melbourne, Sydney",
                     "utc": [
@@ -1884,7 +1884,7 @@ components: { vueCountriesCities },
                 {
                     "value": "West Pacific Standard Time",
                     "abbr": "WPST",
-                    "offset": 10,
+                    "offset": '+10',
                     "isdst": false,
                     "text": "(UTC+10:00) Guam, Port Moresby",
                     "utc": [
@@ -1899,7 +1899,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Tasmania Standard Time",
                     "abbr": "TST",
-                    "offset": 10,
+                    "offset":' +10',
                     "isdst": false,
                     "text": "(UTC+10:00) Hobart",
                     "utc": [
@@ -1910,7 +1910,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Yakutsk Standard Time",
                     "abbr": "YST",
-                    "offset": 9,
+                    "offset": '+9',
                     "isdst": false,
                     "text": "(UTC+09:00) Yakutsk",
                     "utc": [
@@ -1922,7 +1922,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Central Pacific Standard Time",
                     "abbr": "CPST",
-                    "offset": 11,
+                    "offset": '+11',
                     "isdst": false,
                     "text": "(UTC+11:00) Solomon Is., New Caledonia",
                     "utc": [
@@ -1938,7 +1938,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Vladivostok Standard Time",
                     "abbr": "VST",
-                    "offset": 11,
+                    "offset": '+11',
                     "isdst": false,
                     "text": "(UTC+11:00) Vladivostok",
                     "utc": [
@@ -1950,7 +1950,7 @@ components: { vueCountriesCities },
                 {
                     "value": "New Zealand Standard Time",
                     "abbr": "NZST",
-                    "offset": 12,
+                    "offset": '+12',
                     "isdst": false,
                     "text": "(UTC+12:00) Auckland, Wellington",
                     "utc": [
@@ -1961,7 +1961,7 @@ components: { vueCountriesCities },
                 {
                     "value": "UTC+12",
                     "abbr": "U",
-                    "offset": 12,
+                    "offset": '+12',
                     "isdst": false,
                     "text": "(UTC+12:00) Coordinated Universal Time+12",
                     "utc": [
@@ -1978,7 +1978,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Fiji Standard Time",
                     "abbr": "FST",
-                    "offset": 12,
+                    "offset": '+12',
                     "isdst": false,
                     "text": "(UTC+12:00) Fiji",
                     "utc": [
@@ -1988,7 +1988,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Magadan Standard Time",
                     "abbr": "MST",
-                    "offset": 12,
+                    "offset": '+12',
                     "isdst": false,
                     "text": "(UTC+12:00) Magadan",
                     "utc": [
@@ -2001,7 +2001,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Kamchatka Standard Time",
                     "abbr": "KDT",
-                    "offset": 13,
+                    "offset": '+13',
                     "isdst": true,
                     "text": "(UTC+12:00) Petropavlovsk-Kamchatsky - Old",
                     "utc": [
@@ -2011,7 +2011,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Tonga Standard Time",
                     "abbr": "TST",
-                    "offset": 13,
+                    "offset": '+13',
                     "isdst": false,
                     "text": "(UTC+13:00) Nuku'alofa",
                     "utc": [
@@ -2024,7 +2024,7 @@ components: { vueCountriesCities },
                 {
                     "value": "Samoa Standard Time",
                     "abbr": "SST",
-                    "offset": 13,
+                    "offset": '+13',
                     "isdst": false,
                     "text": "(UTC+13:00) Samoa",
                     "utc": [

@@ -12,11 +12,11 @@
         <span v-if="getUser.role == 'admin'"> <router-link :to="{name: 'all-users'}"><img src="http://127.0.0.1:8000/images/logo.svg" alt="uswa-logo" style="width:150px; ">  </router-link>  </span>  
         <span v-else> <router-link :to="{name: 'home'}"><img src="http://127.0.0.1:8000/images/logo.svg" alt="uswa-logo" style="width:150px; ">  </router-link>  </span>  
       </div>
-      <div class="pl-3 desktop " v-if="getUser.role !== 'admin' " >
+      <div class="pl-4 ms-5 desktop " v-if="getUser.role !== 'admin' " >
         <ul class="list-unstyled my-auto py-auto d-flex align-items-center"  >
+          <li> <router-link :to="{name: 'home'}" class="px-1" >Home</router-link></li>        
          <li> <router-link :to="{name: 'find-tutor'}" class="px-3" v-if="getUser.role !== 'tutor' ">Find a tutor</router-link> </li>           
          <li> <router-link :to="{name: 'register-tutor'}" class="px-3"  v-if="getUser.role !== 'tutor' && getUser.role !== 'student' ">Become a tutor</router-link> </li>           
-         <li> <router-link :to="{name: 'home'}" class="px-1" >Home</router-link></li> 
         </ul>
       </div>  
       
@@ -32,7 +32,7 @@
         </span>
     </div>
     <!-- --------------------Acc bal--------------------- -->
-    <div class="text-muted" v-if="isLogedIn">
+    <div class="text-muted acc" v-if="isLogedIn">
       <router-link :to="{name: 'account'}" v-if="getUser.role !== 'admin'">
         <div class="border btn btn-default py-2">
           <span class="fw-bold"> Bal: </span>
@@ -70,7 +70,7 @@
 <!-- ----------------- Drop down --------------------------------------  -->
             <div class="dropdown mx-2">   
               <a v-if=" isLogedIn" class="d-flex align-items-center " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              {{getUser.first_name}} &nbsp; 
+              {{this.capitalize(getUser.first_name)}} &nbsp; 
                <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.5rem" v-if="! getUser.image"></i>
                <img v-else :src="getUser.image" alt="profile picture" style="width:40px; height:40px; border-radius:50%">
               </a>
@@ -94,12 +94,13 @@
   </div>
   </div>
 
+  <div>
     <router-view></router-view>
+  </div>
+    
 
-  <div class="clearfix"></div>
-
-  <div class="w-100  ">
-      <Profile />     
+  <div class=" ">
+    <Profile />     
 
      <Footer /> 
   </div>
@@ -147,6 +148,9 @@ export default {
     }
   },
   methods:{
+    capitalize(string){
+          if(string)  return string.charAt(0).toUpperCase() + string.slice(1);
+        },
     showHomePage(){ 
       this.$router.push({name: 'home'});
       setTimeout(() => {
@@ -172,6 +176,16 @@ mounted(){
 <style scoped>
 .mobile{
   display:none;
+}
+.hvr:hover, a:hover{
+  color:#d61e1ef3;
+
+}
+.acc:hover{
+  border:1px solid  #e08686f3;
+  
+  background-color: #f5e4e4f3;
+  border-radius: 5px;
 }
 @media screen and (max-width: 750px){
       .mobile{

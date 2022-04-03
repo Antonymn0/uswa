@@ -6,33 +6,33 @@
       <div class="mobile-outer " v-for="(tutor, index) in this.current_tutors" :key="index">
           <div class="mobile   ">              
             <div class="bg-white  inner rounded">
-                <div class="d-flex ">
+                <div class="d-flex align-items-center">
                     <div class="px-2 pt-3">
                         <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem;" v-if="!tutor.image">                        
-                        <img :src="tutor.image" alt="" style="width:5rem;"  v-if="tutor.image">  
+                        <img :src="tutor.image" alt="" style="width:6rem;"  v-if="tutor.image">  
                     </div>
-                    <div class="pl-2">
-                        <h5>
-                            {{this.capitalize(tutor.first_name)}} 
-                            <span class="float-end"> &nbsp; 
-                                <country-flag country='ke' size='.7rem'/> &nbsp;
+                    <div class="pl-2 ms-2">
+                        <h5 class="d-flex align-items-center">
+                           <span> {{this.capitalize(tutor.first_name)}} {{ tutor.last_name.charAt(0).toUpperCase()}}.</span> 
+                            <span class="float-end ms-3"> 
+                                <country-flag country='ke' size='.5rem'/> &nbsp;
                                 <i class="bi bi-shield-fill-check text-primary" ></i>
                             </span>                            
                         </h5>
                         <span class="clearfix w-100"></span>
                         <div class=" d-flex align-items-center justify-content-between " >                           
-                            <span class="small"><i class="bi bi-mortarboard-fill text-secondary"></i> &nbsp; {{tutor.language}} </span> 
+                            <span class="small fw-bold"><i class="bi bi-mortarboard-fill text-secondary"></i> &nbsp; {{tutor.language}} </span> 
                             <span class="small float-end" ><i class="bi bi-suit-heart-fill text-muted" style="font-size:1.5rem" @click.prevent="toggleFavourite($event, tutor)"></i> </span>
                         </div>
 
                         <div class="">
                             <div class="p-1 d-flex justify-content-between">
                                 <span  data-bs-toggle="modal" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)"> <i class="bi bi-star-fill text-warning"></i> {{this.calculateStarRating(tutor.reviews)}}</span> &nbsp; &nbsp; &nbsp;
-                                <span > <a  data-bs-toggle="modal" class="text-primary" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)">{{Object.keys(tutor.reviews).length}} Reviews </a>   </span> 
+                                <span > <a  data-bs-toggle="modal" class="text-warning" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)">{{Object.keys(tutor.reviews).length}} Reviews </a>   </span> 
                             </div>
                             <div class="d-flex justify-content-between px-2">
                                  <span ><i class="bi bi-circle-fill text-success" style="font-size:.7rem"></i> </span>
-                               <span> $ {{tutor.hourly_rate}} /hr &nbsp;</span> 
+                               <span class="me-3"> $ {{tutor.hourly_rate}} <span class="small">/hr </span>  </span> 
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
         <div class="clearfix"></div>       
       </div>
       <div v-else>
-        <p class="text-center text-muted py-5">No turtors found currently</p>
+        <p class="text-center text-muted py-5">No records found </p>
       </div>
     <!-- ------------------------------------------------------------------------------------------------------------------ -->
 <div>
@@ -122,7 +122,8 @@ export default {
             if(! Object.keys(this.current_tutors).length ) {
                 setTimeout(() => {
                     this.fetchAvailableTutors();
-                }, 3000);
+                    this.search_term ='Suggested'
+                }, 3500);
             }
         }
     },
@@ -152,8 +153,9 @@ export default {
             let five_star = 0;
             let total_ratings = 0;
             let avarage_rating = 0;
+            let total_rating = 0;
 
-            if(! Object.keys(reviews).length) return; // if reviews empty return
+            if(! Object.keys(reviews).length) return total_rating; // if reviews empty return
             reviews.forEach(review=>{
                 if(review.stars == 1) one_star +=1;
                 if(review.stars == 2) two_star +=1;
@@ -166,7 +168,8 @@ export default {
 
             avarage_rating = (1*one_star) + (2*two_star) + (3*three_star)  + (4*four_star) + (5*five_star);
 
-            return ( avarage_rating/total_ratings ).toFixed(1);
+            total_rating = ( avarage_rating/total_ratings ).toFixed(1);
+            return total_rating;
 
         },
         fetchAvailableTutors(){
@@ -176,6 +179,7 @@ export default {
                     if(response.status == 200){  
                         this.tutors =response.data.data.data;   
                         this.current_tutors = this.tutors; 
+                        
                     }                
                 })
                 .catch(error=>{               

@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h4 class="ps-3 pt-3">Dashboard </h4>  
+      <h4 class="ps-3 pt-3 mx-4">Dashboard </h4>  
       <div> <myLessons /> </div>    
   </div>
 </template>

@@ -3,7 +3,7 @@ export const signupProcess_education = {
         education: {
             institution: null,
             level: null,
-            type: null,
+            // type: null,
             specialty: null,
             study_from: null,
             study_to: null,
@@ -27,9 +27,9 @@ export const signupProcess_education = {
         set_education_level(state, payload) {
             state.education.level = payload;
         },
-        set_type(state, payload) {
-            state.education.type = payload;
-        },
+        // set_type(state, payload) {
+        //     state.education.type = payload;
+        // },
         set_specialty(state, payload) {
             state.education.specialty = payload;
         },

@@ -19,32 +19,26 @@
                  <p>
                    <label for="lesson_type">Language</label>
                     <select  id="lesson_type" v-model="lesson_type" class="w-100 py-3 border text-muted rounded bg-white">
-                        <option selected value="">- Select -</option>
-                        <option  value="english">English</option>
-                        <option  value="german">German</option>
-                        <option  value="italian">Italian</option>
-                        <option  value="spanish">Spannish</option>
-                        <option  value="chinese">Chinese</option>
-                        <option  value="arabic">Arabic</option>
-                        <option  value="russian">russian</option>
+                        <option select="selected" value="">- Select -</option>
+                        <option selected :value="this.tutor.language">{{this.capitalize(this.tutor.language)}}</option>
                     </select>
                     <small class="text-danger" v-if="this.errors.lesson_type"><i class="bi bi-exclamation-triangle"></i> {{this.errors.lesson_type}}</small>
                  </p>
                  
                   <p class="row py-2"> 
                     <span class=" col-sm-6">
-                      <label for="from">From </label> <br>
+                      <label for="from">Time </label> <br>
                         <select name="" id="from" class="p-3 w-100 rounded bg-white border text-muted" v-model="this.time.from">
                             <option  v-bind="this.item" v-for="item in this.time_selector" :key="item" class="form-contro" > {{item}} </option>
                         </select>
                     </span>
-                    <span class=" col-sm-6">
+                    <!-- <span class=" col-sm-6">
                       <label for="to">To</label> <br>
                         <select name="" id="to" class="p-3 w-100 rounded bg-white border text-muted" v-model="this.time.to" @change.prevent="testTimeLimit()">
                             <option  v-bind="this.item" v-for="item in this.time_selector" :key="item" class="form-contro"> {{item}} </option>
                         </select>
                         <small class="text-danger" v-if="this.errors.time_limit"><i class="bi bi-exclamation-triangle"></i> {{this.errors.time_limit}}</small>
-                    </span>
+                    </span> -->
                   </p>
                   
                </div>
@@ -175,6 +169,9 @@ export default {
         ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),    
     },
     methods:{
+        capitalize(string){
+          if(string)  return string.charAt(0).toUpperCase() + string.slice(1);
+        },
         testTimeLimit(){
             delete this.errors.time_limit ;
             if( moment(this.time.to, 'H:mm').diff( moment(this.time.from, 'H:mm'), 'minutes') < 30)  this.errors.time_limit = "Invalid time range selection";          
@@ -198,14 +195,14 @@ export default {
 
             if(!this.date) this.errors.date = "Date field is required";
             if(!this.time.from) this.errors.time_limit = "Time selection is required";
-            if(!this.time.to) this.errors.time_limit = "Time selection is required";            
+            // if(!this.time.to) this.errors.time_limit = "Time selection is required";            
             if(!this.lesson_type) this.errors.lesson_type = "Language selection is required";  
 
             if(Object.keys(this.errors).length) return;
             var form_data = new FormData();
                 form_data.append('lesson_date', this.date);
                 form_data.append('start_time', this.time.from);
-                form_data.append('end_time', this.time.to);
+                // form_data.append('end_time', this.time.to);
                 form_data.append('lesson_type', this.lesson_type);
                 form_data.append('student_id', this.$store.state.user.user.id);
                 form_data.append('student_timezone', this.$store.state.user.user.timezone);

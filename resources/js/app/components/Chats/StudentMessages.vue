@@ -205,25 +205,22 @@ export default {
         refreshConversation(){
             setInterval(() => {
                 this.fetchMesages();
-            }, 10000);
-
-            setInterval(() => {
                 this.refreshCurrentMessage();
-            }, 5000);
+            }, 30000);
         }
     },
     computed:{
         ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),   
     },
     mounted(){
-        // this.refreshConversation();
-        // this.fetchMesages();
         this.fetchMesages();
+        this.refreshConversation();
     }
 }
 </script>
 
 <style scoped>
+
  .parent-nav{
     font-family:Poppins;
     color:#9699a2;   

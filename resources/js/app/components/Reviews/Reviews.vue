@@ -14,7 +14,7 @@
               <h5>
                   <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2rem" v-if="! review.reviewer_image"></i>
                 <img v-else :src="review.reviewer_image" alt="profile picture" style="width:30px; height:30px; border-radius:50%">
-                &nbsp; {{review.reviewer_name}}
+                &nbsp; {{this.capitalize(review.reviewer_name)}}
                   </h5>
               <p>{{this.capitalize(review.body)}}</p>
               <p class="small text-muted  d-flex justify-content-between m-0 mb-0 p-0">

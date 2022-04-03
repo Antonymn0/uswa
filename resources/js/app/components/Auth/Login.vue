@@ -1,6 +1,6 @@
 <template>
   <div class="px-2 py-5 w-100">
-      <form action="#" @submit.prevent="loginUser()" class="mx-auto rounded shadow ">
+      <form action="#" @submit.prevent="loginUser()" class="mx-auto rounded shadow h-auto">
         <div class="imgcontainer">
             <img src="/images/avatar_login.png" alt="Avatar" class="avatar">
         </div>
@@ -26,11 +26,11 @@
             </label>
         </div>
 
-        <div class="container" >
-            <button type="button" class="cancelbtn btn btn-secondary m-2 rounded" @click.prevent="()=>{this.$router.push({name: 'home'})}">Cancel</button>
-            <button type="button" class="cancelbtn m-2 rounded" @click.prevent="()=>{this.$router.push({name: 'register'})}">Register</button>
-            <span class="psw"> <a href="password/reset">Forgot password?</a></span>
-        </div>
+          <div class="py-3 text-center" >
+              <button type="button" class="cancelbtn btn btn-secondary m-2 rounded" @click.prevent="()=>{this.$router.push({name: 'home'})}">Cancel</button>
+              <button type="button" class="cancelbtn m-2 rounded" @click.prevent="()=>{this.$router.push({name: 'register'})}">Register</button> <br>
+              <span class=""> <a href="password/reset">Forgot password?</a></span>
+          </div>
         </form>
 
   </div>

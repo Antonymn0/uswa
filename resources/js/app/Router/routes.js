@@ -32,13 +32,7 @@ const routes = [
         path: "/dashboard/student",
         component: require("../components/Student/Dashboard.vue").default,
     },
-    {
-        name: "student-trial-lesson",
-        path: "/student/trial-lesson",
-        component:
-            require("../components/Student/Lessons/StudentTrialLessonClass.vue")
-                .default,
-    },
+    
 
     // ==================================================================================================================
 

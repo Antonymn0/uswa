@@ -10,14 +10,20 @@
             </div>
             <div class="mb-3 ">
                 <label for="level" class="form-label">Level </label>
-                <input type="text" class="form-control" id="level" v-model="level">
+                <select name="level" id="level" v-model="level" class="p-2 w-100 border rounded bg-white">
+                    <option value="certificate">Certificate </option>
+                    <option value="diploma">Diploma </option>
+                    <option value="barchelors">Barchelors </option>
+                    <option value="masters">Masters </option>
+                </select>
+
                 <small class="text-danger small p-2">{{this.errors.level}}</small>
             </div>
-            <div class="mb-3 ">
+            <!-- <div class="mb-3 ">
                 <label for="type" class="form-label">Type </label>
                 <input type="text" class="form-control" id="type" v-model="type">
                 <small class="text-danger small p-2">{{this.errors.type}}</small>
-            </div>
+            </div> -->
             <div class="mb-3 ">
                 <label for="specialty" class="form-label">Specialty </label>
                 <input type="text" class="form-control" id="specialty" v-model="specialty">
@@ -93,10 +99,10 @@ export default {
             get() { return this.$store.state.signupProcess_education.education.level; },
             set(value) { this.$store.commit('set_education_level', value); }
         },
-        type:{
-            get() { return this.$store.state.signupProcess_education.education.type; },
-            set(value) { this.$store.commit('set_type', value); }
-        },
+        // type:{
+        //     get() { return this.$store.state.signupProcess_education.education.type; },
+        //     set(value) { this.$store.commit('set_type', value); }
+        // },
         specialty:{
             get() { return this.$store.state.signupProcess_education.education.specialty; },
             set(value) { this.$store.commit('set_specialty', value); }
@@ -133,7 +139,7 @@ export default {
                 form_data.append('last_name', this.$store.state.signupProcess_about.about.last_name);
                 form_data.append('has_higher_education', this.$store.state.signupProcess_education.education.i_dont_have_certificate);
                 form_data.append('higher_education_level', this.$store.state.signupProcess_education.education.level);
-                form_data.append('higher_education_type', this.$store.state.signupProcess_education.education.type);
+                // form_data.append('higher_education_type', this.$store.state.signupProcess_education.education.type);
                 form_data.append('higher_education_study_from', this.$store.state.signupProcess_education.education.study_from);
                 form_data.append('higher_education_study_to', this.$store.state.signupProcess_education.education.study_to);
                 form_data.append('higher_education_specialty', this.$store.state.signupProcess_education.education.specialty);

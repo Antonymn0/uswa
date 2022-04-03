@@ -2,8 +2,8 @@
   <div class="parent-nav   ">   
     <div>
         <span @click.prevent="opennotificationSidenav()" class="position-relative" style="cursor:pointer">
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"> 5</span>
-            <i class="bi bi-bell text-dark " @click.prevent="fetchNotifications()"></i>
+            <span v-if='show_notification_badge' class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"> 1</span>
+            <i class="bi bi-bell hvr text-dark " @click.prevent="fetchNotifications()"></i>
         </span>
         <div id="notification" class="sidenav " style="">
             <a href="javascript:void(0)" class="closebtn" id="closeNav" @click.prevent="[closenotificationSidenav()]">&times;</a>
@@ -42,6 +42,7 @@ export default {
             notifications:{},
             current_notifications:{},
             current_notification:{},
+            show_notification_badge:false
         }
     },
     methods:{
@@ -89,6 +90,10 @@ export default {
 </script>
 
 <style scoped>
+.bi:hover{
+  color:#d61e1ef3;
+
+}
  .parent-nav{
     font-family:Poppins;
     color:#9699a2;

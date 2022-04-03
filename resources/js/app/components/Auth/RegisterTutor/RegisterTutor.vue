@@ -24,8 +24,9 @@
             <button type="submit">  <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner"></span> Register</button>           
         </div>
 
-        <div class="container d-flex" >
-            <button type="button" class="cancelbtn m-2 rounded form-control" @click.prevent="()=>{this.$router.push({name: 'home'})}">Cancel</button>
+        <div class="container d-flex justify-content-center align-items-center" >
+            <button type="button" class="cancelbtn m-2 rounded form-control" @click.prevent="()=>{this.$router.push({name: 'home'})}">Cancel</button> 
+             <span > or </span>  
             <button type="button" class="cancelbtn m-2 rounded form-control" @click.prevent="()=>{this.$router.push({name: 'login'})}">Go to Login</button>
             
         </div>

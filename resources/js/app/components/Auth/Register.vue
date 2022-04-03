@@ -2,7 +2,7 @@
   <div class="px-2 py-5">
       <form action="#" @submit.prevent="registerUser()" class="mx-auto rounded shadow pt-3">
         <div class="imgcontainer">
-            <h2>Register</h2>
+            <h2>Register as student</h2>
         </div>      
 
         <div class="container">
@@ -26,10 +26,10 @@
            
         </div>
 
-        <div class="container d-flex align-items-center" >
+        <div class="container d-flex align-items-center justify-content-between" >
             <button type="button" class="cancelbtn m-2 rounded form-control" @click.prevent="()=>{this.$router.push({name: 'home'})}">Cancel</button>
             <button type="button" class="cancelbtn m-2 rounded form-control" @click.prevent="()=>{this.$router.push({name: 'login'})}">Go to Login</button> OR
-            <button type="button" class="cancelbtn m-2 rounded form-control" @click.prevent="()=>{this.$router.push({name: 'register-tutor'})}">Become a tutor</button>
+            <button type="button" class="cancelbtn m-2 rounded form-control float-end" @click.prevent="()=>{this.$router.push({name: 'register-tutor'})}">Become a tutor</button>
             
         </div>
         </form>

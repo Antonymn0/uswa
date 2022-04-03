@@ -1,212 +1,93 @@
 <template>
-<div class="parent ">
-  <div class="row pb-1 pt-5 mx-4 top">
-    <div  class="col-md-6">
-      <div class="px-auto pt-3">
-        <!-- {{pranth_results}} <br> -->
-        <!-- <button class="btn btn-secondary" @click.prevent="testPranth(this.test_string)">Balanced parathenssis</button>         -->
-        <span class="bold mx-auto">
-         Speak a new language with confidence
-        </span> <br>
-        <span class="semi-bold mx-auto ">
-          with the best online tutors.
-        </span>
-        <div class="py-3">
-          <span class="d-flex">
-            <input type="text" class=" border w-100 p-3 shadow search-rounded">
-            <button class="background-red text-white  py-3 px-4 search-btn-rounded shadow">Search </button>
-          </span>
-         
-        </div>
+<div class="">
+   <div class="row pb-1 pt-5 mx-4 top">
+    <div  class="col-md-7 ">
+      <div class="px-auto h-100 pt-3 d-flex align-items-center" >       
+        <span class="align-middle " >
+            <h1 class="fw-bold mx-auto " style="font-size:4rem;"> Speak a new language with confidence  </h1>  
+            <h5 class="semi-bold mx-auto " style="font-size:3rem;">  Learn with the best online tutors.  </h5>
+          </span>   
       </div>      
       </div>
-    <div class="col-md-6 text-right"><img src="/images/cover.png" alt="" style="max-width:90%"></div>
-  </div>
-  <!-- --------------------- -->
-  <div>    
-    <div class="tutors rounded">
-      <div class="tutor-panels ">
-        <span class="lang-icon fonts-red border-red"> EN </span>
-        <span>
-          <span class="title "> English Tutors </span> <br>
-          <small class="">200 Tutors </small>
-        </span>               
-      </div>
-     
-      <div class="tutor-panels ">
-        <span class="lang-icon fonts-red border-red"> EN </span>
-        <span>
-          <span class="title "> English Tutors </span> <br>
-          <small class="">200 Tutors </small>
-        </span>               
-      </div>
-     
-      <div class="tutor-panels ">
-        <span class="lang-icon fonts-red border-red"> EN </span>
-        <span>
-          <span class="title "> English Tutors </span> <br>
-          <small class="">200 Tutors </small>
-        </span>               
-      </div>
-     
-      <div class="tutor-panels ">
-        <span class="lang-icon fonts-red border-red"> EN </span>
-        <span>
-          <span class="title "> English Tutors </span> <br>
-          <small class="">200 Tutors </small>
-        </span>               
-      </div>
-     
-      <div class="tutor-panels ">
-        <span class="lang-icon fonts-red border-red"> EN </span>
-        <span>
-          <span class="title "> English Tutors </span> <br>
-          <small class="">200 Tutors </small>
-        </span>               
-      </div>
-     
-      <div class="tutor-panels ">
-        <span class="lang-icon fonts-red border-red"> EN </span>
-        <span>
-          <span class="title "> English Tutors </span> <br>
-          <small class="">200 Tutors </small>
-        </span>               
-      </div>
-     
-      <div class="tutor-panels ">
-        <span class="lang-icon fonts-red border-red"> EN </span>
-        <span>
-          <span class="title "> English Tutors </span> <br>
-          <small class="">200 Tutors </small>
-        </span>               
-      </div>
-     
-      <div class="tutor-panels ">
-        <span class="lang-icon fonts-red border-red"> EN </span>
-        <span>
-          <span class="title "> English Tutors </span> <br>
-          <small class="">200 Tutors </small>
-        </span>               
-      </div>
-     
-      <div class="tutor-panels ">
-        <span class="lang-icon fonts-red border-red"> EN </span>
-        <span>
-          <span class="title "> English Tutors </span> <br>
-          <small class="">200 Tutors </small>
-        </span>               
-      </div>
-     
-      <div class="tutor-panels ">
-        <span class="lang-icon fonts-red border-red"> EN </span>
-        <span>
-          <span class="title "> English Tutors </span> <br>
-          <small class="">200 Tutors </small>
-        </span>               
-      </div>
-     
-      <div class="tutor-panels ">
-        <span class="lang-icon fonts-red border-red"> EN </span>
-        <span>
-          <span class="title "> English Tutors </span> <br>
-          <small class="">200 Tutors </small>
-        </span>               
-      </div>
-     
-      <div class="tutor-panels ">
-        <span class="lang-icon fonts-red border-red"> EN </span>
-        <span>
-          <span class="title "> English Tutors </span> <br>
-          <small class="">200 Tutors </small>
-        </span>               
-      </div>
-     
-      
-     
-     
-    </div>
-    </div>
-    <!-- ------------------------------------------ -->
-    <div class="my-5 mx-5 new-language">
+    <div class="col-md-5 text-right"><img src="/images/cover.png" alt="" style="max-width:90%"></div>
+  </div> 
+
+
+    <!-- ------------------------------------------ --> 
+      <div class="my-5 mx-5 new-language">
       <h3 class="text-center fw-bold py-5">Learn a new language the easy way</h3>
         <div>
-          <ul class="row list-unstyled ">
+          <ul class="row list-unstyled text-center">
             <li class="col-md-4">
-              <h4>Expert native speakers</h4>
+              <h4 class="text-center">Expert native speakers</h4>
               <p>
                 Find native speakers with expert knowledge and excelent ratings
               </p>
             </li>
             <li class="col-md-4">
-              <h4>Learn anytime anywhere</h4>
+              <h4 class="text-center">Learn anytime anywhere</h4>
               <p>
                 Tutors are available virtualy 24/7. 
               </p>
             </li>
             <li class="col-md-4">
-              <h4>Affordable rates</h4>
+              <h4 class="text-center">Affordable rates</h4>
               <p>
                 Tutors are available with affordable rates to suit your pocket. 
               </p>
             </li>
           </ul>
         </div>
-    </div>
+    </div>  
     <!-- -------------------------------------------------- -->
-  <div>
-    <h2 class="text-center fw-bold ">How Uswa works</h2>
+     <div class="clearfix">
+    <h3 class="text-center fw-bold ">How Uswa works</h3>
 
-    <div class="row mx-5 py-2 how-uswa-work">
+   <div class="row mx-3 py-2 how-uswa-work clearfix">
       <div class="col-md-2  my-3 text-center">
-        <span class="text-center number background-gray"> 1</span>
+        <span class="text-center number "> 1</span>
       </div>
       <div class="col-md-5">
         <h4> Find the best tutor</h4> 
-        <p>Choose from over 12,000 online tutors. Use filters to narrow your search and find the perfect fit </p>        
+        <p>Choose from a pool of seasoned online tutors. Use filters to narrow your search and find the perfect fit </p>        
       </div>
       <div class="col-md-5">
          <img src="/images/find-tutors.webp" alt="image">
       </div>
     </div>
 
-    <div class="row mx-5 my-2 how-uswa-work">
+    <div class="row mx-5 my-2 how-uswa-work clearfix">
       <div class="col-md-2 my-3 text-center">
         <span class="text-center number"> 2</span>
         
       </div>
       <div class="col-md-5 ">
         <h4>Take lessons anytime anywhere </h4> 
-        <p>Find the perfect time for your busy schedule. Book lessons in seconds via desktop or mobile </p>        
+        <p>Find the perfect time for your busy schedule. Book a lessons in seconds on our platform </p>        
       </div>
       <div class="col-md-5">
         <img src="/images/calender.webp" alt="image">
       </div>
     </div>
 
-    <div class="row mx-5 py-2 how-uswa-work">
+    <div class="row mx-5 py-2 how-uswa-work clearfix">
       <div class="col-md-2 my-3 text-center">
         <span class="text-center number"> 3</span>
       </div>
       <div class="col-md-5">
         <h4>Enter virtual classroom </h4> 
-        <p>When it’s lesson time, connect with your tutor through our comprehensive video platform </p>        
+        <p>When it’s lesson time, connect with your tutor through zoom video platform </p>        
       </div>
       <div class="col-md-5">
          <img src="/images/calender.webp" alt="image">
       </div>
-    </div>
+    </div>   
 
-    <div class="flags">      
-      <span><img src="/images/us.svg" alt="" class="rounded-circle"></span>
-      <span><img src="/images/italian.svg" alt="" class="rounded-circle"></span>
-      <span><img src="/images/french.svg" alt="" class="rounded-circle"></span>
-      <span><img src="/images/russian.svg" alt="" class="rounded-circle"></span>
-      <span><img src="/images/german.svg" alt="" class="rounded-circle"></span>
-      <span><img src="/images/chinese.svg" alt="" class="rounded-circle"></span>
-    </div>
+  </div> 
 
-  </div>
-</div>
+</div> 
+
+
   
 </template>
 
@@ -261,22 +142,12 @@ export default {
 </script>
 
 <style scoped>
-.search-rounded{
-  border-radius:2rem 0 0 2rem;
-  border-right:none !important;
-}
 
-input[type=text]:focus{
-  border: 1px solid grey !important;
-}
-.search-btn-rounded{
-  border-radius:0 2rem  2rem 0;
-  border-left: none !important;
-}
+
 .parent{
   color: #3c4447;
-    font-family: Poppins,Montserrat,-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
-    width:100%;
+  font-family: Helvetica,Arial,sans-serif;
+  width:100%;
 }
 .bold{
   font-weight:700;
@@ -296,7 +167,7 @@ input[type=text]:focus{
 }
 .tutors .tutor-panels{
   width:33.33%;
-  float:left;
+  
   padding:4rem;
   background-color:#ffff ;
   display:flex;
@@ -336,19 +207,13 @@ input[type=text]:focus{
   margin:1rem;
   margin-bottom: 2rem;
 }
-.flags img{
-  width:4rem;
-  height:4rem;
-  padding: .3rem;;
-}
-.number{
-  text-align: center;
-  background-color: #f523230c;
-  color: #cf2424f3;
-  width:auto;
-  border-radius:50%;
-  padding:1.3rem;
 
+.number{
+  text-align: left;
+  background-color: #d61e1ef3;
+  color: #fff;
+  border-radius:50%;
+  padding:1.1rem 1.25rem;
 
 }
 
@@ -371,8 +236,7 @@ input[type=text]:focus{
     .tutors{
       margin-left: 1%;
       margin-right: 1%;
-      margin-bottom:5rem !important;
-      
+      margin-bottom:5rem !important;      
     }
     .how-uswa-work{
       text-align: center;

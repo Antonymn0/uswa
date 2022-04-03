@@ -1,6 +1,6 @@
 <template>
   
-<div class="p-3">
+<div class="py-3 px-5">
  <div class="bg-white mt-3 ">
     <h4 class="alert-secondary w-100 py-3 px-3">Trial lessons <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchTrialLessons()">Refresh</button> </span></h4>
     <p class="mb-0 px-3"> Your Trial lesson requests to tutors will appear here.</p>
@@ -48,7 +48,7 @@
                        <br> </span> 
                         <button class="btn btn-sm btn-success m-1" v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.is_student_impressed"  @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lessons </button>
                          <span class="overflow-auto"> 
-                            <a :href="trial_lesson.meeting_link" target="blank" class="btn btn-sm alert-primary m-1" v-if="trial_lesson.meeting_link " >Launch meeting</a> 
+                            <a :href="trial_lesson.meeting_link" target="blank" class="btn btn-sm btn-primary m-1" v-if="trial_lesson.meeting_link " >Launch meeting</a> 
                             <div class="dropdown small " v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.participant_joined_at && trial_lesson.participant_left_at"> 
                                 <span class="text-primary underline" style="cursor:pointer"  type="button"  data-bs-toggle="dropdown" aria-expanded="false" :id="'trial_M_details' + trial_lesson.id" >  Duration: {{this.calculateTimeDiff(trial_lesson.meeting_started_at, trial_lesson.meeting_ended_at) }} mins </span>
                                 <p class="p-3 border small dropdown-menu small text-muted rounded" :aria-labelledby="'trial_M_details' + trial_lesson.id" v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.participant_joined_at && trial_lesson.participant_left_at">
@@ -170,6 +170,7 @@
 
 <div class="bg-white mt-3 ">
       <h4 class="alert-secondary w-100 py-3 px-3">Completed <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchLessons()">Refresh</button> </span></h4>
+     <p class="p-3 small text-muted text-center"> Completed lessons will appear here </p>
       <div class="row p-3 " > 
           <div class="col-md-4 row p-2"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'completed'">              
               <div class="border rounded p-3">
@@ -189,9 +190,10 @@
 
                     <p class="pt-2 mb-0">This was completed in a total duration of {{lesson.lesson_total_duration}}hrs.</p>
                   </div>
+                   <a href="#" class="text-primary mt-3 float-end shadow text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
               </div>              
           </div>
-          <p class="p-3 small text-muted text-center"> Completed lessons will appear here </p>         
+                   
       </div>
   </div>
 
@@ -652,10 +654,10 @@ export default {
         shedulefetchRefresh(){
             setInterval(() => {
                 this.fetchLessons();
-            }, 5000);
+            }, 60000);
             setInterval(() => {
                 this.fetchTrialLessons();
-            }, 30000);
+            }, 60000);
         }
    },
    computed:{
