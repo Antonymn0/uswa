@@ -39,9 +39,9 @@
                 </div>
                 <!-- ------------------------------- -->
                 <div class="d-flex  small p-2">
-                    <span> <i class="bi bi-person-fill"></i> 1 Active students</span>
+                    <span> <i class="bi bi-person-fill"></i> 0 Active students</span>
                     <span class=""> &nbsp; | &nbsp;</span> 
-                    <span>102 Lessons </span>
+                    <span>0 Lessons </span>
                 </div>
                 <!-- ------------------------------------- -->
                 <div class="d-flex  small p-2 speaks">

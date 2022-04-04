@@ -229,9 +229,6 @@ export default {
               console.log(error.response);
               this.errors.error = "Error: Something went wrong. Please try again later."
             });
-
-            
-            
         },
        
         fetchPaypalClientID(){

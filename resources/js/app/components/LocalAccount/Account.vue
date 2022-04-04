@@ -518,9 +518,8 @@ export default {
                     // Authorize the transaction
                     actions.order.authorize().then(function(authorization) {                        
                         axios.post('/api/update/local-account', authorization )
-                        .then(response=>{     
-                            console.log(response);
-                            // window.location.reload();
+                        .then(response=>{ 
+                            window.location.reload();
                         })
                         .catch(error=>{                       
                             console.log(error.response);

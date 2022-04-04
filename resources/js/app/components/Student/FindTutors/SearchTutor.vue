@@ -19,8 +19,8 @@ export default {
     methods:{
         searchTutor(){
             if(! this.search_language) return;
-            axios.get('/api/search-tutors/' +  this.language)             
-            .then(response=>{
+            axios.get('/api/search-tutors/' +  this.search_language)             
+            .then(response=>{ console.log(response.data);
                 this.$emit('searchTutors', response.data.data.data, this.search_language ); //pass results to parent
             })
             .catch(error=>{              

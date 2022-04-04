@@ -65,7 +65,7 @@ class StudentController extends Controller
      * Search tutor by language
      */
     public function searchTutorByLanguage(Request $request, $keyword){
-
+ 
         $tutors = User::with('tutorSchedule')
                 ->with('reviews')
                 ->where('language', $keyword)
@@ -73,7 +73,7 @@ class StudentController extends Controller
                 ->paginate(env('API_PAGINATION', 10));
         return response()->json([
             'success' => true,
-            'message' => 'trial lesson canceled and deleted.',
+            'message' => 'Tutor search results.',
             'data' => $tutors
         ], 200);
     }
