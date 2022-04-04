@@ -10,7 +10,7 @@ import store from "./app/Store/store.js";
 import App from "./App.vue";
 
 axios.defaults.headers.common["Authorization"] = "Bearer " + store.getters.getToken;
-// axios.defaults.baseURL = 'https://uswa-app.herokuapp.com';
+axios.defaults.baseURL = 'https://uswa-app.herokuapp.com';
 axios.interceptors.request.use(
             (config) => {
                 let token = store.getters.getToken;
