@@ -517,7 +517,7 @@ export default {
                 onApprove: function(data, actions) {
                     // Authorize the transaction
                     actions.order.authorize().then(function(authorization) {                        
-                        axios.post('/api/update/local-account/', authorization )
+                        axios.post('/api/update/local-account', authorization )
                         .then(response=>{     
                             console.log(response);
                             // window.location.reload();
