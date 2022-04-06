@@ -636,8 +636,7 @@ export default {
                                 amount: {
                                     currency_code: "USD",
                                     value: amount
-                                },
-                                
+                                },                                
                             }],
                             application_context: {
                                 shipping_preference: 'NO_SHIPPING',
@@ -646,20 +645,18 @@ export default {
                         });
                     },   
 
-                    // Finalize the transaction
-                    onApprove: function(data, actions) {
-                        // Authorize the transaction
-                        actions.order.authorize().then(function(authorization) {
-                            // Get the authorization id
-                            var authorizationID = authorization.purchase_units[0].payments.authorizations[0].id
-                            axios.post('/api/update/local-account', authorization )
-                            .then(response=>{    
-                                window.location.reload();                                
-                            })
-                            .catch(error=>{                       
-                                console.log(error.response);
-                            });
+                   // Finalize the transaction
+                onApprove: function(data, actions) {
+                    // Authorize the transaction
+                    actions.order.authorize().then(function(authorization) {                        
+                        axios.post('/api/update/local-account', authorization )
+                        .then(response=>{ 
+                            window.location.reload();
+                        })
+                        .catch(error=>{                       
+                            console.log(error.response);
                         });
+                    });
                     }
                 }).render('#paypal-button-container');
             });     
