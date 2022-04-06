@@ -131,7 +131,7 @@ export default {
         margin: 0 .2rem;
         overflow: auto;
         white-space: nowrap;
-         -webkit-overflow-scrolling: touch;               
+        -webkit-overflow-scrolling: touch;               
     }
     .infos::-webkit-scrollbar {
         display: none;
@@ -144,10 +144,15 @@ export default {
        width:10rem;
        padding: .7rem;
        margin:  1rem;
-       border:1px solid rgba(145, 3, 3, 0.418);
-       background: rgba(216, 16, 2, 0.205);
+       border:1px solid #cc00008e;
+       background: #fff;
        cursor:pointer;
        border-radius:10rem;
 
+    }
+    .infos span:hover{
+       border:1px solid rgba(145, 3, 3, 0.164);
+       background: #CC0000;
+       color:#fff;
     }
 </style>

@@ -40,11 +40,12 @@ export default {
     .buton{
         border-radius:0 20rem 20rem 0;
         padding: 0 1.5rem;
-        background-color: rgb(255, 205, 205);
+        background-color: #CC0000;
+        color:#fff;
         
     }
     .buton:hover{
-        background-color: rgb(245, 80, 80);
+        background-color: rgb(243, 47, 47);
         color:#fff;
     }
     .buton:active{

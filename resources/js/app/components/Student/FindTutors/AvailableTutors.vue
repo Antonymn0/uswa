@@ -9,7 +9,7 @@
                 <div class="d-flex align-items-center">
                     <div class="px-2 pt-3">
                         <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem;" v-if="!tutor.image">                        
-                        <img :src="tutor.image" alt="" style="width:6rem; height:8rem;"  v-if="tutor.image">  
+                        <img :src="tutor.image" alt="" style="width:6rem; height:7rem;"  v-if="tutor.image">  
                     </div>
                     <div class="pl-2 ms-2">
                         <h5 class="d-flex align-items-center">

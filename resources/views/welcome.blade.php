@@ -34,7 +34,7 @@
 
             /* ======= Global theme and accent color classes =============*/
             .background-red{
-                background-color: #CC0000;;
+                background-color: #CC0000;
             }
             .fonts-red{
                 color: #CC0000;;

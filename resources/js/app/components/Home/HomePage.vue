@@ -84,6 +84,10 @@
     </div>   
 
   </div> 
+  <p class="text-center">
+    <router-link :to="{name: 'register'}" class="px-5 py-3 btn btn-danger rounded-pill" v-if="! isLogedIn">Register now</router-link> 
+  </p>
+    
 
 </div> 
 
@@ -213,7 +217,10 @@ export default {
   background-color: #d61e1ef3;
   color: #fff;
   border-radius:50%;
-  padding:1.1rem 1.25rem;
+  padding:0.8rem 1.2rem;
+  margin:auto;
+  font-weight:500;
+  font-size:1.2rem;
 
 }
 

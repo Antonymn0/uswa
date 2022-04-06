@@ -19,12 +19,11 @@
                 </p>
             </div>
             </div>
-            <div class="col-md-6 border-start">              
-                <h6 class="ps-3 fw-bold">Student <span> &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;Score</span> </h6>
-                <p  v-for="(assignment, index) in this.lesson.get_assignments" :key="index" v-show="assignment.uploaded_by == assignment.student_id"> 
+            <div class="col-md-6 border-start pe-4">              
+                <h6 class="ps-3 fw-bold">Student <span class="float-end"> Score</span> </h6>
+                <p class="d-flex justify-content-between"  v-for="(assignment, index) in this.lesson.get_assignments" :key="index" v-show="assignment.uploaded_by == assignment.student_id"> 
                   <span > <a :href="assignment.assignment_link" target="blank" download="download">  {{assignment.name}}</a> </span> 
-                  <span v-if="current_assignment.assignment_score" class="border rounded small p-1" @click.prevent="updateCurrentAssignment(assignment)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">{{ current_assignment.assignment_score}}</span>  
-                  <span v-else class="border rounded small p-1" @click.prevent="updateCurrentAssignment(assignment)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">N/A</span>  
+                  <span v-if="current_assignment.assignment_score" class="border rounded small p-2 px-3"   >{{ current_assignment.assignment_score}}</span> 
                 </p>               
             </div> 
              <small class="text-muted text-center ">Tip:  Click links to download.  </small>

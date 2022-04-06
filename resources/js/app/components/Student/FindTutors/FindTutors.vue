@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="top-header background-red">
+        <div class="top-header background-redi">
             <span>
                 <h1>Online language tutors & teachers for private lessons </h1>  
                 <p>
@@ -60,6 +60,9 @@ export default {
         color: #efefef;
         border-radius: 0 0 2rem 2rem;
         padding: 2rem 5rem 
+    }
+    .background-redi{
+        background-color:rgba(78, 78, 77, 0.767)
     }
 
 
