@@ -51,7 +51,7 @@
                     <span class="text-success small p-2 m-2" v-if="this.success.book_trial">{{this.success.book_trial}}</span>
                    <span class="small text-danger text-center">{{this.errors.error}}</span> <br>
                 <button class="btn btn-danger m-2" @click.prevent="bookTrialLesson()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.book_lesson"></span> Book lesson</button>
-               <span data-bs-dismiss="modal" aria-label="Close"> <router-link :to="{name: 'account'}" class="btn btn-primary m-2" v-if="this.getAccount.available_balance < this.tutor.hourly_rate">Topup account</router-link> </span> 
+               <span data-bs-dismiss="modal" aria-label="Close"> <router-link :to="{name: 'account'}" class="btn btn-primary m-2" v-if="(this.getAccount.available_balance - this.tutor.hourly_rate) <  1">Topup account</router-link> </span> 
             </div>            
             </div>
         </div>
@@ -156,7 +156,7 @@ export default {
             this.errors = {};
             this.testTimeLimit() ;
             this.validateDate();
-            if((this.getAccount.available_balance - this.tutor.hourly_rate) <  1 ) {
+            if((this.getAccount.available_balance - this.tutor.hourly_rate) <  1 ) { //less than 1
               alert('Insufficient account balance! \nYour account must have a balance of atleast $' + this.tutor.hourly_rate + ' to cover for the cost of your first lesson.'); 
               return;
             }
