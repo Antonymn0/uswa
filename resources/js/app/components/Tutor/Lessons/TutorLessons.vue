@@ -28,7 +28,7 @@
                     <!-- <span class="py-2">Expired: </span> <span> false</span> <br> -->
                     
                     <p class="mb-0" v-if="trial_lesson.decline_reason !== null">
-                        <span class="py-2 fw-normal">Declined:  </span> <span class="text-danger">true </span> <br>
+                        <span class="py-2 fw-normal">Declined:  </span> <span class="text-danger">True </span> <br>
                         <span class="py-2">Decline reason:  </span> <span> {{trial_lesson.decline_reason}}</span>
                     </p>                  
 
@@ -95,7 +95,7 @@
                         <span class="m-0">{{this.capitalize(lesson.lesson_type)}} lessons with tutor {{this.capitalize(lesson.get_lesson_student.first_name)}} </span> 
                         <span class="d-flex m-0 ">
                             <a :href="lesson.meeting_link" target="blank" v-if="lesson.meeting_link && ! this.checkIfLectureUnpaid()" class="btn btn-secondary btn-sm m-1">Classroom</a> <br>
-                            <button class="btn btn-default m-1 btn-sm border tooltip" v-if="this.checkIfLectureUnpaid()">Arrears <span class="tooltiptext">Student hasnt paid for lectures yet!</span></button>
+                            <div class="btn btn-default m-1 btn-sm border tooltip" v-if="this.checkIfLectureUnpaid()">Arrears <span class="tooltiptext">Student hasnt paid for previous lectures yet!</span></div>
                             <a class="btn btn-secondary btn-sm m-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>
                         </span>
                     </p>
