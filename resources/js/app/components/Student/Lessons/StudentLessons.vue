@@ -40,7 +40,7 @@
                         <a v-if="! this.zoom_user_auth_token" :href="'https://zoom.us/oauth/authorize?response_type=code&client_id=' + this.CLIENT_ID + '&state=' + this.ZOOM_STATE + '&redirect_uri=' + this.REDIRECT_URI" class="btn btn-secondary btn-small m-2" >Link with zoom</a>  
                         <button class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.tutor_confirm == 'pending' " @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel request </button>
                       
-                         <span class="overflow-auto"> 
+                         <span class="overflow-auto d-flex"> 
                             <a :href="trial_lesson.meeting_link" target="blank" class="btn btn-sm btn-primary m-1" v-if="trial_lesson.meeting_link " >Launch meeting</a> 
                             <div class="dropdown small " v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.participant_joined_at && trial_lesson.participant_left_at"> 
                                 <span class="text-primary underline" style="cursor:pointer"  type="button"  data-bs-toggle="dropdown" aria-expanded="false" :id="'trial_M_details' + trial_lesson.id" >  Duration: {{this.calculateTimeDiff(trial_lesson.meeting_started_at, trial_lesson.meeting_ended_at) }} mins </span>
@@ -48,8 +48,6 @@
                                     <span class="fw-bold">Meeting Details</span>   <br>
                                     <span class="mb-2 small"> Date: {{this.formatDate(trial_lesson.meeting_started_at) }}</span> <br>
                                     <span class="my-1 small"> Start: {{this.formatDateTime(trial_lesson.meeting_started_at) }}</span> <br>
-                                     <!-- <span class="my-1 small">Joined: {{this.formatDateTime(trial_lesson.participant_joined_at) }}</span>  <br>
-                                    <span class="my-1 small">Left: {{this.formatDateTime(trial_lesson.participant_left_at) }}</span>  <br>  -->
                                     <span class="my-1 small">End: {{this.formatDateTime(trial_lesson.meeting_ended_at) }}</span> <br>
                                     <span class="mt-2 border-top small">Duration: {{this.calculateTimeDiff(trial_lesson.meeting_started_at, trial_lesson.meeting_ended_at) }} mins</span>
                                 </p>
