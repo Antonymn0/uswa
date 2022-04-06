@@ -18,13 +18,13 @@
                 <!-- <button class="btn btn-lg btn-secondary m-2 px-3 w-75"   @click.prevent="this.getPaypalAccessToken()"> Get paypal token </button> -->
                 <small class="text-success" v-if="this.success.signup_link"> <br>{{this.success.signup_link}}</small>
                 <small class="text-danger" v-if="this.errors.signup_link"> <br> {{this.errors.signup_link}}</small>
-                <button class="btn btn-lg btn-secondary m-2 px-3 w-75" v-if=" !this.getUser.paypal_merchant_id && this.getUser.role == 'tutor' "  @click.prevent="this.generateSigupLink()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.signup_link"></span>  Link with paypal </button>
+                <button class="btn btn-lg btn-primary m-2 px-3 w-75" v-if=" !this.getUser.paypal_merchant_id && this.getUser.role == 'tutor' "  @click.prevent="this.generateSigupLink()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.signup_link"></span>  Link with paypal </button>
               
                <small class="text-success" v-if="this.success.charge_object"> <br>{{this.success.charge_object}}</small>
                 <small class="text-danger" v-if="this.errors.charge_object"> <br> {{this.errors.charge_object}}</small>
                
                <span class="text-center">
-                <button class="btn btn-secondary p-2 btn-lg m-2 w-75" v-if="this.getUser.role == 'tutor' "  @click.prevent="this.withdrawFunds()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.charge_object"></span>Withdraw</button>
+                <button class="btn btn-primary p-2 btn-lg m-2 w-75" v-if=" this.getUser.paypal_merchant_id && this.getUser.role == 'tutor' "  @click.prevent="this.withdrawFunds()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.charge_object"></span>Withdraw</button>
                 <div class=" mx-auto m-2 w-75" v-if="this.getUser.role == 'student' " >
                     <label class=" text-secondary">Topup via  paypal: </label>
                     <div class="py-2 small">

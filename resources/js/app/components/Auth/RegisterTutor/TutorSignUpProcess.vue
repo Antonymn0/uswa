@@ -1,13 +1,13 @@
 <template>
 <div class="text-secondary">
     <p class="sign-up-steps py-2 fw-bold ">
-        <span> <i class="bi bi-check-circle"></i> About <i class="bi bi-chevron-right"></i></span>
-        <span> <i class="bi bi-check-circle"></i> Photo <i class="bi bi-chevron-right"></i></span>
-        <span> <i class="bi bi-check-circle"></i> Certificaion <i class="bi bi-chevron-right"></i></span>
-        <span> <i class="bi bi-check-circle"></i> Education <i class="bi bi-chevron-right"></i></span>
-        <span> <i class="bi bi-check-circle"></i> Video <i class="bi bi-chevron-right"></i></span>
-        <span> <i class="bi bi-check-circle"></i> Availability <i class="bi bi-chevron-right"></i></span>
-        <span> <i class="bi bi-check-circle"></i> Finish <i class="bi bi-chevron-right"></i></span>
+        <span @click.prevent="toggleProcess('about')"> <i class="bi bi-check-circle"></i> About <i class="bi bi-chevron-right"></i></span>
+        <span @click.prevent="toggleProcess('photo')"> <i class="bi bi-check-circle"></i> Photo <i class="bi bi-chevron-right"></i></span>
+        <span @click.prevent="toggleProcess('certification')"> <i class="bi bi-check-circle"></i> Certificaion <i class="bi bi-chevron-right"></i></span>
+        <span @click.prevent="toggleProcess('education')"> <i class="bi bi-check-circle"></i> Education <i class="bi bi-chevron-right"></i></span>
+        <span @click.prevent="toggleProcess('video')"> <i class="bi bi-check-circle"></i> Video <i class="bi bi-chevron-right"></i></span>
+        <span @click.prevent="toggleProcess('availability')"> <i class="bi bi-check-circle"></i> Availability <i class="bi bi-chevron-right"></i></span>
+        <span > <i class="bi bi-check-circle"></i> Finish <i class="bi bi-chevron-right"></i></span>
     </p>
     <div class="parent">
         <div id="about" class="">
@@ -65,6 +65,19 @@ export default {
         Video,
         Availability,
         Finish,
+    },
+    methods:{
+        toggleProcess(id_tag){
+            document.getElementById('about').classList.add('hidden');
+            document.getElementById('photo').classList.add('hidden');
+            document.getElementById('certification').classList.add('hidden');
+            document.getElementById('education').classList.add('hidden');
+            document.getElementById('video').classList.add('hidden');
+            document.getElementById('availability').classList.add('hidden');
+            document.getElementById('finish').classList.add('hidden');
+
+            document.getElementById(id_tag).classList.remove('hidden');
+        }
     }
 }
 </script>
@@ -75,6 +88,11 @@ export default {
         width:auto;
         margin: auto;
         text-align:center;
+    }
+    .sign-up-steps span:hover{
+        cursor:pointer;
+        background-color: rgb(131, 129, 129);
+        color:#fff;
     }
     .sign-up-steps span{
         padding: .5rem;
