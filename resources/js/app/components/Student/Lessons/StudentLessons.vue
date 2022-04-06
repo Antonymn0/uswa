@@ -93,7 +93,7 @@
                                 <a :href="lesson.meeting_link" target="blank" class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link && (this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) > 1 && !checkIfLectureUnpaid()">Classroom</a> 
                                 <button v-if="(this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) < 1" class="btn btn-default text-muted border btn-sm m-1" data-bs-target="#paypal-modal" data-bs-toggle="modal" data-bs-dismiss="modal" > Insuficient funds</button> <br>
                                 <a class="btn btn-secondary btn-sm m-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>  <br>
-                                <button class="btn btn-warning btn-sm my-1" v-if="checkIfLectureUnpaid() && this.getAccount.available_balance > lesson.get_lesson_tutor.hourly_rate" @click.prevent="this.sendTutorLecturePayments(lesson)">Pay tutor</button>
+                                <button class="btn btn-warning btn-sm my-1" v-if="checkIfLectureUnpaid() && (this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) >= 0" @click.prevent="this.sendTutorLecturePayments(lesson)">Pay tutor</button>
                             </span>
                         </p>
                         <!-- -------------------- Lectures------------------------  -->

@@ -125,7 +125,7 @@
                             </p>
                             <button class="btn btn-sm btn-primary form-control my-1" v-if="isAllLecturesComplete(lesson.lectures, this.completed_lectures, lesson)" @click.prevent="markLessonComplete( lesson)"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.lesson_complete"></span> Mark this lesson complete </button> 
                         </div>                       
-                           <p class="text-muted small p-5"> You havent defined any lectures yet. Click<span class="text-primary underline" data-bs-toggle="modal" data-bs-target="#lecturesModal" style="cursor:pointer">here to define</span> </p>
+                           <p class="text-muted small p-5" v-else> You havent defined any lectures yet. Click <span class="text-primary underline" data-bs-toggle="modal" data-bs-target="#lecturesModal" style="cursor:pointer"> here to define</span> </p>
                     </div>
                    
                   </div>
