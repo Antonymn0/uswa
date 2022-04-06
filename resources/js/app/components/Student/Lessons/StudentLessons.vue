@@ -467,7 +467,7 @@ export default {
     },
     sendTutorLecturePayments(lesson){
         // process payments fopr the lectures 
-        if(this.getAccount.available_balance < lesson.get_lesson_tutor.hourly_rate) {alert('Cannot process payments. Insufficient funds '); return;}
+        if((this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) < 1) {alert('Cannot process payments. Insufficient funds '); return;}
         if(!confirm('Process payment arrears for the completed lectures?')) return;
         axios.get('/api/students/send-tutor-payments/' + lesson.id)
         .then(response =>{
