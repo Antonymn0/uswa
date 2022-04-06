@@ -27,8 +27,7 @@
                     <p class="fw-bold">  {{this.capitalize(trial_lesson.lesson_type)}} trial lesson with tutor {{this.capitalize(trial_lesson.get_tutor.first_name)}} </p>
                     <span class="py-2">Scheduled for: {{this.formatDate(trial_lesson.lesson_date)}}</span> <br>                  
                     <span>Time: </span> <span>{{trial_lesson.start_time}}hrs - {{trial_lesson.end_time}}hrs </span> <br>
-                    <span class="py-2">Duration: </span> <span>1hr </span> <br>
-                    <!-- <span class="py-2">Expired: </span> <span> false</span> <br> -->
+                    <span class="py-2">Duration: </span> <span> 20 mins </span> <br>
                     
                     <p class="mb-0" v-if="trial_lesson.decline_reason !== null">
                         <span class="py-2 fw-normal">Declined:  </span> <span class="text-danger">True </span> <br>
@@ -41,12 +40,6 @@
                         <a v-if="! this.zoom_user_auth_token" :href="'https://zoom.us/oauth/authorize?response_type=code&client_id=' + this.CLIENT_ID + '&state=' + this.ZOOM_STATE + '&redirect_uri=' + this.REDIRECT_URI" class="btn btn-secondary btn-small m-2" >Link with zoom</a>  
                         <button class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.tutor_confirm == 'pending' " @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel request </button>
                       
-                        <span v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.participant_joined_at && trial_lesson.participant_left_at && !trial_lesson.is_student_impressed">
-                            Impressed by the tutor?  <br>
-                             <span class="btn btn-sm btn-primary m-1" @click="processPayment(trial_lesson)">Yes</span>
-                             <span class="btn btn-sm btn-danger m-1" @click.prevent="notImpressedbyTutor(trial_lesson)">No</span>
-                       <br> </span> 
-                        <button class="btn btn-sm btn-success m-1" v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.is_student_impressed"  @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lessons </button>
                          <span class="overflow-auto"> 
                             <a :href="trial_lesson.meeting_link" target="blank" class="btn btn-sm btn-primary m-1" v-if="trial_lesson.meeting_link " >Launch meeting</a> 
                             <div class="dropdown small " v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.participant_joined_at && trial_lesson.participant_left_at"> 
@@ -62,6 +55,12 @@
                                 </p>
                             </div>
                         </span>
+                          <span v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.participant_joined_at && trial_lesson.participant_left_at && !trial_lesson.is_student_impressed">
+                            Impressed by the tutor?  
+                              <span class="btn btn-sm btn-primary m-1" @click="processPayment(trial_lesson)"> Yes</span>
+                              <span class="btn btn-sm btn-danger m-1" @click.prevent="notImpressedbyTutor(trial_lesson)"> No</span>
+                        </span> 
+                        <button class="btn btn-sm btn-success m-1" v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.is_student_impressed"  @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lessons </button>
                     </div>                   
                 </div>
             </div>              
@@ -498,7 +497,7 @@ export default {
             form_data.append('topic', lesson.lesson_type);
             form_data.append('type', 3);
             form_data.append('start_time', lesson.start_date);
-            form_data.append('duration', lesson.duration);
+            form_data.append('duration', '60');
 
             axios.get('/api/zoom/meeting/create', form_data)
             .then(response => {
@@ -580,9 +579,8 @@ export default {
             if(! this.review) this.errors.review = 'This field is required';
         },
         processPayment(trial_lesson){ 
-             if(trial_lesson.get_tutor.hourly_rate > this.getAccount.available_balance) { alert('Insufficient funds! \n Please top up your account and try again!'); return}
-            // process paypal payments if impressed
-            if(!confirm("By clicking yes, You accept lessons from this tutor and also authorise funds to be moved from your account to the tutor as payments for this session.")) return;
+           // process paypal payments if impressed
+            if(!confirm("By clicking yes, You accept to take lessons from this tutor.")) return;
 
             var form_data = new FormData();
             form_data.append('trial_lesson', JSON.stringify(trial_lesson));
@@ -590,7 +588,7 @@ export default {
             // Call  server to capture the transaction            
             axios.post('/api/transfer-payments/', form_data)
             .then(response=>{                
-                this.success.process_payment = 'Success, payment processed. \n Please  go ahead and schedule your lessons with the tutor!'                     
+                this.success.process_payment = 'Success,  Please  go ahead and schedule your lessons with the tutor!'                     
                 this.$store.dispatch('fetchLocalAccount');
                 this.fetchTrialLessons();
                 console.log(response);

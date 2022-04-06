@@ -147,29 +147,29 @@ class LocalAccountController extends Controller
             }
             
         //process payment  transfer in local account
-        $student_data = [
-            'last_transaction_date' => now(),
-            'last_transaction_method' => 'Uswa:local',
-            'last_amount_transacted' => $trial_lesson->get_tutor->hourly_rate,
-            'balance_before' => $student_local_account->available_balance,
-            'available_balance' => $student_local_account->available_balance - $trial_lesson->get_tutor->hourly_rate, //subtract amount
-            'balance_after' => $student_local_account->available_balance - $trial_lesson->get_tutor->hourly_rate,
-        ];
-        $tutor_data = [
-            'last_transaction_date' => now(),
-            'last_transaction_method' => 'Uswa:local',
-            'last_amount_transacted' => $trial_lesson->get_tutor->hourly_rate,
-            'balance_before' => $tutor_local_account->available_balance,
-            'available_balance' => $tutor_local_account->available_balance + $trial_lesson->get_tutor->hourly_rate, //add amount
-            'balance_after' => $tutor_local_account->available_balance + $trial_lesson->get_tutor->hourly_rate,
-        ];
+        // $student_data = [
+        //     'last_transaction_date' => now(),
+        //     'last_transaction_method' => 'Uswa:local',
+        //     'last_amount_transacted' => $trial_lesson->get_tutor->hourly_rate,
+        //     'balance_before' => $student_local_account->available_balance,
+        //     'available_balance' => $student_local_account->available_balance - $trial_lesson->get_tutor->hourly_rate, //subtract amount
+        //     'balance_after' => $student_local_account->available_balance - $trial_lesson->get_tutor->hourly_rate,
+        // ];
+        // $tutor_data = [
+        //     'last_transaction_date' => now(),
+        //     'last_transaction_method' => 'Uswa:local',
+        //     'last_amount_transacted' => $trial_lesson->get_tutor->hourly_rate,
+        //     'balance_before' => $tutor_local_account->available_balance,
+        //     'available_balance' => $tutor_local_account->available_balance + $trial_lesson->get_tutor->hourly_rate, //add amount
+        //     'balance_after' => $tutor_local_account->available_balance + $trial_lesson->get_tutor->hourly_rate,
+        // ];
 
         $trial_lesson  = TrialLesson::findOrfail($trial_lesson->id); //fetch fresh record to update
         
         //update accounts
         $trial_lesson->update([ 'is_student_impressed' => true ]);
-        $student_local_account->update($student_data);
-        $tutor_local_account->update($tutor_data);
+        // $student_local_account->update($student_data);
+        // $tutor_local_account->update($tutor_data);
 
         return response()->json([
             'success' => true,
