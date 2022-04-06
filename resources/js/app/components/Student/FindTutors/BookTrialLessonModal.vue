@@ -156,8 +156,10 @@ export default {
             this.errors = {};
             this.testTimeLimit() ;
             this.validateDate();
-            if(this.getAccount.available_balance < this.tutor.hourly_rate)
-            { alert('Insufficient account balance! \nYour account must have a balance of atleast $' + this.tutor.hourly_rate + '' + this.getAccount.available_balance + ' to cover for the cost of your first lesson.'); return;}
+            if((this.getAccount.available_balance - this.tutor.hourly_rate) <  1 ) {
+              alert('Insufficient account balance! \nYour account must have a balance of atleast $' + this.tutor.hourly_rate + ' to cover for the cost of your first lesson.'); 
+              return;
+            }
 
             if(!this.date) this.errors.date = "Date field is required";
             if(!this.time.from) this.errors.time_limit = "Time selection is required";           
