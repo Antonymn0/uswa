@@ -3,7 +3,7 @@
 <div class="p-3 px-5">
 
   <div class="bg-white  ">      
-      <h4 class="alert-secondary w-100 py-3 px-3">Trial lessons <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchTrialLessons()">Refresh</button> </span></h4>
+      <h4 class="alert-secondary w-100 py-3 px-3">Trial lessons <span class="float-end mx-3"> <button class="btn btn-sm btn-primary" @click.prevent="fetchTrialLessons()"><i class="bi bi-arrow-clockwise"></i>Refreshefresh</button> </span></h4>
         <p class="px-3 small">
             Request for trial lessons from students will appear here. You can either choose to accept requests or decline.
         </p>
@@ -22,8 +22,8 @@
                     </span>
                        
                     <p class="fw-bold">{{this.capitalize(trial_lesson.get_student.first_name)}} wants to book  {{this.capitalize(trial_lesson.lesson_type)}}  lessons with you</p>
-                    <span class="py-2">Scheduled for: {{this.formatDate(trial_lesson.lesson_date)}}</span> <br>                  
-                    <span>Time: </span> <span>{{trial_lesson.start_time}}hrs - {{trial_lesson.end_time}}hrs </span> <br>
+                    <span class="py-2">Scheduled for: {{this.convertDateToLocal(trial_lesson.lesson_date, trial_lesson.get_student)}}</span> <br>                  
+                    <span>Time: </span> <span>{{this.convertTimeToLocal(trial_lesson.start_time, trial_lesson.get_student)}} </span> <br>
                     <span class="py-2">Duration: </span> <span>1hr </span> <br>
                     <!-- <span class="py-2">Expired: </span> <span> false</span> <br> -->
                     
@@ -74,7 +74,7 @@
 <!-- ------------------------------------Lessons in progress-------------------------------------------------------------------------- -->
 
  <div class="bg-white mt-3 ">
-      <h4 class="alert-secondary w-100 py-3 px-3">In progress <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchLessons()">Refresh</button> </span></h4>
+      <h4 class="alert-secondary w-100 py-3 px-3">In progress <span class="float-end mx-3"> <button class="btn btn-sm btn-primary" @click.prevent="fetchLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
      <small class="alert-danger text-center p-2 rounded" v-if="this.errors.mark_complete"> {{this.errors.mark_complete}} </small>
      <small class="alert-success text-center p-2 rounded" v-if="this.success.lesson_complete"> {{this.success.lesson_complete}} </small>
      <small class="alert-danger text-center p-2 rounded" v-if="this.errors.lesson_complete"> {{this.errors.lesson_complete}} </small>
@@ -145,7 +145,7 @@
 <!-- --------------------------------------------------------------------------------------------------------------- -->
 
   <div class="bg-white mt-3 ">
-      <h4 class="alert-secondary w-100 py-3 px-3">Completed <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchLessons()">Refresh</button> </span></h4>
+      <h4 class="alert-secondary w-100 py-3 px-3">Completed <span class="float-end mx-3"> <button class="btn btn-sm btn-primary" @click.prevent="fetchLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
       <div class="row p-3 "> 
           <div class="col-md-4 row p-2"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'completed'">                
               <div v-show="lesson.status == 'completed'">
@@ -225,6 +225,36 @@ export default {
         },          
         formatDate(date){
             if (date) return moment(String(date)).format('ll');            
+        },
+        convertDateToLocal(date, student){           
+            // convert date from utc to local date 
+          if(! date ) return "Invalid date 1";
+          if(! student ) return "Invalid date parameter";
+          else  {
+             
+              let student_tz = student.local_timezone;
+              let date =  moment.tz(date, student_tz);
+              let utc_time = moment.utc(date); // parse date into utc
+
+              let local_time = utc_time.clone().local().format("YYYY-MM-DD"); // covert date into current local time
+              return local_time;              
+          }  
+          
+        },
+        convertTimeToLocal(date, student){           
+            // convert date from utc to local date 
+          if(! date ) return "Invalid time";
+          if(! student ) return "Invalid time parameter";
+          else  {
+             
+              let student_tz = student.local_timezone;
+              let date =  moment.tz(date, student_tz);
+              let utc_time = moment.utc(date); // parse date into utc
+
+              let local_time = utc_time.clone().local().format("hh:mm a"); // covert date into current local time
+              return local_time;              
+          }  
+          
         },
         capitalize(string) {
             if(string) return string.charAt(0).toUpperCase() + string.slice(1);
@@ -457,5 +487,11 @@ export default {
 </script>
 
 <style>
-
+/* media rules */
+    @media only screen and (max-width: 600px){
+        .px-5{
+            padding-left:0 !important;
+            padding-right:0 !important;
+        }
+    }
 </style>

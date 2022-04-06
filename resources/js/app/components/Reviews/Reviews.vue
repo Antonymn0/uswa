@@ -49,7 +49,7 @@
       </div>
       <div class="modal-body">
         <p class="stars d-flex align-items-center"> 
-            <span>Stars: </span>
+            <span>Stars: &nbsp; &nbsp;</span>
             <span> <i class="bi bi-star-fill 1 text-muted" id="1" @click.prevent="updateStars(1)"></i> </span>
             <span> <i class="bi bi-star-fill 2 text-muted" id="2" @click.prevent="updateStars(2)"></i> </span>
             <span> <i class="bi bi-star-fill 3 text-muted" id="3" @click.prevent="updateStars(3)"></i> </span>

@@ -28,6 +28,7 @@ class ValidateUser extends FormRequest
             'email' => ['required', 'string', 'unique:users'],
             'role' => ['required', 'string'],
             'password' => ['required', 'string','min:4'],
+            'local_timezone' => ['nullable', 'string'],
            
         ];
     }

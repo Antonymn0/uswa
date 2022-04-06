@@ -53,6 +53,7 @@ class UpdateUser extends FormRequest
             'image' => ['nullable', 'mimes:jpg,jpeg,png,svg'],
 
             'timezone' => ['nullable', 'string'],
+            'local_timezone' => ['nullable', 'string'],
             'currency' => ['nullable', 'string'],
             'language' => [ 'nullable', 'string'],
             'level' => ['nullable', 'string'],

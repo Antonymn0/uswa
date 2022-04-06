@@ -2,7 +2,7 @@
   
 <div class="py-3 px-5">
  <div class="bg-white mt-3 ">
-    <h4 class="alert-secondary w-100 py-3 px-3">Trial lessons <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchTrialLessons()">Refresh</button> </span></h4>
+    <h4 class="alert-secondary w-100 py-3 px-3">Trial lessons <span class="float-end mx-3"> <button class="btn btn-sm btn-primary" @click.prevent="fetchTrialLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
     <p class="mb-0 px-3"> Your Trial lesson requests to tutors will appear here.</p>
     <p class="text-center mb-0 py-2">
         <small class="alert-success p-2 mx-4 rounded my-3" v-if="this.success.cancel_lesson">{{this.success.cancel_lesson}}</small> 
@@ -75,7 +75,7 @@
 
 <!-- ----------------------------------------Inprogress lessons-------------------------------------------------------------------------- -->
  <div class="bg-white mt-3 ">
-      <h4 class="alert-secondary w-100 py-3 px-3">In progress <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchLessons()">Refresh</button> </span></h4>
+      <h4 class="alert-secondary w-100 py-3 px-3">In progress <span class="float-end mx-3"> <button class="btn btn-sm btn-primary" @click.prevent="fetchLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
       <small class="alert-danger p-2" v-if="this.errors.insuficient_funds">{{this.errors.insuficient_funds}}</small>
       <small class="alert-success p-2" v-if="this.success.payment_success">{{this.success.payment_success}}</small>
       <div v-if="Object.keys(this.current_lessons).length"> 
@@ -119,7 +119,7 @@
                             <p class="text-muted small p-2"> This tutor hasnt defined any lectures yet. Defined lectures for this lesson will appear here</p>
                         </div>  
                         <!-- <p class="py-3 small">Date started : {{lesson.lessons_start_date}}</p>  -->
-                        <a href="#" class="text-primary mt-3 float-end shadow text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
+                        <a href="#" class="text-warning mt-3 float-end  text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
                     </div>
                 </div>              
             </div>
@@ -169,7 +169,7 @@
 <!-- ------------------------------------------------------------------------------------------------------------------------ -->
 
 <div class="bg-white mt-3 ">
-      <h4 class="alert-secondary w-100 py-3 px-3">Completed <span class="float-end mx-3"> <button class="btn btn-sm btn-secondary" @click.prevent="fetchLessons()">Refresh</button> </span></h4>
+      <h4 class="alert-secondary w-100 py-3 px-3">Completed <span class="float-end mx-3"> <button class="btn btn-sm btn-primary" @click.prevent="fetchLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
      <p class="p-3 small text-muted text-center"> Completed lessons will appear here </p>
       <div class="row p-3 " > 
           <div class="col-md-4 row p-2"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'completed'">              
@@ -190,7 +190,7 @@
 
                     <p class="pt-2 mb-0">This was completed in a total duration of {{lesson.lesson_total_duration}}hrs.</p>
                   </div>
-                   <a href="#" class="text-primary mt-3 float-end shadow text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
+                   <a href="#" class="text-warning mt-3 float-end  text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
               </div>              
           </div>
                    
@@ -210,9 +210,30 @@
         <div class="modal-body mx-auto">
             <div class="w-auto mx-uato text-left py-3">
                 <label class="py-2  ">Topup your account with $10 via Paypal: </label>
-                <div class="h-100 bg dark" @click.prevent="this.showPaypalSpinner()">
+                 <div class="py-2 small">
+                        <span>
+                            <input type="radio" name="amount" id="5" value='5' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
+                            <label for="5"> $5 </label> &nbsp;
+                        </span>
+                        <span> 
+                            <input type="radio" name="amount" id="10" value='10' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
+                            <label for="10"> $10 </label> &nbsp;
+                        </span>
+                        <span>
+                            <input type="radio" name="amount" id="20" value='20' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
+                            <label for="20"> $20 </label> &nbsp;
+                        </span>
+                        <span>
+                            <input type="radio" name="amount" id="50" value='50' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
+                            <label for="50"> $50 </label> &nbsp;
+                        </span>
+                        <span>
+                            <input type="radio" name="amount" id="100" value='100' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
+                            <label for="100"> $100 </label> &nbsp;
+                        </span>                        
+                    </div>
                    <div class=" mx-auto" id="paypal-button-container" ></div>  
-                </div>
+                
                
                 <small class="text-primary" v-if="this.success.payment"> {{this.success.payment}} </small>
                 <small class="text-primary" v-if="this.spinner.paypal_processing"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.paypal_processing"></span> Processing...</small>
@@ -246,6 +267,7 @@ export default {
             decline_reason:null,       
             refresh_interval:{},
             paypal_client_id:'',
+            topup_amount:10,
             zoom_meetings:{},
             CLIENT_ID: null,
             ZOOM_CLIENT_SECRET: null,
@@ -607,7 +629,8 @@ export default {
             s.setAttribute('src', url); s.onload = callback;
             document.head.insertBefore(s, document.head.firstElementChild);
         },
-        loadPaypalCheckout(){ //paypal buttons            
+        loadPaypalCheckout(){ //paypal buttons 
+            var amount = this.topup_amount;           
             this.loadAsync('https://www.paypal.com/sdk/js?client-id=' + this.paypal_client_id + '&intent=authorize&disable-funding=credit,card', function() {
                 paypal.Buttons({                    
                     // Set up the transaction
@@ -616,7 +639,7 @@ export default {
                             purchase_units: [{
                                 amount: {
                                     currency_code: "USD",
-                                    value: '10'
+                                    value: amount
                                 },
                                 // payee: {
                                 //     merchant_id :  'VMJSV3L3DRE9A'
@@ -688,5 +711,13 @@ export default {
     }
     .three-dot:hover{
          color: rgb(116, 114, 114);
+    }
+
+    /* media rules */
+    @media only screen and (max-width: 600px){
+        .px-5{
+            padding-left:0 !important;
+            padding-right:0 !important;
+        }
     }
 </style>

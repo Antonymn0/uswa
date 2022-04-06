@@ -39,6 +39,7 @@
 
 <script>
 import axios from 'axios';
+import moment from "moment";
 
 export default {
 data(){
@@ -76,6 +77,7 @@ methods:{
             form_data.append('password', this.form.password);
             form_data.append('password_again', this.form.password_again);
             form_data.append('role', this.form.role);
+            form_data.append('local_timezone', moment.tz.guess());
         this.spinner =true;
         axios.post('/api/register', form_data ,{
           headers:{

@@ -25,14 +25,15 @@
     <div class="mobile pl-3 text-center">
       <span class="pl-3"> 
         <router-link :to="{name: 'login'}" class="px-1" v-if="! isLogedIn">Login</router-link>
-        <a v-if=" isLogedIn" class="d-flex align-items-center " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            &nbsp;  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.1rem"></i>  &nbsp;
-            {{getUser.first_name}}
+        <a v-if=" isLogedIn" class=" " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.1rem" v-if="! getUser.image"></i>
+               <img v-else :src="getUser.image" alt="profile picture" style="width:40px; height:40px; border-radius:50%"> <br> 
+            {{this.capitalize(getUser.first_name)}}
         </a> 
         </span>
     </div>
     <!-- --------------------Acc bal--------------------- -->
-    <div class="text-muted acc" v-if="isLogedIn">
+    <div class="text-muted acc desktop" v-if="isLogedIn">
       <router-link :to="{name: 'account'}" v-if="getUser.role !== 'admin'">
         <div class="border btn btn-default py-2">
           <span class="fw-bold"> Bal: </span>

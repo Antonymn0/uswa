@@ -3,7 +3,7 @@
       <h5>   {{this.capitalize(this.search_term)}} tutors </h5>
       <!-- ----------------------------------------------------------------------------------------------------- -->
       <div v-if="Object.keys(this.current_tutors).length">
-      <div class="mobile-outer " v-for="(tutor, index) in this.current_tutors" :key="index">
+      <div class="mobile-outer " v-for="(tutor, index) in this.current_tutors" :key="index" style="overflow:hidden">
           <div class="mobile   ">              
             <div class="bg-white  inner rounded">
                 <div class="d-flex align-items-center">

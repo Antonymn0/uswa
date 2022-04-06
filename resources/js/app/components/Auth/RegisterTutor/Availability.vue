@@ -1752,9 +1752,10 @@ export default {
                 form_data.append('friday', JSON.stringify(this.$store.state.signupProcess_availability.availability.friday));
                 form_data.append('saturday', JSON.stringify(this.$store.state.signupProcess_availability.availability.saturday));
                 form_data.append('sunday', JSON.stringify(this.$store.state.signupProcess_availability.availability.sunday));            
-                form_data.append('availability', true);            
+                form_data.append('availability', true); 
+                form_data.append('local_timezone', moment.tz.guess());
                 form_data.append('_method', 'PUT');
-
+                
             axios.post('/api/user/' + this.getUser.id , form_data)             
             .then(response=>{
                 this.spinner = {}

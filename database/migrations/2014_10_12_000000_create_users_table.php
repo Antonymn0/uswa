@@ -49,6 +49,7 @@ class CreateUsersTable extends Migration
            $table->string('image')->nullable();
 
            $table->string('timezone')->nullable();
+           $table->string('local_timezone')->nullable();
            $table->string('currency')->nullable();
            $table->string('language')->nullable();
            $table->string('level')->nullable();
