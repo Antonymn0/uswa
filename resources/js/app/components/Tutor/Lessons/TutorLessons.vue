@@ -95,7 +95,7 @@
                         <span class="m-0">{{this.capitalize(lesson.lesson_type)}} lessons with tutor {{this.capitalize(lesson.get_lesson_student.first_name)}} </span> 
                         <span class="d-flex m-0 ">
                             <a :href="lesson.meeting_link" target="blank" v-if="lesson.meeting_link && ! this.checkIfLectureUnpaid()" class="btn btn-secondary btn-sm m-1">Classroom</a> <br>
-                            <button class="btn btn-default m-1 btn-sm border" v-if="this.checkIfLectureUnpaid()">Arrears</button>
+                            <button class="btn btn-default m-1 btn-sm border tooltip" v-if="this.checkIfLectureUnpaid()">Arrears <span class="tooltiptext">Student hasnt paid for lectures yet!</span></button>
                             <a class="btn btn-secondary btn-sm m-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>
                         </span>
                     </p>
@@ -342,11 +342,9 @@ export default {
         checkIfLectureUnpaid(){
             var unpaid = false;
             this.completed_lectures.forEach(lec=>{                
-                if(lec.payment_status == 'unpaid')   unpaid = true;
+                if(lec.payment_status == 'unpaid')  unpaid = true;
             });
-            console.log(unpaid);
-            return unpaid;
-           
+            return unpaid;           
         },
         markLessonComplete(lesson){
             if(lesson.status == 'complete') {alert('Lesson already marked complete'); return;}
@@ -487,6 +485,32 @@ export default {
 </script>
 
 <style>
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
 /* media rules */
     @media only screen and (max-width: 600px){
         .px-5{
