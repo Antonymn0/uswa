@@ -90,8 +90,8 @@
                         <p class="fw-bold">
                             <span class="m-0">{{this.capitalize(lesson.lesson_type)}} lesson with tutor {{this.capitalize(lesson.get_lesson_tutor.first_name)}} </span> 
                             <span class=" m-0 d-flex justify-content-end" style="overflow:auto">
-                                <a :href="lesson.meeting_link" target="blank" class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link && this.getAccount.available_balance > lesson.get_lesson_tutor.hourly_rate && !checkIfLectureUnpaid()">Classroom</a> 
-                                <button v-if="(this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) > 0" class="btn btn-default text-muted border btn-sm m-1" data-bs-target="#paypal-modal" data-bs-toggle="modal" data-bs-dismiss="modal" > Insuficient funds</button> <br>
+                                <a :href="lesson.meeting_link" target="blank" class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link && (this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) > 1 && !checkIfLectureUnpaid()">Classroom</a> 
+                                <button v-if="(this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) < 1" class="btn btn-default text-muted border btn-sm m-1" data-bs-target="#paypal-modal" data-bs-toggle="modal" data-bs-dismiss="modal" > Insuficient funds</button> <br>
                                 <a class="btn btn-secondary btn-sm m-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>  <br>
                                 <button class="btn btn-warning btn-sm my-1" v-if="checkIfLectureUnpaid() && this.getAccount.available_balance > lesson.get_lesson_tutor.hourly_rate" @click.prevent="this.sendTutorLecturePayments(lesson)">Pay tutor</button>
                             </span>
@@ -113,7 +113,7 @@
                                     </span>
                                 </p>
                             </div>
-                            <p class="text-muted small p-2"> This tutor hasnt defined any lectures yet. Defined lectures for this lesson will appear here</p>
+                            <p class="text-muted small p-2"> This tutor hasnt set any lectures yet. Defined lectures for this lesson will appear here</p>
                         </div>  
                         <!-- <p class="py-3 small">Date started : {{lesson.lessons_start_date}}</p>  -->
                         <a href="#" class="text-warning mt-3 float-end  text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
