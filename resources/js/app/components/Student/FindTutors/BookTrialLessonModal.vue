@@ -40,7 +40,7 @@
                     <span class="fw-bold"> Note: </span>
                     <span> 
                       <ul>
-                        <li>All trial lessons are limited to 1hr. </li>
+                        <li>All trial lessons are limited to 20 mins. </li>
                         <li>This is to help you test the tutor and see if you like them. </li>
                         <li>If you dont like the tutor you can always find another. </li>
                         <li>We emphasize you to watch the tutor introduction video before booking a lesson with them. </li>
@@ -156,9 +156,8 @@ export default {
             this.errors = {};
             this.testTimeLimit() ;
             this.validateDate();
-            this.$store.dispatch('fetchLocalAccount');
             if(this.getAccount.available_balance < this.tutor.hourly_rate)
-            { alert('Insufficient account balance! \nYour account must have a balance of atleast $' + this.tutor.hourly_rate + ' to cover for the cost of your first lesson.'); return;}
+            { alert('Insufficient account balance! \nYour account must have a balance of atleast $' + this.tutor.hourly_rate + '' + this.getAccount.available_balance + ' to cover for the cost of your first lesson.'); return;}
 
             if(!this.date) this.errors.date = "Date field is required";
             if(!this.time.from) this.errors.time_limit = "Time selection is required";           
@@ -173,6 +172,7 @@ export default {
                 form_data.append('student_timezone', this.$store.state.user.user.timezone);
                 form_data.append('tutor_id', this.tutor.id);
                 form_data.append('tutor_confirm', 'pending');
+                form_data.append('duration', '20');
                 form_data.append('tutor_timezone', this.tutor.timezone);           
             if(!confirm('Book a trial lesson with this tutor?')) return;
             this.spinner.book_lesson = true;

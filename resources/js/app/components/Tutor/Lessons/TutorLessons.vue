@@ -374,7 +374,7 @@ export default {
             form_data.append('topic', trial_lesson.lesson_type);
             form_data.append('type', 2);
             form_data.append('start_time', trial_lesson.start_date);
-            form_data.append('duration', trial_lesson.duration);
+            form_data.append('duration', '20');
 
             axios.get('/api/zoom/meeting/create', form_data)
             .then(response => {
