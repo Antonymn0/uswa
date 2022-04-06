@@ -22,8 +22,7 @@ export default {
             this.show_message = false;
             setInterval(() => {                                              
                 if(this.getUser.registration == 'complete') return;
-                if(this.getUser.role !== 'tutor') return;
-                else this.show_message = true
+                if(this.getUser.role == 'tutor') this.show_message = true;               
             }, 5000);            
         }
     },

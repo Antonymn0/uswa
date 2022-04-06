@@ -156,19 +156,18 @@ export default {
             this.errors = {};
             this.testTimeLimit() ;
             this.validateDate();
+            this.$store.dispatch('fetchLocalAccount');
             if(this.getAccount.available_balance < this.tutor.hourly_rate)
             { alert('Insufficient account balance! \nYour account must have a balance of atleast $' + this.tutor.hourly_rate + ' to cover for the cost of your first lesson.'); return;}
 
             if(!this.date) this.errors.date = "Date field is required";
-            if(!this.time.from) this.errors.time_limit = "Time selection is required";
-            // if(!this.time.to) this.errors.time_limit = "Time selection is required";            
+            if(!this.time.from) this.errors.time_limit = "Time selection is required";           
             if(!this.lesson_type) this.errors.lesson_type = "Language selection is required";  
 
             if(Object.keys(this.errors).length) return;
             var form_data = new FormData();
                 form_data.append('lesson_date', this.date);
                 form_data.append('start_time', this.time.from);
-                // form_data.append('end_time', this.time.to);
                 form_data.append('lesson_type', this.lesson_type);
                 form_data.append('student_id', this.$store.state.user.user.id);
                 form_data.append('student_timezone', this.$store.state.user.user.timezone);
@@ -195,8 +194,7 @@ export default {
               console.log(error.response);
               this.errors.error = "Error: Something went wrong. Please try again later."
             });
-        },
-       
+        },       
     },
     mounted(){
        //
