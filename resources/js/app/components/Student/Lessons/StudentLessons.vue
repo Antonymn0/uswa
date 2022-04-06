@@ -206,7 +206,7 @@
         </div>
         <div class="modal-body mx-auto">
             <div class="w-auto mx-uato text-left py-3">
-                <label class="py-2  ">Topup your account with $10 via Paypal: </label>
+                <label class="py-2  ">Topup your account via Paypal: </label>
                  <div class="py-2 small">
                         <span>
                             <input type="radio" name="amount" id="5" value='5' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
