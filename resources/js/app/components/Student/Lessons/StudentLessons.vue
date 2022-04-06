@@ -586,7 +586,7 @@ export default {
             form_data.append('trial_lesson', JSON.stringify(trial_lesson));
 
             // Call  server to capture the transaction            
-            axios.post('/api/transfer-payments/', form_data)
+            axios.post('/api/transfer-payments', form_data)
             .then(response=>{                
                 this.success.process_payment = 'Success,  Please  go ahead and schedule your lessons with the tutor!'                     
                 this.$store.dispatch('fetchLocalAccount');
