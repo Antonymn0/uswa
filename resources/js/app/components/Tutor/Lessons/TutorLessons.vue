@@ -95,7 +95,7 @@
                         <span class="m-0">{{this.capitalize(lesson.lesson_type)}} lessons with tutor {{this.capitalize(lesson.get_lesson_student.first_name)}} </span> 
                         <span class="d-flex m-0 ">
                             <a :href="lesson.meeting_link" target="blank" v-if="lesson.meeting_link && ! this.checkIfLectureUnpaid()" class="btn btn-secondary btn-sm m-1">Classroom</a> <br>
-                            <button class="btn btn-default m-1 btn-sm border " v-if="this.checkIfLectureUnpaid()" @click.pevent="showArrearsTip()">Arrears </button>
+                            <button class="btn btn-default m-1 btn-sm border " v-if="this.checkIfLectureUnpaid()" @click.prevent="showArrearsTip()">Arrears </button>
                             <a class="btn btn-secondary btn-sm m-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>
                         </span>
                     </p>
@@ -126,8 +126,7 @@
                             <button class="btn btn-sm btn-primary form-control my-1" v-if="isAllLecturesComplete(lesson.lectures, this.completed_lectures, lesson)" @click.prevent="markLessonComplete( lesson)"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.lesson_complete"></span> Mark this lesson complete </button> 
                         </div>                       
                            <p class="text-muted small p-5" v-else> You havent defined any lectures yet. Click <span class="text-primary underline" data-bs-toggle="modal" data-bs-target="#lecturesModal" style="cursor:pointer"> here to define</span> </p>
-                    </div>
-                   
+                    </div>                   
                   </div>
               </div>              
           </div>
@@ -257,7 +256,7 @@ export default {
           
         },
         showArrearsTip(){
-            alert('Student hasnt cleared for previous lectures arrears yet');
+            alert("This student hasn't cleared the previous lectures arrears yet!");
         },
         capitalize(string) {
             if(string) return string.charAt(0).toUpperCase() + string.slice(1);

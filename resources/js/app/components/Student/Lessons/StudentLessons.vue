@@ -637,9 +637,7 @@ export default {
                                     currency_code: "USD",
                                     value: amount
                                 },
-                                // payee: {
-                                //     merchant_id :  'VMJSV3L3DRE9A'
-                                // },
+                                
                             }],
                             application_context: {
                                 shipping_preference: 'NO_SHIPPING',
@@ -654,13 +652,9 @@ export default {
                         actions.order.authorize().then(function(authorization) {
                             // Get the authorization id
                             var authorizationID = authorization.purchase_units[0].payments.authorizations[0].id
-                            axios.post('/api/update/local-account/', authorization )
-                            .then(response=>{      
-                                console.log(response); 
-                                window.location.reload()
-                                this.$store.dispatch('fetchLocalAccount');
-                                console.log('Success, payment processed!');                 
-                                this.success.payment = 'Success, payment processed!';
+                            axios.post('/api/update/local-account', authorization )
+                            .then(response=>{    
+                                window.location.reload();                                
                             })
                             .catch(error=>{                       
                                 console.log(error.response);
