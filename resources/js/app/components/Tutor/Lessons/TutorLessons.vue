@@ -95,7 +95,7 @@
                         <span class="m-0">{{this.capitalize(lesson.lesson_type)}} lessons with tutor {{this.capitalize(lesson.get_lesson_student.first_name)}} </span> 
                         <span class="d-flex m-0 ">
                             <a :href="lesson.meeting_link" target="blank" v-if="lesson.meeting_link && ! this.checkIfLectureUnpaid()" class="btn btn-secondary btn-sm m-1">Classroom</a> <br>
-                            <div class="btn btn-default m-1 btn-sm border tooltip" v-if="this.checkIfLectureUnpaid()">Arrears <span class="tooltiptext">Student hasnt paid for previous lectures yet!</span></div>
+                            <button class="btn btn-default m-1 btn-sm border " v-if="this.checkIfLectureUnpaid()" @click.pevent="showArrearsTip()">Arrears </button>
                             <a class="btn btn-secondary btn-sm m-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>
                         </span>
                     </p>
@@ -255,6 +255,9 @@ export default {
               return local_time;              
           }  
           
+        },
+        showArrearsTip(){
+            alert('Student hasnt cleared for previous lectures arrears yet');
         },
         capitalize(string) {
             if(string) return string.charAt(0).toUpperCase() + string.slice(1);
@@ -485,32 +488,7 @@ export default {
 </script>
 
 <style>
-/* Tooltip container */
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
-}
 
-/* Tooltip text */
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
- 
-  /* Position the tooltip text - see examples below! */
-  position: absolute;
-  z-index: 1;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
 /* media rules */
     @media only screen and (max-width: 600px){
         .px-5{
