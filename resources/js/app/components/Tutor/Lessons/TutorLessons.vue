@@ -351,6 +351,7 @@ export default {
         markLessonComplete(lesson){
             if(lesson.status == 'complete') {alert('Lesson already marked complete'); return;}
             if(! confirm('Mark this lesson complete? \n This record will be available in your completed lessons.')) return;
+            if(! this.checkIfLectureUnpaid()) {alert("Failed, This lesson has pending unpaid lecture arreas."); return;}
             this.spinner.lesson_complete = true;
             axios.get('/api/lesson/mark-complete/' + lesson.id)
             .then(response=>{
