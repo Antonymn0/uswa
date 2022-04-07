@@ -1,11 +1,11 @@
 <template>
-  <div class="infos text-center tex-secondary">
+  <div class="infos text-center text-muted">
       <span data-bs-toggle="modal" data-bs-target="#staticBackdrop1"> How to choose an ideal tutor</span>
       <span data-bs-toggle="modal" data-bs-target="#staticBackdrop2">How you can pay for lessons</span>
       <span data-bs-toggle="modal" data-bs-target="#staticBackdrop3">Where lessons take place</span>
       <span data-bs-toggle="modal" data-bs-target="#staticBackdrop4">How we verify our tutors</span>
   </div>
-  <div>
+  <div class="">
       <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content mx-2">

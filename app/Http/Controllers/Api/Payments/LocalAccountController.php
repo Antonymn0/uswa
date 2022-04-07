@@ -120,7 +120,6 @@ class LocalAccountController extends Controller
      * Get user account balance
      */
     public function getAccountBalance(Request $request){
-
         $account = LocalAccount::where('user_id', $request->user()->id )->first();
         return response()->json([
             'success' => true,
@@ -145,31 +144,12 @@ class LocalAccountController extends Controller
                 'data' => false
             ],500);
             }
-            
-        //process payment  transfer in local account
-        // $student_data = [
-        //     'last_transaction_date' => now(),
-        //     'last_transaction_method' => 'Uswa:local',
-        //     'last_amount_transacted' => $trial_lesson->get_tutor->hourly_rate,
-        //     'balance_before' => $student_local_account->available_balance,
-        //     'available_balance' => $student_local_account->available_balance - $trial_lesson->get_tutor->hourly_rate, //subtract amount
-        //     'balance_after' => $student_local_account->available_balance - $trial_lesson->get_tutor->hourly_rate,
-        // ];
-        // $tutor_data = [
-        //     'last_transaction_date' => now(),
-        //     'last_transaction_method' => 'Uswa:local',
-        //     'last_amount_transacted' => $trial_lesson->get_tutor->hourly_rate,
-        //     'balance_before' => $tutor_local_account->available_balance,
-        //     'available_balance' => $tutor_local_account->available_balance + $trial_lesson->get_tutor->hourly_rate, //add amount
-        //     'balance_after' => $tutor_local_account->available_balance + $trial_lesson->get_tutor->hourly_rate,
-        // ];
+
 
         $trial_lesson  = TrialLesson::findOrfail($trial_lesson->id); //fetch fresh record to update
         
         //update accounts
         $trial_lesson->update([ 'is_student_impressed' => true ]);
-        // $student_local_account->update($student_data);
-        // $tutor_local_account->update($tutor_data);
 
         return response()->json([
             'success' => true,
@@ -242,7 +222,7 @@ class LocalAccountController extends Controller
             'user_id' => $user->id,
             'transaction_id' => (time() +11),
             'transaction_type' => 'local',
-            'payment_method' => 'Uswa:local',
+            'payment_method' => 'Local',
             'amount_transacted' => $amount_due,
             'transacted_from' => 'You',
             'transacted_to' =>  'Tutor',
@@ -258,8 +238,8 @@ class LocalAccountController extends Controller
         $tutor_trans_hist_data =[
             'user_id' => $tutor_local_account->user_id,
             'transaction_id' => (time() +22),
-            'transaction_type' => 'Uswa:local',
-            'payment_method' => 'local',
+            'transaction_type' => 'Local',
+            'payment_method' => 'Local',
             'amount_transacted' => $final_amount_due,
             'transacted_from' => 'Student',
             'transacted_to' =>  'You',
@@ -276,8 +256,7 @@ class LocalAccountController extends Controller
 
         // save transaction history data
         $student_transaction_history = TransactionHistory::create($student_trans_hist_data); 
-        $tutor_transaction_history = TransactionHistory::create($tutor_trans_hist_data); 
-
+        $tutor_transaction_history = TransactionHistory::create($tutor_trans_hist_data);
         
         // update lecture payment status
         foreach ($lectures as $lec) {

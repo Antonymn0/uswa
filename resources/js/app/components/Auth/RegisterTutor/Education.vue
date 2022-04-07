@@ -180,8 +180,8 @@ export default {
             this.image = null;
         },
         validateForm(){
-            this.errors={};this.errors={};
-            if( this.i_dont_have_certificate) return;
+            this.errors={}
+            if(this.i_dont_have_certificate == true) return;
 
             if(! this.institution) this.errors.institution = "This field is required";
             if(! this.level) this.errors.level = "This field is required";

@@ -10,13 +10,15 @@ use App\Http\Requests\Lecture\ValidateLecturerequest;
 class LectureController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the lecture resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lectures = Lecture::paginate(env('API_PAGINATION', 10));
+        $user = $request->user();
+        $lectures = Lecture::where('tutor_id', $user->id)
+                    ->paginate(env('API_PAGINATION', 10));
         return response()->json([
             'success'=> true,
             'message' => 'A list of lectures',

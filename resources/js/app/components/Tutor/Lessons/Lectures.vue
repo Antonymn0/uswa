@@ -50,6 +50,7 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-success px-3" @click.prevent="this.fetchLectures()">Refresh</button>
                 <button type="button" class="btn btn-danger px-3" data-bs-dismiss="modal">Close</button>
             </div>
             </div>
@@ -205,6 +206,7 @@ export default {
         fetchLectures(){
             axios.get('/api/lectures')
             .then(response=>{
+                console.log(response.data);
                 this.lectures= response.data.data.data;
             })
             .catch(response=>{

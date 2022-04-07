@@ -61,7 +61,7 @@
                         <small class="text-success">{{this.success.update}}</small> 
                         <small class="text-danger">{{this.errors.update}}</small> <br/>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary"> <span class="spinner-border spinner-border-sm" v-if="this.spinner"></span> Update</button>
                     </div>
                 </form>
             </div>
@@ -88,6 +88,7 @@ export default {
                 city:   '',
                 image:'',
                 img_preview: '',
+                spinner:false
             },
             errors:{},
             success:{} ,
@@ -134,13 +135,16 @@ export default {
             if(this.form.image) form_data.append('image', this.form.image);
             form_data.append('_method', 'PUT');
 
+            this.spinner = true;
             axios.post('/api/user/' + this.$store.state.user.user.id, form_data)
             .then( response => {
             if( response.status == 200){
+                this.spinner= false;
                 this.success.update = "Success, details updated.";
             }
             })
             .catch( error => {
+                this.spinner= false;
                this.errors.update = "Failed, details not updated!.";
                 console.log(error.response);                    
             });

@@ -1,15 +1,15 @@
 <template>
   <div class="parent">
-      <h5>   {{this.capitalize(this.search_term)}} tutors </h5>
+      <h5 class="fw-bold text-muted">   {{this.capitalize(this.search_term)}} tutors </h5>
       <!-- ----------------------------------------------------------------------------------------------------- -->
-      <div v-if="Object.keys(this.current_tutors).length">
-      <div class="mobile-outer " v-for="(tutor, index) in this.current_tutors" :key="index" style="overflow:hidden">
-          <div class="mobile   ">              
-            <div class="bg-white  inner rounded">
+      <div class="row " v-if="Object.keys(this.current_tutors).length">
+      <div class="col-md-3" v-for="(tutor, index) in this.current_tutors" :key="index" style="overflow:hidden">
+          <div class=" h-100  ">              
+            <div class="bg-white p-1 inner rounded h-100 ">
                 <div class="d-flex align-items-center">
                     <div class="px-2 pt-3">
-                        <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem;" v-if="!tutor.image">                        
-                        <img :src="tutor.image" alt="" style="width:6rem; height:7rem;"  v-if="tutor.image">  
+                        <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem; background:cover" v-if="!tutor.image">                        
+                        <img :src="tutor.image" alt="" style="width:6rem; height:6rem;"  v-if="tutor.image">  
                     </div>
                     <div class="pl-2 ms-2">
                         <h5 class="d-flex align-items-center">
@@ -55,7 +55,7 @@
                     <span> Description: </span>
                     <span>{{ this.capitalize(tutor.description)}}  </span>
                 </div>
-                <div class="d-flex align-items-center py-2">                    
+                <div class="d-flex   p-2 ">                    
                     <span> <button class="btn btn-danger rounded" @click.prevent="updateCurrent_tutor(tutor)" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Intro</button> &nbsp; </span> 
                     <span> <button class="btn btn-danger  rounded"  @click.prevent="updateCurrent_tutor(tutor)" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book  lesson</button> &nbsp; </span> 
                     <span> <button class='btn btn-primary '  @click.prevent="updateCurrent_tutor(tutor)"  data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span> 
@@ -209,10 +209,9 @@ export default {
         margin: 0 2rem;
     }
 
-    .mobile{
-        width:25%;
-        float:left;    
-    }
+
+
+  
     .mobile .inner{
         padding:  .7rem;
         margin:  .3rem .2rem ;

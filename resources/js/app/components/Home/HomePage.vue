@@ -43,7 +43,7 @@
      <div class="clearfix">
     <h3 class="text-center fw-bold ">How Uswa works</h3>
 
-   <div class="row mx-3 py-2 how-uswa-work clearfix">
+   <div class="row mx-5 py-2 how-uswa-work clearfix">
       <div class="col-md-2  my-3 text-center">
         <span class="text-center number "> 1</span>
       </div>
