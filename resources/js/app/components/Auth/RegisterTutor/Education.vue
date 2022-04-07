@@ -139,7 +139,6 @@ export default {
                 form_data.append('last_name', this.$store.state.signupProcess_about.about.last_name);
                 form_data.append('has_higher_education', this.$store.state.signupProcess_education.education.i_dont_have_certificate);
                 form_data.append('higher_education_level', this.$store.state.signupProcess_education.education.level);
-                // form_data.append('higher_education_type', this.$store.state.signupProcess_education.education.type);
                 form_data.append('higher_education_study_from', this.$store.state.signupProcess_education.education.study_from);
                 form_data.append('higher_education_study_to', this.$store.state.signupProcess_education.education.study_to);
                 form_data.append('higher_education_specialty', this.$store.state.signupProcess_education.education.specialty);
@@ -181,12 +180,11 @@ export default {
         },
         validateForm(){
             this.errors={}
-            if(this.i_dont_have_certificate == true) return;
+            if(this.i_dont_have_certificate ) return;
 
             if(! this.institution) this.errors.institution = "This field is required";
             if(! this.level) this.errors.level = "This field is required";
             if(! this.specialty) this.errors.specialty = "This field is required";
-            if(! this.type) this.errors.type = "This field is required";
             if(! this.study_from) this.errors.study_from = "This field is required";
             if(! this.study_to) this.errors.study_to = "This field is required";
         },
