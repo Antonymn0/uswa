@@ -184,13 +184,13 @@ class LocalAccountController extends Controller
         $student_local_account = LocalAccount::where('user_id', $user->id)->first();
         $tutor_local_account = LocalAccount::where('user_id', $lesson->tutor_id)->first();
 
-        if($student_local_account->available_balance < $final_amount_due)
+        if($student_local_account->available_balance < $amount_due)
             { // if less funds return success false
                 return response()->json([
                     'success' =>false,
                     'message' => "Insufficent funds",
                     'data'=> [
-                        'final_amount_due' => $final_amount_due,
+                        'amount_due' => $amount_due,
                         'lecture_count' => $lecture_count,
                     ]
                 ],402);

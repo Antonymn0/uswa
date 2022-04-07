@@ -18,6 +18,7 @@ class TutorTrialLessonController extends Controller
         $trail_lesson = TrialLesson::with('getStudent')
             ->with('getStudent')
             ->where('tutor_id', $user->id)
+            ->orderBy('created_at', 'desc')
             ->paginate(env('API_PAGINATION', 10));
 
         return response()->json([

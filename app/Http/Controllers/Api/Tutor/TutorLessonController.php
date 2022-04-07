@@ -19,6 +19,7 @@ class TutorLessonController extends Controller
             ->with('lectures')
             ->with('completedLectures')
             ->where('tutor_id', $user->id)
+            ->orderBy('created_at', 'desc')
             ->paginate(env('API_PAGINATION', 10));
 
         return response()->json([

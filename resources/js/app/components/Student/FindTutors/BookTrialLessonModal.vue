@@ -145,8 +145,8 @@ export default {
         },
         validateDate(){
             delete this.errors.date;
-            if( moment(this.date).isBefore(moment()) ) this.errors.date = "Invalid date selection."
-            if( moment(this.date).isAfter(moment().add(5, 'days')) ) this.errors.date = "This activity should happen in 5 days max."
+            if( moment(this.date).isBefore(moment().subtract(1, 'days')) ) this.errors.date = "Invalid date selection."
+            if( moment(this.date).isAfter(moment().add(5, 'days')) ) this.errors.date = "This activity should happen within 5 days max."
         },
         bookTrialLesson(){
             if(!this.isLogedIn) { 
