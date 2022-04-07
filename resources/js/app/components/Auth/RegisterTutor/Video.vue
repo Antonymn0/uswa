@@ -8,7 +8,7 @@
                 <div>                   
                     <p class="shadow" style="overflow:hidden"> 
                        <span class="w-100" style="position:absolute" v-if="!this.video_preview"> <small class="" style="position:absolute;top:6rem; left:1.2rem; ">Select a video or paste a link  below.</small></span> 
-                        <iframe width="360" height="260"  :src="video_preview" >  </iframe>
+                        <iframe width="360" height="260"  :src="video_preview"  autoplay="false">  </iframe>
                         
                      </p>
                      <small class="text-danger">{{this.errors.video}}</small>

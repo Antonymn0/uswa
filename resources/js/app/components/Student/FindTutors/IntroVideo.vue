@@ -12,10 +12,10 @@
                     <div class="col-md-6 ">
                         <h6>Introduction Video</h6>
                         <p class="mb-0 rounded" style="overflow:hidden" v-if="this.tutor.introduction_video">                        
-                            <iframe width="400" height="300"  :src="this.tutor.introduction_video" class="shadow bg-dark rounded" >  </iframe>                    
+                            <iframe width="400" height="300"  :src="this.tutor.introduction_video" autoplay="false" class="shadow bg-dark rounded" >  </iframe>                    
                         </p>
                         <p class="mb-0 rouded" style="overflow:hidden" v-if="this.tutor.introduction_video_url"> 
-                            <iframe  width="400" height="300"  :src="this.tutor.introduction_video_url" class="shadow bg-dark rouded"  v-if="this.tutor.introduction_video_url">  </iframe>                        
+                            <iframe  width="400" height="300"  :src="this.tutor.introduction_video_url" autoplay="false" class="shadow bg-dark rouded"  v-if="this.tutor.introduction_video_url">  </iframe>                        
                         </p>
                         <p v-if="!this.tutor.introduction_video && !this.tutor.introduction_video_url" class="text-muted small  py-5 mt-5">This tutor has not uploded an introduction video yet</p>
                     </div>
