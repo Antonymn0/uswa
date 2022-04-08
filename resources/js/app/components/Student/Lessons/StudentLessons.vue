@@ -92,7 +92,7 @@
                         <p class="fw-bold">
                             <span class="m-0">{{this.capitalize(lesson.lesson_type)}} lesson with tutor {{this.capitalize(lesson.get_lesson_tutor.first_name)}} </span> 
                             <span class=" m-0 d-flex justify-content-end" style="overflow:auto">
-                                <a :href="lesson.meeting_link" target="blank" class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link && (this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) > 1 && !checkIfLectureUnpaid()">Classroom</a> 
+                                <a :href="lesson.meeting_link" target="blank" class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link && (this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) > 1 && !checkIfLectureUnpaid(lesson)">Classroom</a> 
                                 <button v-if="(this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) < 1" class="btn btn-default text-muted border btn-sm m-1" data-bs-target="#paypal-modal" data-bs-toggle="modal" data-bs-dismiss="modal" > Insuficient funds</button> <br>
                                 <a class="btn btn-secondary btn-sm m-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>  <br>
                                 <button class="btn btn-warning btn-sm my-1" v-if="checkIfLectureUnpaid(lesson) && (this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) >= 0" @click.prevent="this.sendTutorLecturePayments(lesson)">Pay tutor</button>
@@ -334,6 +334,9 @@ export default {
       
         isLectureComplete(lecture, lesson){ //determine if the lecture is 'marked' completed or otherwise
             var css_class = false;
+            if(!lesson) return;
+            if(! Object.keys(this.completed_lectures).length) return;
+
             this.completed_lectures.forEach(lec=>{                
                 if(lec.lecture_id == lecture.id && lec.lesson_id == lesson.id)   css_class = true;
             });
@@ -341,12 +344,13 @@ export default {
         },
         checkIfLectureUnpaid(lesson){             
             if(!lesson) return;
+            if(! Object.keys(this.completed_lectures).length) return;
+
             var unpaid = false;
             this.completed_lectures.forEach(lec=>{                
                 if(lec.payment_status == 'unpaid' && lec.lesson_id == lesson.id)   unpaid = true;//if any lecture is unpaid set true
             });
-            return unpaid;
-           
+            return unpaid;           
         },
         fetchTrialLessons(){
             axios.get('/api/students/fetch-lessons/trial')

@@ -96,8 +96,8 @@
                     <p class="fw-bold">
                         <span class="m-0">{{this.capitalize(lesson.lesson_type)}} lessons with tutor {{this.capitalize(lesson.get_lesson_student.first_name)}} </span> 
                         <span class="d-flex m-0 ">
-                            <a :href="lesson.meeting_link" target="blank" v-if="lesson.meeting_link && ! this.checkIfLectureUnpaid()" class="btn btn-secondary btn-sm m-1">Classroom</a> <br>
-                            <button class="btn btn-default m-1 btn-sm border " v-if="this.checkIfLectureUnpaid()" @click.prevent="showArrearsTip()">Arrears </button>
+                            <a :href="lesson.meeting_link" target="blank" v-if="lesson.meeting_link && ! this.checkIfLectureUnpaid(lesson)" class="btn btn-secondary btn-sm m-1">Classroom</a> <br>
+                            <button class="btn btn-default m-1 btn-sm border " v-if="this.checkIfLectureUnpaid(lesson)" @click.prevent="showArrearsTip()">Arrears </button>
                             <a class="btn btn-secondary btn-sm m-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>
                         </span>
                     </p>
@@ -344,17 +344,17 @@ export default {
             is_lesson_complete = Object.keys(lectures).length == completed_count; // true or false
             return is_lesson_complete;
         },
-        checkIfLectureUnpaid(){
+        checkIfLectureUnpaid(lesson){
             var unpaid = false;
             this.completed_lectures.forEach(lec=>{                
-                if(lec.payment_status == 'unpaid')  unpaid = true;
+                if(lec.payment_status == 'unpaid' && lec.lesson_id == lesson.id)  unpaid = true;
             });
             return unpaid;           
         },
         markLessonComplete(lesson){
             if(lesson.status == 'complete') {alert('Lesson already marked complete'); return;}
             if(! confirm('Mark this lesson complete? \n This record will be available in your completed lessons.')) return;
-            if(! this.checkIfLectureUnpaid()) {alert("Failed, This lesson has pending unpaid lecture arreas."); return;}
+            if(! this.checkIfLectureUnpaid(lesson)) {alert("Failed, This lesson has pending unpaid lecture arreas."); return;}
             this.spinner.lesson_complete = true;
             axios.get('/api/lesson/mark-complete/' + lesson.id)
             .then(response=>{
