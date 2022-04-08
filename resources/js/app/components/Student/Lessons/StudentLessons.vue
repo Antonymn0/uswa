@@ -340,6 +340,7 @@ export default {
             return css_class;
         },
         checkIfLectureUnpaid(lesson){ //if any lecture is unpaid set true
+        console.log(lesson);
             var unpaid = false;
             this.completed_lectures.forEach(lec=>{                
                 if(lec.payment_status == 'unpaid' && lec.lesson_id == lesson.id)   unpaid = true;
