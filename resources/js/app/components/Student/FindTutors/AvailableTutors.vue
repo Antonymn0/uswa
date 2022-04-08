@@ -51,7 +51,7 @@
                     <span>{{tutor.subject}} &nbsp; </span>  <span class="alert-primary px-1 rounded">  {{ this.capitalize(tutor.subject_level)}} </span>  
                 </div>
                 <!-- -------------------------- -->
-                <div class="px-2">
+                <div class="px-2" style="min-height:5rem">
                     <span> Description: </span>
                     <span>{{ this.capitalize(tutor.description)}}  </span>
                 </div>
