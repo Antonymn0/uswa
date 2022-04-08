@@ -13,9 +13,9 @@
      
     <div v-if="Object.keys(this.current_trial_lessons).length"> 
     <div class="row px-3 m-1">               
-        <div class="col-md-4 row p-2"  v-for="(trial_lesson, index) in this.current_trial_lessons" :key="index">              
-            <div class="border rounded p-3 m-1">
-                <div>
+        <div class="col-md-4 row p-1"  v-for="(trial_lesson, index) in this.current_trial_lessons" :key="index">              
+            <div>
+                <div class="border-line rounded p-3 m-1 h-100">
                     <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
                         <h6 class="py-2 fw-bold"> 
                             <span>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
@@ -78,8 +78,8 @@
       <div v-if="Object.keys(this.current_lessons).length"> 
         <div class="row px-4 ">      
             <div class="col-md-4 row p-3"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'ongoing'">              
-                <div class="border rounded p-3">
-                    <div>
+                <div>
+                    <div class="border-line rounded p-3 h-100">
                         <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
                             <h6 class="py-2 fw-bold"> 
                                 <span>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
@@ -93,7 +93,7 @@
                                 <a :href="lesson.meeting_link" target="blank" class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link && (this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) > 1 && !checkIfLectureUnpaid()">Classroom</a> 
                                 <button v-if="(this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) < 1" class="btn btn-default text-muted border btn-sm m-1" data-bs-target="#paypal-modal" data-bs-toggle="modal" data-bs-dismiss="modal" > Insuficient funds</button> <br>
                                 <a class="btn btn-secondary btn-sm m-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>  <br>
-                                <button class="btn btn-warning btn-sm my-1" v-if="checkIfLectureUnpaid() && (this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) >= 0" @click.prevent="this.sendTutorLecturePayments(lesson)">Pay tutor</button>
+                                <button class="btn btn-warning btn-sm my-1" v-if="checkIfLectureUnpaid(lesson) && (this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) >= 0" @click.prevent="this.sendTutorLecturePayments(lesson)">Pay tutor</button>
                             </span>
                         </p>
                         <!-- -------------------- Lectures------------------------  -->
@@ -170,8 +170,8 @@
      <p class="p-3 small text-muted text-center"> Completed lessons will appear here </p>
       <div class="row p-3 " > 
           <div class="col-md-4 row p-2"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'completed'">              
-              <div class="border rounded p-3">
-                  <div>
+              <div>
+                  <div class="border-line rounded p-3 h-100">
                     <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
                         <h6 class="py-2 fw-bold"> 
                             <span>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
@@ -336,12 +336,11 @@ export default {
             });
             return css_class;
         },
-        checkIfLectureUnpaid(){ //if any lecture is unpaid set true
+        checkIfLectureUnpaid(lesson){ //if any lecture is unpaid set true
             var unpaid = false;
             this.completed_lectures.forEach(lec=>{                
-                if(lec.payment_status == 'unpaid')   unpaid = true;
+                if(lec.payment_status == 'unpaid' && lec.lesson_id == lesson.id)   unpaid = true;
             });
-            console.log(unpaid);
             return unpaid;
            
         },
@@ -679,8 +678,7 @@ export default {
         this.fetchZoomAuthToken();
         this.getZoomCredentials();
         this.fetchPaypalClientID();
-        this.shedulefetchRefresh();
-        
+        this.shedulefetchRefresh();        
     }
 
 }
@@ -698,6 +696,12 @@ export default {
     }
     .three-dot:hover{
          color: rgb(116, 114, 114);
+    }
+    .border-line{
+        border:1px solid rgb(231, 231, 231);
+    }
+    .border-line:hover{
+        border:1px solid rgb(248, 186, 186);
     }
 
     /* media rules */

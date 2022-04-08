@@ -10,15 +10,15 @@
         <small class="alert-success p-2" v-if="this.success.shedule_meeting">{{this.success.shedule_meeting}}</small>
       <small class="alert-danger p-2" v-if="this.success.shedule_meeting">{{this.errors.meeting_sheduled}}</small>
       <div class="row p-3 ">          
-          <div class="col-md-4 row p-2"  v-for="(trial_lesson, index) in this.current_trial_lessons" :key="index">              
-              <div class="border rounded p-3 m-1">
-                  <div>
+          <div class="col-md-4 row p-1"  v-for="(trial_lesson, index) in this.current_trial_lessons" :key="index">              
+              <div>
+                  <div class="border-line rounded p-2 h-100">
                     <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
                         <h6 class="py-2 fw-bold"> 
                             <span>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
                             {{this.capitalize(trial_lesson.get_student.first_name)}}
                         </h6>
-                        <small class='text-muted fw-light'> <span class="small  fw-bold">  Status:</span> {{trial_lesson.tutor_confirm}} </small> 
+                        <small class='text-muted small fw-light'> <span class="small  fw-bold">  Status:</span> {{trial_lesson.tutor_confirm}} </small> 
                     </span>
                        
                     <p class="fw-bold">{{this.capitalize(trial_lesson.get_student.first_name)}} wants to book  {{this.capitalize(trial_lesson.lesson_type)}}  lessons with you</p>
@@ -80,9 +80,9 @@
      <small class="alert-danger text-center p-2 rounded" v-if="this.errors.lesson_complete"> {{this.errors.lesson_complete}} </small>
      <div v-if="Object.keys(this.current_lessons).length  "> 
       <div class="row p-3 ">            
-          <div class="col-md-4 row p-2"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'ongoing'">         
-              <div class="border rounded p-3">
-                  <div>
+          <div class="col-md-4 row p-1"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'ongoing'">         
+              <div>
+                  <div class="border-line rounded p-3 h-100">
                     <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
                         <h6 class="py-2 fw-bold"> 
                             <span>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
@@ -146,10 +146,10 @@
   <div class="bg-white mt-3 ">
       <h4 class="alert-secondary w-100 py-3 px-3">Completed <span class="float-end mx-3"> <button class="btn btn-sm btn-primary" @click.prevent="fetchLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
       <div class="row p-3 "> 
-          <div class="col-md-4 row p-2"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'completed'">                
+          <div class="col-md-4 row p-1"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'completed'">                
               <div v-show="lesson.status == 'completed'">
-              <div class="border rounded p-3">
-                  <div>
+              <div>
+                  <div class="border-line rounded p-3 h-100">
                       <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
                           <h6 class="py-2 fw-bold"> 
                               <span>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
@@ -488,7 +488,12 @@ export default {
 </script>
 
 <style>
-
+.border-line{
+        border:1px solid rgb(231, 231, 231);
+    }
+.border-line:hover{
+    border:1px solid rgb(248, 186, 186);
+}
 /* media rules */
     @media only screen and (max-width: 600px){
         .px-5{

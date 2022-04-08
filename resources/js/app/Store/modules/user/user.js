@@ -13,7 +13,7 @@ export const user = {
             console.log('User successfully set...');
             console.log('Logged_in: ' + state.is_logedin);
         },
-        unsetUser(state,user=null) {
+        unsetUser(state, user=null) {
             state.user = {};           
             state.is_logedin = false;
             console.log('User Unset...');

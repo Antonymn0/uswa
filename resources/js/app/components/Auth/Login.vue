@@ -77,7 +77,7 @@ methods:{
         .catch(error=>{
           this.spinner=false;
             if(error.response.status == 401){
-              this.$store.commit('unsetUser', user=null);
+              this.$store.commit('unsetUser' );
               this.errors.credentials = error.response.data.message;
             }
             console.log(error.response);
