@@ -339,13 +339,14 @@ export default {
             });
             return css_class;
         },
-        checkIfLectureUnpaid(lesson){ //if any lecture is unpaid set true
-        console.log(lesson);
+        checkIfLectureUnpaid(lesson){             
+            if(!lesson) return;
             var unpaid = false;
             this.completed_lectures.forEach(lec=>{                
-                if(lec.payment_status == 'unpaid' )   unpaid = true;
+                if(lec.payment_status == 'unpaid' && lec.lesson_id == lesson.id)   unpaid = true;//if any lecture is unpaid set true
             });
-            return unpaid;           
+            return unpaid;
+           
         },
         fetchTrialLessons(){
             axios.get('/api/students/fetch-lessons/trial')
