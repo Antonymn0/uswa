@@ -15,7 +15,8 @@
                   <div class="border-line rounded p-2 h-100">
                     <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
                         <h6 class="py-2 fw-bold"> 
-                            <span>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
+                            <span v-if="trial_lesson.get_student.image"> <img :src="trial_lesson.get_student.image" alt="profile pic" style="height:26px; width:26px; border-radius:50%"> </span>
+                            <span v-else>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
                             {{this.capitalize(trial_lesson.get_student.first_name)}}
                         </h6>
                         <small class='text-muted small fw-light'> <span class="small  fw-bold">  Status:</span> {{trial_lesson.tutor_confirm}} </small> 
@@ -85,7 +86,8 @@
                   <div class="border-line rounded p-3 h-100">
                     <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
                         <h6 class="py-2 fw-bold"> 
-                            <span>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
+                            <span v-if="lesson.get_lesson_student.image"> <img :src="lesson.get_lesson_student.image" alt="profile pic" style="height:26px; width:26px; border-radius:50%"> </span>
+                            <span v-else>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
                             {{this.capitalize(lesson.get_lesson_student.first_name)}}
                         </h6>
                         <span class="small"> Status: {{lesson.status}}...</span>
@@ -152,7 +154,8 @@
                   <div class="border-line rounded p-3 h-100">
                       <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
                           <h6 class="py-2 fw-bold"> 
-                              <span>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
+                              <span v-if="lesson.get_lesson_student.image"> <img :src="lesson.get_lesson_student.image" alt="profile pic" style="height:26px; width:26px; border-radius:50%"> </span>
+                              <span v-else>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
                                  Antony mn
                             </h6>
                            <span class="small"> Status: {{lesson.status}}</span>
