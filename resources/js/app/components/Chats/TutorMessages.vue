@@ -161,14 +161,14 @@ export default {
                 console.log(response)  ;              
                 if(response.status == 200){
                     this.current_message_thread = response.data.data.conversation_thread;                   
-                }    console.log(response.data.data.conversation_thread);                           
+                }                               
             })
             .catch(error => {  console.log(error.response);  });
         },
         toggleSeen(message){
             axios.get('/api/student/update-seen/' + message.id)
             .then(response => {
-                console.log('Thread seen toggled');              
+                              
             })
             .catch(error => {  console.log(error.response);   });
         },
@@ -191,7 +191,6 @@ export default {
             .then(response => {
                 if(response.status == 201){
                     this.new_message = null;
-                    console.log(response.data);
                     this.refreshCurrentMessage();
                 }                               
             })
@@ -200,19 +199,15 @@ export default {
         refreshConversation(){
             setInterval(() => {
                 this.fetchMesages();
-            }, 10000);
-
-            setInterval(() => {
                 this.refreshCurrentMessage();
-            }, 5000);
+            }, 10000);
         }
     },
     computed:{
         ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),    
     },
     mounted(){
-        // this.refreshConversation();
-        // this.fetchMesages();
+        this.refreshConversation();
         this.fetchMesages();
     }
 }

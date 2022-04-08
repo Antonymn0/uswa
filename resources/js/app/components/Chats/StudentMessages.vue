@@ -173,7 +173,7 @@ export default {
             .then(response => {                
                 if(response.status == 200){
                     this.current_message_thread = response.data.data.conversation_thread;                   
-                }    console.log(response.data.data.conversation_thread);                           
+                }                               
             })
             .catch(error => {  console.log(error.response);  });
         },
@@ -196,7 +196,6 @@ export default {
             .then(response => {
                 if(response.status == 201){
                     this.new_message = null;
-                    console.log(response.data);
                     this.refreshCurrentMessage();
                 }                               
             })

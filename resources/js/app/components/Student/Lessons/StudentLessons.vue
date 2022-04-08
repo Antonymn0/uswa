@@ -345,8 +345,7 @@ export default {
             this.completed_lectures.forEach(lec=>{                
                 if(lec.payment_status == 'unpaid' )   unpaid = true;
             });
-            return unpaid;
-           
+            return unpaid;           
         },
         fetchTrialLessons(){
             axios.get('/api/students/fetch-lessons/trial')
