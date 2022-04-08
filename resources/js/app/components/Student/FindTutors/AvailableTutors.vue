@@ -209,6 +209,9 @@ export default {
         margin: 0 2rem;
     }
 
+    .hover-card{
+        border: 1px solid rgb(241, 241, 241);
+    }
     .hover-card:hover{
         border: 1px solid rgb(241, 201, 201);
     }
