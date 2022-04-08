@@ -343,7 +343,7 @@ export default {
         console.log(lesson);
             var unpaid = false;
             this.completed_lectures.forEach(lec=>{                
-                if(lec.payment_status == 'unpaid' && lec.lesson_id == lesson.id)   unpaid = true;
+                if(lec.payment_status == 'unpaid' )   unpaid = true;
             });
             return unpaid;
            
