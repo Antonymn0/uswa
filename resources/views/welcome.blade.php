@@ -37,10 +37,10 @@
                 background-color: #CC0000;
             }
             .fonts-red{
-                color: #CC0000;;
+                color: #CC0000;
             }
             .border-red{
-                border: 1px solid #CC0000;;
+                border: 1px solid #CC0000;
             }
             /* -------------------------------- */
             .background-gray{

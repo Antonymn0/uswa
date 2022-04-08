@@ -31,7 +31,7 @@
                                 
                                     <small class="float-end mr-3 text-muted">{{lastInThreadTime(message.conversation_thread)}}</small>
                                 </span>
-                                <span class="p-2 position-absolute end-0" @click.prevent="deleteConversation(message.id)"> <i class="bi bi-trash text-muted" style="cursor:pointer"></i> </span>
+                                <span class="p-2 trash position-absolute end-0" @click.prevent="deleteConversation(message.id)"> <i class="bi bi-trash " style="cursor:pointer"></i> </span>
 
                             </div>
                         </li>                    
@@ -225,7 +225,12 @@ export default {
     font-family:Poppins;
     color:#9699a2;   
  }
-  
+  .trash{
+      color: #9c9b9b !important;
+  }
+  .trash:hover{
+      color: #CC0000 !important;
+  }
 .charts{
     padding:1rem 2rem .2rem;
     margin:.2rem 0;

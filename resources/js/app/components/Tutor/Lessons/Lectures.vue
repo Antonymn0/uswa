@@ -23,7 +23,7 @@
                                 <thead class="p-2">
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Duration</th>
+                                    <th>Duration <small class="text-muted fw-light">(hrs)</small></th>
                                     <th>Description</th>
                                     <th>Action</th>
                                 </thead>
@@ -206,7 +206,6 @@ export default {
         fetchLectures(){
             axios.get('/api/lectures')
             .then(response=>{
-                console.log(response.data);
                 this.lectures= response.data.data.data;
             })
             .catch(response=>{
