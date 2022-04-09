@@ -2,7 +2,7 @@
   
 <div class="py-3 px-5">
  <div class="bg-white mt-3 ">
-    <h4 class="alert-secondary w-100 py-3 px-3">Trial lessons <span class="float-end mx-3"> <button class="btn btn-sm btn-primary" @click.prevent="fetchTrialLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
+    <h4 class="alert-secondary w-100 py-3 px-3">Trial lessons <span class="float-end mx-3"> <button class="btn btn-sm btn-danger" @click.prevent="fetchTrialLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
     <p class="mb-0 px-3"> Your Trial lesson requests to tutors will appear here.</p>
     <p class="text-center mb-0 py-2">
         <small class="alert-success p-2 mx-4 rounded my-3" v-if="this.success.cancel_lesson">{{this.success.cancel_lesson}}</small> 
@@ -27,7 +27,7 @@
                        
                     <p class="fw-bold">  {{this.capitalize(trial_lesson.lesson_type)}} trial lesson with tutor {{this.capitalize(trial_lesson.get_tutor.first_name)}} </p>
                     <span class="py-2">Scheduled for: {{this.formatDate(trial_lesson.lesson_date)}}</span> <br>                  
-                    <span>Time: </span> <span>{{trial_lesson.start_time}}hrs - {{trial_lesson.end_time}}hrs </span> <br>
+                    <span>Time: </span> <span>{{trial_lesson.start_time}}hrs  </span> <br>
                     <span class="py-2">Duration: </span> <span> 20 mins </span> <br>
                     
                     <p class="mb-0" v-if="trial_lesson.decline_reason !== null">
@@ -73,14 +73,14 @@
 
 <!-- ----------------------------------------Inprogress lessons-------------------------------------------------------------------------- -->
  <div class="bg-white mt-3 ">
-      <h4 class="alert-secondary w-100 py-3 px-3">In progress <span class="float-end mx-3"> <button class="btn btn-sm btn-primary" @click.prevent="fetchLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
+      <h4 class="alert-secondary w-100 py-3 px-3">In progress <span class="float-end mx-3"> <button class="btn btn-sm btn-danger" @click.prevent="fetchLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
       <small class="alert-danger p-2" v-if="this.errors.insuficient_funds">{{this.errors.insuficient_funds}}</small>
       <small class="alert-success p-2" v-if="this.success.payment_success">{{this.success.payment_success}}</small>
       <div v-if="Object.keys(this.current_lessons).length"> 
         <div class="row px-4 ">      
             <div class="col-md-4 row p-3"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'ongoing'">              
                 <div>
-                    <div class="border-line rounded p-3 h-100">
+                    <div class="border-line rounded p-2  h-100">
                         <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
                             <h6 class="py-2 fw-bold"> 
                                 <span v-if="lesson.get_lesson_tutor.image"> <img :src="lesson.get_lesson_tutor.image" alt="profile pic" style="height:26px; width:26px; border-radius:50%"> </span>
@@ -101,8 +101,9 @@
                         <!-- -------------------- Lectures------------------------  -->
                         <div>
                             <h5>Lectures</h5>
-                            <div v-if="Object.keys(lesson.lectures).length">                           
-                                <p v-for="(lecture, index) in lesson.lectures" :key="index" class="row pt-2 pb- rounded  lec-hover  mb-1 ">
+                            <div v-if="Object.keys(lesson.lectures).length" class="lec-scroll border-start">   
+                                                    
+                                <p v-for="(lecture, index) in lesson.lectures" :key="index" class="row pt-2  rounded  lec-hover  mb-1 mx-1  ">
                                     <span class="col-1 m-0 align-middle "><i class="bi bi-patch-check-fill" v-if="this.isLectureComplete(lecture, lesson)"></i> </span>
                                     <span class=" col-7 m-0 align-middle">  {{this.capitalize(lecture.lecture_name)}}</span>
                                     <span class=" col-2 m-0 align-middle">{{lecture.lecture_duration}}<small>hrs </small> </span>                           
@@ -113,12 +114,13 @@
                                             <span class="m-0">{{this.capitalize(lecture.lecture_description)}}</span>                                   
                                         </p>
                                     </span>
+                                    
                                 </p>
                             </div>
-                            <p class="text-muted small p-2"> This tutor hasnt set any lectures yet. Defined lectures for this lesson will appear here</p>
+                            <p class="text-muted small p-2" v-if="! Object.keys(lesson.lectures).length"> This tutor hasnt set any lectures yet. Defined lectures for this lesson will appear here</p>
                         </div>  
                         <!-- <p class="py-3 small">Date started : {{lesson.lessons_start_date}}</p>  -->
-                        <a href="#" class="text-warning mt-3 float-end  text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
+                        <a href="#" class="text-warning  my-3 float-end  text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
                     </div>
                 </div>              
             </div>
@@ -168,7 +170,7 @@
 <!-- ------------------------------------------------------------------------------------------------------------------------ -->
 
 <div class="bg-white mt-3 ">
-      <h4 class="alert-secondary w-100 py-3 px-3">Completed <span class="float-end mx-3"> <button class="btn btn-sm btn-primary" @click.prevent="fetchLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
+      <h4 class="alert-secondary w-100 py-3 px-3">Completed <span class="float-end mx-3"> <button class="btn btn-sm btn-danger" @click.prevent="fetchLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
      <p class="p-3 small text-muted text-center"> Completed lessons will appear here </p>
       <div class="row p-3 " > 
           <div class="col-md-4 row p-2"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'completed'">              
@@ -693,6 +695,17 @@ export default {
 </script>
 
 <style>
+.lec-scroll{
+    height:auto;
+    width:100%;
+    max-height: 10rem;
+    overflow:scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    }
+    .lec-scroll::-webkit-scrollbar {
+    display: none;
+    }
     .dropdown{
         width:auto !important;
     }

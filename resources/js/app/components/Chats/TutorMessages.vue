@@ -15,7 +15,7 @@
                 <a href="javascript:void(0)" class="closebtn hidden"  @click.prevent="closeThread()"><i class="bi bi-arrow-left text-dark " ></i></a>
             </span>
             <div id="messages" class="">             
-                <h4 class="border-bottom p-2 d-flex align-content-center justify-content-between"> <span>Messages </span>  <span class="btn btn-secondary btn-sm me-3 p-0" @click.prevent="fetchMesages()"> <i class="bi bi-arrow-clockwise"></i> </span></h4>
+                <h4 class="border-bottom p-2 d-flex align-content-center justify-content-between"> <span>Messages </span>  <span class="btn btn-danger btn-sm me-3 p-0" @click.prevent="fetchMesages()"> <i class="bi bi-arrow-clockwise"></i> </span></h4>
                <div v-if="Object.keys(this.current_messages).length">
                     <ul class="list-unstyled pr-3 mr-3 pt-4" v-for="(message, index) in this.current_messages" :key="index">
                         <li class="border-bottom p-2">
@@ -50,12 +50,12 @@
                 </h4>
 
                 <div v-for="(text, index) in this.current_message_thread" :key="index">
-                    <div class="w-100">
+                    <div class="">
                         <div class="charts " :class="[text.sender == this.getUser.id ? 'float-end' : '']">                            
                             <p class="mb-0">{{this.capitalize(text.message)}}</p>
                             <p class="text-end  mb-0 small text-muted">
                             <span class="mx-2"> {{formatDate(text.created_at)}} </span>
-                                <span class="ml-2" v-if="text.recipient !== this.getUser.id"><i class="bi bi-check-all "></i></span>   
+                            <span class="ml-2" v-if="text.recipient !== this.getUser.id"><i class="bi bi-check-all "></i></span>   
                             </p>                        
                         </div>
                     </div>
@@ -229,6 +229,7 @@ export default {
     margin:.2rem 0;
     border: 1px solid rgb(230, 226, 226);
     border-radius: 2rem;
+    width:auto;
     max-width:75%;
 }
 .reply{
