@@ -162,13 +162,12 @@ export default {
                 this.current_messages = response.data.data.data; 
                 response.data.data.data.forEach(message=>{                 
                     if(! message.student_seen) this.unread_threads +=1;                    
-                });
-                               
+                });                               
             })
             .catch(error => {  console.log(error.response);   });
         },
         refreshCurrentMessage(){  
-               if(!Object.keys(this.current_message).length) return;
+            if(!Object.keys(this.current_message).length) return;
             if(!this.isLogedIn)  {this.$router.push({name: 'login'}); return; };
             axios.get('/api/student/get-message/' + this.current_message.id)
             .then(response => {                
@@ -206,7 +205,7 @@ export default {
             setInterval(() => {
                 this.fetchMesages();
                 this.refreshCurrentMessage();
-            }, 30000);
+            }, 20000);
         }
     },
     computed:{

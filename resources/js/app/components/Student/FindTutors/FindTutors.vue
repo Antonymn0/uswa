@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="top-header background-redi">
+        <div class="top-header background-redi border-bottom">
             <span>
-                <h1>Online language tutors & teachers for private lessons </h1>  
+                <h1 >Online language tutors & teachers for private lessons </h1>  
                 <p>
                     Looking for an online tutor? Uswa is the fastest growing language learning platform worldwide. 
                     You can choose from a pool of seasoned online tutors on our platform
@@ -54,15 +54,17 @@ export default {
 }
 </script>
 
-<style>
-    .top-header{
-       
-        color: #efefef;
+<style scoped>
+    .top-header{       
+        color: #272727;
         border-radius: 0 0 2rem 2rem;
         padding: 2rem 5rem 
     }
+    h1{
+        color:#CC0000;
+    }
     .background-redi{
-        background-color:rgba(78, 78, 77, 0.767)
+        background-color:rgba(218, 218, 216, 0.459)
     }
 
 

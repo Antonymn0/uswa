@@ -12,7 +12,7 @@
     </p>
      
     <div v-if="Object.keys(this.current_trial_lessons).length"> 
-    <div class="row px-3 m-1">               
+    <div class="row m-1">               
         <div class="col-md-4 row p-1"  v-for="(trial_lesson, index) in this.current_trial_lessons" :key="index">              
             <div>
                 <div class="border-line rounded p-3 m-1 h-100">
@@ -713,13 +713,14 @@ export default {
     }
     .border-line{
         border:1px solid rgb(231, 231, 231);
+        width:100%;
     }
     .border-line:hover{
         border:1px solid rgb(248, 186, 186);
     }
 
     /* media rules */
-    @media only screen and (max-width: 600px){
+    @media only screen and (max-width: 950px){
         .px-5{
             padding-left:0 !important;
             padding-right:0 !important;

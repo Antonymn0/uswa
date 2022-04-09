@@ -199,7 +199,7 @@ export default {
             setInterval(() => {
                 this.fetchMesages();
                 this.refreshCurrentMessage();
-            }, 10000);
+            }, 20000);
         }
     },
     computed:{

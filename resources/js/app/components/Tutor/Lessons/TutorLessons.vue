@@ -504,12 +504,13 @@ export default {
     }
 .border-line{
         border:1px solid rgb(231, 231, 231);
+        width:100%;
     }
 .border-line:hover{
     border:1px solid rgb(248, 186, 186);
 }
 /* media rules */
-    @media only screen and (max-width: 600px){
+    @media only screen and (max-width: 950px){
         .px-5{
             padding-left:0 !important;
             padding-right:0 !important;
