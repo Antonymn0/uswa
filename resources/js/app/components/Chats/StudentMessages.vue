@@ -167,8 +167,9 @@ export default {
             })
             .catch(error => {  console.log(error.response);   });
         },
-        refreshCurrentMessage(){     
-            if(!this.isLogedIn)  this.$router.push({name: 'login'});
+        refreshCurrentMessage(){  
+               if(!Object.keys(this.current_message).length) return;
+            if(!this.isLogedIn)  {this.$router.push({name: 'login'}); return; };
             axios.get('/api/student/get-message/' + this.current_message.id)
             .then(response => {                
                 if(response.status == 200){

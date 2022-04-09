@@ -84,7 +84,9 @@ class ConversationController extends Controller
      */
     public function show($id)
     {
-        $message = Conversation::with('conversationThread') ->first();
+        $message = Conversation::with('conversationThread')
+                            ->where('id', $id)
+                            ->first();
         return response()->json([
             'success' => true,
             'data' =>$message,

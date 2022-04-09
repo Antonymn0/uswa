@@ -20,7 +20,7 @@
                     <ul class="list-unstyled pr-3 mr-3 pt-4" v-for="(message, index) in this.current_messages" :key="index">
                         <li class="border-bottom p-2">
                             <div class="d-flex position-relative " style="cursor:pointer">
-                                <span @click.prevent="[toggleMessage(message), toggleThread(message.conversation_thread),  showThread(), toggleSeen(message) ]">  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.5rem"></i></span>
+                                <span >  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.5rem"></i></span>
                                 <span class="ml-2" @click.prevent="[toggleMessage(message), toggleThread(message.conversation_thread),  showThread(), toggleSeen(message) ]" style="cursor:pointer">
                                     <h5 class="m-0 position-relative"> 
                                         {{this.capitalize(message.message_sender.first_name)}} {{ message.message_sender.last_name.charAt(0).toUpperCase()}}
@@ -42,7 +42,7 @@
             </div>
 
             <!-- ----------------------------- Conversation Thread --------------------------------------- -->
-            <div id="thread" class="mr-3 hidden">
+            <div id="thread" class="mr-3 ">
                 <div  v-if="Object.keys(this.current_message).length">
                 <h4 class="d-flex align-items-center border-bottom">
                     <span><i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.7rem"></i>  </span>                   
@@ -140,7 +140,6 @@ export default {
         },
         toggleMessage(message){
             this.current_message = message;
-            console.log(this.current_message.message_sender.first_name);
         },
         fetchMesages(){
             if(!this.isLogedIn)  this.$router.push({name: 'login'});
@@ -155,10 +154,10 @@ export default {
             .catch(error => {  console.log(error.response);   });
         },
         refreshCurrentMessage(){ 
-            if(!this.isLogedIn)  this.$router.push({name: 'login'});           
+            if(!Object.keys(this.current_message).length) return;
+            if(!this.isLogedIn)  { this.$router.push({name: 'login'}); return; }           
             axios.get('/api/tutor/get-message/' + this.current_message.id)
-            .then(response => {
-                console.log(response)  ;              
+            .then(response => {            
                 if(response.status == 200){
                     this.current_message_thread = response.data.data.conversation_thread;                   
                 }                               
