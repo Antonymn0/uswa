@@ -69,7 +69,7 @@
 <!-- ----------------------------------------------------------------------------- -->
 
 <!-- ----------------- Drop down --------------------------------------  -->
-            <div class="dropdown mx-2">   
+            <div class="dropdown mx-2" v-if=" isLogedIn">   
               <a v-if=" isLogedIn" class="d-flex align-items-center " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               {{this.capitalize(getUser.first_name)}} &nbsp; 
                <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.5rem" v-if="! getUser.image"></i>
@@ -85,7 +85,7 @@
                   <li v-if=" isLogedIn && this.getUser.role == 'student'"><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdropProfile" >Profile</a></li> 
                   <li v-if=" isLogedIn && this.getUser.role == 'tutor'"><a class="dropdown-item" href="#"  ><router-link :to="{name: 'register-tutor-signup'}"  >Profile</router-link></a></li>
                   <li v-if="this.getUser.role == 'tutor'"> <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#lecturesModal"> Lectures </a> </li>
-                  <li> <a class="dropdown-item" href="#"> <Logout /> </a> </li>
+                  <li  v-if=" isLogedIn">  <Logout />  </li>
               </ul>
             </div>        
         </div>

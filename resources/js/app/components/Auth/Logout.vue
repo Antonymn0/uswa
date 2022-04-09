@@ -1,6 +1,6 @@
 <template> 
-    <span>
-        <a href="#" class="px-1" @click.prevent="this.logout()" v-if=" isLogedIn">Logout <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner"></span> </a> 
+    <span  v-if=" isLogedIn">
+        <a href="#" class="dropdown-item" @click.prevent="this.logout()" v-if=" isLogedIn">Logout <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner"></span> </a> 
     </span>
      
 </template>
