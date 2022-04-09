@@ -1,6 +1,6 @@
 <template>
   <div class="parent-nav mr-3">   
-    <div class="">
+    <div class="me-2">
         <span  class="position-relative" @click.prevent="openStudentMessages()" style="cursor:pointer">
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" v-if="this.unread_threads > 0">
                 {{unread_threads}}
