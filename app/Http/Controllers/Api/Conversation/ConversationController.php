@@ -23,6 +23,7 @@ class ConversationController extends Controller
                     ->with('messageRecipient')
                     ->where('sender', $user->id)
                     ->orWhere('recipient', $user->id)
+                    ->orderBy('created_at', 'desc')
                     ->paginate(env('API_PAGINATION', 10));
         return response()->json([
             'success' => true,
@@ -43,6 +44,7 @@ class ConversationController extends Controller
                     ->with('messageSender')
                     ->where('sender', $user->id)
                     ->orWhere('recipient', $user->id)
+                    ->orderBy('created_at', 'desc')
                     ->paginate(env('API_PAGINATION', 10));
         return response()->json([
             'success' => true,

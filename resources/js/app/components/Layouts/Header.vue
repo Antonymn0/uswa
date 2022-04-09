@@ -8,7 +8,7 @@
 <div class="border-bottom"> 
   <div class="parent-header d-flex justify-content-between align-items-center  border-bottom px-3">
     <div class="d-flex justify-content-start align-items-center">
-      <div class="d-flex py-4 ps-5 log"> 
+      <div class="d-flex py-4 ps-3 log"> 
         <span v-if="getUser.role == 'admin'"> <router-link :to="{name: 'all-users'}"><img src="/images/logo.svg" alt="uswa-logo" style="width:150px; heigh">  </router-link>  </span>  
         <span v-else> <router-link :to="{name: 'home'}"><img src="/images/logo.svg" alt="uswa-logo" style="width:150px; height:100%">  </router-link>  </span>  
       </div>
@@ -195,7 +195,7 @@ mounted(){
       .desktop{
         display:none;
       }
-      .ps-5{
+      .ps-4{
         padding-left: 0 !important;
         margin-right:5px;
       }
