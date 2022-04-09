@@ -8,7 +8,7 @@
 <div class="border-bottom"> 
   <div class="parent-header d-flex justify-content-between align-items-center  border-bottom px-3">
     <div class="d-flex justify-content-start align-items-center">
-      <div class="d-flex py-4 ps-5"> 
+      <div class="d-flex py-4 ps-5 log"> 
         <span v-if="getUser.role == 'admin'"> <router-link :to="{name: 'all-users'}"><img src="/images/logo.svg" alt="uswa-logo" style="width:150px; heigh">  </router-link>  </span>  
         <span v-else> <router-link :to="{name: 'home'}"><img src="/images/logo.svg" alt="uswa-logo" style="width:150px; height:100%">  </router-link>  </span>  
       </div>
@@ -22,12 +22,12 @@
       
     </div>
     <!-- ---------------------- -->
-    <div class="mobile pl-3 text-center">
-      <span class="pl-3"> 
+    <div class="mobile ps-3 text-center">
+      <span class=""> 
         <router-link :to="{name: 'login'}" class="px-1" v-if="! isLogedIn">Login</router-link>
-        <a v-if=" isLogedIn" class=" " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <a v-if=" isLogedIn" class=" login" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdropProfile">
               <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.1rem" v-if="! getUser.image"></i>
-               <img v-else :src="getUser.image" alt="profile picture" style="width:40px; height:40px; border-radius:50%"> <br> 
+               <img v-else :src="getUser.image" alt="profile picture" > <br> 
             {{this.capitalize(getUser.first_name)}}
         </a> 
         </span>
@@ -52,7 +52,7 @@
      <!-- --------------------------------------------------   -->
 
      <!-- ------------------- Components -------------------------- -->
-        <div class="d-flex" v-if="isLogedIn && this.getUser.role !== 'admin' ">
+        <div class="d-flex components" v-if="isLogedIn && this.getUser.role !== 'admin' ">
           <span class="" v-if="getUser.role == 'student' "> <StudentMessages /></span>
           <span class="" v-if="getUser.role == 'tutor' "> <TutorMessages /></span>
           <span class="" v-if="getUser.role == 'admin' "> <AdminNotifications /></span>
@@ -195,6 +195,23 @@ mounted(){
       .desktop{
         display:none;
       }
+      .ps-5{
+        padding-left: 0 !important;
+        margin-right:5px;
+      }
+      .log img{
+        width:100px !important;
+      }
+      .login img{
+        width:25px ;
+        height:25px ;
+        border-radius:50%;
+      }
+      .components{
+        margin: 0 50px 0
+      }
+
+
 }
   
 
