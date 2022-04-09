@@ -211,28 +211,10 @@
         </div>
         <div class="modal-body mx-auto">
             <div class="w-auto mx-uato text-left py-3">
-                <label class="py-2  ">Topup your account via Paypal: </label>
-                 <div class="py-2 small">
-                        <span>
-                            <input type="radio" name="amount" id="5" value='5' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
-                            <label for="5"> $5 </label> &nbsp;
-                        </span>
-                        <span> 
-                            <input type="radio" name="amount" id="10" value='10' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
-                            <label for="10"> $10 </label> &nbsp;
-                        </span>
-                        <span>
-                            <input type="radio" name="amount" id="20" value='20' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
-                            <label for="20"> $20 </label> &nbsp;
-                        </span>
-                        <span>
-                            <input type="radio" name="amount" id="50" value='50' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
-                            <label for="50"> $50 </label> &nbsp;
-                        </span>
-                        <span>
-                            <input type="radio" name="amount" id="100" value='100' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
-                            <label for="100"> $100 </label> &nbsp;
-                        </span>                        
+                <label class=" text-secondary">Enter amount to topup via  paypal: </label>                   
+                    <div class="py-3">                       
+                        <input type="number" name="" min="5" max="100" class="form-control text-center" placeholder="Enter amount" v-model="topup_amount" @input="this.checkAmount()">
+                        <small class="text-danger"> {{this.errors.topup_amount}}</small>
                     </div>
                    <div class=" mx-auto" id="paypal-button-container" ></div>  
                 
@@ -269,7 +251,7 @@ export default {
             decline_reason:null,       
             refresh_interval:{},
             paypal_client_id:'',
-            topup_amount:10,
+            topup_amount:null,
             zoom_meetings:{},
             CLIENT_ID: null,
             ZOOM_CLIENT_SECRET: null,
@@ -333,7 +315,16 @@ export default {
             if(!confirm('Open trial lesson window?')) return;
             this.$router.push({name: 'student-trial-lesson'});
         },
-      
+        checkAmount(){
+            if( this.topup_amount >= 5 && this.topup_amount <= 100) {                
+                this.errors ={}
+                if(this.getUser.role == 'student' ) this.loadPaypalCheckout();
+            }
+            else {
+                this.errors.topup_amount = "Enter value between 5 and 100";
+                this.topup_amount = 0;
+                }
+        },
         isLectureComplete(lecture, lesson){ //determine if the lecture is 'marked' completed or otherwise
             var css_class = false;
             if(!lesson) return;
@@ -634,7 +625,9 @@ export default {
             s.setAttribute('src', url); s.onload = callback;
             document.head.insertBefore(s, document.head.firstElementChild);
         },
-        loadPaypalCheckout(){ //paypal buttons 
+        loadPaypalCheckout(){ 
+            // load paypal buttons 
+            if(!this.topup_amount || this.topup_amount < 5 || this.topup_amount >100) return;
             var amount = this.topup_amount;           
             this.loadAsync('https://www.paypal.com/sdk/js?client-id=' + this.paypal_client_id + '&intent=authorize&disable-funding=credit,card', function() {
                 paypal.Buttons({                    

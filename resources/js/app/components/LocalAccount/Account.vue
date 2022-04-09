@@ -1,9 +1,9 @@
 <template>
-  <div class="px-4 pe-5 text-secondary">
+  <div class="px-3  text-secondary">
     <div class="row "> 
-      <div class="col-sm-6">
+      <div class="col-sm-6 bg-white">
         <div class="py-3 h-100">
-          <div class="card p-3 text-center h-100">
+          <div class=" p-3 text-center h-100">
             <!-- --------------------------------------- -->
             <div class="py-3 card mx-2 rounded shadow"> 
             <div class="fw-bold pt-5 "> 
@@ -15,7 +15,6 @@
                 </p>
             </div>
             <div class="pt-3 pb-2"> 
-                <!-- <button class="btn btn-lg btn-secondary m-2 px-3 w-75"   @click.prevent="this.getPaypalAccessToken()"> Get paypal token </button> -->
                 <small class="text-success" v-if="this.success.signup_link"> <br>{{this.success.signup_link}}</small>
                 <small class="text-danger" v-if="this.errors.signup_link"> <br> {{this.errors.signup_link}}</small>
                 <button class="btn btn-lg btn-primary m-2 px-3 w-75" v-if=" !this.getUser.paypal_merchant_id && this.getUser.role == 'tutor' "  @click.prevent="this.generateSigupLink()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.signup_link"></span>  Link with paypal </button>
@@ -26,29 +25,12 @@
                <span class="text-center">
                 <button class="btn btn-primary p-2 btn-lg m-2 w-75" v-if=" this.getUser.paypal_merchant_id && this.getUser.role == 'tutor' "  @click.prevent="this.withdrawFunds()"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.charge_object"></span>Withdraw</button>
                 <div class=" mx-auto m-2 w-75" v-if="this.getUser.role == 'student' " >
-                    <label class=" text-secondary">Topup via  paypal: </label>
-                    <div class="py-2 small">
-                        <span>
-                            <input type="radio" name="amount" id="5" value='5' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
-                            <label for="5"> $5 </label> &nbsp;
-                        </span>
-                        <span> 
-                            <input type="radio" name="amount" id="10" value='10' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
-                            <label for="10"> $10 </label> &nbsp;
-                        </span>
-                        <span>
-                            <input type="radio" name="amount" id="20" value='20' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
-                            <label for="20"> $20 </label> &nbsp;
-                        </span>
-                        <span>
-                            <input type="radio" name="amount" id="50" value='50' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
-                            <label for="50"> $50 </label> &nbsp;
-                        </span>
-                        <span>
-                            <input type="radio" name="amount" id="100" value='100' v-model="topup_amount" @change.prevent="loadPaypalCheckout()">  
-                            <label for="100"> $100 </label> &nbsp;
-                        </span>                        
+                    <label class=" text-secondary">Enter amount to topup via  paypal: </label>                   
+                    <div class="py-3">                       
+                        <input type="number" name="" min="5" max="100" class="form-control text-center" placeholder="Enter amount" v-model="topup_amount" @input="this.checkAmount()">
+                        <small class="text-danger"> {{this.errors.topup_amount}}</small>
                     </div>
+                    
                     <div id="paypal-button-container"></div> 
                 </div>  
                </span>
@@ -81,17 +63,17 @@
       </div>
 
       <!-- ============================ Transaction history ======================================================= -->
-      <div class="col-sm-6"> 
+      <div class="col-sm-6  bg-white"> 
             <div class="py-3 h-100">
-                <div class="card p-3 text-center h-100">
+                <div class=" p-3 text-center h-100">
                     <!-- --------------------------------------- -->
-                    <div class="fw-bold pt-5"> 
+                    <div class="fw-bold "> 
                         <h4>Transaction history  </h4> 
                         <p class="text-muted small"> All Your transaction history will apprear here</p>                    
                     </div>
                     <div class="pt-3 px-1">   
                         <div v-if="Object.keys(this.current_transactions).length">          
-                            <div class="border small rounded px-1  my-1" v-for="(transaction, index) in  this.current_transactions" :key="index">
+                            <div class="border small rounded py-2 px-3  my-1" v-for="(transaction, index) in  this.current_transactions" :key="index">
                                 <p class="d-flex justify-content-between mb-0">
                                     <span>{{this.formatDateTime(transaction.transaction_date)}}</span>
                                     <span>{{this.capitalize(transaction.transaction_type)}}</span>                    
@@ -101,7 +83,7 @@
                                         <span >From: </span> <span class="m-0">{{this.capitalize(transaction.transacted_from)}}</span> <br>
                                         <span >To: </span> <span>{{this.capitalize(transaction.transacted_to)}}</span>
                                     </p>
-                                    <p class="d-flex my-auto align-content-center pe-3">
+                                    <p class="d-flex my-auto align-content-center ">
                                         <span class="m-0">Amount: &nbsp; </span>
                                         <span class="m-0 fw-bold"> $</span>
                                         <span class="m-0 fw-bold">{{transaction.amount_transacted}}</span>
@@ -141,7 +123,7 @@ export default {
             spinner:{},
             errors:{},
             success:{},
-            topup_amount:10,
+            topup_amount:null,
             selected_country_code:null,
             selected_country_name:null,
             countries:{
@@ -406,7 +388,16 @@ export default {
         capitalize(string) {
             if(string) return string.charAt(0).toUpperCase() + string.slice(1);
         },        
-        
+        checkAmount(){
+            if( this.topup_amount >= 5 && this.topup_amount <= 100) {                
+                this.errors ={}
+                if(this.getUser.role == 'student' ) this.loadPaypalCheckout();
+            }
+            else {
+                this.errors.topup_amount = "Enter value between 5 and 100";
+                this.topup_amount = 0;
+                }
+        },
         fetchAccount(){
            this.$store.dispatch('fetchLocalAccount');
          },
@@ -485,6 +476,8 @@ export default {
             document.head.insertBefore(s, document.head.firstElementChild);
         },
         loadPaypalCheckout(){
+            if(!this.topup_amount || this.topup_amount < 5 || this.topup_amount >100) return;
+
             var amount = this.topup_amount;
             this.loadAsync('https://www.paypal.com/sdk/js?client-id=' + this.paypal_client_id + '&intent=authorize&disable-funding=credit,card', function() {
                 
@@ -536,8 +529,7 @@ export default {
     mounted(){
         this.fetchPaypalClientID();
         this.fetchAccount();
-        this.fetchTransactionHistory();       
-        setTimeout(() => { if(this.getUser.role == 'student' ) this.loadPaypalCheckout() }, 1000);
+        this.fetchTransactionHistory();        
     }
 
 }

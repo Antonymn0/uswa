@@ -1,20 +1,20 @@
 <template>
 <div class="">
-   <div class="row pb-1 pt-5 mx-4 top">
-    <div  class="col-md-7 ">
-      <div class="px-auto h-100 pt-3 d-flex align-items-center" >       
+   <div class="row  pt-5 mx-4 top">
+    <div  class="col-md-7 pb-3">
+      <div class="ps-4 h-100 py-3 d-flex align-items-center" >       
         <span class="align-middle " >
             <h1 class="fw-bold mx-auto " style="font-size:4rem;"> Speak a new language with confidence  </h1>  
             <h5 class="semi-bold mx-auto " style="font-size:3rem;">  Learn with the best online tutors.  </h5>
           </span>   
       </div>      
       </div>
-    <div class="col-md-5 text-right"><img src="/images/cover.png" alt="" style="max-width:90%"></div>
+    <div class="col-md-5 text-right"><img src="/images/cover.png" alt="" style="max-width:100%; height:auto"></div>
   </div> 
 
 
     <!-- ------------------------------------------ --> 
-      <div class="my-5 mx-5 new-language">
+      <div class=" p-5 new-language">
       <h3 class="text-center fw-bold py-5">Learn a new language the easy way</h3>
         <div>
           <ul class="row list-unstyled text-center">
@@ -40,10 +40,10 @@
         </div>
     </div>  
     <!-- -------------------------------------------------- -->
-     <div class="clearfix">
-    <h3 class="text-center fw-bold ">How Uswa works</h3>
+     <div class="clearfix pt-5">
+    <h3 class="text-center  fw-bold ">How Uswa works</h3>
 
-   <div class="row mx-5 py-2 how-uswa-work clearfix">
+   <div class="row mx-5 py-4 how-uswa-work clearfix">
       <div class="col-md-2  my-3 text-center">
         <span class="text-center number "> 1</span>
       </div>
@@ -147,7 +147,10 @@ export default {
 
 <style scoped>
 
-
+.new-language{
+  background-color:rgba(221, 214, 214, 0.342);
+  
+}
 .parent{
   color: #3c4447;
   font-family: Helvetica,Arial,sans-serif;
