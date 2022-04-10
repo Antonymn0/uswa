@@ -14,7 +14,7 @@
                         <p class="mb-0 rounded" style="overflow:hidden" v-if="this.tutor.introduction_video">                        
                             <iframe width="400" height="300"  :src="this.tutor.introduction_video" autoplay="false" class="shadow bg-dark rounded" >  </iframe>                    
                         </p>
-                        <p class="mb-0 rouded" style="overflow:hidden" v-if="this.tutor.introduction_video_url"> 
+                        <p class="mb-0 rouded" style="overflow:hidden" v-if="! this.tutor.introduction_video"> 
                             <iframe  width="400" height="300"  :src="this.tutor.introduction_video_url" autoplay="false" class="shadow bg-dark rouded"  v-if="this.tutor.introduction_video_url">  </iframe>                        
                         </p>
                         <p v-if="!this.tutor.introduction_video && !this.tutor.introduction_video_url" class="text-muted small  py-5 mt-5">This tutor has not uploded an introduction video yet</p>
@@ -147,7 +147,7 @@ export default {
               let date_placeholder = '2020-01-01 '; // JUST A FILLER PLACEHOLDER DATE to help in formating
               let tutor_tz = tutor.local_timezone;
               let date =  moment.tz(date_placeholder + time, tutor_tz);
-              let utc_time = moment.utc(date); // parse date into utc
+              let utc_time = date.utc(); // parse date into utc
 
               let local_time = utc_time.clone().local().format("h:mm a"); // covert date into current local time
               return local_time;              

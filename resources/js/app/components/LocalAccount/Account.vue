@@ -374,7 +374,6 @@ export default {
                     "ZM": "Zambia",
                     "ZW": "Zimbabwe"
                     }
-
         }
     },
 
@@ -537,4 +536,14 @@ export default {
 
 <style>
 
+/* //media querries */
+@media screen and (max-width: 750px) {
+    .mx-2{
+        margin-left:0 !important ;
+        margin-right:0 !important ;
+    }
+    .p-3{
+        padding: 0 !important;
+    }
+}
 </style>

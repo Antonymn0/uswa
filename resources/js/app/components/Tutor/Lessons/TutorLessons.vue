@@ -251,7 +251,7 @@ export default {
              
               let student_tz = student.local_timezone;
               let date =  moment.tz(date, student_tz);
-              let utc_time = moment.utc(date); // parse date into utc
+              let utc_time = date.utc(); // parse date into utc
 
               let local_time = utc_time.clone().local().format("hh:mm a"); // covert date into current local time
               return local_time;              

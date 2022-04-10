@@ -16,12 +16,9 @@
                      <li class="nav-item" v-if=" isLogedIn">
                        <route-link :to="{name: 'student-dashboard'}" class="nav-link" @click.prevent="pushRoutes('student-dashboard')" v-if="getUser.role == 'student'">Dashboard </route-link>
                        <route-link :to="{name: 'tutor-dashboard'}" class="nav-link" @click.prevent="pushRoutes('tutor-dashboard')" v-if="getUser.role == 'tutor'">Dashboard </route-link>
-                        <route-link :to="{name: ''}" class="nav-link" @click.prevent="pushRoutes('')" data-bs-toggle="modal" data-bs-target="#lecturesModal"> Lectures </route-link>
+                        <route-link :to="{name: ''}" class="nav-link" v-if="getUser.role == 'tutor'" @click.prevent="pushRoutes('')" data-bs-toggle="modal" data-bs-target="#lecturesModal"> Lectures </route-link>
                         <route-link :to="{name: 'account'}" class="nav-link" @click.prevent="pushRoutes('account')" >Account </route-link>
-                    </li>
-                  
-                  
-                    
+                    </li>                    
                     <li class="dropdown-item  pt-2">                          
                         <button type="submit" class="btn-danger mx-auto text-white" @click.prevent="this.closeNav()"> 
                             <span> <router-link :to="{name: 'login'}" class="px-1 text-white"  v-if="! isLogedIn" >Login</router-link></span>                            

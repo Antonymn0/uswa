@@ -77,6 +77,15 @@ export default {
             .catch(error=>{
                 console.log(error.response);
             });
+        },
+        markNotificationRead(id){
+            axios.get('/api/notifications/mark-read' + id)
+            .then(response=>{
+                this.fetchNotifications();               
+            })
+            .catch(error=>{
+                console.log(error.response);
+            });
         }
     },
 
