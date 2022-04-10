@@ -3,7 +3,7 @@
       <h5 class="fw-bold text-muted">   {{this.capitalize(this.search_term)}} tutors </h5>
       <!-- ----------------------------------------------------------------------------------------------------- -->
       <div class="row " v-if="Object.keys(this.current_tutors).length">
-      <div class="col-md-3" v-for="(tutor, index) in this.current_tutors" :key="index" style="overflow:hidden">
+      <div class="col-md-3 mb-2" v-for="(tutor, index) in this.current_tutors" :key="index" style="overflow:hidden" >
           <div class=" h-100  ">              
             <div class="bg-white p-1 inner rounded h-100 hover-card">
                 <div class="d-flex align-items-center">

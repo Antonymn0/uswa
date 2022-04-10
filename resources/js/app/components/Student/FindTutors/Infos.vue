@@ -14,23 +14,21 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body px-3">
-                <h5>First, think about why you’re looking for a tutor. Depending on your goal, use filters to find your perfect tutor faster:</h5>
+                <h5>First, think about why you’re looking for a tutor. Depending on your goal, use the search bar to find your perfect language tutor faster:</h5>
                 <ul>
-                    <li>Choose the subject you want to study</li>
-                    <li>Set your comfortable price per hour</li>
-                    <li>If you have preferences for a specific accent, select tutor’s country, or filter by native speakers</li>
+                    <li>Decide the language you want to study</li>
+                    <li>Decide your comfortable price per hour</li>
+                    <li>If you have preferences for a specific accent, select a tutor that is a native to that language</li>
                     <li>Specify the time when you want to learn</li>
-                    <li>If you have a specific need, like lessons for kids or Business English, use the ‘Specialties’ filter to narrow tutors by areas of expertise.</li>
-                </ul>
-                <p>
-                    After applying filters, you’ll see a list of tutors to choose from. Our ranking algorithm considers all your filter preferences and puts the best tutors on top. Even new tutors can come on top if they fit your needs — they can be a great choice, too!
-                </p>
+                </ul>             
 
                 <h4>Here are some more tips to help you choose:</h4>
                 <ul>
-                    <li> Watch tutor videos to hear their pronunciation and understand their personality a bit.</li>
-                    <li> Open the tutor profile by clicking on their name. You’ll learn more about the tutor's experience and teaching style.</li>
+                    <li> Watch tutor videos to hear their pronunciation, accents and understand their personality.</li>
+                    <li> Open the tutor profile by clicking on the 'Intro' button on the Available tutors page. You’ll learn more about the tutor's experience and teaching style.</li>
                     <li> Check reviews and ratings from other students to make an informed choice.</li>
+                    <li> Check the tutors availability schedule.</li>
+                    <li> Book a trial lesson with them and start learning.</li>
                 </ul>
             </div>            
             </div>
@@ -48,18 +46,27 @@
             <div class="modal-body px-2">
                 <h4>Let’s look at how you can pay for lessons on Uswa.</h4>
                 <p>
-                    First, you buy your trial lesson with a tutor to see if you like them. Tutor price for trial and next lessons is the same. If you like the tutor, you can then buy a set of hours with them.
+                    First, You book for a 20min free trial lesson with the tutor. If you like the tutor, you can then go ahead and set up lessons with them.
                 </p>
                 <p>
-                    Your tutor will help you understand how many hours per week or month you’ll need to reach your goals. The more hours you buy, the bigger the discount from Uswa.
+                    Your tutor will help you understand how many hours per week or month you’ll need to reach your goals. The more hours you study in a week, the the better.
                 </p>
                 <h5>A few more things to keep in mind:</h5>
                 <ul>
-                    <li>If you need to switch tutors, you can easily transfer the hours you've bought with the help of the ‘Transfer hours’ feature. You can also request a refund of your unused hours.</li>
-                    <li>If you don’t like your trial lesson, we’ll give you a free replacement with any new tutor of your choice, at any price. We’re sure there’s a perfect tutor for you on Uswa!</li>
-                    <li>You can cancel or reschedule any lesson for free up to 4 hours before it starts.</li>
-                    <li>Your trial lesson is 1 hour. Your next lessons can last from 30 mins to 3h 30mins — up to you and your tutor! You choose the date and time that best works for you</li>
-                    <li>You can pay for lessons with a bank card, PayPal or Apple Pay.</li>
+                    <li>If you need to switch tutors, you can easily book a new trial lesson with a new tutor and continue taking lessons with them.</li>
+                    <li>If you don’t like your trial lesson, Just click the  'No' button on the 'Impressed by tutor option' to cancel it! Then go ahead and find another tutor</li>
+                    
+                    <li>Your trial lesson is 20mins long. Your next lessons can last for as long as you and your tutor agree on! You choose the date and time that best works for both of you</li>
+                    <li>You  pay for lessons with  PayPal.</li>
+                    <li>Lessons at Uswa are billed on hourly basis. 1 lesson lecture is equal to 1hr and vice varsa</li>
+                    <li>Your account must have enough funds to cover for atleast the next lesson upfront. The funds are transfered to the tutor only after the lesson has been delivered. Otherwise the funds remain in your Uswa account</li>
+                    <li> The Uswa learning process is easy: <br> 
+                        You top up your account with enough funds. <br>
+                        Enter classroom and take lectures. <br>
+                        The tutor confirms the lectures. <br>
+                        You pay the tutor for the lectures delievered. <br> <br>
+                        Isn't that easy?
+                    </li>
                 </ul>
                
             </div>            
@@ -76,19 +83,20 @@
             </div>
             <div class="modal-body px-2">
               <p>
-                  You will meet your tutor online in the Uswa classroom: the video platform that has everything you need for your lessons! Enjoy an easy-to-use video chat and messenger, upload files, make notes and share your screen, all without leaving the site. There’s also an interactive whiteboard to make your lessons even more fun!
+                  You will meet your tutor online via Zoom video conferencing!
               </p>
 
-                <h5>Taking lessons in the Uswa classroom is safe and convenient because:</h5>
+                <h5>Taking lessons on Uswa via Zoom is safe and convenient because:</h5>
                 <ul>
                     <li> You don’t need to share your contact details</li>
-                    <li>Connect automatically simply by visiting Uswa: no need to download other programs</li>
-                    <li> Lessons in the Uswa classroom are confirmed automatically, so you don’t need to do it manually</li>
-                    <li> Your homework, vocab, files and notes are all in one place -- you’ll never loose them!</li>
+                    <li> Connect your Zoom account to your Uswa account with just a click of a button</li>
+                    <li>Enter classroom automatically simply by clicking the `classroom` button on your `Inprogress Lessons` tab</li>
+                    <li> Lessons & lectures in the Uswa classroom are confirmed by the tutor as they are delivered - lecture by lecture. </li>
+                    <li> Your homework and assignments   are all in one place -- you’ll never loose them!</li>
                    
                 </ul>
                 <p>
-                    Once you schedule your lesson, you can enter the classroom by pressing ‘Enter classroom’ on ‘My lessons’.
+                    Once you schedule your lessons with the tutor, you can enter the classroom by pressing the ‘classroom’ button on ‘In progress lessons` tab.
                 </p>
             </div>            
             </div>
@@ -112,6 +120,8 @@
                 <p>
                     Our friendly customer support team is always ready to listen and help you get a free replacement in case you have any issues with your tutor.
                 </p>
+
+                <p class="text-muted fw-bold pt-5">Happy learning....!!!</p>
             </div>            
             </div>
         </div>
