@@ -2343,6 +2343,7 @@ components: { vueCountriesCities },
             this.middle_name = this.getUser.middle_name;
             this.last_name = this.getUser.last_name;
             this.country = this.getUser.country;
+            this.country_code = this.getUser.country_code;
             this.city = this.getUser.city;
             this.timezone = this.getUser.timezone;
             this.currency = this.getUser.currency;
