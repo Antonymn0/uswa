@@ -490,7 +490,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .lec-scroll{
     height:auto;
     width:100%;

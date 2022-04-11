@@ -534,7 +534,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 /* //media querries */
 @media screen and (max-width: 750px) {

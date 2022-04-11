@@ -6,15 +6,15 @@
         <div id="mySidenav" class="sidenav" style="">
             <a href="javascript:void(0)" class="closebtn" id="closeNav" @click.prevent="closeNav()">&times;</a>
                 <ul class="list-unstyled ml-5">
-                    <li class="nav-item">
+                    <li class="py-0">
                         <route-link :to="{name: 'home'}" class="nav-link" @click.prevent="pushRoutes('home')">Home </route-link>
                     </li>
-                      <li class="nav-item">
+                      <li class="py-0">
                         <route-link :to="{name: 'find-tutor'}" class="nav-link" @click.prevent="pushRoutes('find-tutor')" v-if="getUser.role !== 'tutor' ">Find a Tutor </route-link>
                         <router-link :to="{name: 'register-tutor'}" class="px-3"  @click.prevent="pushRoutes('register-tutor')" v-if="getUser.role !== 'tutor' && getUser.role !== 'student' ">Become a tutor</router-link>
                     </li>
-                     <li class="nav-item" v-if=" isLogedIn">
-                       <route-link :to="{name: 'student-dashboard'}" class="nav-link" @click.prevent="pushRoutes('student-dashboard')" v-if="getUser.role == 'student'">Dashboard </route-link>
+                     <li class="" v-if=" isLogedIn">
+                       <route-link :to="{name: 'student-dashboard'}" class="nav-link " @click.prevent="pushRoutes('student-dashboard')" v-if="getUser.role == 'student'">Dashboard </route-link>
                        <route-link :to="{name: 'tutor-dashboard'}" class="nav-link" @click.prevent="pushRoutes('tutor-dashboard')" v-if="getUser.role == 'tutor'">Dashboard </route-link>
                         <route-link :to="{name: ''}" class="nav-link" v-if="getUser.role == 'tutor'" @click.prevent="pushRoutes('')" data-bs-toggle="modal" data-bs-target="#lecturesModal"> Lectures </route-link>
                         <route-link :to="{name: 'account'}" class="nav-link" @click.prevent="pushRoutes('account')" >Account </route-link>
@@ -22,7 +22,7 @@
                     <li class="dropdown-item  pt-2">                          
                         <button type="submit" class="btn-danger mx-auto text-white" @click.prevent="this.closeNav()"> 
                             <span> <router-link :to="{name: 'login'}" class="px-1 text-white"  v-if="! isLogedIn" >Login</router-link></span>                            
-                            <Logout />                               
+                            <Logout class="text-white"/>                               
                         </button>                                                
                     </li>                  
                 </ul>

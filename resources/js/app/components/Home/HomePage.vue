@@ -85,7 +85,7 @@
 
   </div> 
   <p class="text-center">
-    <router-link :to="{name: 'register'}" class="px-5 py-3 btn btn-danger rounded-pill" v-if="! isLogedIn">Register now</router-link> 
+    <router-link :to="{name: 'register'}" class=" btn btn-danger rounded-pill px-5 py-3" v-if="! isLogedIn">Register now</router-link> 
   </p>
     
 

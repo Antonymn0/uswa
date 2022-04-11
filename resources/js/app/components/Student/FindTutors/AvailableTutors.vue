@@ -7,9 +7,9 @@
           <div class=" h-100   ">              
             <div class="bg-white p-1 inner rounded h-100  hover-card">
                 <div class="d-flex align-items-center">
-                    <div class="px-2 pt-3">
+                    <div class="px-2 ">
                         <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem; background:cover" v-if="!tutor.image">                        
-                        <img :src="tutor.image" alt="" style="width:6rem; height:6rem;"  v-if="tutor.image">  
+                        <img :src="tutor.image" alt="" style="width:5.7rem; height:5.7rem;"  v-if="tutor.image">  
                     </div>
                     <div class="pl-2 ms-2">
                         <h5 class="d-flex align-items-center mb-0">
@@ -24,7 +24,7 @@
                             <span class="small fw-bold"><i class="bi bi-mortarboard-fill text-secondary"></i> &nbsp; {{tutor.language}} </span> 
                            
                         </div>
-                            <div class="t ">
+                            <div class=" ">
                                  <span class="small  my-5"><i class="bi bi-circle-fill text-success" style="font-size:.7rem"></i> Online </span> <br>
                                <span class="mt-5  lead"> $ {{tutor.hourly_rate}} <span class="small">/hr </span>  </span> 
                             </div>
@@ -33,7 +33,7 @@
                 <!-- ------------------------------- -->
                 
                 <div class="p-1 d-flex justify-content-start align-items-center">
-                    <span class="small" data-bs-toggle="modal" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)"> <i class="bi bi-star-fill text-warning"></i> {{this.calculateStarRating(tutor.reviews)}}  &nbsp; &nbsp; &nbsp;</span> 
+                    <span class="small ps-1" data-bs-toggle="modal" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)"> <i class="bi bi-star-fill text-warning"></i> {{this.calculateStarRating(tutor.reviews)}}  &nbsp; &nbsp; &nbsp;</span> 
                     <span > <a  data-bs-toggle="modal" class="text-warning" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)">{{Object.keys(tutor.reviews).length}} Reviews </a>  &nbsp; &nbsp; &nbsp; </span> 
                      <span class="small float-end" ><i class="bi bi-suit-heart-fill text-muted" style="font-size:1.3rem" @click.prevent="toggleFavourite($event, tutor)"></i> </span>
                 </div>
