@@ -52,7 +52,7 @@
                     <span>{{tutor.subject}} &nbsp; </span>  <span class="alert-primary px-1 rounded">  {{ this.capitalize(tutor.subject_level)}} </span>  
                 </div>
                 <!-- -------------------------- -->
-                <div class="px-2" style="height:5rem; overflow:hidden">
+                <div class="px-2" style="height:4.5rem; overflow:hidden">
                     <span> Description: </span>
                     <span>{{ this.capitalize(tutor.description)}}  </span>
                 </div>
