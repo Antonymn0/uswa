@@ -5,7 +5,7 @@
       <div class="row " v-if="Object.keys(this.current_tutors).length">
       <div class="col-md-3 mb-2 px-1" v-for="(tutor, index) in this.current_tutors" :key="index" style="overflow:hidden" >
           <div class=" h-100   ">              
-            <div class="bg-white p-1 inner rounded h-100  hover-card">
+            <div class="bg-white p-1 pt-2 inner rounded h-100  hover-card">
                 <div class="d-flex align-items-center">
                     <div class="px-2 ">
                         <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem; background:cover" v-if="!tutor.image">                        

@@ -126,7 +126,7 @@
             </div>
             </div>
           </div>
-          <p class="p-3 mb-0 small" >
+          <p class="p-3 mb-0 small text-muted" >
             Learning at Uswa is absolutely free-flow and self-paced. You  are in total control of your learning process. 
             You can take lessons anytime anywhere.                   
         </p>
