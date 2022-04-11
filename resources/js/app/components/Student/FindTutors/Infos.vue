@@ -1,5 +1,5 @@
 <template>
-  <div class="infos text-center text-muted">
+  <div class="infos text-center small text-muted">
       <span data-bs-toggle="modal" data-bs-target="#staticBackdrop1"> How to choose an ideal tutor</span>
       <span data-bs-toggle="modal" data-bs-target="#staticBackdrop2">How you can pay for lessons</span>
       <span data-bs-toggle="modal" data-bs-target="#staticBackdrop3">Where lessons take place</span>
