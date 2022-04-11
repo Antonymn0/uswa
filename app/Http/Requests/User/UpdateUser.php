@@ -33,12 +33,15 @@ class UpdateUser extends FormRequest
             'address' => ['nullable', 'string'],
             'biography' => ['nullable', 'string'],
             'biography' => ['nullable', 'string'],
+
             'id_number' => ['nullable', 'string', Rule::unique('users')->ignore($this->user)],
             'date_of_birth' => ['nullable', 'string'],
             'city' => ['nullable', 'string'],
             'country' => ['nullable', 'string'],
+            'country_code' => ['nullable', 'string'],
             'nationality' => ['nullable', 'string'],
             'postal_code' => ['nullable', 'string'],
+
             'phone_verified_at' => ['nullable', 'string'],
             'email_verified_at' => ['nullable', 'string'],
             'suspended_at' => ['nullable', 'string'],
@@ -46,6 +49,7 @@ class UpdateUser extends FormRequest
             'approved_at' => ['nullable', 'string'],
             'deleted_at' => ['nullable', 'string'],
             'approved_by' => ['nullable', 'string'],
+
             'registered_by' => ['nullable', 'integer'],
             'registration' => ['nullable', 'string'],
             'suspended_by' => ['nullable', 'string'],

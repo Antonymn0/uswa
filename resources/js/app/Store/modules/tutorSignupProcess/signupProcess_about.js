@@ -5,6 +5,7 @@ export const signupProcess_about = {
             middle_name: null,
             last_name: null,
             country: null,
+            country_code: null,
             city: null,
             timezone: null,
             currency: null,
@@ -31,6 +32,9 @@ export const signupProcess_about = {
         },
         set_country(state, payload) {
             state.about.country = payload;
+        },
+        set_country_code(state, payload) {
+            state.about.country_code = payload;
         },
         set_city(state, payload) {
             state.about.city = payload;

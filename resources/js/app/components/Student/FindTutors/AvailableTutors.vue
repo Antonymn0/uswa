@@ -3,48 +3,49 @@
       <h5 class="fw-bold text-muted">   {{this.capitalize(this.search_term)}} tutors </h5>
       <!-- ----------------------------------------------------------------------------------------------------- -->
       <div class="row " v-if="Object.keys(this.current_tutors).length">
-      <div class="col-md-3 mb-2" v-for="(tutor, index) in this.current_tutors" :key="index" style="overflow:hidden" >
-          <div class=" h-100  ">              
-            <div class="bg-white p-1 inner rounded h-100 hover-card">
+      <div class="col-md-3 mb-2 px-1" v-for="(tutor, index) in this.current_tutors" :key="index" style="overflow:hidden" >
+          <div class=" h-100   ">              
+            <div class="bg-white p-1 inner rounded h-100  hover-card">
                 <div class="d-flex align-items-center">
                     <div class="px-2 pt-3">
                         <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem; background:cover" v-if="!tutor.image">                        
                         <img :src="tutor.image" alt="" style="width:6rem; height:6rem;"  v-if="tutor.image">  
                     </div>
                     <div class="pl-2 ms-2">
-                        <h5 class="d-flex align-items-center">
+                        <h5 class="d-flex align-items-center mb-0">
                            <span> {{this.capitalize(tutor.first_name)}} {{ tutor.last_name.charAt(0).toUpperCase()}}.</span> 
                             <span class="float-end ms-3"> 
-                                <country-flag country='ke' size='.5rem'/> &nbsp;
+                                <country-flag :country='tutor.country_code' size='.5rem'/> &nbsp;
                                 <i class="bi bi-shield-fill-check text-primary" ></i>
                             </span>                            
                         </h5>
                         <span class="clearfix w-100"></span>
                         <div class=" d-flex align-items-center justify-content-between " >                           
                             <span class="small fw-bold"><i class="bi bi-mortarboard-fill text-secondary"></i> &nbsp; {{tutor.language}} </span> 
-                            <span class="small float-end" ><i class="bi bi-suit-heart-fill text-muted" style="font-size:1.5rem" @click.prevent="toggleFavourite($event, tutor)"></i> </span>
+                           
                         </div>
-
-                        <div class="">
-                            <div class="p-1 d-flex justify-content-between">
-                                <span  data-bs-toggle="modal" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)"> <i class="bi bi-star-fill text-warning"></i> {{this.calculateStarRating(tutor.reviews)}}</span> &nbsp; &nbsp; &nbsp;
-                                <span > <a  data-bs-toggle="modal" class="text-warning" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)">{{Object.keys(tutor.reviews).length}} Reviews </a>   </span> 
+                            <div class="t ">
+                                 <span class="small  my-5"><i class="bi bi-circle-fill text-success" style="font-size:.7rem"></i> Online </span> <br>
+                               <span class="mt-5  lead"> $ {{tutor.hourly_rate}} <span class="small">/hr </span>  </span> 
                             </div>
-                            <div class="d-flex justify-content-between px-2">
-                                 <span ><i class="bi bi-circle-fill text-success" style="font-size:.7rem"></i> </span>
-                               <span class="me-3"> $ {{tutor.hourly_rate}} <span class="small">/hr </span>  </span> 
-                            </div>
-                        </div>
-                    </div>
+                       </div>
                 </div>
                 <!-- ------------------------------- -->
-                <div class="d-flex  small p-2">
+                
+                <div class="p-1 d-flex justify-content-start align-items-center">
+                    <span class="small" data-bs-toggle="modal" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)"> <i class="bi bi-star-fill text-warning"></i> {{this.calculateStarRating(tutor.reviews)}}  &nbsp; &nbsp; &nbsp;</span> 
+                    <span > <a  data-bs-toggle="modal" class="text-warning" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)">{{Object.keys(tutor.reviews).length}} Reviews </a>  &nbsp; &nbsp; &nbsp; </span> 
+                     <span class="small float-end" ><i class="bi bi-suit-heart-fill text-muted" style="font-size:1.3rem" @click.prevent="toggleFavourite($event, tutor)"></i> </span>
+                </div>
+                            
+                
+                <div class="d-flex  small px-2">
                     <span> <i class="bi bi-person-fill"></i> 0 Active students</span>
                     <span class=""> &nbsp; | &nbsp;</span> 
                     <span>0 Lessons </span>
                 </div>
                 <!-- ------------------------------------- -->
-                <div class="d-flex  small p-2 speaks">
+                <div class="d-flex  small px-2 speaks">
                     <span class="fw-bold">Speaks: &nbsp; </span> 
                     <span> {{tutor.language}} &nbsp;</span> <span class="alert-success px-1 rounded"> {{ this.capitalize(tutor.level)}} </span>  
                     <span class="">  &nbsp; | &nbsp;</span>

@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
            $table->dateTime('date_of_birth')->nullable();
            $table->string('city')->nullable();
            $table->string('country')->nullable();
+           $table->string('country_code')->nullable();
            $table->string('nationality')->nullable();
            $table->string('postal_code')->nullable();
 

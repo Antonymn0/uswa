@@ -21,7 +21,7 @@
 
                 <div class=" rouded mb-3 px-1 row" >
                     <label for="country" class="form-label">Country & State</label>  <span class="small text-center">({{this.$store.state.signupProcess_about.about.country}} | {{this.$store.state.signupProcess_about.about.city}} )</span>
-                    <vueCountriesCities id="country" @country='selectedCountry = $event' @change="updateCountryCity()" @city='selectedCity = $event' @blur="updateCountryCity()"  class="text-muted"/>   
+                    <vueCountriesCities id="country" @country='selectedCountry = $event' @change="updateCountryCity()" @city='selectedCity = $event' @country_code='selectedCountryCode = $event' @blur="updateCountryCity()"  class="text-muted"/>   
                     <small class="text-danger small">{{this.errors.country}}</small> 
                     <small class="text-danger small float-end">{{this.errors.city}}</small>            
                 </div>
@@ -117,6 +117,7 @@ export default {
 components: { vueCountriesCities },
     data(){
         return{
+            selectedCountryCode: '',
             selectedCountry: '',
             selectedCity: '',
             errors:{},
@@ -2269,10 +2270,10 @@ components: { vueCountriesCities },
      methods:{
         updateCountryCity(){
             setTimeout(() => {
-               this.$store.commit('set_country', this.selectedCountry);
+                this.$store.commit('set_country', this.selectedCountry);
+                this.$store.commit('set_country_code', this.selectedCountryCode); 
                 this.$store.commit('set_city', this.selectedCity); 
-            }, 50);
-            
+            }, 50);            
         },
         timezone(){
             console.log(moment.tz.names()) ;
@@ -2290,6 +2291,7 @@ components: { vueCountriesCities },
                 form_data.append('middle_name', this.$store.state.signupProcess_about.about.middle_name);
                 form_data.append('last_name', this.$store.state.signupProcess_about.about.last_name);
                 form_data.append('country', this.$store.state.signupProcess_about.about.country);
+                form_data.append('country_code', this.$store.state.signupProcess_about.about.country_code);
                 form_data.append('city', this.$store.state.signupProcess_about.about.city);
                 form_data.append('currency', this.$store.state.signupProcess_about.about.currency);
                 form_data.append('language', this.$store.state.signupProcess_about.about.language);
@@ -2300,7 +2302,7 @@ components: { vueCountriesCities },
                 form_data.append('timezone', this.$store.state.signupProcess_about.about.timezone);
                 form_data.append('description', this.$store.state.signupProcess_about.about.description);
                 form_data.append('_method', 'PUT');
-
+                
             axios.post('/api/user/' + this.getUser.id , form_data)             
             .then(response=>{
                 this.spinner = {}
