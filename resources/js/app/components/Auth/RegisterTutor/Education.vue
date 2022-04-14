@@ -137,7 +137,7 @@ export default {
                 form_data.append('higher_education_study_from', this.$store.state.signupProcess_education.education.study_from);
                 form_data.append('higher_education_study_to', this.$store.state.signupProcess_education.education.study_to);
                 form_data.append('higher_education_specialty', this.$store.state.signupProcess_education.education.specialty);
-                if(! this.image_preview) form_data.append('higher_education_certificate_upload', this.$store.state.signupProcess_education.education.image);
+                if(! this.img_preview) form_data.append('higher_education_certificate_upload', this.$store.state.signupProcess_education.education.image);
                 form_data.append('higher_education_institution', this.$store.state.signupProcess_education.education.institution);            
                 form_data.append('_method', 'PUT');
 
@@ -161,7 +161,7 @@ export default {
         validateForm(){
             this.errors={}
             if(this.i_dont_have_certificate ) return;
-            
+
             if(! this.img_preview){
                 if(!this.image) this.errors.image = 'Certificate is required';
             }

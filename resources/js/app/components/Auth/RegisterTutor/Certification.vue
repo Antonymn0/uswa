@@ -138,7 +138,7 @@ export default {
                 form_data.append('first_name', this.$store.state.signupProcess_about.about.first_name);
                 form_data.append('last_name', this.$store.state.signupProcess_about.about.last_name);
                 form_data.append('has_teaching_certificate', this.$store.state.signupProcess_certification.certification.i_dont_have_certificate);
-                if(! this.image_preview) form_data.append('teaching_certificate_upload', this.$store.state.signupProcess_certification.certification.image);
+                if(! this.img_preview) form_data.append('teaching_certificate_upload', this.$store.state.signupProcess_certification.certification.image);
                 form_data.append('teaching_certificate_subject', this.$store.state.signupProcess_certification.certification.subject);
                 form_data.append('teaching_certificate_year_of_study_from', this.$store.state.signupProcess_certification.certification.study_from);
                 form_data.append('teaching_certificate_year_of_study_to', this.$store.state.signupProcess_certification.certification.study_to);
