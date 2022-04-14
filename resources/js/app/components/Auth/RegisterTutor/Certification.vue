@@ -138,7 +138,7 @@ export default {
                 form_data.append('first_name', this.$store.state.signupProcess_about.about.first_name);
                 form_data.append('last_name', this.$store.state.signupProcess_about.about.last_name);
                 form_data.append('has_teaching_certificate', this.$store.state.signupProcess_certification.certification.i_dont_have_certificate);
-                 form_data.append('teaching_certificate_upload', this.$store.state.signupProcess_certification.certification.image);
+                if(! this.image_preview) form_data.append('teaching_certificate_upload', this.$store.state.signupProcess_certification.certification.image);
                 form_data.append('teaching_certificate_subject', this.$store.state.signupProcess_certification.certification.subject);
                 form_data.append('teaching_certificate_year_of_study_from', this.$store.state.signupProcess_certification.certification.study_from);
                 form_data.append('teaching_certificate_year_of_study_to', this.$store.state.signupProcess_certification.certification.study_to);
@@ -165,7 +165,10 @@ export default {
             this.errors = {};  
             if(this.i_dont_have_certificate) return; 
             
-            if(!this.image) this.errors.image = 'Certificate is required';
+            if(! this.img_preview){
+                if(!this.image) this.errors.image = 'Certificate is required';
+            }
+            
             if(!this.subject) this.errors.subject = 'Subject field is required';
             if(!this.certificate) this.errors.certificate = 'Certificate field is required';
 
@@ -177,7 +180,7 @@ export default {
         },
         populateFormFields(){
             this.i_dont_have_certificate  = false;
-            this.image = this.getUser.teaching_certificate_upload;
+            // this.image = this.getUser.teaching_certificate_upload;
             this.subject = this.getUser.teaching_certificate_subject;
             this.study_from = this.getUser.teaching_certificate_year_of_study_from;
             this.study_to = this.getUser.teaching_certificate_year_of_study_to;
