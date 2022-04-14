@@ -54,7 +54,7 @@
                                 </p>
                             </div>
                         </span>
-                          <span v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.participant_joined_at && trial_lesson.participant_left_at && !trial_lesson.is_student_impressed">
+                          <span v-if="!trial_lesson.is_student_impressed && trial_lesson.tutor_confirm == 'accepted' && trial_lesson.participant_joined_at">
                             Impressed by the tutor?  
                               <span class="btn btn-sm btn-primary m-1" @click="processPayment(trial_lesson)"> Yes</span>
                               <span class="btn btn-sm btn-danger m-1" @click.prevent="notImpressedbyTutor(trial_lesson)"> No</span>
