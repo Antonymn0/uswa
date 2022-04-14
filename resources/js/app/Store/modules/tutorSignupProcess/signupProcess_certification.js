@@ -5,19 +5,18 @@ export const signupProcess_certification = {
             certificate: null,
             issued_by: null,
             description: null,
-            img_preview: null,
+            c_img_preview: null,
             study_from: null,
             study_to: null,
             i_dont_have_certificate: false,
             image: null,
-            img_preview: null,
         },
     }),
 
     getters: {},
     mutations: {
         set_certificate_img_preview(state, payload) {
-            state.certification.img_preview = payload;
+            state.certification.c_img_preview = payload;
         },
         set_certificate_image(state, payload) {
             state.certification.image = payload;

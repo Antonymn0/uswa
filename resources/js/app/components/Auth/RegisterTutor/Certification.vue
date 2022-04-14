@@ -46,16 +46,14 @@
             <div class="row align-items-center py-4">
                 <div class="col-md-6 text-center">
                     <label for="imagecert" class="btn btn-secondary"> Upload certificate</label> <br>
-                    <small>Format: jpg,png,jpeg,svg </small> <br> 
+                    <small>Format: pdf </small> <br> 
                     <small class="#"> Max:10mb </small> 
                       
-                    <input type="file"  hidden name="image" class=" btn-sm btn alert-danger text-white m-2"  id="imagecert"    @change="this.fileUpload($event)">
+                    <input type="file"  hidden name="image" class=" btn-sm btn alert-danger text-white m-2"  id="imagecert" accept=".pdf"   @change="this.fileUpload($event)">
                 </div>
-                <div class="col-md-6 ">
-                    <span style="position:relative" v-if="this.img_preview"> <i class="bi bi-x-circle text-danger shadow rounded-circle pb-0" @click="removeImage()" style="font-size:1.5rem; position:absolute; left:9rem; top:-3rem; cursor:pointer"></i></span> 
-                    <img :src="this.img_preview" alt="" class=" " style="width:100px; height:105px" v-if="this.img_preview"> 
-                    <small class="text-danger small shadow p-2">{{this.errors.image}}</small>
-                </div>
+               <div class="col-md-6">
+                   <a :href="img_preview" target="blank">File</a>
+               </div>
             </div>
              
             <div class="form-check pt-3">
@@ -82,7 +80,7 @@ export default {
     computed:{
         ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),
         img_preview:{
-            get() { return this.$store.state.signupProcess_certification.certification.img_preview; },
+            get() { return this.$store.state.signupProcess_certification.certification.c_img_preview; },
             set(value) { this.$store.commit('set_certificate_img_preview', value); }
         },
         image:{
@@ -128,23 +126,8 @@ export default {
             document.getElementById('education').classList.remove('hidden');
         },
         
-        fileUpload(event){             
+        fileUpload(event){                        
             this.image = event.target.files[0];            
-            if(this.image.size > 2048 * 1024){
-              this.errors.image = "Image too big: Select an image less than 2mb."; 
-              this.image = null;
-              return;
-            } 
-            if(this.image['type'] === 'image/jpeg' || this.image['type'] === 'image/jpg' || this.image['type'] === 'image/png' || this.image['type'] === 'image/svg' || this.image['type'] === 'image/gif'){
-                this.img_preview = URL.createObjectURL(event.currentTarget.files[0]); 
-                delete this.errors.image
-                return;
-            } 
-            else {
-                this.errors.image = "Error:  Allowed types pdf";
-                this.img_preview = null;
-                this.image = null;
-            }
         },
         submitForm(){
             this.validateForm();
@@ -155,7 +138,7 @@ export default {
                 form_data.append('first_name', this.$store.state.signupProcess_about.about.first_name);
                 form_data.append('last_name', this.$store.state.signupProcess_about.about.last_name);
                 form_data.append('has_teaching_certificate', this.$store.state.signupProcess_certification.certification.i_dont_have_certificate);
-                if(this.img_preview !== this.getUser.image) form_data.append('teaching_certificate_upload', this.$store.state.signupProcess_certification.certification.image);
+                 form_data.append('teaching_certificate_upload', this.$store.state.signupProcess_certification.certification.image);
                 form_data.append('teaching_certificate_subject', this.$store.state.signupProcess_certification.certification.subject);
                 form_data.append('teaching_certificate_year_of_study_from', this.$store.state.signupProcess_certification.certification.study_from);
                 form_data.append('teaching_certificate_year_of_study_to', this.$store.state.signupProcess_certification.certification.study_to);

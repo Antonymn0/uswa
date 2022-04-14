@@ -3,12 +3,11 @@ export const signupProcess_education = {
         education: {
             institution: null,
             level: null,
-            // type: null,
             specialty: null,
             study_from: null,
             study_to: null,
             i_dont_have_certificate: false,
-            img_preview: null,
+            e_img_preview: null,
             image: null,
         },
     }),
@@ -16,7 +15,7 @@ export const signupProcess_education = {
     getters: {},
     mutations: {
         set_education_img_preview(state, payload) {
-            state.education.img_preview = payload;
+            state.education.e_img_preview = payload;
         },
         set_education_image(state, payload) {
             state.education.image = payload;
@@ -27,9 +26,6 @@ export const signupProcess_education = {
         set_education_level(state, payload) {
             state.education.level = payload;
         },
-        // set_type(state, payload) {
-        //     state.education.type = payload;
-        // },
         set_specialty(state, payload) {
             state.education.specialty = payload;
         },

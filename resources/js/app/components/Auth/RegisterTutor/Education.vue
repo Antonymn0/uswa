@@ -48,16 +48,14 @@
             <div class="row align-items-center py-2">
                 <div class="col-md-6 text-center">
                     <label for="imageHcert" class="btn btn-secondary"> Upload certificate</label> <br>
-                    <small>Format: jpg,png,jpeg,svg </small> <br> 
+                    <small>Format: pdf </small> <br> 
                     <small class="#"> Max:10mb </small> 
                       
-                    <input type="file"  hidden name="image" class=" btn-sm btn alert-danger text-white m-2"  id="imageHcert"    @change="this.fileUpload($event)">
+                    <input type="file"  hidden name="image" class=" btn-sm btn alert-danger text-white m-2"  id="imageHcert" accept=".pdf"   @change="this.fileUpload($event)">
                 </div>
-                <div class="col-md-6 ">
-                    <span style="position:relative" v-if="this.img_preview"> <i class="bi bi-x-circle text-danger shadow rounded-circle pb-0" @click="removeImage()" style="font-size:1.5rem; position:absolute; left:9rem; top:-3rem; cursor:pointer"></i></span>
-                    <img :src="this.img_preview" alt="" class=" " style="width:100px; height:105px" v-if="this.img_preview"> 
-                    <small class="text-danger small shadow p-2">{{this.errors.image}}</small>
-                </div>
+               <div class="col-md-6">
+                   <a :href="img_preview" target="blank">File</a>
+               </div>
             </div>
             <div class="form-check p-3">
                 <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck" v-model="i_dont_have_certificate">
@@ -84,7 +82,7 @@ export default {
     computed:{
         ...mapGetters(['isLogedIn', 'getUser', 'getAccount']),
         img_preview:{
-            get() { return this.$store.state.signupProcess_education.education.img_preview; },
+            get() { return this.$store.state.signupProcess_education.education.e_img_preview; },
             set(value) { this.$store.commit('set_education_img_preview', value); }
         },
         image:{
@@ -99,10 +97,7 @@ export default {
             get() { return this.$store.state.signupProcess_education.education.level; },
             set(value) { this.$store.commit('set_education_level', value); }
         },
-        // type:{
-        //     get() { return this.$store.state.signupProcess_education.education.type; },
-        //     set(value) { this.$store.commit('set_type', value); }
-        // },
+
         specialty:{
             get() { return this.$store.state.signupProcess_education.education.specialty; },
             set(value) { this.$store.commit('set_specialty', value); }
@@ -142,7 +137,7 @@ export default {
                 form_data.append('higher_education_study_from', this.$store.state.signupProcess_education.education.study_from);
                 form_data.append('higher_education_study_to', this.$store.state.signupProcess_education.education.study_to);
                 form_data.append('higher_education_specialty', this.$store.state.signupProcess_education.education.specialty);
-               if(this.img_preview !== this.getUser.higher_education_certificate_upload) form_data.append('higher_education_certificate_upload', this.$store.state.signupProcess_education.education.image);
+                form_data.append('higher_education_certificate_upload', this.$store.state.signupProcess_education.education.image);
                 form_data.append('higher_education_institution', this.$store.state.signupProcess_education.education.institution);            
                 form_data.append('_method', 'PUT');
 
@@ -157,22 +152,7 @@ export default {
             })
         },
         fileUpload(event){             
-            this.image = event.target.files[0];            
-            if(this.image.size > 2048 * 1024){
-              this.errors.image = "Image too big: Select an image less than 2mb."; 
-              this.image = null;
-              return;
-            } 
-            if(this.image['type'] === 'image/jpeg' || this.image['type'] === 'image/jpg' || this.image['type'] === 'image/png' || this.image['type'] === 'image/svg' || this.image['type'] === 'image/gif'){
-                this.img_preview = URL.createObjectURL(event.currentTarget.files[0]); 
-                delete this.errors.image
-                return;
-            } 
-            else {
-                this.errors.image = "Error:  Allowed types jpg/png/jpeg/gif";
-                this.img_preview = null;
-                this.image = null;
-            }
+            this.image = event.target.files[0];         
         },
         removeImage(){
             this.img_preview = null;

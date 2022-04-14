@@ -68,7 +68,7 @@ class UpdateUser extends FormRequest
 
             'has_teaching_certificate' => ['string', 'nullable'],
             'teaching_certificate' => ['string', 'nullable'],
-            'teaching_certificate_upload' => ['mimes:svg,png,jpg,jpeg', 'nullable'],
+            'teaching_certificate_upload' => ['mimes:pdf', 'nullable'],
             'teaching_certificate_subject' => ['string', 'nullable'],
             'teaching_certificate_year_of_study_from' => ['string', 'nullable'],
             'teaching_certificate_year_of_study_to' => ['string', 'nullable'],
@@ -81,7 +81,7 @@ class UpdateUser extends FormRequest
             'higher_education_study_from' => ['date', 'nullable'],
             'higher_education_study_to' => ['date', 'nullable'],
             'higher_education_specialty' => ['string', 'nullable'],
-            'higher_education_certificate_upload' => ['mimes:jpg,jpeg,png,svg', 'nullable'],
+            'higher_education_certificate_upload' => ['mimes:pdf', 'nullable'],
             'has_higher_education_certificate' => ['string', 'nullable'],
 
             'hourly_rate' => [ 'nullable','regex:/^[0-9]+(\.[0-9]{1,2})?$/'],

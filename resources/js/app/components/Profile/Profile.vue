@@ -143,7 +143,7 @@ export default {
                 this.success.update = "Success, details updated.";
                 setTimeout(() => {
                     document.getElementById('close_profile').click();
-                }, 3500);
+                }, 3000);
             }
             })
             .catch( error => {
