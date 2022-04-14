@@ -55,11 +55,11 @@
                             </div>
                         </span>
                           <span v-if="!trial_lesson.is_student_impressed && trial_lesson.tutor_confirm == 'accepted' && trial_lesson.participant_joined_at">
-                            Impressed by the tutor?  
+                                Impressed by the tutor?  
                               <span class="btn btn-sm btn-primary m-1" @click="processPayment(trial_lesson)"> Yes</span>
                               <span class="btn btn-sm btn-danger m-1" @click.prevent="notImpressedbyTutor(trial_lesson)"> No</span>
                         </span> 
-                        <button class="btn btn-sm btn-success m-1" v-if="trial_lesson.tutor_confirm == 'accepted' && trial_lesson.is_student_impressed"  @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lessons </button>
+                        <button class="btn btn-sm btn-success m-1" v-if="trial_lesson.is_student_impressed"  @click.prevent="this.createLesson(trial_lesson)"> <span class="spinner-border spinner-border-sm" v-if="this.spinner.create_lesson" role="status" aria-hidden="true" ></span> Create lessons </button>
                     </div>                   
                 </div>
             </div>              
