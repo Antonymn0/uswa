@@ -53,7 +53,7 @@
                         <label for="exampleFormControlInputimage">Image*</label>
                         <div class="image-preview mx-auto p-0 m-0 text-center">
                             <img :src="form.img_preview" alt="" style="width:50px; height:50px">  <br>
-                            <input type="file"  name="image" class=" btn-sm btn alert-danger text-white m-2"  id="exampleFormControlInputimage"  placeholder="Preparation time"  @change="fileUpload">
+                            <input type="file"  name="image" class=" btn-sm btn alert-danger text-white m-2"  id="exampleFormControlInputimage"  @change="fileUpload">
                         </div>    
                         <small class="text-danger"> {{this.errors.image }} </small>              
                     </div>
@@ -61,7 +61,7 @@
                         <small class="text-success">{{this.success.update}}</small> 
                         <small class="text-danger">{{this.errors.update}}</small> <br/>
                         <button type="button" class="btn btn-danger" id="close_profile" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary"> <span class="spinner-border spinner-border-sm" v-if="this.spinner"></span> Update</button>
+                        <button type="submit" class="btn btn-primary"> <span class="spinner-border spinner-border-sm" v-if="this.form.spinner"></span> Update</button>
                     </div>
                 </form>
             </div>
