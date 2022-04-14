@@ -133,30 +133,29 @@ class LocalAccountController extends Controller
      * transfer funds from student to tutor in local account
     */
     public function transferFundsFromStudentToTutor(Request $request){
-        // $trial_lesson = json_decode($request->trial_lesson);        
+        $trial_lesson = json_decode($request->trial_lesson);        
         
-        // $student_local_account = LocalAccount::where('user_id', $trial_lesson->student_id)->first();
-        // $tutor_local_account = LocalAccount::where('user_id', $trial_lesson->tutor_id)->first();
+        $student_local_account = LocalAccount::where('user_id', $trial_lesson->student_id)->first();
+        $tutor_local_account = LocalAccount::where('user_id', $trial_lesson->tutor_id)->first();
 
-        // if($student_local_account->available_balance < $trial_lesson->get_tutor->hourly_rate ) {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'Insufficient funds',
-        //         'data' => false
-        //     ],500);
-        //     }
+        if($student_local_account->available_balance < $trial_lesson->get_tutor->hourly_rate ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Insufficient funds',
+                'data' => false
+                ],500);
+            }
 
-
-        // $trial_lesson  = TrialLesson::findOrfail($trial_lesson->id); //fetch fresh record to update
+        $trial_lesson  = TrialLesson::findOrfail($trial_lesson->id); //fetch fresh record to update
         
-        // //update accounts
-        // $trial_lesson->update([ 'is_student_impressed' => true ]);
+        //update accounts
+        $trial_lesson->update([ 'is_student_impressed' => true ]);
 
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => 'Success, funds trasfered locally from student to tutor.',
-        //     'data' => true
-        // ], 200);
+        return response()->json([
+            'success' => true,
+            'message' => 'Success, funds trasfered locally from student to tutor.',
+            'data' => true
+        ], 200);
     }
 
     /**

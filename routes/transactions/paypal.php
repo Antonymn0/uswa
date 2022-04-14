@@ -18,8 +18,6 @@ Route::group(['middleware'=>['auth:api']],function(){
    //capture authorized payment   
     Route::get('/capture-authorized-payment','Api\Payments\Paypal\PaypalController@captureAuthorizedPAyment'); 
    
- 
-   
    //update local account  
     Route::post('/update/local-account','Api\Payments\Paypal\PaypalController@updateLocalAccount'); 
    
@@ -29,6 +27,5 @@ Route::group(['middleware'=>['auth:api']],function(){
    //transfer payments from student to tutor locally
     Route::post('/transfer-payments','Api\Payments\LocalAccountController@transferFundsFromStudentToTutor');  
    
-
 });
 
