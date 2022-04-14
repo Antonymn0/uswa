@@ -6,6 +6,7 @@
         <li> <router-link :to="{name: 'all-users'}" class="px-1" >Users</router-link></li>
         <li> <router-link :to="{name: 'all-lessons'}" class="px-1" >Lessons</router-link></li>
         <li> <router-link :to="{name: 'tutor-review'}" class="px-1" >Tutor review</router-link></li>
+        <li> <router-link :to="{name: 'admin-account'}" class="px-1" >Account</router-link></li>
         
      
       </ul>

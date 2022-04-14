@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(env('API_PAGINATION', 10));
+        $users = User::orderBy('created_at', 'desc')->paginate(env('API_PAGINATION', 10));
         return response()->json([
             'success'=> true,
             'message' => 'A list of users',
@@ -59,7 +59,7 @@ class UserController extends Controller
         return response()->json([
             'success'=> true,
             'message'=> 'User created successfuly',
-            'data' => $user,
+            'data' => $new_user,
             'token' => $token 
             ],  201);
     }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\LocalAccount;
 use App\Models\TrialLesson;
 use App\Models\Lesson;
+use App\Models\UswaCommisionAccount;
 use App\Models\StudentCompletedLecture;
 use App\Http\Requests\Payments\ValidateLocalAccountRequest;
 use App\Models\TransactionHistory;
@@ -132,30 +133,30 @@ class LocalAccountController extends Controller
      * transfer funds from student to tutor in local account
     */
     public function transferFundsFromStudentToTutor(Request $request){
-        $trial_lesson = json_decode($request->trial_lesson);        
+        // $trial_lesson = json_decode($request->trial_lesson);        
         
-        $student_local_account = LocalAccount::where('user_id', $trial_lesson->student_id)->first();
-        $tutor_local_account = LocalAccount::where('user_id', $trial_lesson->tutor_id)->first();
+        // $student_local_account = LocalAccount::where('user_id', $trial_lesson->student_id)->first();
+        // $tutor_local_account = LocalAccount::where('user_id', $trial_lesson->tutor_id)->first();
 
-        if($student_local_account->available_balance < $trial_lesson->get_tutor->hourly_rate ) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Insufficient funds',
-                'data' => false
-            ],500);
-            }
+        // if($student_local_account->available_balance < $trial_lesson->get_tutor->hourly_rate ) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'Insufficient funds',
+        //         'data' => false
+        //     ],500);
+        //     }
 
 
-        $trial_lesson  = TrialLesson::findOrfail($trial_lesson->id); //fetch fresh record to update
+        // $trial_lesson  = TrialLesson::findOrfail($trial_lesson->id); //fetch fresh record to update
         
-        //update accounts
-        $trial_lesson->update([ 'is_student_impressed' => true ]);
+        // //update accounts
+        // $trial_lesson->update([ 'is_student_impressed' => true ]);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Success, funds trasfered locally from student to tutor.',
-            'data' => true
-        ], 200);
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'Success, funds trasfered locally from student to tutor.',
+        //     'data' => true
+        // ], 200);
     }
 
     /**
@@ -178,7 +179,10 @@ class LocalAccountController extends Controller
             $amount_due += $lec->amount_due; // calculate total amount dues for all unpaid lectures
         }
 
-        $uswa_fee = (10/100) * $amount_due; // 10% uswa tutor fee
+        $uswa_commission_acc = UswaCommisionAccount::first();
+        $uswa_fee_percentage = $uswa_commission_acc->fee_percentage;
+
+        $uswa_fee = ($uswa_fee_percentage/100) * $amount_due; // 10% uswa tutor fee
         $final_amount_due = $amount_due - $uswa_fee; // amount due after fee deduction
 
         $student_local_account = LocalAccount::where('user_id', $user->id)->first();
@@ -250,9 +254,17 @@ class LocalAccountController extends Controller
             'remarks' => 'Paid by student ' ,
             'status' => 'Complete',
         ];
+        $uswa_fee_trasanction_data=[
+            'available_balance' =>  $uswa_commission_acc->available_balance + $uswa_fee,
+            'last_amount_transacted' => $uswa_fee,
+            'last_transaction_type' => 'Commission',
+            'balance_before' => $uswa_commission_acc->available_balance,
+            'balance_after' => $uswa_commission_acc->available_balance + $uswa_fee,
+        ];
 
         $student_local_account->update($student_data);
         $tutor_local_account->update($tutor_data);
+        $uswa_commission_acc->update($uswa_fee_trasanction_data);
 
         // save transaction history data
         $student_transaction_history = TransactionHistory::create($student_trans_hist_data); 

@@ -91,6 +91,11 @@ const routes = [
         path: "/admin/tutor/review",
         component: require("../components/Admin/Tutor/TutorReview.vue").default,
     },
+    {
+        name: "admin-account",
+        path: "/admin/acount",
+        component: require("../components/Admin/Account/Account.vue").default,
+    },
 
     // =======================================================================
     // ACCOUNT ROUTES

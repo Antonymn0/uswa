@@ -64,7 +64,7 @@ methods:{
         })
         .catch(error=>{ 
           if(error.response.status) this.$router.push({name: 'admin-register'});       
-            console.log(error.response);
+            
         })
     },
     registerUser(){

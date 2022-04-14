@@ -42,12 +42,13 @@
         </div> 
       </router-link>           
     </div>
-    <!-- --------------------------------------------------- -->
+    <!-- --------------------------------------------------- --> 
     <!-- ---------Dashboard----------------- -->
     <div class="d-flex align-items-center">        
-        <div class="px-2 desktop" v-if=" isLogedIn && this.getUser.role !== 'admin'">
+        <div class="px-2 desktop" v-if=" isLogedIn ">
           <router-link :to="{name: 'student-dashboard'}" v-if="getUser.role == 'student'">Dashboard</router-link> &nbsp;
           <router-link :to="{name: 'tutor-dashboard'}" v-if="getUser.role == 'tutor'">Dashboard</router-link>
+          <router-link :to="{name: 'all-users'}" v-if="getUser.role == 'admin'">Dashboard</router-link>
         </div>
      <!-- --------------------------------------------------   -->
 

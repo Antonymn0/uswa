@@ -183,7 +183,6 @@ export default {
             .then(response=>{
                 this.users = response.data.data.data;
                 this.current_users = this.users;
-                console.log(this.current_users);
             })
             .catch(error=>{
                 console.log(error.response)

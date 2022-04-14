@@ -96,17 +96,17 @@ export default {
         }
     },
     methods:{
-        submitForm(){
-            this.validateForm();
-            if(Object.keys(this.errors).length) return;
-            var form_data = new FormData();
-            form_data.append('first_name', this.form.first_name);
-            form_data.append('middle_name', this.form.middle_name);
-            form_data.append('email', this.form.email);
-            form_data.append('phone', this.form.phone);
-            form_data.append('country', this.form.country);
-            form_data.append('city', this.form.city);
-        },
+        // submitForm(){
+        //     this.validateForm();
+        //     if(Object.keys(this.errors).length) return;
+        //     var form_data = new FormData();
+        //     form_data.append('first_name', this.form.first_name);
+        //     form_data.append('middle_name', this.form.middle_name);
+        //     form_data.append('email', this.form.email);
+        //     form_data.append('phone', this.form.phone);
+        //     form_data.append('country', this.form.country);
+        //     form_data.append('city', this.form.city);
+        // },
         fileUpload(event){
             this.form.image = event.target.files[0]; 
             if(this.form.image.size > 2048 * 1024){

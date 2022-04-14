@@ -66,6 +66,8 @@ Route::group(['middleware'=>['auth:api']],function(){
 
   // Import admin tutor routes file
   require __DIR__.'/admin/tutors.php';
+  // Import admin commisions routes file
+  require __DIR__.'/admin/commissions.php';
 
   // Import notifications routes file
   require __DIR__.'/notifications/notifications.php';

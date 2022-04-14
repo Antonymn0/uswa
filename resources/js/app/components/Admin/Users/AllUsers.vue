@@ -23,8 +23,9 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
-                    <th>Subject</th>
-                    <th>Origin</th>
+                    <th>Language 1</th>
+                    <th>Language 2</th>
+                    <th>Country</th>
                     <th>Action</th>
                 </thead>
                 <tbody v-if="Object.keys(this.current_users).length">
@@ -32,13 +33,16 @@
                         <td>{{index + 1}}</td>
                         <td>{{this.capitalize(user.first_name)}} {{this.capitalize(user.last_name)}}</td>
                         <td>{{user.email}}</td>
-                        <td>{{user.role}}</td>
+                        <td v-if="user.role == 'admin'" ><span class="text-primary">{{user.role}} </span> </td>
+                        <td v-else>{{user.role}}</td>
                         <td>{{user.language}}</td>
+                        <td>{{user.subject}}</td>
                         <td>{{user.country}}</td>
-                        <td>
+                        <td v-if="user.role !== 'admin'">
                             <span v-if="!user.deleted_at"><i class="bi bi-trash btn-sm btn btn-danger" @click.prevent="suspendUser(user.id)"></i></span>
                             <span v-else><i class="bi bi-arrow-counterclockwise btn-sm  btn btn-primary" @click.prevent="restoreUser(user.id)"></i></span>
-                            </td>
+                        </td>
+                        <td v-else></td>
                     </tr>
                 </tbody>
                 <tbody v-else>

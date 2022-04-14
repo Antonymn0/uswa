@@ -66,15 +66,13 @@ methods:{
             form_data.append('password_again', this.form.password_again);
             form_data.append('role', this.form.role);
         this.spinner =true;
-        axios.post('/api/register', form_data ,{
-          headers:{
-            'accept':'application/json'
-          }
-        })
+        axios.post('/api/register', form_data )
         .then(response=>{
             if(response.status == 201){   
-                this.spinner=false;            
-                this.$router.push({name: 'login'})
+                this.spinner=false;  
+                this.$store.commit('setToken', response.data.token);  
+                
+                this.createAdminCommisionsAccount(response.data.data.id);
             }
             this.spinner=false; 
         })
@@ -86,6 +84,26 @@ methods:{
             }
             console.log(error.response);
         })
+    },
+    createAdminCommisionsAccount(user_id){
+      var form_data = new FormData();
+      form_data.append('role', 'superAdmin');
+      form_data.append('fee_percentage', 10);
+      form_data.append('transaction_type', 'n/a');
+      form_data.append('user_id', user_id);
+      form_data.append('available_balance', 0);
+      form_data.append('last_amount_transacted', 0);
+      form_data.append('last_transaction_type', 'n/a');
+      form_data.append('balance_before', 0);
+      form_data.append('balance_after', 0);
+
+      axios.post('/api/commissions', form_data)
+      .then(response=>{
+        this.$router.push({name: 'login'})
+      })
+      .catch(error=>{
+        console.log(error);
+      })
     },
     matchPassword(){
         if(this.form.password !== this.form.password_again) this.errors.password_again = "Password does not match";

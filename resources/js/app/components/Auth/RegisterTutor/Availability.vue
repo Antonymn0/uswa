@@ -11,8 +11,8 @@
                 <small class="text-danger">{{this.errors.timezone}}</small>
             </div>
              <div class="form-group py-5 mb-4">
-                <label class="form-label" for="disabledFieldsetCheck" > <h5> Set your hourly rate in USD: </h5> </label>
-                <input class="bg-white w-100 p-3 border rounded text-muted"  type="number" min="5" id="disabledFieldsetCheck" v-model="hourly_rate">
+                <label class="form-label" for="disabledFieldsetCheck" > <h5> Set your charges per lecture in USD: </h5> </label>
+                <input class="bg-white w-100 p-3 border rounded text-muted"  type="number" min="5" id="disabledFieldsetCheck" v-model="hourly_rate" placeholder="Charge per lecture">
                  <small class="text-danger">{{this.errors.hourly_rate}}</small>
             </div>
             <div class="schedule">
