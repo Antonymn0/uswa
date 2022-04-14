@@ -184,7 +184,7 @@ export default {
             this.description = this.getUser.teaching_certificate_description;
             this.issued_by = this.getUser.teaching_certificate_issued_by;
             this.certificate = this.getUser.teaching_certificate;
-            this.img_preview = this.getUser.image;
+            this.img_preview = this.getUser.teaching_certificate_upload;
         }
     },
     mounted(){
