@@ -141,7 +141,7 @@ export default {
                 return;
             } 
             else {
-                this.errors.image = "Error:  Allowed types jpg/png/jpeg/gif";
+                this.errors.image = "Error:  Allowed types pdf";
                 this.img_preview = null;
                 this.image = null;
             }

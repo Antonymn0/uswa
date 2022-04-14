@@ -60,7 +60,7 @@
                     <div class="modal-footer">
                         <small class="text-success">{{this.success.update}}</small> 
                         <small class="text-danger">{{this.errors.update}}</small> <br/>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="close_profile" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary"> <span class="spinner-border spinner-border-sm" v-if="this.spinner"></span> Update</button>
                     </div>
                 </form>
@@ -125,13 +125,13 @@ export default {
         }, 
         submitForm(){
             var form_data = new FormData();
-            form_data.append('first_name', this.form.first_name);
-            form_data.append('middle_name', this.form.middle_name);
-            form_data.append('last_name', this.form.last_name);
-            form_data.append('email', this.form.email);
-            form_data.append('phone', this.form.phone);
-            form_data.append('country', this.form.country);
-            form_data.append('city', this.form.city);
+                form_data.append('first_name', this.form.first_name);
+                form_data.append('middle_name', this.form.middle_name);
+                form_data.append('last_name', this.form.last_name);
+                form_data.append('email', this.form.email);
+                form_data.append('phone', this.form.phone);
+                form_data.append('country', this.form.country);
+                form_data.append('city', this.form.city);
             if(this.form.image) form_data.append('image', this.form.image);
             form_data.append('_method', 'PUT');
 
@@ -141,6 +141,9 @@ export default {
             if( response.status == 200){
                 this.spinner= false;
                 this.success.update = "Success, details updated.";
+                setTimeout(() => {
+                    document.getElementById('close_profile').click();
+                }, 3500);
             }
             })
             .catch( error => {
