@@ -388,12 +388,12 @@ export default {
             if(string) return string.charAt(0).toUpperCase() + string.slice(1);
         },        
         checkAmount(){
-            if( this.topup_amount >= 5 && this.topup_amount <= 100) {                
+            if( this.topup_amount >= 1 && this.topup_amount <= 100) {                
                 this.errors ={}
                 if(this.getUser.role == 'student' ) this.loadPaypalCheckout();
             }
             else {
-                this.errors.topup_amount = "Enter value between 5 and 100";
+                this.errors.topup_amount = "Enter value between 1 and 100";
                 this.topup_amount = 0;
                 }
         },
