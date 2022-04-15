@@ -1,7 +1,7 @@
 <template>
 <div class="">
    <div class="row  pt-5 mx-4 top align-items-center h-100">
-    <div  class="col-md-7 py-5">
+    <div  class="col-md-7 py-5 h-100">
       <div class="ps-4 h-100 py-5 d-flex align-items-center" >       
         <span class="align-middle " >
             <h1 class="fw-bold mx-auto " style="font-size:4rem;"> Speak a new language with confidence  </h1>  
@@ -9,7 +9,7 @@
           </span>   
       </div>      
       </div>
-    <div class="col-md-5 text-right"><img src="/images/cover.png" alt="" style="max-width:100%; height:auto"></div>
+    <div class="col-md-5 text-right h-100"><img src="/images/cover.png" alt="" style="max-width:100%; height:auto"></div>
   </div> 
 
 
@@ -50,13 +50,13 @@
             Use filters to narrow your search and find the perfect fit </p>        
         </div>
         <div class="col-md-6">
-          <img src="/images/find-tutors.webp" alt="image">
+          <img src="/images/find_the_best_tutor.png" alt="image">
         </div>
       </div>
 
       <div class="row mx-5 my-2 how-uswa-work clearfix align-items-center"> 
         <div class="col-md-6">
-          <img src="/images/calender.webp" alt="image">
+          <img src="/images/lessons_anytime.png" alt="image">
         </div>
         <div class="col-md-6 ">
           <h3 class="fw-bold">Take lessons anytime anywhere </h3> 
@@ -73,12 +73,12 @@
           connect with your tutor through zoom video platform </p>        
         </div>
         <div class="col-md-6">
-          <img src="/images/calender.webp" alt="image">
+          <img src="/images/enter_virtual_classroom.png" alt="image">
         </div>
       </div>   
 
   </div> 
-  <p class="text-center">
+  <p class="text-center py-5">
     <router-link :to="{name: 'register'}" class=" btn btn-danger rounded-pill px-5 py-3" v-if="! isLogedIn">Register now</router-link> 
   </p>
     
