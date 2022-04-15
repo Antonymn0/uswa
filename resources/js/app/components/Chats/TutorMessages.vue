@@ -19,8 +19,8 @@
                <div v-if="Object.keys(this.current_messages).length">
                     <ul class="list-unstyled pr-3 mr-3 pt-4" v-for="(message, index) in this.current_messages" :key="index">
                         <li class="border-bottom p-2">
-                            <div class="d-flex position-relative " style="cursor:pointer">
-                                <span v-if="message.message_sender.image">  <img :src="message.message_sender.image" alt="profile pic" style="width:20px; height:20px; border-radius:50%;"> </span>
+                            <div class="d-flex position-relative align-items-center" style="cursor:pointer">
+                                <span v-if="message.message_sender.image">  <img :src="message.message_sender.image" alt="profile pic" style="width:30px; height:30px; border-radius:50%;"> </span>
                                 <span v-else>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2.5rem"></i></span>
                                 <span class="ml-2" @click.prevent="[toggleMessage(message), toggleThread(message.conversation_thread),  showThread(), toggleSeen(message) ]" style="cursor:pointer">
                                     <h5 class="m-0 position-relative"> 
@@ -46,7 +46,7 @@
             <div id="thread" class="mr-3 ">
                 <div  v-if="Object.keys(this.current_message).length">
                 <h4 class="d-flex align-items-center border-bottom">
-                    <span v-if="this.current_message.message_sender.image"> <img :src="this.current_message.message_sender.image" alt="profile pic" style="width:20px; height:20px; border-radius:50%;"> </span>                   
+                    <span v-if="this.current_message.message_sender.image"> <img :src="this.current_message.message_sender.image" alt="profile pic" style="width:30px; height:30px; border-radius:50%;"> </span>                   
                     <span v-else><i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.7rem"></i>  </span>                   
                     <span v-if="Object.keys(this.current_message).length">{{this.capitalize(this.current_message.message_sender.first_name)}}  {{ this.current_message.message_sender.last_name.charAt(0).toUpperCase()}} </span> 
                 </h4>
