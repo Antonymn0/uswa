@@ -45,7 +45,7 @@
 
     <div class="row mx-5 py-4 how-uswa-work clearfix align-items-center">      
         <div class="col-md-6">
-          <h3 class="fw-bold"> Find the best tutor</h3> 
+          <h1 class="fw-bold"> Find the best tutor</h1> 
           <p>Choose from a pool of seasoned online tutors. <br>
             Use filters to narrow your search and find the perfect fit </p>        
         </div>
@@ -59,7 +59,7 @@
           <img src="/images/lessons_anytime.png" alt="image">
         </div>   
         <div class="col-md-6 ">
-          <h3 class="fw-bold">Take lessons anytime anywhere </h3> 
+          <h1 class="fw-bold">Take lessons anytime anywhere </h1> 
           <p>Find the perfect time for your busy schedule. <br>
             Book a lessons in seconds on our platform </p>        
         </div>      
@@ -67,7 +67,7 @@
 
       <div class="row mx-5 py-3 how-uswa-work clearfix align-items-center">     
         <div class="col-md-6">
-          <h3 class="fw-bold">Enter virtual classroom </h3> 
+          <h1 class="fw-bold">Enter virtual classroom </h1> 
           <p>When it’s lesson time, <br>
           connect with your tutor through zoom video platform </p>        
         </div>
