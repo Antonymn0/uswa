@@ -89,8 +89,8 @@
                     Tip: <br>                    
                     <i class="bi bi-dot"></i> Define your lectures in small chunks of 1hr each <br>
                     <i class="bi bi-dot"></i> Lectures should not exceed  1hr limit<br>
-                    <i class="bi bi-dot"></i> Your defined hourly rate will be applied on these lectures <br>
-                   <i class="bi bi-dot"></i>  Students are billed on 1hr flat rate 
+                    <i class="bi bi-dot"></i> Your defined  charge rate will be applied on these lectures <br>
+                   <i class="bi bi-dot"></i>  Students are billed per lecture 
                 </p>
             </div>
               

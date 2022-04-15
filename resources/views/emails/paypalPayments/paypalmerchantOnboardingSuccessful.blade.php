@@ -1,4 +1,6 @@
 @component('mail::message')
+<img src="{{url('https://uswa-app.herokuapp.com/images/logo.svg')}}" style="width:90px; float:right" alt="menuthy Logo">
+<br>
 # Congratulations {{$user->first_name}},
 
 Your  onboarding process is successful.

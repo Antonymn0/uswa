@@ -27,7 +27,7 @@
                 <div class=" mx-auto m-2 w-75" v-if="this.getUser.role == 'student' " >
                     <label class=" text-secondary">Enter amount to topup via  paypal: </label>                   
                     <div class="py-3">                       
-                        <input type="number" name="" min="5" max="100" class="form-control text-center" placeholder="Enter amount" v-model="topup_amount" @input="this.checkAmount()">
+                        <input type="number" name="" min="1" max="500" class="form-control text-center" placeholder="Enter amount" v-model="topup_amount" @input="this.checkAmount()">
                         <small class="text-danger"> {{this.errors.topup_amount}}</small>
                     </div>
                     
@@ -388,12 +388,12 @@ export default {
             if(string) return string.charAt(0).toUpperCase() + string.slice(1);
         },        
         checkAmount(){
-            if( this.topup_amount >= 1 && this.topup_amount <= 100) {                
+            if( this.topup_amount >= 1 && this.topup_amount <= 500) {                
                 this.errors ={}
                 if(this.getUser.role == 'student' ) this.loadPaypalCheckout();
             }
             else {
-                this.errors.topup_amount = "Enter value between 1 and 100";
+                this.errors.topup_amount = "Enter value between 1 and 500";
                 this.topup_amount = 0;
                 }
         },

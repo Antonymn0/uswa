@@ -1,8 +1,8 @@
 <template>
 <div class="">
-   <div class="row  pt-5 mx-4 top">
-    <div  class="col-md-7 pb-3">
-      <div class="ps-4 h-100 py-3 d-flex align-items-center" >       
+   <div class="row  pt-5 mx-4 top align-items-center">
+    <div  class="col-md-7 py-5">
+      <div class="ps-4 h-100 py-5 d-flex align-items-center" >       
         <span class="align-middle " >
             <h1 class="fw-bold mx-auto " style="font-size:4rem;"> Speak a new language with confidence  </h1>  
             <h5 class="semi-bold mx-auto " style="font-size:3rem;">  Learn with the best online tutors.  </h5>
@@ -15,8 +15,8 @@
 
     <!-- ------------------------------------------ --> 
       <div class=" p-5 new-language">
-      <h3 class="text-center fw-bold py-5">Learn a new language the easy way</h3>
-        <div>
+      <h1 class="text-center fw-bold py-5">Learn a new language the easy way</h1>
+        <div class="pb-5">
           <ul class="row list-unstyled text-center">
             <li class="col-md-4">
               <h4 class="text-center">Expert native speakers</h4>
@@ -40,48 +40,42 @@
         </div>
     </div>  
     <!-- -------------------------------------------------- -->
-     <div class="clearfix pt-5">
-    <h3 class="text-center  fw-bold ">How Uswa works</h3>
+     <div class="clearfix p-5 fw-bold">
+      <h1 class="text-center  fw-bold ">How Uswa works</h1>
 
-   <div class="row mx-5 py-4 how-uswa-work clearfix">
-      <div class="col-md-2  my-3 text-center">
-        <span class="text-center number "> 1</span>
+    <div class="row mx-5 py-4 how-uswa-work clearfix align-items-center">      
+        <div class="col-md-6">
+          <h3 class="fw-bold"> Find the best tutor</h3> 
+          <p>Choose from a pool of seasoned online tutors. <br>
+            Use filters to narrow your search and find the perfect fit </p>        
+        </div>
+        <div class="col-md-6">
+          <img src="/images/find-tutors.webp" alt="image">
+        </div>
       </div>
-      <div class="col-md-5">
-        <h4> Find the best tutor</h4> 
-        <p>Choose from a pool of seasoned online tutors. Use filters to narrow your search and find the perfect fit </p>        
-      </div>
-      <div class="col-md-5">
-         <img src="/images/find-tutors.webp" alt="image">
-      </div>
-    </div>
 
-    <div class="row mx-5 my-2 how-uswa-work clearfix">
-      <div class="col-md-2 my-3 text-center">
-        <span class="text-center number"> 2</span>
-        
+      <div class="row mx-5 my-2 how-uswa-work clearfix align-items-center"> 
+        <div class="col-md-6">
+          <img src="/images/calender.webp" alt="image">
+        </div>
+        <div class="col-md-6 ">
+          <h3 class="fw-bold">Take lessons anytime anywhere </h3> 
+          <p>Find the perfect time for your busy schedule. <br>
+            Book a lessons in seconds on our platform </p>        
+        </div>
+      
       </div>
-      <div class="col-md-5 ">
-        <h4>Take lessons anytime anywhere </h4> 
-        <p>Find the perfect time for your busy schedule. Book a lessons in seconds on our platform </p>        
-      </div>
-      <div class="col-md-5">
-        <img src="/images/calender.webp" alt="image">
-      </div>
-    </div>
 
-    <div class="row mx-5 py-2 how-uswa-work clearfix">
-      <div class="col-md-2 my-3 text-center">
-        <span class="text-center number"> 3</span>
-      </div>
-      <div class="col-md-5">
-        <h4>Enter virtual classroom </h4> 
-        <p>When it’s lesson time, connect with your tutor through zoom video platform </p>        
-      </div>
-      <div class="col-md-5">
-         <img src="/images/calender.webp" alt="image">
-      </div>
-    </div>   
+      <div class="row mx-5 py-2 how-uswa-work clearfix align-items-center">     
+        <div class="col-md-6">
+          <h3 class="fw-bold">Enter virtual classroom </h3> 
+          <p>When it’s lesson time, <br>
+          connect with your tutor through zoom video platform </p>        
+        </div>
+        <div class="col-md-6">
+          <img src="/images/calender.webp" alt="image">
+        </div>
+      </div>   
 
   </div> 
   <p class="text-center">
@@ -148,7 +142,7 @@ export default {
 <style scoped>
 
 .new-language{
-  background-color:rgba(221, 214, 214, 0.342);
+  background-color:#fff;
   
 }
 .parent{
