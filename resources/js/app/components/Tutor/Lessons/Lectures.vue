@@ -75,7 +75,7 @@
                         </div>
                         <div class="form-group p-2">
                             <label for="duration">Duration: <small class="text-muted"> (hrs)</small> </label>
-                            <input type="number" id="duration" min='1' max="1" class="form-control" v-model="lecture_duration" placeholder="Duration in hrs">
+                            <input type="number" id="duration" min='1' max="5" class="form-control" v-model="lecture_duration" placeholder="Duration in hrs">
                             <small class="text-danger">{{this.errors.lecture_duration}}</small>
                         </div>
                         <div class="form-group p-2">
@@ -86,11 +86,10 @@
                     </form>
                 </div>
                 <p class="text-muted small p-2">
-                    Tip: <br>                    
-                    <i class="bi bi-dot"></i> Define your lectures in small chunks of 1hr each <br>
-                    <i class="bi bi-dot"></i> Lectures should not exceed  1hr limit<br>
+                    Tips: <br>                    
+                    <i class="bi bi-dot"></i> Define your lectures in small chunks of about 1hr each <br>
                     <i class="bi bi-dot"></i> Your defined  charge rate will be applied on these lectures <br>
-                   <i class="bi bi-dot"></i>  Students are billed per lecture 
+                    <i class="bi bi-dot"></i>  Students are billed per lecture flat rate
                 </p>
             </div>
               

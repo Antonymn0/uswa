@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-md-6 border-start px-3"> 
                         <p >
-                            <span class="m-0 p-0">About {{tutor.first_name}}:</span> <br>
+                            <span class="m-0 p-0 fw-bold">About {{tutor.first_name}}:</span> <br>
                             <span class="m-0 p-0">{{tutor.description}}</span>
                         </p>
                         <div class="py-2">

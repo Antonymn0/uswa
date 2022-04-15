@@ -18,7 +18,7 @@
                     <br> <small class="text-danger small">{{this.errors.image}}</small>
                 </div>  
                 <div class="col-md-6 ">
-                    <h5 class="p-2">Tips for taking a good photo</h5>
+                    <h5 class="px-2">Tips for taking a good photo</h5>
                     <span class="p-2"> <i class="bi bi-check-circle"></i> Smile and look at the camera</span> <br>
                     <span class="p-2"> <i class="bi bi-check-circle"></i> Frame your head and shoulders </span> <br>
                     <span class="p-2"> <i class="bi bi-check-circle"></i> Your photo is centered and upright </span> <br>
