@@ -40,7 +40,7 @@
         </div>
     </div>  
     <!-- -------------------------------------------------- -->
-     <div class="clearfix p-5  fw-bold">
+     <div class="clearfix p-5 how_uswa_works fw-bold">
       <h1 class="text-center py-2 fw-bold ">How Uswa works</h1>
 
     <div class="row mx-5 py-4 how-uswa-work clearfix align-items-center">      
@@ -139,7 +139,9 @@ export default {
 </script>
 
 <style scoped>
-
+.how_uswa_works{
+  font-size: 22px;
+}
 .new-language{
   background-color:#fff;
   
