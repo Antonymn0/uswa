@@ -40,8 +40,8 @@
         </div>
     </div>  
     <!-- -------------------------------------------------- -->
-     <div class="clearfix p-5 fw-bold">
-      <h1 class="text-center  fw-bold ">How Uswa works</h1>
+     <div class="clearfix p-5  fw-bold">
+      <h1 class="text-center py-2 fw-bold ">How Uswa works</h1>
 
     <div class="row mx-5 py-4 how-uswa-work clearfix align-items-center">      
         <div class="col-md-6">
@@ -54,19 +54,18 @@
         </div>
       </div>
 
-      <div class="row mx-5 my-2 how-uswa-work clearfix align-items-center"> 
-        <div class="col-md-6">
+      <div class="row mx-5 py-3 how-uswa-work clearfix align-items-center">  
+        <div class="col-md-6 ">
           <img src="/images/lessons_anytime.png" alt="image">
-        </div>
+        </div>   
         <div class="col-md-6 ">
           <h3 class="fw-bold">Take lessons anytime anywhere </h3> 
           <p>Find the perfect time for your busy schedule. <br>
             Book a lessons in seconds on our platform </p>        
-        </div>
-      
+        </div>      
       </div>
 
-      <div class="row mx-5 py-2 how-uswa-work clearfix align-items-center">     
+      <div class="row mx-5 py-3 how-uswa-work clearfix align-items-center">     
         <div class="col-md-6">
           <h3 class="fw-bold">Enter virtual classroom </h3> 
           <p>When it’s lesson time, <br>
