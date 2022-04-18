@@ -9,7 +9,7 @@
         </p>
         <small class="alert-success p-2" v-if="this.success.shedule_meeting">{{this.success.shedule_meeting}}</small>
       <small class="alert-danger p-2" v-if="this.success.shedule_meeting">{{this.errors.meeting_sheduled}}</small>
-      <div class="row p-3 ">          
+      <div class="row p-3 panel">          
           <div class="col-md-4 row p-1"  v-for="(trial_lesson, index) in this.current_trial_lessons" :key="index">              
               <div>
                   <div class="border-line rounded p-2 h-100">
@@ -80,7 +80,7 @@
      <small class="alert-success text-center p-2 rounded" v-if="this.success.lesson_complete"> {{this.success.lesson_complete}} </small>
      <small class="alert-danger text-center p-2 rounded" v-if="this.errors.lesson_complete"> {{this.errors.lesson_complete}} </small>
      <div v-if="Object.keys(this.current_lessons).length  "> 
-      <div class="row p-2 ">            
+      <div class="row p-2 panel">            
           <div class="col-md-4 row p-1"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'ongoing'">         
               <div>
                   <div class="border-line rounded p-3 h-100">
@@ -147,7 +147,7 @@
 
   <div class="bg-white mt-3 ">
       <h4 class="alert-secondary w-100 py-3 px-3">Completed <span class="float-end mx-3"> <button class="btn btn-sm btn-danger" @click.prevent="fetchLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
-      <div class="row p-3 "> 
+      <div class="row p-3 panel"> 
           <div class="col-md-4 row p-1"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'completed'">                
               <div v-show="lesson.status == 'completed'">
               <div>
@@ -470,7 +470,7 @@ export default {
             var form_data = new FormData();
                 form_data.append('lesson_date', this.trial_lesson_reschedule_date);
                 form_data.append('start_time', this.trial_lesson_reschedule_time);
-                
+
             if(!confirm('Reschedule this trial lesson?')) return;
             this.spinner.reschedule_trial_lesson = true;
             axios.post('/api/reschedule-trial-lesson/' + trial_lesson.id, form_data)
@@ -619,6 +619,16 @@ export default {
     scrollbar-width: none;  /* Firefox */
     }
     .lec-scroll::-webkit-scrollbar {
+    display: none;
+    }
+    .panel{
+        height: auto;
+        max-height: 35rem;
+        overflow:scroll;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    .panel::-webkit-scrollbar {
     display: none;
     }
 .border-line{
