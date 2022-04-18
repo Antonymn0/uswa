@@ -20,7 +20,7 @@
                 </div>
 
                 <div class=" rouded mb-3 px-1 row" >
-                    <label for="country" class="form-label">Country & State</label>  <span class="small text-center">({{this.$store.state.signupProcess_about.about.country}} | {{this.$store.state.signupProcess_about.about.city}} )</span>
+                    <label for="country" class="form-label">Country & State</label>  <span class="small text-center">Selected: {{this.$store.state.signupProcess_about.about.country}} | {{this.$store.state.signupProcess_about.about.city}} </span>
                     <vueCountriesCities id="country" @country='selectedCountry = $event' @change="updateCountryCity()" @city='selectedCity = $event' @country_code='selectedCountryCode = $event' @blur="updateCountryCity()"  class="text-muted"/>   
                     <small class="text-danger small">{{this.errors.country}}</small> 
                     <small class="text-danger small float-end">{{this.errors.city}}</small>            
@@ -2271,7 +2271,7 @@ components: { vueCountriesCities },
         updateCountryCity(){
             setTimeout(() => {
                 this.$store.commit('set_country', this.selectedCountry);
-                this.$store.commit('set_country_code', this.selectedCountryCode); 
+                if(this.selectedCountryCode !=='') this.$store.commit('set_country_code', this.selectedCountryCode); 
                 this.$store.commit('set_city', this.selectedCity); 
             }, 50);            
         },
@@ -2343,8 +2343,10 @@ components: { vueCountriesCities },
             this.middle_name = this.getUser.middle_name;
             this.last_name = this.getUser.last_name;
             this.country = this.getUser.country;
+            this.selectedCountry = this.getUser.country;
             this.country_code = this.getUser.country_code;
             this.city = this.getUser.city;
+            this.selectedCity = this.getUser.city;
             this.timezone = this.getUser.timezone;
             this.currency = this.getUser.currency;
             this.language = this.getUser.language;

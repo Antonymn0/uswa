@@ -8,6 +8,7 @@ use App\Models\TrialLesson;
 use App\Models\Notification;
 use App\Models\User;
 use App\Http\Requests\TrialLesson\ValidateTrialLesson;
+use App\Http\Requests\TrialLesson\UpdateTrialLessonRequest;
 use App\Events\TrialLesson\trialLessonCreated;
 
 class TrialLessonContoller extends Controller
@@ -66,7 +67,7 @@ class TrialLessonContoller extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request\UpdateTrialLessonRequest $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -99,6 +100,26 @@ class TrialLessonContoller extends Controller
         return response()->json([
             'success' => true,
             'message' => 'meeting link updated',
+            'data' =>true
+        ],200);
+    }
+
+    /**
+     * Reschedule trial lesson
+     */
+    public function rescheduleTrialLesson(UpdateTrialLessonRequest $request, $id)
+    {
+        $data = $request->validated();
+        $data['meeting_link'] = null;
+        $data['meeting_id'] = null;
+
+       $trial_lesson = TrialLesson::findOrFail($id);
+
+       $trial_lesson->update($data);
+
+       return response()->json([
+            'success' => true,
+            'message' => 'Trial lesson updated',
             'data' =>true
         ],200);
     }

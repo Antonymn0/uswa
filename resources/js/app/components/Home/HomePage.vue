@@ -40,16 +40,16 @@
         </div>
     </div>  
     <!-- -------------------------------------------------- -->
-     <div class="clearfix p-5 how_uswa_works fw-bold">
-      <h1 class="text-center py-2 fw-bold ">How Uswa works</h1>
+     <div class="clearfix p-5 how_uswa_works fw-bold text-center">
+      <h1 class=" py-2 fw-bold ">How Uswa works</h1>
 
     <div class="row mx-5 py-4 how-uswa-work clearfix align-items-center">      
-        <div class="col-md-6">
+        <div class="col-md-6 px-5 text-center">
           <h1 class="fw-bold"> Find the best tutor</h1> 
-          <p>Choose from a pool of seasoned online tutors. <br>
+          <p class="text-secondary">Choose from a pool of seasoned online tutors. <br>
             Use filters to narrow your search and find the perfect fit </p>        
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 ">
           <img src="/images/find_the_best_tutor.png" alt="image">
         </div>
       </div>
@@ -59,8 +59,8 @@
           <img src="/images/lessons_anytime.png" alt="image">
         </div>   
         <div class="col-md-6 ">
-          <h1 class="fw-bold">Take lessons anytime anywhere </h1> 
-          <p>Find the perfect time for your busy schedule. <br>
+          <h1 class="fw-bold">Take lessons anytime, anywhere </h1> 
+          <p class="text-secondary">Find the perfect time for your busy schedule. <br>
             Book a lessons in seconds on our platform </p>        
         </div>      
       </div>
@@ -68,7 +68,7 @@
       <div class="row mx-5 py-3 how-uswa-work clearfix align-items-center">     
         <div class="col-md-6">
           <h1 class="fw-bold">Enter virtual classroom </h1> 
-          <p>When it’s lesson time, <br>
+          <p class="text-secondary">When it’s lesson time, <br>
           connect with your tutor through zoom video platform </p>        
         </div>
         <div class="col-md-6">
@@ -165,6 +165,10 @@ export default {
   color:#3c4447;
   height:100vh;
   overflow:hidden;
+}
+.how_uswa_works img{
+    padding:3.5rem;
+    
 }
 .tutors .tutor-panels{
   width:33.33%;

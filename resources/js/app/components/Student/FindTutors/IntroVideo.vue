@@ -4,7 +4,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content px-1">
             <div class="modal-header">
-                <h4 class="modal-title fw-bold">{{this.tutor.first_name}} {{this.tutor.last_name}}</h4>
+                <h4 class="modal-title fw-bold">About {{this.tutor.first_name}} {{this.tutor.last_name}}</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body ">              
@@ -14,14 +14,15 @@
                         <p class="mb-0 rounded" style="overflow:hidden" v-if="this.tutor.introduction_video">                        
                             <iframe width="400" height="300"  :src="this.tutor.introduction_video" autoplay="false" class="shadow bg-dark rounded" >  </iframe>                    
                         </p>
-                        <p class="mb-0 rouded" style="overflow:hidden" v-if="! this.tutor.introduction_video"> 
-                            <iframe  width="400" height="300"  :src="this.tutor.introduction_video_url" autoplay="false" class="shadow bg-dark rouded"  v-if="this.tutor.introduction_video_url">  </iframe>                        
+                        <p class="mb-0 rouded" style="overflow:hidden" v-if="!this.tutor.introduction_video && this.tutor.introduction_video_url"> 
+                            <iframe  width="400" height="300"  :src="this.tutor.introduction_video_url" autoplay="false" class="shadow bg-dark rouded"  v-if="this.tutor.introduction_video_url">  </iframe>  
+                            <span v-if="this.tutor.introduction_video_url && !this.tutor.introduction_video">If the video doesnt play, click this <a :href="this.tutor.introduction_video_url">link to open it in another tab </a> </span>                      
                         </p>
                         <p v-if="!this.tutor.introduction_video && !this.tutor.introduction_video_url" class="text-muted small  py-5 mt-5">This tutor has not uploded an introduction video yet</p>
                     </div>
                     <div class="col-md-6 border-start px-3"> 
                         <p >
-                            <span class="m-0 p-0 fw-bold">About {{tutor.first_name}}:</span> <br>
+                            <span class="m-0 p-0 fw-bold">About:</span> <br>
                             <span class="m-0 p-0">{{tutor.description}}</span>
                         </p>
                         <div class="py-2">

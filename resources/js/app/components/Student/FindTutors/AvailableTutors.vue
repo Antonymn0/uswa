@@ -14,14 +14,14 @@
                     <div class="pl-2 ms-2">
                         <h5 class="d-flex align-items-center mb-0">
                            <span> {{this.capitalize(tutor.first_name)}} {{ tutor.last_name.charAt(0).toUpperCase()}}.</span> 
-                            <span class="float-end ms-3"> 
+                            <span class="float-end ms-3">
                                 <country-flag :country='tutor.country_code' size='.5rem'/> &nbsp;
                                 <i class="bi bi-shield-fill-check text-primary" ></i>
                             </span>                            
                         </h5>
                         <span class="clearfix w-100"></span>
                         <div class=" d-flex align-items-center justify-content-between " >                           
-                            <span class="small fw-bold"><i class="bi bi-mortarboard-fill text-secondary"></i> &nbsp; {{tutor.language}} </span> 
+                            <span class="small fw-bold"><i class="bi bi-mortarboard-fill text-secondary"></i> &nbsp; {{tutor.subject}} </span> 
                            
                         </div>
                             <div class=" ">
@@ -46,7 +46,7 @@
                 </div>
                 <!-- ------------------------------------- -->
                 <div class="d-flex  small px-2 speaks">
-                    <span class="fw-bold">Speaks: &nbsp; </span> 
+                    <span class="fw-bold">Languages: &nbsp; </span> 
                     <span> {{tutor.language}} &nbsp;</span> <span class="alert-success px-1 rounded"> {{ this.capitalize(tutor.level)}} </span>  
                     <span class="">  &nbsp; | &nbsp;</span>
                     <span>{{tutor.subject}} &nbsp; </span>  <span class="alert-primary px-1 rounded">  {{ this.capitalize(tutor.subject_level)}} </span>  

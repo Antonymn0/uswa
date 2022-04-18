@@ -24,7 +24,7 @@
                        
                     <p class="fw-bold">{{this.capitalize(trial_lesson.get_student.first_name)}} wants to book  {{this.capitalize(trial_lesson.lesson_type)}}  lessons with you</p>
                     <span class="py-2">Scheduled for: {{this.formatDate(trial_lesson.lesson_date)}}</span> <br>                  
-                    <span>Time: </span> <span>{{trial_lesson.start_time}}hrs </span> <br>
+                    <span>Time: </span> <span>{{trial_lesson.start_time}}hrs </span> <span class="btn btn-secondary btn-sm float-end" data-bs-target="#reschedule-trial-lesson" data-bs-toggle="modal" data-bs-dismiss="modal" @click.prevent="updateCurrentTrialLesson(trial_lesson)">Reschedule</span> <br>
                     <span class="py-2">Duration: </span> <span>20 mins </span> <br>
                     <!-- <span class="py-2">Expired: </span> <span> false</span> <br> -->
                     
@@ -183,7 +183,42 @@
   </div>
         <div> <Assignments :lesson="this.current_lesson"/> </div>
   </div>
-
+ <!-- Reschedule trial lesson -->
+    <div class="modal fade" id="reschedule-trial-lesson" aria-hidden="true" aria-labelledby="exampleModalToggleLabelreschedule" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header"> <h5> Reschedule Trial lesson </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body mx-auto">
+            <div class="w-auto mx-uato text-left py-3">                                  
+                    <div class="py-3">   
+                        <label class=" text-secondary">Date: </label>                     
+                        <input type="date" name=""  class="form-control text-center" placeholder="Date" v-model="trial_lesson_reschedule_date">
+                        <small class="text-danger"> {{this.errors.trial_lesson_reschedule_date}}</small>
+                    </div>                
+                    <div class="py-3">   
+                        <label class=" text-secondary">Time: </label>    
+                        <select name="" id="from" class="p-2 w-100 rounded bg-white border text-muted" v-model="this.trial_lesson_reschedule_time">
+                            <option  value='' selected class="form-contro" > - Select - </option>
+                            <option  v-bind="this.item" v-for="item in this.time_selector" :key="item" class="form-contro" > {{item}} </option>
+                        </select>                
+                         <small class="text-danger"> {{this.errors.trial_lesson_reschedule_time}}</small>
+                    </div>                
+               
+                <small class="text-primary" v-if="this.success.payment"> {{this.success.payment}} </small>
+                <small class="text-primary" v-if="this.spinner.paypal_processing"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.paypal_processing"></span> Processing...</small>
+            </div>
+            
+        </div>
+        <div class="py-3 border-top text-end me-3">
+            <small class="text-success"> {{this.success.reschedule_trial_lesson}} <br> </small>
+          <button class="btn btn-primary m-1" @click.prevent="this.rescheduleTrialLesson(this.current_trial_lesson)" > <span class="spinner-border spinner-border-sm" v-if="this.spinner.reschedule_trial_lesson" role="status" aria-hidden="true" ></span> Reschedule </button>
+          <button class="btn btn-danger m-1" id="reschedule" data-bs-target="#staticBackdropTrial" data-bs-toggle="modal" data-bs-dismiss="modal"> Cancel </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -199,10 +234,13 @@ export default {
     data(){
         return{
             current_trial_lessons:{},
+            current_trial_lesson:{},
             current_lessons:{},
             completed_lectures:{},
             lectures:{},
             current_lesson:{  get_assignments:{}   },
+            trial_lesson_reschedule_date:null,
+            trial_lesson_reschedule_time:null,
             completed_lessons:{},
             decline_reason:null,
             errors:{},
@@ -216,6 +254,56 @@ export default {
             REDIRECT_URI: null,
             zoom_user_auth_token: null ,
             ZOOM_STATE: this.$store.state.user.user.id,   
+            time_selector:[
+                        '00:00',
+                        '00:30',
+                        '01:00',
+                        '01:30',
+                        '02:00',
+                        '02:30',
+                        '03:00',
+                        '03:30',
+                        '04:00',
+                        '04:30',
+                        '05:00',
+                        '05:30',
+                        '06:00',
+                        '06:30',
+                        '07:00',
+                        '07:30',
+                        '08:00',
+                        '08:30',
+                        '09:00',
+                        '09:30',
+                        '10:00',
+                        '10:30',
+                        '11:00',
+                        '11:30',
+                        '12:00',
+                        '12:30',
+                        '13:00',
+                        '13:30',
+                        '14:00',
+                        '14:30',
+                        '15:00',
+                        '15:30',
+                        '16:00',
+                        '16:30',
+                        '17:00',
+                        '17:30',
+                        '18:00',
+                        '18:30',
+                        '19:00',
+                        '19:30',
+                        '20:00',
+                        '20:30',
+                        '21:00',
+                        '21:30',
+                        '22:00',
+                        '22:30',
+                        '23:00',
+                        '23:30',
+                    ],
         }
     },
     computed:{
@@ -227,6 +315,9 @@ export default {
         },          
         formatDate(date){
             if (date) return moment(String(date)).format('ll');            
+        },
+         updateCurrentTrialLesson(trial_lesson)   {
+            this.current_trial_lesson = trial_lesson;
         },
         convertDateToLocal(date, student){           
             // convert date from utc to local date 
@@ -372,6 +463,28 @@ export default {
                 console.log(error.response);
             })
         },
+        rescheduleTrialLesson(trial_lesson){
+            this.validateRescheduleTrailLesson();
+            if(Object.keys(this.errors).length) return;
+          
+            var form_data = new FormData();
+                form_data.append('lesson_date', this.trial_lesson_reschedule_date);
+                form_data.append('start_time', this.trial_lesson_reschedule_time);
+
+            this.spinner.reschedule_trial_lesson = true;
+            axios.post('/api/reschedule-trial-lesson/' + trial_lesson.id, form_data)
+            .then(response=>{
+                this.spinner ={}
+                this.success.reschedule_trial_lesson = 'Success, Operation successful!'
+                this.fetchTrialLessons();
+                document.getElementById('reschedule').click();
+                this.trial_lesson_reschedule_date = null;
+                this.trial_lesson_reschedule_time = null;
+            })
+            .catch(error=>{
+                console.log(error.response);
+            })
+        },
         scheduleZoomMeeting(trial_lesson){
             this.spinner.schedule_meeting = true;
             var form_data = new FormData();
@@ -470,6 +583,11 @@ export default {
             .catch(error=>{
                 console.log(error.response);
             })
+        },
+        validateRescheduleTrailLesson(){
+            this.errors={}
+            if(! this.trial_lesson_reschedule_date) this.errors.trial_lesson_reschedule_date = 'Date field is required!'; 
+            if(! this.trial_lesson_reschedule_time) this.errors.trial_lesson_reschedule_time = 'Time field is required!'; 
         },
         shedulefetchRefresh(){
             setInterval(() => {

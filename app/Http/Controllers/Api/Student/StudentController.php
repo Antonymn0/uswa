@@ -69,6 +69,7 @@ class StudentController extends Controller
         $tutors = User::with('tutorSchedule')
                 ->with('reviews')
                 ->where('language', $keyword)
+                ->orWhere('subject', $keyword)
                 ->where('registration', 'complete')
                 ->paginate(env('API_PAGINATION', 10));
         return response()->json([
