@@ -81,7 +81,6 @@
     <router-link :to="{name: 'register'}" class=" btn btn-danger rounded-pill px-5 py-3" v-if="! isLogedIn">Register now</router-link> 
   </p>
     
-
 </div> 
 
 
@@ -230,7 +229,7 @@ export default {
     }
 }
 /* media quesries */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 750px) {
     .tutors .tutor-panels{
         width:100%;       
     }
@@ -258,6 +257,9 @@ export default {
     .mx-5{
       margin-right:3px !important;
       margin-left:3px !important;
+    }
+    .p-5{
+      padding: 5px !important;
     }
 }
 

@@ -7,7 +7,7 @@
             </span>
             <i class="bi bi-chat-dots text-dark " >  </i>
         </span>
-        <div id="mySidenav" class="sidenav px-3 shadow" style="">
+        <div id="mySidenav-tutor" class="sidenav px-3 shadow" style="">
             <span class="" id="closeMessages">
                 <a href="javascript:void(0)" class="closebtn" id="closeNav" @click.prevent="closeMessages()">&times;</a>
             </span>
@@ -109,11 +109,11 @@ export default {
           if(string)  return string.charAt(0).toUpperCase() + string.slice(1);
         },
         openTutorMessages() {
-            document.getElementById("mySidenav").style.width = "550px";            
+            document.getElementById("mySidenav-tutor").style.width = "550px";            
             document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         },
         closeMessages() {
-            document.getElementById("mySidenav").style.width = "0";           
+            document.getElementById("mySidenav-tutor").style.width = "0";           
             document.body.style.backgroundColor = "white";
         },
         showThread(){

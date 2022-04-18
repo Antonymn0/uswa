@@ -12,6 +12,8 @@ Route::group(['middleware'=>['auth:api']],function(){
     
     //student notifications routes
     Route::get('/student/notifications/get/{user_id}','Api\Notification\NotificationController@getStudentNotifications');
+
+    Route::get('/notifications/read/{id}','Api\Notification\NotificationController@readNotification');
    
     
 });

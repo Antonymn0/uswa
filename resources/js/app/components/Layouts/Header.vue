@@ -56,7 +56,6 @@
         <div class="d-flex components" v-if="isLogedIn && this.getUser.role !== 'admin' ">
           <span class="" v-if="getUser.role == 'student' "> <StudentMessages /></span>
           <span class="" v-if="getUser.role == 'tutor' "> <TutorMessages /></span>
-          <span class="" v-if="getUser.role == 'admin' "> <AdminNotifications /></span>
           <span class="" v-if="getUser.role == 'student' "> <StudentNotifications /></span>
           <span class="" v-if="getUser.role == 'tutor' "> <TutorNotifications /></span>
           <span class="" > <Lectures /></span>
@@ -119,7 +118,6 @@ import Profile from "../Profile/Profile.vue";
 import StudentMessages from "../Chats/StudentMessages.vue";
 
 import TutorMessages from "../Chats/TutorMessages.vue";
-import AdminNotifications from "../UserNotifications/AdminNotifications.vue";
 import TutorNotifications from "../UserNotifications/TutorNotifications.vue";
 import StudentNotifications from "../UserNotifications/StudentNotifications.vue";
 import VerifyEmail from "../Notifications/EmailUnverified.vue";
@@ -136,7 +134,6 @@ export default {
     Profile,
     StudentMessages,
     TutorMessages,
-    AdminNotifications,
     StudentNotifications,
     TutorNotifications,
     VerifyEmail,
@@ -211,7 +208,11 @@ mounted(){
       .components{
         margin: 0 50px 0
       }
-
+      .px-3{
+        padding-left: 0 !important;
+        padding-right: 0 !important;       
+      }
+     
 
 }
   

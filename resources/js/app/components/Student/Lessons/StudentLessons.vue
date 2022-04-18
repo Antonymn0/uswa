@@ -720,8 +720,8 @@ export default {
     }
 
     /* media rules */
-    @media only screen and (max-width: 950px){
-        .px-5 .px-4{
+    @media only screen and (max-width: 750px){
+        .px-5, .px-4{
             padding-left:0 !important;
             padding-right:0 !important;
         }

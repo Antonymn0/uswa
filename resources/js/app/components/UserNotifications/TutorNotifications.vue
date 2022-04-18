@@ -11,7 +11,7 @@
             <div class="px-3">
 
                 <div v-if="Object.keys(this.current_notifications).length"> 
-                    <div class="card p-2 mb-2 position-relative" v-for="(notification, index) in this.current_notifications" :key="index">
+                    <div v-for="(notification, index) in this.current_notifications" :key="index" @click.prevent="this.markNotificationRead(notification)" class="card p-2 mb-2 position-relative " :class="notification.status == 'sent' ? 'card-unread' : '' " >
                     <span class="position-absolute top-0 end-0 text-danger mr-2" style="cursor:pointer" @click.prevent="deleteNotification(notification.id)">  &times;</span>
                         <h5>{{notification.title}}</h5>
                         <p class="mb-0">
@@ -64,6 +64,10 @@ export default {
             .then(response=>{
                 this.notifications = response.data.data.data;
                 this.current_notifications = this.notifications;
+                this.show_notification_badge = false; // toggle show key
+                this.notifications.forEach(notification => {
+                    if(notification.status == 'sent') this.show_notification_badge = true;
+                })
             })
             .catch(error=>{
                 console.log(error.response);
@@ -71,6 +75,17 @@ export default {
         },
         deleteNotification(id){
             axios.delete('/api/notifications/' + id)
+            .then(response=>{
+                this.fetchNotifications();               
+            })
+            .catch(error=>{
+                console.log(error.response);
+            });
+        },
+        markNotificationRead(notification){
+            if(notification.status == 'read') return;
+
+            axios.get('/api/notifications/read/' + notification.id)
             .then(response=>{
                 this.fetchNotifications();               
             })
@@ -101,7 +116,13 @@ export default {
     align-items: center;
     justify-content:space-between;
  }
-  
+ .card-unread{
+   border:1px solid rgb(253, 162, 162);
+ }
+  .card:hover{
+      border:1px solid rgb(145, 58, 58) ;
+      cursor:pointer;
+  }
 
 /* The side navigation menu */
 .sidenav {

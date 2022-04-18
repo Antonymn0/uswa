@@ -101,4 +101,19 @@ class NotificationController extends Controller
             'data'=>$notifications
             ], 200);
     }
+
+    /**
+     * mark notifification read
+     */
+    public function readNotification(Request $request, $id)
+    {
+        $notification = Notification::findOrFail($id);
+        $notification-> update([ 'status'=> 'read' ]);
+
+        return response()->json([
+            'success'=> true, 
+            'message'=> 'Success notification marked read', 
+            'data'=>true
+            ], 200);
+    }
 }
