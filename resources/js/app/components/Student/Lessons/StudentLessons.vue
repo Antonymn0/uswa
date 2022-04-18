@@ -481,7 +481,8 @@ export default {
             var form_data = new FormData();
                 form_data.append('lesson_date', this.trial_lesson_reschedule_date);
                 form_data.append('start_time', this.trial_lesson_reschedule_time);
-
+                
+            if(!confirm('Reschedule this trial lesson?')) return;
             this.spinner.reschedule_trial_lesson = true;
             axios.post('/api/reschedule-trial-lesson/' + trial_lesson.id, form_data)
             .then(response=>{
