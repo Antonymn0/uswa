@@ -112,6 +112,7 @@ class TrialLessonContoller extends Controller
         $data = $request->validated();
         $data['meeting_link'] = null;
         $data['meeting_id'] = null;
+        $data['is_student_impressed'] = null;
 
        $trial_lesson = TrialLesson::findOrFail($id);
 
