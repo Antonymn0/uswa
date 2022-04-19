@@ -70,7 +70,7 @@
                     <form action="" ref="form">
                         <div class="form-group p-2">
                             <label for="name">Lecture name:</label>
-                            <input type="text" id="name" class="form-control" v-model="lecture_name" placeholder="Lecture name">
+                            <input type="text" id="name" class="form-control" v-model="lecture_name" placeholder="Lecture name eg. Introduction to English language">
                             <small class="text-danger">{{this.errors.lecture_name}}</small>
                         </div>
                         <div class="form-group p-2">

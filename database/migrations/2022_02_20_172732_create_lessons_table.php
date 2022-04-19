@@ -52,6 +52,17 @@ class CreateLessonsTable extends Migration
             $table->string('status')->nullable(); 
             $table->string('meeting_link')->nullable(); 
 
+            $table->string('meeting_id')->nullable();
+            $table->string('meeting_uuid')->nullable();
+            $table->string('meeting_host_id')->nullable();
+            $table->string('is_student_impressed')->nullable();
+            $table->string('participant_left_meeting_reason')->nullable();
+            
+            $table->timestamp('meeting_started_at')->nullable();
+            $table->timestamp('meeting_ended_at')->nullable();
+            $table->timestamp('participant_joined_at')->nullable();
+            $table->timestamp('participant_left_at')->nullable();
+
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });

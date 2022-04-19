@@ -1,6 +1,6 @@
 <template>
   
-<div class="p-3 px-5">
+<div class="p-3 px-5 ">
 
   <div class="bg-white  ">      
       <h4 class="alert-secondary w-100 py-3 px-3">Trial lessons <span class="float-end mx-3"> <button class="btn btn-sm btn-danger" @click.prevent="fetchTrialLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
@@ -24,7 +24,7 @@
                        
                     <p class="fw-bold">{{this.capitalize(trial_lesson.get_student.first_name)}} wants to book  {{this.capitalize(trial_lesson.lesson_type)}}  lessons with you</p>
                     <span class="py-2">Scheduled for: {{this.formatDate(trial_lesson.lesson_date)}}</span> <br>                  
-                    <span>Time: </span> <span>{{trial_lesson.start_time}}hrs </span> <span class="btn btn-secondary btn-sm float-end" data-bs-target="#reschedule-trial-lesson" data-bs-toggle="modal" data-bs-dismiss="modal" @click.prevent="updateCurrentTrialLesson(trial_lesson)">Reschedule</span> <br>
+                    <span>Time: </span> <span>{{trial_lesson.start_time}}hrs </span> <span class="btn btn-success btn-sm float-end" data-bs-target="#reschedule-trial-lesson" data-bs-toggle="modal" data-bs-dismiss="modal" @click.prevent="updateCurrentTrialLesson(trial_lesson)">Reschedule</span> <br>
                     <span class="py-2">Duration: </span> <span>20 mins </span> <br>
                     <!-- <span class="py-2">Expired: </span> <span> false</span> <br> -->
                     
@@ -107,7 +107,10 @@
                         <h5>Lectures  </h5>
                         <div v-if="Object.keys(lesson.lectures).length" class="lec-scroll border-start mb-2">
                             <p v-for="(lecture, index) in lesson.lectures" :key="index" class="row small pt-2 pb- rounded align-middle lec-hover  mb-1 mx-1 " >
-                                <span class="col-1 m-0 align-middle "><i class="bi bi-patch-check-fill" v-if="this.isLectureComplete(lecture, lesson)"></i> </span>
+                                <span class="col-1 m-0 align-middle ">
+                                        <i class="bi bi-patch-check-fill text-muted"  v-if="this.isLectureComplete(lecture, lesson)"></i> 
+                                        <i class="bi bi-patch-check-fill text-primary" v-if="this.is_bothTutorStudentMarkedLectureComplete(lecture, lesson)"></i> 
+                                    </span>
                             <span class="col-7 m-0 align-middle">
                                 <span class=" dropdown  " > 
                                         <span class="  m-0 align-middle three-dot"  style="cursor:pointer "  type="button"  data-bs-toggle="dropdown" aria-expanded="false" :id="'trial_M_details' + lecture.id" >{{this.capitalize(lecture.lecture_name)}}</span>
@@ -117,13 +120,18 @@
                                         </p>
                                     </span>
                                 </span>                             
-                                <span class=" col-2 m-0 align-middle">{{lecture.lecture_duration}}<small>hrs </small> </span>                         
+                                <span class=" col-2 m-0 align-middle">{{lecture.lecture_duration}}<small>hrs </small> </span>   
+
                                 <span class=" small col-1 m-0 align-middle  " > 
                                     <span class="  m-0 align-middle" style="cursor:pointer; font-size:1.5rem"  type="button"  data-bs-toggle="dropdown" aria-expanded="false" :id="'trial_Mo_details' + lecture.id" > <i class="bi bi-three-dots three-dot"></i></span>
-                                    <p class="p-3 border small dropdown-menu small text-muted rounded" :aria-labelledby="'trial_Mo_details' + lecture.id" >
-                                        <span class="fw-bold m-0 btn btn-sm btn-success" @click.prevent="markLectureComplete(lecture, lesson)">Complete</span>  <br>                                                               
+                                    <p class="p-3 border small dropdown-menu small text-muted text-center rounded" :aria-labelledby="'trial_Mo_details' + lecture.id" >
+                                        <h6 class="fw-bold">Action</h6>
+                                        <span v-if="this.is_bothTutorStudentMarkedLectureComplete(lecture, lesson)" class="fw-bold m-0 btn btn-sm btn-success m-1 disabled w-100" >Completed</span> 
+                                        <span v-else class="fw-bold m-0 btn  btn-success m-1 w-100" @click.prevent="markLectureComplete(lecture, lesson)">Mark complete</span>                                                                
+                                                                                                        
                                     </p>
                                 </span>
+
                             </p>
                             <button class="btn btn-sm btn-primary form-control my-1" v-if="isAllLecturesComplete(lesson.lectures, this.completed_lectures, lesson)" @click.prevent="markLessonComplete( lesson)"> <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.lesson_complete"></span> Mark this lesson complete </button> 
                         </div>                       
@@ -388,7 +396,7 @@ export default {
             });
         },
         markLectureComplete(lecture, lesson){
-            if(!confirm('Are you sure to mark this lecture complete?')) return;
+            if(!confirm('Are you sure you want to mark this lecture complete?')) return;
             var form_data = new FormData();
                 form_data.append('lesson_id', lesson.id);
                 form_data.append('lecture_id', lecture.id);
@@ -396,11 +404,13 @@ export default {
                 form_data.append('tutor_id', lesson.tutor_id);
                 form_data.append('marked_by', lesson.tutor_id);
                 form_data.append('payment_status','unpaid');
+                form_data.append('tutor_marked_complete',1);
+                form_data.append('tutor_marked_complete_at', moment().format('YYYY-MM-DD HH:mm'));
                 form_data.append('amount_due',this.getUser.hourly_rate);
+
             axios.post('/api/lecture/completed', form_data)
             .then(response => {
-                this.fetchLessons();
-                console.log(response.data);   
+                this.fetchLessons();  
             })
             .catch(error=>{  
                 if(error.response.status == 422){
@@ -415,9 +425,19 @@ export default {
         isLectureComplete(lecture, lesson){ //determine if the lecture is 'marked' completed or otherwise
             var css_class = false;
             this.completed_lectures.forEach(lec=>{                
-                if(lec.lecture_id == lecture.id && lec.lesson_id == lesson.id)   css_class = true;
+                if(lec.lecture_id == lecture.id && lec.lesson_id == lesson.id && lec.tutor_marked_complete && !lec.student_marked_complete)   css_class = true;
             });
             return css_class;
+        },
+        is_bothTutorStudentMarkedLectureComplete(lecture, lesson){
+            var key = false;
+            if(!lesson) return;
+            if(! Object.keys(this.completed_lectures).length) return;
+
+            this.completed_lectures.forEach(lec=>{                
+               if(lec.lecture_id == lecture.id && lec.lesson_id == lesson.id && lec.tutor_marked_complete && lec.student_marked_complete)   key = true;
+            });
+            return key;
         },
         isAllLecturesComplete(lectures, completed_lectures, lesson){ //determine if all the lectures are 'marked' completed or otherwise means leasson complete
             var current_completed_lectures = []
@@ -444,8 +464,9 @@ export default {
         },
         markLessonComplete(lesson){
             if(lesson.status == 'complete') {alert('Lesson already marked complete'); return;}
+            if( this.checkIfLectureUnpaid(lesson)) {alert("Operation aborted! \n This lesson has pending unpaid lecture arreas."); return;}
             if(! confirm('Mark this lesson complete? \n This record will be available in your completed lessons.')) return;
-            if(! this.checkIfLectureUnpaid(lesson)) {alert("Failed, This lesson has pending unpaid lecture arreas."); return;}
+            
             this.spinner.lesson_complete = true;
             axios.get('/api/lesson/mark-complete/' + lesson.id)
             .then(response=>{
@@ -623,7 +644,7 @@ export default {
     }
     .panel{
         height: auto;
-        max-height: 35rem;
+        max-height: 30.5rem;
         overflow:scroll;
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */

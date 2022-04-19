@@ -24,7 +24,12 @@ class CreateStudentCompletedLecturesTable extends Migration
             $table->timestamp('payment_date')->nullable();
             $table->double('amount_due')->nullable();
             $table->double('paid_amount')->nullable();
-            $table->string('payment_reciept_no')->nullable();           
+            $table->string('payment_reciept_no')->nullable();  
+
+            $table->tinyInteger('tutor_marked_complete')->nullable();
+            $table->timestamp('tutor_marked_complete_at')->nullable();
+            $table->tinyInteger('student_marked_complete')->nullable();
+            $table->timestamp('student_marked_complete_at')->nullable();  
             
             $table->timestamps();
         });

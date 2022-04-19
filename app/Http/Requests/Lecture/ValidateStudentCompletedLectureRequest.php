@@ -34,6 +34,10 @@ class ValidateStudentCompletedLectureRequest extends FormRequest
             'paid_amount' => 'nullable|regex:/^[0-9]+(\.[0-9]{1,2})?$/',
             'amount_due' => 'nullable|regex:/^[0-9]+(\.[0-9]{1,2})?$/',
             'payment_reciept_no' => 'nullable|string',
+            'tutor_marked_complete' => 'nullable|string',
+            'tutor_marked_complete_at' => 'nullable|date',
+            'student_marked_complete' => 'nullable|string',
+            'student_marked_complete_at' => 'nullable|date',
         ];
     }
 }

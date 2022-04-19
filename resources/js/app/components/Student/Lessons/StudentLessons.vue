@@ -12,8 +12,8 @@
     </p>
      
     <div v-if="Object.keys(this.current_trial_lessons).length"> 
-    <div class="row m-1 panel">               
-        <div class="col-md-4 row p-1"  v-for="(trial_lesson, index) in this.current_trial_lessons" :key="index">              
+    <div class="row m-2 panel">               
+        <div class="col-md-4 row p-1 my-2"  v-for="(trial_lesson, index) in this.current_trial_lessons" :key="index">              
             <div>
                 <div class="border-line rounded p-3 m-1 h-100">
                     <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
@@ -27,7 +27,7 @@
                        
                     <p class="fw-bold">  {{this.capitalize(trial_lesson.lesson_type)}} trial lesson with tutor {{this.capitalize(trial_lesson.get_tutor.first_name)}}   </p>
                     <span class="py-2">Scheduled for: {{this.formatDate(trial_lesson.lesson_date)}}</span> <br>                  
-                    <span>Time: </span> <span>{{trial_lesson.start_time}}hrs  </span> <span class="btn btn-secondary btn-sm float-end" data-bs-target="#reschedule-trial-lesson" data-bs-toggle="modal" data-bs-dismiss="modal" @click.prevent="updateCurrentTrialLesson(trial_lesson)">Reschedule</span><br>
+                    <span>Time: </span> <span>{{trial_lesson.start_time}}hrs  </span> <span class="btn btn-success btn-sm float-end" data-bs-target="#reschedule-trial-lesson" data-bs-toggle="modal" data-bs-dismiss="modal" @click.prevent="updateCurrentTrialLesson(trial_lesson)">Reschedule</span><br>
                     <span class="py-2">Duration: </span> <span> 20 mins </span> <br>
                     
                     <p class="mb-0" v-if="trial_lesson.decline_reason !== null">
@@ -39,7 +39,7 @@
 
                     <div class="mb-0 py-2 ">
                         <a v-if="! this.zoom_user_auth_token" :href="'https://zoom.us/oauth/authorize?response_type=code&client_id=' + this.CLIENT_ID + '&state=' + this.ZOOM_STATE + '&redirect_uri=' + this.REDIRECT_URI" class="btn btn-secondary btn-small m-2" >Link with zoom</a>  
-                        <button class="btn btn-sm btn-secondary m-1" v-if="trial_lesson.tutor_confirm == 'pending' " @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel request </button>
+                        <button class="btn btn-sm btn-danger m-1" v-if="trial_lesson.tutor_confirm == 'pending' " @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel request </button>
                       
                          <span class=" d-flex align-items-center"> 
                             <a :href="trial_lesson.meeting_link" target="blank" class="btn btn-sm btn-primary m-1" v-if="trial_lesson.meeting_link " >Launch meeting</a> &nbsp;
@@ -104,22 +104,34 @@
                             <div v-if="Object.keys(lesson.lectures).length" class="lec-scroll border-start">   
                                                     
                                 <p v-for="(lecture, index) in lesson.lectures" :key="index" class="row pt-2  rounded  lec-hover  mb-1 mx-1  ">
-                                    <span class="col-1 m-0 align-middle "><i class="bi bi-patch-check-fill" v-if="this.isLectureComplete(lecture, lesson)"></i> </span>
-                                    <span class=" col-7 m-0 align-middle">  {{this.capitalize(lecture.lecture_name)}}</span>
-                                    <span class=" col-2 m-0 align-middle">{{lecture.lecture_duration}}<small>hrs </small> </span>                           
-                                    <span class="dropdown small col-1 m-0 align-middle  " > 
-                                        <span class=" col-1 m-0 align-middle text-end" style="cursor:pointer; font-size:1.5rem"  type="button"  data-bs-toggle="dropdown" aria-expanded="false" :id="'trial_M_details' + lecture.id" > <i class="bi bi-three-dots three-dot"></i></span>
+                                    <span class="col-1 m-0 align-middle ">
+                                        <i class="bi bi-patch-check-fill text-muted"  v-if="this.isLectureComplete(lecture, lesson)"></i> 
+                                        <i class="bi bi-patch-check-fill text-primary" v-if="this.is_bothTutorStudentMarkedLectureComplete(lecture, lesson)"></i> 
+                                    </span>
+                                    
+                                    <span class="small col-7 m-0 align-middle " > 
+                                        <span class="  m-0 align-middle three-dot"  style="cursor:pointer "  type="button"  data-bs-toggle="dropdown" aria-expanded="false" :id="'trial_M_details' + lecture.id" >{{this.capitalize(lecture.lecture_name)}}</span>
                                         <p class="p-3 border small dropdown-menu small text-muted rounded" :aria-labelledby="'trial_M_details' + lecture.id" >
                                             <span class="fw-bold m-0">Description</span>  <br>
-                                            <span class="m-0">{{this.capitalize(lecture.lecture_description)}}</span>                                   
+                                            <span class="m-0">{{this.capitalize(lecture.lecture_description)}}</span>  <br>                                            
+                                        </p>
+                                    </span>
+                                    <span class=" col-2 m-0 align-middle">{{lecture.lecture_duration}}<small>hrs </small> </span> 
+
+                                    <span class="small col-1 m-0 align-middle  " > 
+                                        <span class="  m-0 align-middle text-end" style="cursor:pointer; font-size:1.5rem; z-index:10;"  type="button"  data-bs-toggle="dropdown" aria-expanded="false" :id="'trial_M_details' + lecture.id" > <i class="bi bi-three-dots three-dot"></i></span>
+                                        <p class="p-3 border small dropdown-menu small text-muted text-center rounded" :aria-labelledby="'trial_M_details' + lecture.id" >                                           
+                                           <h6 class="fw-bold">Action</h6>
+                                            <span v-if="! this.isTutorLectureMarkedComplete(lecture, lesson) && ! this.is_bothTutorStudentMarkedLectureComplete(lecture, lesson)" class="border btn btn-default p-1 w-100 rounded mt-2 text-muted">Pending...</span>                            
+                                            <span class="w-100" v-if="this.isTutorLectureMarkedComplete(lecture, lesson)"> <button class="btn btn-success btn-sm m-2 w-100" @click.prevent="studentMarkLectureComplete(lecture, lesson)">Mark complete</button> </span>                               
+                                            <span class="w-100" v-if="this.is_bothTutorStudentMarkedLectureComplete(lecture, lesson)"> <button class="btn btn-success btn-sm m-2 mx-auto disabled w-100">Completed</button> </span>                                 
                                         </p>
                                     </span>
                                     
                                 </p>
                             </div>
-                            <p class="text-muted small p-2" v-if="! Object.keys(lesson.lectures).length"> This tutor hasnt set any lectures yet. Defined lectures for this lesson will appear here</p>
+                            <p class="text-muted small p-2" v-if="! Object.keys(lesson.lectures).length"> This tutor has not set any lectures yet. Lectures for this lesson will appear here</p>
                         </div>  
-                        <!-- <p class="py-3 small">Date started : {{lesson.lessons_start_date}}</p>  -->
                         <a href="#" class="text-warning  my-3 float-end  text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
                     </div>
                 </div>              
@@ -173,7 +185,7 @@
       <h4 class="alert-secondary w-100 py-3 px-3">Completed <span class="float-end mx-3"> <button class="btn btn-sm btn-danger" @click.prevent="fetchLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
      <p class="p-3 small text-muted text-center"> Completed lessons will appear here </p>
       <div class="row p-3 panel" > 
-          <div class="col-md-4 row p-2"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'completed'">              
+          <div class="col-md-4 row p-2 my-2"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'completed'">              
               <div>
                   <div class="border-line rounded p-3 h-100">
                     <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
@@ -423,9 +435,50 @@ export default {
             if(! Object.keys(this.completed_lectures).length) return;
 
             this.completed_lectures.forEach(lec=>{                
-                if(lec.lecture_id == lecture.id && lec.lesson_id == lesson.id)   css_class = true;
+               if(lec.lecture_id == lecture.id && lec.lesson_id == lesson.id && lec.tutor_marked_complete && !lec.student_marked_complete)   css_class = true;
             });
             return css_class;
+        },
+        isTutorLectureMarkedComplete(lecture, lesson){
+            var tutor_complete_css_class = false;
+            if(!lesson) return;
+            if(! Object.keys(this.completed_lectures).length) return;
+
+            this.completed_lectures.forEach(lec=>{                
+                if(lec.lecture_id == lecture.id && lec.lesson_id == lesson.id && lec.tutor_marked_complete && !lec.student_marked_complete)  tutor_complete_css_class = true; // tutor marked lecture complete
+            });
+            return tutor_complete_css_class;
+        },
+        async studentMarkLectureComplete(lecture, lesson){
+            if(!lesson) return;
+            if(! Object.keys(this.completed_lectures).length) return;
+
+            if(this.checkIfLectureUnpaid(lesson) && (this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) >= 0){
+                await this.sendTutorLecturePayments(lesson);
+            }            
+
+            this.completed_lectures.forEach(lec=>{                
+                if(lec.lecture_id == lecture.id && lec.lesson_id == lesson.id && lec.tutor_marked_complete && !lec.student_marked_complete) 
+                {
+                    axios.get('/api/student/mark-lecture-complete/' + lec.id)
+                    .then(response=>{
+                       this.fetchLessons();
+                    })
+                    .catch(error=>{
+                        console.log(error.response);
+                    })
+                }
+            });
+        },
+        is_bothTutorStudentMarkedLectureComplete(lecture, lesson){
+            var key = false;
+            if(!lesson) return;
+            if(! Object.keys(this.completed_lectures).length) return;
+
+            this.completed_lectures.forEach(lec=>{                
+               if(lec.lecture_id == lecture.id && lec.lesson_id == lesson.id && lec.tutor_marked_complete && lec.student_marked_complete)   key = true;
+            });
+            return key;
         },
         checkIfLectureUnpaid(lesson){             
             if(!lesson) return;
@@ -451,6 +504,7 @@ export default {
             .then(response =>{
                 this.completed_lectures = response.data.data.data[0].completed_lectures; // load completed lectures to local data
                 this.current_lessons = response.data.data.data;
+                console.log(this.completed_lectures);
             })
             .catch(error=>{
                 console.log(error.response);
@@ -509,99 +563,99 @@ export default {
                 console.log(error.response);
             });
         },
-    async createLesson(trial_lesson){
-        if(! confirm('Schedule lessons with this tutor?')) return;
-        this.spinner.create_lesson=true;
-        var form_data = new FormData(); 
-            form_data.append('lesson_date', trial_lesson.lesson_date);
-            form_data.append('start_time', trial_lesson.start_time);
-            form_data.append('lesson_type', trial_lesson.lesson_type);
-            form_data.append('student_id', trial_lesson.student_id);
-            form_data.append('student_timezone', this.$store.state.user.user.timezone);
-            form_data.append('tutor_id', trial_lesson.tutor_id);
-            form_data.append('trial_lesson_id', trial_lesson.id);
-            form_data.append('tutor_confirm', 'pending');
-            form_data.append('lesson_total_duration', '40');
-            form_data.append('covered_duration', '0');
-            form_data.append('remaining_duration', '0');
-            form_data.append('status', 'ongoing');
-            form_data.append('tutor_timezone', trial_lesson.timezone);            
-            
-        axios.post('/api/lessons/create', form_data)
-        .then(response => {
-           console.log(response.data.data);
-           this.scheduleZoomMeeting(response.data.data); //schedule zoom meeting
-           this.success.create_lesson = "Success, Lesson created";
-           this.spinner.create_lesson=false;
-           setTimeout(() => {
-              delete this.success.create_lesson ;
-           }, 3500);
-        })
-        .catch(error=>{
+        async createLesson(trial_lesson){
+            if(! confirm('Schedule lessons with this tutor?')) return;
+            this.spinner.create_lesson=true;
+            var form_data = new FormData(); 
+                form_data.append('lesson_date', trial_lesson.lesson_date);
+                form_data.append('start_time', trial_lesson.start_time);
+                form_data.append('lesson_type', trial_lesson.lesson_type);
+                form_data.append('student_id', trial_lesson.student_id);
+                form_data.append('student_timezone', this.$store.state.user.user.timezone);
+                form_data.append('tutor_id', trial_lesson.tutor_id);
+                form_data.append('trial_lesson_id', trial_lesson.id);
+                form_data.append('tutor_confirm', 'pending');
+                form_data.append('lesson_total_duration', '40');
+                form_data.append('covered_duration', '0');
+                form_data.append('remaining_duration', '0');
+                form_data.append('status', 'ongoing');
+                form_data.append('tutor_timezone', trial_lesson.timezone);            
+                
+            axios.post('/api/lessons/create', form_data)
+            .then(response => {
+            console.log(response.data.data);
+            this.scheduleZoomMeeting(response.data.data); //schedule zoom meeting
+            this.success.create_lesson = "Success, Lesson created";
             this.spinner.create_lesson=false;
-            if(error.response.status == 422) { alert('Lessons already created!'); return; }            
-            console.log(error.response);
-        });
-    },
-    deleteLesson(lesson){
-        axios.delete('/api/lesson/delete/{lesson_id/' + lesson.id)
-        .then(response=>{
-            console.log(response);
-        })
-        .catch(error=>{
-            console.log(error.response);
-        })
-    },
-     fetchZoomAuthToken() { // fetch current user's zoom auth token
-       axios.get('/api/zoom/user-auth-token')
-        .then(response => {
-            this.zoom_user_auth_token = response.data.data.token;  
-        })
-        .catch(error=>{
-            console.log(error.response);
-        }); 
-    },
-    refreshZoomAuthToken() { // refreshcurrent user's zoom auth token
-       this.errors.token_expired = "Refreshing zoom... Please try again!"
-       axios.get('/api/zoom/user-auth-token/refresh')
-        .then(response => {
             setTimeout(() => {
-                delete this.errors.token_expired;
-            }, 200);
-            
-        })
-        .catch(error=>{   
-            this.errors.token_expired = "Failed to authenticate zoom Please try again!"         
-            console.log(error.response);
-        }); 
-    },
-    async updateLessonMeetingLink(lesson_id){
-        //
-
-    },
-    sendTutorLecturePayments(lesson){
-        // process payments fopr the lectures 
-        if((this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) < 1) {alert('Cannot process payments. Insufficient funds '); return;}
-        if(!confirm('Process payment arrears for the completed lectures?')) return;
-        axios.get('/api/students/send-tutor-payments/' + lesson.id)
-        .then(response =>{
-            this.success.payment_success = 'Success, Payment processed';
-            this.$store.dispatch('fetchLocalAccount');
-            this.fetchLessons();
-            setTimeout(() => {
-                    this.success={}
-                }, 3500);
-        })
-        .catch(error=>{
-            if(error.response.status == 402){
-                this.$store.dispatch('fetchLocalAccount');
-                alert(`Insufficient funds to process payment. \n You have $${error.response.data.data.amount_due} arrears for ${error.response.data.data.lecture_count} unpaid lectures. \n \n Please top up your account and try again. `);
-                this.errors.insuficient_funds = 'Failed, insufficient funds';
+                delete this.success.create_lesson ;
+            }, 3500);
+            })
+            .catch(error=>{
+                this.spinner.create_lesson=false;
+                if(error.response.status == 422) { alert('Lessons already created!'); return; }            
+                console.log(error.response);
+            });
+        },
+        deleteLesson(lesson){
+            axios.delete('/api/lesson/delete/{lesson_id/' + lesson.id)
+            .then(response=>{
+                console.log(response);
+            })
+            .catch(error=>{
+                console.log(error.response);
+            })
+        },
+        fetchZoomAuthToken() { // fetch current user's zoom auth token
+        axios.get('/api/zoom/user-auth-token')
+            .then(response => {
+                this.zoom_user_auth_token = response.data.data.token;  
+            })
+            .catch(error=>{
+                console.log(error.response);
+            }); 
+        },
+        refreshZoomAuthToken() { // refreshcurrent user's zoom auth token
+        this.errors.token_expired = "Refreshing zoom... Please try again!"
+        axios.get('/api/zoom/user-auth-token/refresh')
+            .then(response => {
                 setTimeout(() => {
-                    this.errors={}
-                }, 3500);
-            }
-            console.log(error.response.data.data);
+                    delete this.errors.token_expired;
+                }, 200);
+                
+            })
+            .catch(error=>{   
+                this.errors.token_expired = "Failed to authenticate zoom Please try again!"         
+                console.log(error.response);
+            }); 
+        },
+        async updateLessonMeetingLink(lesson_id){
+            //
+
+        },
+        async sendTutorLecturePayments(lesson){
+            // process payments fopr the lectures 
+            if((this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) < 1) {alert('Cannot process payments. Insufficient funds '); return;}
+            if(!confirm('Mark this lecture complete & Process payments for the completed lectures?')) return;
+            await  axios.get('/api/students/send-tutor-payments/' + lesson.id)
+            .then(response =>{
+                this.success.payment_success = 'Success, Payment processed';
+                this.$store.dispatch('fetchLocalAccount');
+                this.fetchLessons();
+                setTimeout(() => {
+                        this.success={}
+                    }, 3500);
+            })
+            .catch(error=>{
+                if(error.response.status == 402){
+                    this.$store.dispatch('fetchLocalAccount');
+                    alert(`Insufficient funds to process payment. \n You have $${error.response.data.data.amount_due} arrears for ${error.response.data.data.lecture_count} unpaid lectures. \n \n Please top up your account and try again. `);
+                    this.errors.insuficient_funds = 'Failed, insufficient funds';
+                    setTimeout(() => {
+                        this.errors={}
+                    }, 3500);
+                }
+                console.log(error.response.data.data);
             })
         },
         async scheduleZoomMeeting(lesson){
@@ -817,7 +871,7 @@ export default {
     }
     .panel{
         height: auto;
-        max-height: 35rem;
+        max-height: 30.5rem;
         overflow:scroll;
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */

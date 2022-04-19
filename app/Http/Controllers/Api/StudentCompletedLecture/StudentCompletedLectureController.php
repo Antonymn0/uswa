@@ -108,4 +108,21 @@ class StudentCompletedLectureController extends Controller
             'data'=>true
             ], 200);
     }
+
+    /**
+     * mark lecture student complete
+     */
+    public function markLectureComplete(Request $request, $id)
+    {
+        $lecture = StudentCompletedLecture::findOrFail($id);
+        $lecture->update([
+            'student_marked_complete' => 1,
+            'student_marked_complete_at' => now(),
+        ]);
+        return response()->json([
+            'success'=> true, 
+            'message'=> 'Lecture successfuly marked complete ', 
+            'data'=>true
+            ], 200);
+    }
 }

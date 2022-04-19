@@ -62,8 +62,11 @@ use Illuminate\Support\Facades\Route;
         //Delete lesson
         Route::delete('/lesson/delete/{lesson_id}','Api\Lesson\LessonController@destroy')->name('delete.lesson');
         
-        //Delete lesson
+        //Reschedule trial lesson
         Route::post('/reschedule-trial-lesson/{lesson_id}','Api\TrialLesson\TrialLessonContoller@rescheduleTrialLesson')->name('reschedule.lesson');
+        
+        //Reschedule trial lesson
+        Route::get('/student/mark-lecture-complete/{completed_lecture_id}','Api\StudentCompletedLecture\StudentCompletedLectureController@markLectureComplete')->name('mark.lecture.complete');
 
     });
 
