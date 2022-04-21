@@ -13,7 +13,8 @@
              <div class="form-group py-5 mb-4">
                 <label class="form-label" for="disabledFieldsetCheck" > <h5> Set your charges per lecture in USD: </h5> </label>
                 <input class="bg-white w-100 p-3 border rounded text-muted"  type="number" min="5" id="disabledFieldsetCheck" v-model="hourly_rate" placeholder="Charge per lecture">
-                 <small class="text-danger">{{this.errors.hourly_rate}}</small>
+                <small>Attracts a  commision fee of {{this.uswa_commision_percentage}}% .</small>
+                <small class="text-danger">{{this.errors.hourly_rate}}</small>
             </div>
             <div class="schedule">
                 <h5>Set your working Schedule</h5>
@@ -1678,7 +1679,8 @@ export default {
                 }
             ],
             errors:{},
-            spinner:{}
+            spinner:{},
+            uswa_commision_percentage:0
         }
     },
     computed:{
@@ -1807,10 +1809,21 @@ export default {
             this.sunday.is_available = this.getUser.tutor_schedule.sunday ? true : false;
             this.sunday.from = this.getUser.tutor_schedule.sunday_from;
             this.sunday.to = this.getUser.tutor_schedule.sunday_to;
+        },
+        fetchUswaCommision(){
+            axios.get('/api/get-uswa-commision')
+            .then(response=>{
+                this.uswa_commision_percentage = response.data.data.fee_percentage;
+                console.log(response.data.data.fee_percentage);
+            })
+            .catch(error=>{
+                console.log(error.response);
+            })
         }
     },
     mounted(){
         this.populateFormFields();
+        this.fetchUswaCommision();
         }
 }
 </script>

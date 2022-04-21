@@ -46,6 +46,8 @@ use Illuminate\Support\Facades\Route;
         
         // Mark lesson complete
         Route::get('/lesson/mark-complete/{lesson_id}','Api\Tutor\TutorLessonController@markLessonComplete')->name('mark.lessson.complete');
+       //fetch uswa commision route
+        Route::get('/get-uswa-commision','Api\Admin\UswaCommisionAccountController@index')->name('fetch.uswa.commision');
         
     });
 
