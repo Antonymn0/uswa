@@ -638,7 +638,7 @@ export default {
             var complete_unpaid_lectures = this.getCompleteButUnpaidLectures(lesson);
             if((this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) < 1) {alert('Operation aborted. Insufficient funds. \n Please top up your account and try again '); return;}
           
-            if(! confirm(`Mark this lecture complete & Process payments of USD ${complete_unpaid_lectures * lesson.get_lesson_tutor.hourly_rate } for (${complete_unpaid_lectures}) completed lectures?`)) return;
+            if(! confirm(`Mark this lecture complete & Process payments of USD ${complete_unpaid_lectures * lesson.get_lesson_tutor.hourly_rate } \n for (${complete_unpaid_lectures}) completed lectures?`)) return;
             await  axios.get('/api/students/send-tutor-payments/' + lesson.id)
             .then(response =>{
                 this.success.payment_success = 'Success, Payment processed';
