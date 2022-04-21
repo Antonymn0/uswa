@@ -659,6 +659,12 @@ export default {
 .border-line:hover{
     border:1px solid rgb(248, 186, 186);
 }
+.lec-hover{
+        border:1px solid rgb(223, 219, 219);
+    }
+    .lec-hover:hover{
+        border:1px solid rgb(180, 177, 177);
+    }
 /* media rules */
     @media only screen and (max-width: 950px){
         .px-5{
