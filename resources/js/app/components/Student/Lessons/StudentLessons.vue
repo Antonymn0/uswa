@@ -635,8 +635,10 @@ export default {
         },
         async sendTutorLecturePayments(lesson){
             // process payments fopr the lectures 
-            if((this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) < 1) {alert('Cannot process payments. Insufficient funds '); return;}
-            if(!confirm('Mark this lecture complete & Process payments for the completed lectures?')) return;
+            var complete_unpaid_lectures = this.getCompleteButUnpaidLectures(lesson);
+            if((this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) < 1) {alert('Operation aborted. Insufficient funds. \n Please top up your account and try again '); return;}
+          
+            if(! confirm(`Mark this lecture complete & Process payments of USD ${complete_unpaid_lectures * lesson.get_lesson_tutor.hourly_rate } for (${complete_unpaid_lectures}) completed lectures?`)) return;
             await  axios.get('/api/students/send-tutor-payments/' + lesson.id)
             .then(response =>{
                 this.success.payment_success = 'Success, Payment processed';
@@ -657,6 +659,16 @@ export default {
                 }
                 console.log(error.response.data.data);
             })
+        },
+        getCompleteButUnpaidLectures(lesson){
+            var complete_but_unpaid_lectures = 0;
+            if(!lesson) return;
+            if(! Object.keys(this.completed_lectures).length) return;
+
+            this.completed_lectures.forEach(lec=>{                
+               if( lec.lesson_id == lesson.id && lec.tutor_marked_complete && !lec.student_marked_complete)   complete_but_unpaid_lectures += 1;
+            });
+            return complete_but_unpaid_lectures;
         },
         async scheduleZoomMeeting(lesson){
             var form_data = new FormData();
@@ -839,7 +851,7 @@ export default {
         shedulefetchRefresh(){
             setInterval(() => {
                 this.fetchLessons();
-            }, 60000);
+            }, 10000);
             setInterval(() => {
                 this.fetchTrialLessons();
             }, 60000);

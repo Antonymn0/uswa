@@ -21,7 +21,7 @@
             <li class="col-md-4">
               <h4 class="text-center">Expert native speakers</h4>
               <p>
-                Find native speakers with expert knowledge and excelent ratings
+                Find native speakers with expert knowledge  <br> and excelent ratings
               </p>
             </li>
             <li class="col-md-4">
@@ -33,7 +33,7 @@
             <li class="col-md-4">
               <h4 class="text-center">Affordable rates</h4>
               <p>
-                Tutors are available with affordable rates to suit your pocket. 
+                Tutors are available with affordable <br> rates to suit your pocket. 
               </p>
             </li>
           </ul>
@@ -44,9 +44,9 @@
       <h1 class=" py-2 fw-bold ">How Uswa works</h1>
 
     <div class="row mx-5 py-4 how-uswa-work clearfix align-items-center">      
-        <div class="col-md-6 px-5 text-center">
-          <h1 class="fw-bold"> Find the best tutor</h1> 
-          <p class="text-secondary">Choose from a pool of seasoned online tutors. <br>
+        <div class="col-md-6  ">
+          <h1 class="fw-bold "> Find the best tutor</h1> 
+          <p class="text-secondary text-justify ">Choose from a pool of seasoned online tutors. 
             Use filters to narrow your search and find the perfect fit </p>        
         </div>
         <div class="col-md-6 ">
@@ -60,7 +60,7 @@
         </div>   
         <div class="col-md-6 ">
           <h1 class="fw-bold">Take lessons anytime, anywhere </h1> 
-          <p class="text-secondary">Find the perfect time for your busy schedule. <br>
+          <p class="text-secondary">Find the perfect time for your busy schedule. 
             Book a lessons in seconds on our platform </p>        
         </div>      
       </div>
@@ -68,7 +68,7 @@
       <div class="row mx-5 py-3 how-uswa-work clearfix align-items-center">     
         <div class="col-md-6">
           <h1 class="fw-bold">Enter virtual classroom </h1> 
-          <p class="text-secondary">When it’s lesson time, <br>
+          <p class="text-secondary">When it’s lesson time, 
           connect with your tutor through zoom video platform </p>        
         </div>
         <div class="col-md-6">
@@ -170,6 +170,7 @@ export default {
     padding:3.5rem;
     
 }
+
 .tutors .tutor-panels{
   width:33.33%;
   
@@ -198,10 +199,24 @@ export default {
 .how-uswa-work{
   margin-left:2rem;
   margin-right:2rem;
+  text-align: left;
+}
+.how-uswa-work p{
+  text-align: justify;
+  width:auto;
+  max-width:75%;
+  margin: auto;
+  padding-right:2rem;
+}
+.how-uswa-work h1{
+  width:auto;
+  max-width:75%;
+  margin: auto;
 }
 .how-uswa-work img{
   width:35rem; 
   max-width:100%;
+ 
 }
 .flags{
   margin-left: 5rem;

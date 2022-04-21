@@ -464,7 +464,7 @@ export default {
         },
         markLessonComplete(lesson){
             if(lesson.status == 'complete') {alert('Lesson already marked complete'); return;}
-            if( this.checkIfLectureUnpaid(lesson)) {alert("Operation aborted! \n This lesson has pending unpaid lecture arreas."); return;}
+            if( this.checkIfLectureUnpaid(lesson)) { alert("Operation aborted! \n This lesson has pending unpaid lecture arreas."); return;}
             if(! confirm('Mark this lesson complete? \n This record will be available in your completed lessons.')) return;
             
             this.spinner.lesson_complete = true;
@@ -614,7 +614,7 @@ export default {
         shedulefetchRefresh(){
             setInterval(() => {
                 this.fetchLessons();
-            }, 5000);
+            }, 10000);
             setInterval(() => {
                 this.fetchTrialLessons();
             }, 30000);

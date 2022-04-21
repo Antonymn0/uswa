@@ -141,7 +141,7 @@ class LocalAccountController extends Controller
         if($student_local_account->available_balance < $trial_lesson->get_tutor->hourly_rate ) {
             return response()->json([
                 'success' => false,
-                'message' => 'Insufficient funds',
+                'message' => 'Failed, Insufficient funds',
                 'data' => false
                 ],500);
             }
@@ -153,7 +153,7 @@ class LocalAccountController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Success, funds trasfered locally from student to tutor.',
+            'message' => 'Success, trial lesson marked student impressed.',
             'data' => true
         ], 200);
     }
