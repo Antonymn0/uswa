@@ -123,7 +123,7 @@ export default {
             spinner:{},
             errors:{},
             success:{},
-            topup_amount:null,
+            topup_amount:0,
             selected_country_code:null,
             selected_country_name:null,
             countries:{
@@ -387,10 +387,10 @@ export default {
         capitalize(string) {
             if(string) return string.charAt(0).toUpperCase() + string.slice(1);
         },        
-        checkAmount(){
+        async checkAmount(){
             if( this.topup_amount >= 1 && this.topup_amount <= 500) {                
                 this.errors ={}
-                if(this.getUser.role == 'student' ) this.loadPaypalCheckout();
+                if(this.getUser.role == 'student' ) await this.loadPaypalCheckout();
             }
             else {
                 this.errors.topup_amount = "Enter value between 1 and 500";
@@ -475,7 +475,7 @@ export default {
             document.head.insertBefore(s, document.head.firstElementChild);
         },
         loadPaypalCheckout(){
-            if(!this.topup_amount || this.topup_amount < 5 || this.topup_amount >100) return;
+            if(!this.topup_amount || this.topup_amount < 5 || this.topup_amount >500) return;
 
             var amount = this.topup_amount;
             this.loadAsync('https://www.paypal.com/sdk/js?client-id=' + this.paypal_client_id + '&intent=authorize&disable-funding=credit,card', function() {

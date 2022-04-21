@@ -657,12 +657,9 @@ export default {
                 if(error.response.status == 402){
                     this.$store.dispatch('fetchLocalAccount');
                     alert(`Insufficient funds to process payment. \n You have $${error.response.data.data.amount_due} arrears for ${error.response.data.data.lecture_count} unpaid lectures. \n \n Please top up your account and try again. `);
-                    this.errors.insuficient_funds = 'Failed, insufficient funds';
-                    setTimeout(() => {
-                        this.errors={}
-                    }, 3500);
-                    return false;
+                    this.errors.insuficient_funds = 'Failed, insufficient funds';                  
                 }
+                return false;
                 console.log(error.response.data.data);
             })
         },
