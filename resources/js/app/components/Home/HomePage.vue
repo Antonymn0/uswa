@@ -204,7 +204,7 @@ export default {
 .how-uswa-work p{
   text-align: justify;
   width:auto;
-  max-width:75%;
+  max-width:74%;
   margin: auto;
   padding-right:2rem;
 }
