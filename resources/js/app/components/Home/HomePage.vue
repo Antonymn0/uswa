@@ -49,13 +49,13 @@
           <p class="text-secondary text-justify ">Choose from a pool of seasoned online tutors. 
             Use filters to narrow your search and find the perfect fit </p>        
         </div>
-        <div class="col-md-6 ">
+        <div class="col-md-6 text-center">
           <img src="/images/find_the_best_tutor.png" alt="image">
         </div>
       </div>
 
       <div class="row mx-5 py-3 mx-auto how-uswa-work clearfix align-items-center">  
-        <div class="col-md-6 ">
+        <div class="col-md-6 text-center">
           <img src="/images/lessons_anytime.png" alt="image">
         </div>   
         <div class="col-md-6 ">
@@ -71,7 +71,7 @@
           <p class="text-secondary">When it’s lesson time, 
           connect with your tutor through zoom video platform </p>        
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 text-center">
           <img src="/images/enter_virtual_classroom.png" alt="image">
         </div>
       </div>   
@@ -204,18 +204,19 @@ export default {
 .how-uswa-work p{
   text-align: justify;
   width:auto;
-  max-width:74%;
+  max-width:31rem;
   margin: auto;
   padding-right:2.5rem;
 }
 .how-uswa-work h1{
   width:auto;
-  max-width:75%;
+  max-width:31rem;
   margin: auto;
 }
 .how-uswa-work img{
   width:auto; 
   max-width:100%;
+  
  
 }
 .flags{
