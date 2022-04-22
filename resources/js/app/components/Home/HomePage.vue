@@ -40,10 +40,10 @@
         </div>
     </div>  
     <!-- -------------------------------------------------- -->
-     <div class="clearfix p-5 how_uswa_works fw-bold text-center">
+     <div class="clearfix p-5 mx-auto ms-3 how_uswa_works fw-bold text-center">
       <h1 class=" py-2 fw-bold ">How Uswa works</h1>
 
-    <div class="row mx-5 py-4 how-uswa-work clearfix align-items-center">      
+    <div class="row mx-5 py-4 how-uswa-work mx-auto clearfix align-items-center">      
         <div class="col-md-6  ">
           <h1 class="fw-bold "> Find the best tutor</h1> 
           <p class="text-secondary text-justify ">Choose from a pool of seasoned online tutors. 
@@ -54,7 +54,7 @@
         </div>
       </div>
 
-      <div class="row mx-5 py-3 how-uswa-work clearfix align-items-center">  
+      <div class="row mx-5 py-3 mx-auto how-uswa-work clearfix align-items-center">  
         <div class="col-md-6 ">
           <img src="/images/lessons_anytime.png" alt="image">
         </div>   
@@ -65,7 +65,7 @@
         </div>      
       </div>
 
-      <div class="row mx-5 py-3 how-uswa-work clearfix align-items-center">     
+      <div class="row mx-5 py-3 mx-auto how-uswa-work clearfix align-items-center">     
         <div class="col-md-6">
           <h1 class="fw-bold">Enter virtual classroom </h1> 
           <p class="text-secondary">When it’s lesson time, 
@@ -214,7 +214,7 @@ export default {
   margin: auto;
 }
 .how-uswa-work img{
-  width:35rem; 
+  width:auto; 
   max-width:100%;
  
 }

@@ -197,8 +197,7 @@
                         <span class="small"> Status: {{lesson.status}}</span>
                         </span>                       
                     <p class="fw-bold">{{this.capitalize(lesson.lesson_type)}} lessons with tutor {{this.capitalize(lesson.get_lesson_tutor.first_name)}}</p>
-                    <span class="py-2">Date started: {{this.formatDate(lesson.created_at)}}</span> <br>
-                    <span class="py-2">Date completed: </span> <span> {{this.formatDate(lesson.updated_at)}}</span> <br>
+                    <span class="py-2">Date started: {{this.formatDate(lesson.created_at)}}</span> <br>                   
                     <span class="py-2">Total Duration: </span><span>{{lesson.lesson_total_duration}}hr </span>  &nbsp; &nbsp;                      
                     <span>Score: </span> <span>{{lesson.student_score}}%</span>
 

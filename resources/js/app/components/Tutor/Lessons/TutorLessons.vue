@@ -171,7 +171,6 @@
                        
                       <p class="fw-bold">{{lesson.lesson_type}} lessons</p>
                       <span class="py-2">Date started: {{this.formatDate(lesson.created_at)}}</span> <br>
-                      <span class="py-2">Date completed: </span> <span> {{this.formatDate(lesson.updated_at)}}</span> <br>
                       <span class="py-2">Course Duration: </span><span>{{lesson.lesson_total_duration}}hrs </span>  <br>                      
                       <span>Student score: </span> <span>{{lesson.student_score}}%</span>
 
