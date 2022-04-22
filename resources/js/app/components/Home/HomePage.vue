@@ -206,7 +206,7 @@ export default {
   width:auto;
   max-width:74%;
   margin: auto;
-  padding-right:2rem;
+  padding-right:2.5rem;
 }
 .how-uswa-work h1{
   width:auto;
