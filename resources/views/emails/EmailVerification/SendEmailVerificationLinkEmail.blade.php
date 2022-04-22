@@ -1,8 +1,10 @@
 @component('mail::message')
-<img src="{{asset('images/logo.svg')}}" style="width:90px; float:right" alt="uswa Logo">
+<img src="{{url('/images/logo.svg')}}" style="width:90px; float:right" alt="uswa Logo">
 <br>
-#Verify your email <br>
-Hello {{$user->first_name}},
+<h1> 
+    Verify your email <br>
+    Hello {{$user->first_name}},
+</h1>
 
 We are excited that you are here to try our platform.
 
