@@ -20,9 +20,8 @@ class EmailVerificationController extends Controller
         ]);
         if(!empty($email)){
             $user =   User::where('email', $email)->first();
-            if($user){
+            if(!empty($user)){
                 event(new SendEmailVerificationLink($user));
-                return $email;
             }
             return  'User not found';            
         }
