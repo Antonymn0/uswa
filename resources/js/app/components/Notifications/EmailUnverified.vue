@@ -27,7 +27,7 @@ export default {
         sendEmailverificationLink(){
             this.email = this.getUser.email;
             var form_data = new FormData();
-            form_data.append('email', this.email);
+            form_data.append('email', this.getUser.email);
             axios.post('/api/send-email-verification-link', form_data)
             .then(response=>{
                 if(response.status == 200){
@@ -43,7 +43,6 @@ export default {
         is_emailVerified(){
             setTimeout(() => {
                 if(! this.getUser.email) return;
-                console.log('Setting user...');
                 this.user = this.getUser;
                 if(this.user.email_verified_at) return;
                 else this.email_verified = false

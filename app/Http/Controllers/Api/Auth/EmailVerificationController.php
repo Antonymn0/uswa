@@ -16,16 +16,16 @@ class EmailVerificationController extends Controller
      */
     public function sendVerificationLink(Request $request){
         $email =   $request->validate([           
-            'email' => ['required', 'string', 'email', 'max:255']           
+            'email' => ['required', 'email', 'max:255']           
         ]);
-        if(!empty($email)){
+        
+        if(! empty($email)){            
             $user =   User::where('email', $email)->first();
-            if(!empty($user)){
-                event(new SendEmailVerificationLink($user));
-            }
-            return  'User not found';            
+            
+            if(! empty($user))  { event(new SendEmailVerificationLink($user));  return ' Success, Verification link sent.'; }
+            else return  'User not found';            
         }
-        return  'Invalid email';
+        else return  'Invalid email';
     }
 
     /**
