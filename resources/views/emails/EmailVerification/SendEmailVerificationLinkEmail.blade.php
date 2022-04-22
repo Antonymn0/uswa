@@ -1,5 +1,5 @@
 @component('mail::message')
-<img src="{{url('/images/logo.svg')}}" style="width:90px; float:right" alt="menuthy Logo">
+<img src="{{$message->embed('assets/logo.svg'))}}" style="width:90px; float:right" alt="menuthy Logo">
 <br>
 #Verify your email <br>
 Hello {{$user->first_name}},
