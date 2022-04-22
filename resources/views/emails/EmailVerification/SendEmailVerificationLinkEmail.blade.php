@@ -1,5 +1,5 @@
 @component('mail::message')
-<img src="{{url('https://uswa-app.herokuapp.com/images/logo.svg')}}" style="width:90px; float:right" alt="menuthy Logo">
+<img src="{{url('/images/logo.svg')}}" style="width:90px; float:right" alt="menuthy Logo">
 <br>
 #Verify your email <br>
 Hello {{$user->first_name}},
