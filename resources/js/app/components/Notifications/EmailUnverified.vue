@@ -32,7 +32,6 @@ export default {
             .then(response=>{
                 if(response.status == 200){
                   this.show_message = true;
-                  console.log(response);  
                 }                
             })
             .catch(error=>{

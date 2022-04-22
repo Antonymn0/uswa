@@ -167,8 +167,7 @@ export default {
   overflow:hidden;
 }
 .how_uswa_works img{
-    padding:3.5rem;
-    
+    padding:3.5rem;    
 }
 
 .tutors .tutor-panels{
@@ -216,8 +215,6 @@ export default {
 .how-uswa-work img{
   width:auto; 
   max-width:100%;
-  
- 
 }
 .flags{
   margin-left: 5rem;
