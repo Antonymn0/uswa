@@ -22,6 +22,10 @@
                     </div>
                     <div class="col-md-6 border-start px-3"> 
                         <p >
+                            <span class="m-0 p-0 fw-bold"> Country: </span>  
+                            <span class="m-0 p-0"> {{tutor.country}} </span> 
+                        </p>
+                        <p >
                             <span class="m-0 p-0 fw-bold">About:</span> <br>
                             <span class="m-0 p-0">{{tutor.description}}</span>
                         </p>
