@@ -71,7 +71,7 @@ class UswaCommisionAccountController extends Controller
         $data = $request->validated();
 
         $account = UswaCommisionAccount::findOrfail($id);
-        $old_account = $account;
+        $old_account = UswaCommisionAccount::findOrfail($id);
 
         $account->update($data);
 
