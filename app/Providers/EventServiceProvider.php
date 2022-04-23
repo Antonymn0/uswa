@@ -62,6 +62,11 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Transaction\TransactionCreated' => [
             'App\Listeners\Transaction\transactionCreatedListener',
         ],
+
+        // Commision/fee events
+        'App\Events\CommissionFee\commissionFeeUpdated' => [
+            'App\Listeners\CommissionFee\commissionFeeUpdatedListener',
+        ],
         
         
         // TrialLesson events
