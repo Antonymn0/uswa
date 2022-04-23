@@ -1,7 +1,7 @@
 @component('mail::message')
 <img src="{{url('https://uswa-app.herokuapp.com/images/logo.svg')}}" style="width:90px; float:right" alt="menuthy Logo">
 <br>
-# Dear {{$student->first_name}},
+<h2> Dear {{$student->first_name}},</h2> 
 
 We regret to inform you that your request for {{$trial_lesson->lesson_type}} trial lessons  has been declined. The tutor declined the request due to:  {{$trial_lesson->decline_reason}}.
 

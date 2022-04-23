@@ -1,7 +1,7 @@
 @component('mail::message')
 <img src="{{url('https://uswa-app.herokuapp.com/images/logo.svg')}}" style="width:90px; float:right" alt="menuthy Logo"> <br>
 
-# {{$user->first_name}}, Welcome to Uswa
+<h2>{{$user->first_name}}, Welcome to Uswa </h2> 
 
 
 Thankyou for registering with us. <br>
