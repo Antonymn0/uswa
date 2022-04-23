@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Events\PaypalPayments\paymentAuthorised;
 use App\Events\PaypalPayments\paymentProcessed;
 use App\Events\PaypalPayments\paypalMerchantOnbordingSuccess;
+use App\Events\Transaction\TransactionCreated;
 class PaypalController extends Controller
 {
     /**
