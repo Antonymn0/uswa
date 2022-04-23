@@ -3,8 +3,8 @@
 <br>
 <h2>Dear {{$user->first_name}}  </h2>
 
-A payment of USD {{$transaction->amount_transacted}} has been transfered to your paypal account. <br>
-Please check your account to confirm.
+A topup of USD {{$transaction->amount_transacted}} has been transfered to your Uswa account via paypal . <br>
+Please check your Uswa account to confirm.
 
 
 @component('mail::button', ['url' => url('/home')])

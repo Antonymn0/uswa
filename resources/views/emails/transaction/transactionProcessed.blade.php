@@ -3,7 +3,8 @@
 <br>
 <h2>Dear {{$user->first_name}}, </h2>
 
-Your {{$transaction->transaction_type }} transaction of USD {{$transaction->amount_transacted }} has been processed.
+Your {{$transaction->transaction_type }} transaction of USD {{$transaction->amount_transacted }} has been processed. <br>
+Please check your account to confirm.
 
 Thanks,<br>
 {{ env('APP_NAME') }}
