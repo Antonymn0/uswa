@@ -1,5 +1,5 @@
 @component('mail::message')
-<img src="https://uswa-app.herokuapp.com/images/logo.svg" style="width:90px; float:right" alt="uswa Logo">
+<img src="https://uswa-app.herokuapp.com/images/cover.png" style="width:90px; float:right" alt="uswa Logo">
 <br>
 <h1>  Verify your email </h1>
     
