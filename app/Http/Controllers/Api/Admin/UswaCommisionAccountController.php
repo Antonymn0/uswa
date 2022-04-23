@@ -74,7 +74,9 @@ class UswaCommisionAccountController extends Controller
         $old_account = $account;
         $account->update($data);
 
-        event( new commissionFeeUpdated($account,$old_account));
+        $account = UswaCommisionAccount::findOrfail($id); // fetch updated record
+
+        event( new commissionFeeUpdated($account, $old_account));
 
         return response()->json([
             'success' => true,
