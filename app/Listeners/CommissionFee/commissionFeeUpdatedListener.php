@@ -6,11 +6,12 @@ use App\Events\CommissionFee\commissionFeeUpdated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Admin\CommisionFeeRevised;
 use App\Models\User;
 
-class commissionFeeUpdatedListener implements shouldQueue
+class commissionFeeUpdatedListener 
 {
     /**
      * Create the event listener.
@@ -30,6 +31,8 @@ class commissionFeeUpdatedListener implements shouldQueue
      */
     public function handle(commissionFeeUpdated $event)
     {
+
+
         $old_account = $event->old_account;
         $account = $event->account;
 

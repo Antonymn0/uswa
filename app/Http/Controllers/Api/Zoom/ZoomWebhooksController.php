@@ -61,7 +61,7 @@ class ZoomWebhooksController extends Controller
         if(!empty($trial_lesson)){
             //
         }
-        Log::info($request);
+        
     }
 
     /**
