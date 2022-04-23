@@ -1,5 +1,6 @@
 <template>
   <div>
+      <form action="#" method="POST" enctype="multipart/form-data" @submit.prevent="this.submitForm()">
       <h4 class="py-4">Video introduction</h4>
       <h5>Upload a video</h5>
       <p>Introduce yourself to students! Upload a short introduction video about yourself and what you do.</p>
@@ -15,7 +16,7 @@
                     <br>
                     <p class="mt-3">
                         <label for="videolink" class="btn btn-secondary">Select video </label> <small class="text-muted">Max: 50mb</small>
-                        <input type="file" hidden  name="image" class=" btn-sm btn alert-danger text-white m-2"  id="videolink"    @change="this.fileUpload($event)">
+                        <input type="file" hidden  name="image" class=" btn-sm btn alert-danger text-white m-2"  id="videolink" accept=".mp4"   @change="this.fileUpload($event)">
                     </p>                    
                 </div>
                  
@@ -42,9 +43,11 @@
           </div>
       </div>
        <div class="text-center pt-3 mt-3 pb-2 border-top">
+           <small class="text-primary small">{{this.uploading_video}} <br> </small> 
             <button class="btn btn-secondary m-1" @click.prevent="this.backStep()">Back</button>
-            <button class="btn btn-danger m-1" @click.prevent="this.submitForm()">  <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.submit_video"></span> Next</button>
+            <button class="btn btn-danger m-1" >  <span class="spinner-border spinner-border-sm text-left" v-if="this.spinner.submit_video"></span> Next</button>
         </div>
+        </form>
   </div>
 </template>
 
@@ -55,7 +58,8 @@ export default {
     data(){
         return{            
            errors:{} , 
-           spinner:{}              
+           spinner:{}   ,
+           uploading_video:null,           
         }
     },
     computed:{
@@ -88,7 +92,7 @@ export default {
                 return;
             } 
             else {
-                this.errors.video = "Error:  Allowed file tyype mp4";
+                this.errors.video = "Error:  Allowed file type mp4";
                 this.video_preview = null;
                 this.video = null;
             }
@@ -97,7 +101,7 @@ export default {
             this.validateForm();
             if(Object.keys(this.errors).length) return;
 
-            this.spinner.submit_video = true;
+            
             var form_data = new FormData();
                 form_data.append('first_name', this.$store.state.signupProcess_about.about.first_name);
                 form_data.append('last_name', this.$store.state.signupProcess_about.about.last_name);
@@ -109,12 +113,17 @@ export default {
               
                form_data.append('_method', 'PUT');
 
-            axios.post('/api/user/' + this.getUser.id , form_data)             
+            this.spinner.submit_video = true;
+
+            this.uploading_video = `Uploading your video. This may take a while. \n Please wait....`;
+            axios.post('/api/user/' + this.getUser.id , form_data,  { headers: {   'Content-Type': 'multipart/form-data'  } })             
             .then(response=>{
+                this.uploading_video = null;
                 this.spinner = {}
                this.nextStep();
             })
-            .catch(error=>{   
+            .catch(error=>{  
+                this.uploading_video = null;
                 this.spinner = {}             
                 console.log(error.response);
             })

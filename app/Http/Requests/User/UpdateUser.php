@@ -86,7 +86,7 @@ class UpdateUser extends FormRequest
 
             'hourly_rate' => [ 'nullable','regex:/^[0-9]+(\.[0-9]{1,2})?$/'],
 
-            'introduction_video' => [ 'nullable','mimes:mp4'],
+            'introduction_video' => [ 'nullable','mimes:mp4', 'max:50000'],
             'introduction_video_url' => ['string', 'nullable'],
             'schedule' => ['string', 'nullable'],
         ];

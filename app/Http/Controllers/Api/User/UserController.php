@@ -87,7 +87,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateUser $request, User $user)
-    {
+    {        
         $data = $request->validated(); 
         //upload image
         if($request->hasFile('image')){  
