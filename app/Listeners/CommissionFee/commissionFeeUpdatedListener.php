@@ -7,9 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
 use Illuminate\Support\Facades\Mail;
-use AppMail\Admin\CommisionFeeRevised;
+use App\Mail\Admin\CommisionFeeRevised;
+use App\Models\User;
 
-class commissionFeeUpdatedListener
+class commissionFeeUpdatedListener implements shouldQueue
 {
     /**
      * Create the event listener.

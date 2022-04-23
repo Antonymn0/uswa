@@ -10,7 +10,7 @@ This fee will be applied to all payments recieved from students on Uswa effectiv
 For more information, please do not hesistate to contact us at info@uswa.com. Our friendly customer care team will be happy to assist you with any queries regarding Uswa fees and commisions.
 
 
-@component('mail::button', ['url' => url('/'')] )
+@component('mail::button', ['url' => url('/')] )
 Home
 @endcomponent
 

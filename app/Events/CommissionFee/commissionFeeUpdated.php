@@ -21,7 +21,7 @@ class commissionFeeUpdated
      *
      * @return void
      */
-    public function __construct($commision_fee, $tutor)
+    public function __construct($commision_fee)
     {
         $this->commision_fee = $commision_fee;
         
