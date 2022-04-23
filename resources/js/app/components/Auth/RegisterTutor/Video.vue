@@ -119,6 +119,10 @@ export default {
             this.uploading_video = `Uploading your video. This may take a while. \n Please wait....`;
             axios.post('/api/user/' + this.getUser.id , form_data,  { headers: {   'Content-Type': 'multipart/form-data'  } })             
             .then(response=>{
+                var user = this.getUser;
+                user.introduction_video = this.video_preview;
+                this.$store.commit('setUser', user);
+
                 this.uploading_video = null;
                 this.spinner = {}
                this.nextStep();
