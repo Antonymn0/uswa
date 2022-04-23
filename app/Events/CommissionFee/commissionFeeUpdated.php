@@ -14,18 +14,18 @@ class commissionFeeUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $commision_fee;
     public $old_account;
+    public $account;
     
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($commision_fee, $old_account)
+    public function __construct( $old_account, $account)
     {
-        $this->commision_fee = $commision_fee;
         $this->old_account = $old_account;
+        $this->account = $account;
         
     }
 

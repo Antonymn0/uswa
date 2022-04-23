@@ -11,18 +11,18 @@ class CommisionFeeRevised extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $commision_fee;
     public $old_account;
+    public $account;
     public $tutor;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($commision_fee, $old_account, $tutor)
+    public function __construct($old_account, $account,  $tutor)
     {
-        $this->commision_fee = $commision_fee;
         $this->old_account = $old_account;
+        $this->account = $account;
         $this->tutor = $tutor;
     }
 

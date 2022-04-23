@@ -70,13 +70,13 @@ class UswaCommisionAccountController extends Controller
     {
         $data = $request->validated();
 
-        $account = UswaCommisionAccount::findOrfail($id);
-        $old_account = $account;
-        $account->update($data);
+        $old_account = UswaCommisionAccount::findOrfail($id);
+        
+        $old_account->update($data);
 
         $account = UswaCommisionAccount::findOrfail($id); // fetch updated record
 
-        event( new commissionFeeUpdated($account, $old_account));
+        event( new commissionFeeUpdated( $old_account, $account));
 
         return response()->json([
             'success' => true,
