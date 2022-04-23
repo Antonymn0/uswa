@@ -132,6 +132,7 @@ export default {
 
             axios.post('/api/commissions/' + id, form_data)
             .then(response=>{
+                console.log(response.data);
                 this.success.new_fee_percentage = 'Success, Uswa fee updated';
                 this.new_fee_percentage = null;
                 this.spinner = {}

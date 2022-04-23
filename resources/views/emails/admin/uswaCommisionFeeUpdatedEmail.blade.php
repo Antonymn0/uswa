@@ -5,7 +5,7 @@
 
 <h3> Dear {{$tutor->first_name}} {{$tutor->last_name}} ,</h3>
 
-This is to notify you that Uswa commison fee has been revised from {{$old_account->fee_percentage}}% to {{$account->fee_percentage}}%. 
+This is to notify you that Uswa commison fee has been revised from {{$old_account}}% to {{$account}}%. 
 This fee will be applied to all payments recieved from students on Uswa effective immediately. <br>
 For more information, please do not hesistate to contact us at info@uswa.com. Our friendly customer care team will be happy to assist you with any queries regarding Uswa fees and commisions.
 
