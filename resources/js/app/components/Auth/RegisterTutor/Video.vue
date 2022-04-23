@@ -9,7 +9,7 @@
                 <div>                   
                     <p class="shadow" style="overflow:hidden"> 
                        <span class="w-100" style="position:absolute" v-if="!this.video_preview"> <small class="" style="position:absolute;top:6rem; left:1.2rem; ">Select a video or paste a link  below.</small></span> 
-                        <iframe width="360" height="260"  :src="video_preview"  autoplay="false">  </iframe>
+                        <iframe width="400" height="300"  :src="this.video_preview" autoplay="false" class="shadow bg-secondary " >  </iframe>
                         
                      </p>
                      <small class="text-danger">{{this.errors.video}}</small>
@@ -140,10 +140,12 @@ export default {
         nextStep(){
             document.getElementById('video').classList.add('hidden');
             document.getElementById('availability').classList.remove('hidden');
+            
         },
         backStep(){
             document.getElementById('video').classList.add('hidden');
             document.getElementById('education').classList.remove('hidden');
+            
         },
         
         clearUrl(){
@@ -156,10 +158,13 @@ export default {
             this.errors={};            
             if(!this.video && !this.video_url && !this.video_preview) this.errors.video = "Please select a video or paste a link in the box below.";
         },
-        populateFormFields(){
-            this.video_preview = this.getUser.introduction_video; 
+        populateFormFields(){ 
             this.video_url = this.getUser.introduction_video_url; 
-           
+            setInterval(() => {                                
+                if(document.getElementById('video').classList.contains('hidden')) this.video_preview = null;
+                else this.video_preview = this.getUser.introduction_video;
+            }, 2000);           
+                      
         }
     },
     mounted(){
