@@ -59,7 +59,8 @@ export default {
         return{            
            errors:{} , 
            spinner:{}   ,
-           uploading_video:null,           
+           uploading_video:null, 
+                 
         }
     },
     computed:{
@@ -162,7 +163,8 @@ export default {
             this.video_url = this.getUser.introduction_video_url; 
             setInterval(() => {                                
                 if(document.getElementById('video').classList.contains('hidden')) this.video_preview = null;
-                else this.video_preview = this.getUser.introduction_video;
+                if(this.video_preview) return; 
+                if(! document.getElementById('video').classList.contains('hidden')) this.video_preview = this.getUser.introduction_video;
             }, 2000);           
                       
         }
