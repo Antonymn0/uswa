@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\ValidateUswaCommisionAccount;
 use App\Http\Requests\Admin\UpdateUswaCommisionAccount;
 use App\Http\Controllers\Api\Payments\Paypal\PaypalController;
 use App\Models\PaypalAuthToken;
+use App\Events\CommissionFee\commissionFeeUpdated;
 
 class UswaCommisionAccountController extends Controller
 {
@@ -71,6 +72,8 @@ class UswaCommisionAccountController extends Controller
 
         $account = UswaCommisionAccount::findOrfail($id);
         $account->update($data);
+
+        event( new commissionFeeUpdated($account));
 
         return response()->json([
             'success' => true,

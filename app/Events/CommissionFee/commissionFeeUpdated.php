@@ -15,7 +15,7 @@ class commissionFeeUpdated
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $commision_fee;
-    public $tutor;
+    
     /**
      * Create a new event instance.
      *
@@ -24,7 +24,7 @@ class commissionFeeUpdated
     public function __construct($commision_fee, $tutor)
     {
         $this->commision_fee = $commision_fee;
-        $this->tutor = $tutor;
+        
     }
 
     /**
