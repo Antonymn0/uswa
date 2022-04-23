@@ -20,7 +20,7 @@
                 </div>
 
                 <div class=" rouded mb-3 px-1 row" >
-                    <label for="country" class="form-label">Country & State</label>  <span class="small text-center">Selected: {{this.$store.state.signupProcess_about.about.country}} | {{this.$store.state.signupProcess_about.about.city}} </span>
+                    <label for="country" class="form-label">Country & State</label>  <span class="small text-center">Selected: {{this.$store.state.signupProcess_about.about.country}} | {{this.$store.state.signupProcess_about.about.city }} | {{this.selectedCountryCode}} </span>
                     <vueCountriesCities id="country" @country='selectedCountry = $event' @change="updateCountryCity()" @city='selectedCity = $event' @country_code='selectedCountryCode = $event' @blur="updateCountryCity()"  class="text-muted"/>   
                     <small class="text-danger small">{{this.errors.country}}</small> 
                     <small class="text-danger small float-end">{{this.errors.city}}</small>            
@@ -117,7 +117,7 @@ export default {
 components: { vueCountriesCities },
     data(){
         return{
-            selectedCountryCode: '',
+            selectedCountryCode: null,
             selectedCountry: '',
             selectedCity: '',
             errors:{},
@@ -2271,9 +2271,9 @@ components: { vueCountriesCities },
         updateCountryCity(){
             setTimeout(() => {
                 this.$store.commit('set_country', this.selectedCountry);
-                if(this.selectedCountryCode !=='') this.$store.commit('set_country_code', this.selectedCountryCode); 
+                if(this.selectedCountryCode ) this.$store.commit('set_country_code', this.selectedCountryCode); 
                 this.$store.commit('set_city', this.selectedCity); 
-            }, 50);            
+            }, 100);            
         },
         timezone(){
             console.log(moment.tz.names()) ;
@@ -2284,6 +2284,7 @@ components: { vueCountriesCities },
         },
         submitForm(){
             this.validateForm();
+            console.log(this.errors);
             if(Object.keys(this.errors).length) return;
             this.spinner.submit_about = true;
             var form_data = new FormData();
@@ -2325,6 +2326,7 @@ components: { vueCountriesCities },
             if(! this.last_name) this.errors.last_name = "Last name field is required";
            
             if(! this.country) this.errors.country = "County field is required";
+            if(! this.country_code) this.errors.country_code = "Country code field is required";
             if(! this.city) this.errors.city = "City field is required";
             
             if(! this.timezone) this.errors.timezone = "Timezone field is required";
@@ -2346,7 +2348,7 @@ components: { vueCountriesCities },
             this.last_name = this.getUser.last_name;
             this.country = this.getUser.country;
             this.selectedCountry = this.getUser.country;
-            this.country_code = this.getUser.country_code;
+            this.selectedCountryCode = this.getUser.country_code;
             this.city = this.getUser.city;
             this.selectedCity = this.getUser.city;
             this.timezone = this.getUser.timezone;
