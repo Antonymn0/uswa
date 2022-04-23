@@ -12,14 +12,16 @@ class TransactionProcessed extends Mailable
     use Queueable, SerializesModels;
 
     public $transaction;
+    public $user;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($transaction)
+    public function __construct($transaction, $user)
     {
         $this->transaction = $transaction;
+        $this->user = $user;
     }
 
     /**

@@ -1,7 +1,7 @@
 @component('mail::message')
-<img src='https://uswa-app.herokuapp.com/images/logo.svg' style="width:90px; float:right" alt="menuthy Logo">
+<img src="{{url('/images/email_logo.png')}}" style="width:90px; float:right" alt="uswa Logo">
 <br>
-<h2>Dear user, </h2> 
+<h2>Dear {{$user->first_name}}, </h2>
 
 Your {{$transaction->transaction_type }} transaction of USD {{$transaction->amount_transacted }} has been processed.
 

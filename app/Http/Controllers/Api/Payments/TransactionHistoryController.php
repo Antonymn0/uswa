@@ -40,10 +40,11 @@ class TransactionHistoryController extends Controller
     public function store(ValidateTransactionHistoryRequest $request)
     {
         $data = $request->validated(); 
+        $user = $request->user();
 
         $transaction = TransactionHistory::create($data);
 
-        event(new TransactionCreated($transaction));
+        event(new TransactionCreated($transaction, $user));
 
         return response()->json([
             'success'=> true,

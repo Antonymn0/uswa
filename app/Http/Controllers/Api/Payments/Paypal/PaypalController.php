@@ -213,7 +213,7 @@ class PaypalController extends Controller
         ];
         $tutor_local_account->update($acc_data);
         $transaction_history = TransactionHistory::create($trans_data); // record history  
-
+        event(new TransactionCreated($transaction, $user = $tutor));
         return $data;    
     }
 

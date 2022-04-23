@@ -1,5 +1,5 @@
 @component('mail::message')
-<img src="{{url('https://uswa-app.herokuapp.com/images/logo.svg')}}" style="width:90px; float:right" alt="menuthy Logo">
+<img src="{{url('/images/email_logo.png')}}" style="width:90px; float:right" alt="uswa Logo">
 <br>
 <h2>Dear {{$student->first_name}}, </h2>  <br>
 Your {{$trial_lesson->lesson_type}} trial lesson has been accepted and a meeting scheduled on the specified date. 

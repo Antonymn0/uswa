@@ -30,11 +30,13 @@ class transactionCreatedListener implements ShouldQueue
      */
     public function handle(TransactionCreated $event)
     {
+        $transaction = $event->transaction;
+        $user = $event->user;
         //send emails
         if($event->transaction->transaction_type == 'topup')
-            Mail::to('email@email.com')->send(new TransactionProcessed($event->transaction));
+            Mail::to($user->email)->send(new TransactionProcessed($transaction, $user));
 
         if($event->transaction->transaction_type == 'withdrawal')
-            Mail::to('email@email.com')->send(new WithdrawalSuccessful($event->transaction));
+            Mail::to($user->email)->send(new WithdrawalSuccessful($transaction, $user));
     }
 }
