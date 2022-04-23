@@ -10,14 +10,18 @@
                         <route-link :to="{name: 'home'}" class="nav-link" @click.prevent="pushRoutes('home')">Home </route-link>
                     </li>
                       <li class="py-0">
-                        <route-link :to="{name: 'find-tutor'}" class="nav-link" @click.prevent="pushRoutes('find-tutor')" v-if="getUser.role !== 'tutor' ">Find a Tutor </route-link>
-                        <router-link :to="{name: 'register-tutor'}" class="px-3"  @click.prevent="pushRoutes('register-tutor')" v-if="getUser.role !== 'tutor' && getUser.role !== 'student' ">Become a tutor</router-link>
+                        <route-link :to="{name: 'find-tutor'}" class="nav-link" @click.prevent="pushRoutes('find-tutor')" v-if="getUser.role !== 'tutor' && getUser.role !== 'admin' ">Find a Tutor </route-link>
+                        <router-link :to="{name: 'register-tutor'}" class="px-3"  @click.prevent="pushRoutes('register-tutor')" v-if="getUser.role !== 'tutor' && getUser.role !== 'student' && getUser.role !== 'admin'">Become a tutor</router-link>
                     </li>
                      <li class="" v-if=" isLogedIn">
                        <route-link :to="{name: 'student-dashboard'}" class="nav-link " @click.prevent="pushRoutes('student-dashboard')" v-if="getUser.role == 'student'">Dashboard </route-link>
                        <route-link :to="{name: 'tutor-dashboard'}" class="nav-link" @click.prevent="pushRoutes('tutor-dashboard')" v-if="getUser.role == 'tutor'">Dashboard </route-link>
                         <route-link :to="{name: ''}" class="nav-link" v-if="getUser.role == 'tutor'" @click.prevent="pushRoutes('')" data-bs-toggle="modal" data-bs-target="#lecturesModal"> Lectures </route-link>
-                        <route-link :to="{name: 'account'}" class="nav-link" @click.prevent="pushRoutes('account')" >Account </route-link>
+                        <route-link :to="{name: 'account'}" class="nav-link" @click.prevent="pushRoutes('account')" v-if="getUser.role !== 'admin'" > Account </route-link>
+                        <router-link :to="{name: 'all-users'}" class="nav-link" v-if="getUser.role == 'admin'" @click.prevent="pushRoutes('all-users')"> Users</router-link>
+                        <router-link :to="{name: 'all-lessons'}" class="nav-link" v-if="getUser.role == 'admin'" @click.prevent="pushRoutes('all-lessons')"> Lessons</router-link>
+                        <router-link :to="{name: 'tutor-review'}" class="nav-link" v-if="getUser.role == 'admin'" @click.prevent="pushRoutes('tutor-review')"> Reviews</router-link>
+                        <router-link :to="{name: 'admin-account'}" class="nav-link" v-if="getUser.role == 'admin'" @click.prevent="pushRoutes('admin-account')"> Account</router-link>
                     </li>                    
                     <li class="dropdown-item  pt-2">                          
                         <button type="submit" class="btn-danger mx-auto text-white" @click.prevent="this.closeNav()"> 

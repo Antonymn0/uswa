@@ -32,7 +32,7 @@ class commissionFeeUpdatedListener implements shouldQueue
     {
         $commision_fee = $event->commision_fee;
 
-        $tutors = User::where('role', 'student')->get();
+        $tutors = User::where('role', 'tutor')->get();
 
         foreach ($tutors as $tutor) {
             //send commision/fee update email

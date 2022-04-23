@@ -195,6 +195,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+/* media quesries */
+@media only screen and (max-width: 750px) {
+    
+    
+}
 
 </style>

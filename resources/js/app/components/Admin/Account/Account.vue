@@ -127,7 +127,7 @@ export default {
             form_data.append('fee_percentage', this.new_fee_percentage);
             form_data.append('_method', 'PUT');
 
-            if(! confirm('Update uswa fee percentage?')) return;
+            if(! confirm('Update uswa fee percentage? \n An email notification will be sent to all tutors on the platform regarding this operation.')) return;
             this.spinner.new_fee_percentage = true;
 
             axios.post('/api/commissions/' + id, form_data)
