@@ -2302,6 +2302,8 @@ components: { vueCountriesCities },
                 form_data.append('timezone', this.$store.state.signupProcess_about.about.timezone);
                 form_data.append('description', this.$store.state.signupProcess_about.about.description);
                 form_data.append('_method', 'PUT');
+
+                console.log(...form_data);
                 
             axios.post('/api/user/' + this.getUser.id , form_data)             
             .then(response=>{
