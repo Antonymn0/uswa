@@ -1,9 +1,9 @@
 @component('mail::message')
 <img src="{{url('/images/email_logo.png')}}" style="width:90px; float:right" alt="uswa Logo">
 <br>
-<h2> Dear Tutor,</h2> 
+<h2>Dear {{$user->first_name}}  </h2>
 
-Your student john has payed you. A payment of USD 10 has been transfered to your paypal account. <br>
+A payment of USD {{$transaction->amount_transacted}} has been transfered to your paypal account. <br>
 Please check your account to confirm.
 
 
