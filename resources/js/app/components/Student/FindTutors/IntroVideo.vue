@@ -16,7 +16,7 @@
                         </p>
                         <p class="mb-0 rouded" style="overflow:hidden" v-if="!this.tutor.introduction_video && this.tutor.introduction_video_url"> 
                             <iframe  width="400" height="300"  :src="this.tutor.introduction_video_url" autoplay="false" class="shadow bg-dark rouded"  v-if="this.tutor.introduction_video_url">  </iframe>  
-                            <span v-if="this.tutor.introduction_video_url && !this.tutor.introduction_video">If the video doesnt play, click this <a :href="this.tutor.introduction_video_url">link to open it in another tab </a> </span>                      
+                            <span v-if="this.tutor.introduction_video_url && !this.tutor.introduction_video">If the video doesnt play, click this <a :href="this.tutor.introduction_video_url" target="blank" class="text-primary underline">link to open </a>  in another tab  </span>                      
                         </p>
                         <p v-if="!this.tutor.introduction_video && !this.tutor.introduction_video_url" class="text-muted small  py-5 mt-5">This tutor has not uploded an introduction video yet</p>
                           <p class="text-muted p-3 mb-0 pb-0 d-flex justify-content-between align-items-center">
