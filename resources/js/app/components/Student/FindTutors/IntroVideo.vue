@@ -19,6 +19,11 @@
                             <span v-if="this.tutor.introduction_video_url && !this.tutor.introduction_video">If the video doesnt play, click this <a :href="this.tutor.introduction_video_url">link to open it in another tab </a> </span>                      
                         </p>
                         <p v-if="!this.tutor.introduction_video && !this.tutor.introduction_video_url" class="text-muted small  py-5 mt-5">This tutor has not uploded an introduction video yet</p>
+                          <p class="text-muted p-3 mb-0 pb-0 d-flex justify-content-between align-items-center">
+                            <span class="m-0 p-0 fw-bold"> Country: </span>  
+                            <span class="m-0 p-0"> &nbsp; &nbsp; {{tutor.country}} </span> 
+                            <span class="m-0 p-0 float-end"> <country-flag :country='tutor.country_code' size='.5rem'/> </span> 
+                        </p>
                     </div>
                     <div class="col-md-6 border-start px-3"> 
                         <p >
@@ -135,9 +140,13 @@
 
 <script>
 import moment from "moment";
+import CountryFlag from 'vue-country-flag-next';
 
 export default {
     props:['tutor'],
+    components: {
+        CountryFlag,
+    },
     data(){
         return{
 
