@@ -31,9 +31,11 @@ export const signupProcess_about = {
             state.about.last_name = payload;
         },
         set_country(state, payload) {
+            console.log("Setting country to: " + payload);
             state.about.country = payload;
         },
         set_country_code(state, payload) {
+            console.log('Setting country code to: ' + payload);
             state.about.country_code = payload;
         },
         set_city(state, payload) {

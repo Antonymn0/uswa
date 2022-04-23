@@ -2226,6 +2226,10 @@ components: { vueCountriesCities },
             get() {  return this.$store.state.signupProcess_about.about.country;  },
             set(value) {  this.$store.commit('set_country', value);  }
         },
+        country_code:{
+            get() {  return this.$store.state.signupProcess_about.about.country_code;  },
+            set(value) {  this.$store.commit('set_country_code', value);  }
+        },
         city:{
             get() {  return this.$store.state.signupProcess_about.about.city;},
             set(value) {  this.$store.commit('set_city', value); }
@@ -2280,7 +2284,7 @@ components: { vueCountriesCities },
             return moment.tz.names();
          },
         logFile(){
-            console.log(this.$store.state.signupProcess_about.about);
+            // console.log(this.$store.state.signupProcess_about.about);
         },
         submitForm(){
             this.validateForm();
@@ -2348,7 +2352,7 @@ components: { vueCountriesCities },
             this.last_name = this.getUser.last_name;
             this.country = this.getUser.country;
             this.selectedCountry = this.getUser.country;
-            this.selectedCountryCode = this.getUser.country_code;
+            this.country_code = this.getUser.country_code;
             this.city = this.getUser.city;
             this.selectedCity = this.getUser.city;
             this.timezone = this.getUser.timezone;
