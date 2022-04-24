@@ -20,7 +20,8 @@
                         </p>
                         <p v-if="!this.tutor.introduction_video && !this.tutor.introduction_video_url" class="text-muted small  py-5 mt-5">This tutor has not uploded an introduction video yet</p>
                           <p class="text-muted p-3 mb-0 pb-0 d-flex justify-content-between align-items-center">
-                            <span class="m-0 p-0 fw-bold"> Country: </span>  
+                            <span class="m-0 p-0 fw-bold"> Homeland: </span>  
+                            <span class="m-0 p-0"> &nbsp; &nbsp; {{tutor.city}} </span> 
                             <span class="m-0 p-0"> &nbsp; &nbsp; {{tutor.country}} </span> 
                             <span class="m-0 p-0 float-end"> <country-flag :country='tutor.country_code' size='.5rem'/> </span> 
                         </p>

@@ -24,8 +24,8 @@
                             <span class="small fw-bold"><i class="bi bi-mortarboard-fill text-secondary"></i> &nbsp; {{tutor.subject}} </span> 
                            
                         </div>
-                            <div class=" ">
-                                 <span class="small  my-5"><i class="bi bi-circle-fill text-success" style="font-size:.7rem"></i> Online &nbsp; &nbsp; </span> <span class="text-muted small"><i class="bi bi-house"></i>  {{this.capitalize(tutor.country)}}</span> <br>
+                            <div class="align-items-center ">
+                                 <span class="small align-items-center "><i class="bi bi-circle-fill text-success" style="font-size:.7rem"></i> Online &nbsp; &nbsp; </span> <span class="text-muted small"><i class="bi bi-house"></i>  {{this.capitalize(tutor.country)}}</span> <br>
                                <span class="mt-5  lead"> $ {{tutor.hourly_rate}} <span class="small">/hr </span>  </span> 
                             </div>
                        </div>
