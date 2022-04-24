@@ -13,7 +13,7 @@
                     </div>
                     <div class="pl-2 ms-2">
                         <h5 class="d-flex align-items-center mb-0">
-                           <span> {{this.capitalize(tutor.first_name)}} {{ tutor.last_name.charAt(0).toUpperCase()}}. &nbsp; &nbsp;</span> 
+                           <span> {{this.capitalize(tutor.first_name)}} {{ tutor.last_name.charAt(0).toUpperCase()}}. </span> 
                             <span class="float-end ms-3">
                                 <!-- <country-flag :country='tutor.country_code' size='.5rem'/> &nbsp; -->
                                 <i class="bi bi-shield-fill-check text-primary" ></i>
