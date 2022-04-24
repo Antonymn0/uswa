@@ -11,12 +11,12 @@
                 <div class="row">                     
                     <div class="col-md-6 ">
                         <h6>Introduction Video</h6>
-                        <p class="mb-0 rounded" style="overflow:hidden" v-if="this.tutor.introduction_video">                        
-                            <iframe width="400" height="300"  :src="this.tutor.introduction_video" autoplay="false" class="shadow bg-dark rounded" >  </iframe>                    
+                        <p class="mb-0 rounded text-center" style="overflow:hidden" v-if="this.tutor.introduction_video">                        
+                            <iframe width="350" height="250"  :src="this.tutor.introduction_video" autoplay="false" id='iframe' class="shadow   rounded" >  </iframe>                    
                         </p>
-                        <p class="mb-0 rouded" style="overflow:hidden" v-if="!this.tutor.introduction_video && this.tutor.introduction_video_url"> 
-                            <iframe  width="400" height="300"  :src="this.tutor.introduction_video_url" autoplay="false" class="shadow bg-dark rouded"  v-if="this.tutor.introduction_video_url">  </iframe>  
-                            <span v-if="this.tutor.introduction_video_url && !this.tutor.introduction_video" class="pt-2">If the video doesnt play, click this <a :href="this.tutor.introduction_video_url" target="blank" class="text-primary underline">link to open </a>  in another tab  </span>                      
+                        <p class="mb-0 rouded text-center" style="overflow:hidden" v-if="!this.tutor.introduction_video && this.tutor.introduction_video_url"> 
+                            <iframe  width="350" height="250"  :src="this.tutor.introduction_video_url" autoplay="false" class="shadow  rouded" id="iframe" v-if="this.tutor.introduction_video_url">  </iframe>  
+                            <span v-if="this.tutor.introduction_video_url && !this.tutor.introduction_video" class="pt-2 text-start">If the video doesnt play, click this <a :href="this.tutor.introduction_video_url" target="blank" class="text-primary underline">link to open </a>  in another tab  </span>                      
                         </p>
                         <p v-if="!this.tutor.introduction_video && !this.tutor.introduction_video_url" class="text-muted small  py-5 mt-5">This tutor has not uploded an introduction video yet</p>
                           <p class="text-muted p-3 mb-0 pb-0 d-flex justify-content-between align-items-center">
@@ -26,9 +26,10 @@
                         </p>
                     </div>
                     <div class="col-md-6 border-start px-3"> 
-                        <p >
+                        <p class="d-flex justify-content-between align-items-center pe-3">
                             <span class="m-0 p-0 fw-bold"> Country: </span>  
                             <span class="m-0 p-0"> {{tutor.country}} </span> 
+                             <span class="m-0 p-0 "> <country-flag :country='tutor.country_code' size='.5rem'/> </span> 
                         </p>
                         <p >
                             <span class="m-0 p-0 fw-bold">About:</span> <br>
@@ -129,7 +130,7 @@
               <div class="p-1 text-left">
                 <button class="btn btn-success m-1"  data-bs-toggle="modal" data-bs-target="#staticBackdropMessage">Message</button> 
                 <button class="btn btn-primary m-1"  data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book trial lesson</button> 
-               <button class="btn btn-danger m-1" data-bs-dismiss="modal" aria-label="Close">Close</button>  
+               <button class="btn btn-danger m-1" data-bs-dismiss="modal" aria-label="Close" @click.prevent="this.pauseIframeVideo()">Close</button>  
               </div>           
             </div>            
             </div>
@@ -143,13 +144,18 @@ import moment from "moment";
 import CountryFlag from 'vue-country-flag-next';
 
 export default {
-    props:['tutor'],
+    props:['new_tutor'],
     components: {
         CountryFlag,
     },
     data(){
         return{
-
+            tutor: {}
+        }
+    },
+    watch: {
+        new_tutor: function  (){
+            this.tutor = this.new_tutor;
         }
     },
     methods:{
@@ -166,6 +172,14 @@ export default {
               let local_time = utc_time.clone().local().format("h:mm a"); // covert date into current local time
               return local_time;              
           }  
+          
+        },
+        pauseIframeVideo(){
+            this.tutor ={}
+            setTimeout(() => {
+              this.tutor = this.new_tutor;  
+            }, 500);
+            
           
         }
     },

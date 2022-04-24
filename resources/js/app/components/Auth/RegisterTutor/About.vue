@@ -89,8 +89,7 @@
                     <label for="description" class="form-label">Description </label>
                     <textarea  cols="30" rows="5" class="p-2 form-control" id="description" placeholder="Introduce yourself with a short text description..." v-model="description"></textarea>
                     <br> <small class="text-danger small">{{this.errors.description}}</small>
-                </div >
-                
+                </div >                
 
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck" v-model="over18">
@@ -2275,7 +2274,7 @@ components: { vueCountriesCities },
         updateCountryCity(){
             setTimeout(() => {
                 this.$store.commit('set_country', this.selectedCountry);
-                if(this.selectedCountryCode ) this.$store.commit('set_country_code', this.selectedCountryCode); 
+                this.$store.commit('set_country_code', this.selectedCountryCode); 
                 this.$store.commit('set_city', this.selectedCity); 
             }, 100);            
         },

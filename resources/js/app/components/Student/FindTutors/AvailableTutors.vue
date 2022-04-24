@@ -13,9 +13,9 @@
                     </div>
                     <div class="pl-2 ms-2">
                         <h5 class="d-flex align-items-center mb-0">
-                           <span> {{this.capitalize(tutor.first_name)}} {{ tutor.last_name.charAt(0).toUpperCase()}}.</span> 
+                           <span> {{this.capitalize(tutor.first_name)}} {{ tutor.last_name.charAt(0).toUpperCase()}}. &nbsp; &nbsp;</span> 
                             <span class="float-end ms-3">
-                                <country-flag :country='tutor.country_code' size='.5rem'/> &nbsp;
+                                <!-- <country-flag :country='tutor.country_code' size='.5rem'/> &nbsp; -->
                                 <i class="bi bi-shield-fill-check text-primary" ></i>
                             </span>                            
                         </h5>
@@ -25,7 +25,7 @@
                            
                         </div>
                             <div class=" ">
-                                 <span class="small  my-5"><i class="bi bi-circle-fill text-success" style="font-size:.7rem"></i> Online </span> <br>
+                                 <span class="small  my-5"><i class="bi bi-circle-fill text-success" style="font-size:.7rem"></i> Online &nbsp; &nbsp; </span> <span class="text-muted small"><i class="bi bi-house"></i>  {{this.capitalize(tutor.country)}}</span> <br>
                                <span class="mt-5  lead"> $ {{tutor.hourly_rate}} <span class="small">/hr </span>  </span> 
                             </div>
                        </div>
@@ -74,7 +74,7 @@
 <div>
     <BookTialLessonModal :tutor="this.current_tutor"/>
     <SendMessage :tutor="this.current_tutor"/>
-    <IntroVideo :tutor="this.current_tutor"/>
+    <IntroVideo :new_tutor="this.current_tutor"/>
     <Reviews :tutor="this.current_tutor"/>
 </div>
   </div>
