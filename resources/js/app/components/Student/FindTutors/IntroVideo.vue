@@ -5,7 +5,7 @@
             <div class="modal-content px-1">
             <div class="modal-header">
                 <h4 class="modal-title fw-bold">About {{this.tutor.first_name}} {{this.tutor.last_name}}</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click.prevent="this.pauseIframeVideo()"></button>
             </div>
             <div class="modal-body ">              
                 <div class="row">                     
@@ -25,12 +25,7 @@
                             <span class="m-0 p-0 float-end"> <country-flag :country='tutor.country_code' size='.5rem'/> </span> 
                         </p>
                     </div>
-                    <div class="col-md-6 border-start px-3"> 
-                        <p class="d-flex justify-content-between align-items-center pe-3">
-                            <span class="m-0 p-0 fw-bold"> Country: </span>  
-                            <span class="m-0 p-0"> {{tutor.country}} </span> 
-                             <span class="m-0 p-0 "> <country-flag :country='tutor.country_code' size='.5rem'/> </span> 
-                        </p>
+                    <div class="col-md-6 border-start px-3">                         
                         <p >
                             <span class="m-0 p-0 fw-bold">About:</span> <br>
                             <span class="m-0 p-0">{{tutor.description}}</span>
