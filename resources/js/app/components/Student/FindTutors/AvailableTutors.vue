@@ -49,7 +49,7 @@
                     <span class="fw-bold">Languages: &nbsp; </span> 
                     <span> {{tutor.language}} &nbsp;</span> <span class="alert-success px-1 rounded"> {{ this.capitalize(tutor.level)}} </span>  
                     <span class="">  &nbsp; | &nbsp;</span>
-                    <span>{{tutor.subject}} &nbsp; </span>  <span class="alert-primary px-1 rounded">  {{ this.capitalize(tutor.subject_level)}} </span>  
+                    <span>{{tutor.second_language}} &nbsp; </span>  <span class="alert-primary px-1 rounded">  {{ this.capitalize(tutor.second_language_level)}} </span>  
                 </div>
                 <!-- -------------------------- -->
                 <div class="px-2" style="height:4.5rem; overflow:hidden">

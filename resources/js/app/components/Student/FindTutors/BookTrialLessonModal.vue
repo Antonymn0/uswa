@@ -17,7 +17,7 @@
                     <small class="text-danger" v-if="this.errors.date"><i class="bi bi-exclamation-triangle"></i> {{this.errors.date}}</small>
                  </p>
                  <p>
-                   <label for="lesson_type">Language</label>
+                   <label for="lesson_type">Language | Subject | Course</label>
                     <select  id="lesson_type" v-model="lesson_type" class="w-100 py-3 border text-muted rounded bg-white">
                         <option select="selected" value="">- Select -</option>
                         <option selected :value="this.tutor.language">{{this.capitalize(this.tutor.language)}}</option>

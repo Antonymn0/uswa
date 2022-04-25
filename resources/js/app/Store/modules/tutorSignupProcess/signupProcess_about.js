@@ -11,11 +11,13 @@ export const signupProcess_about = {
             currency: null,
             language: null,
             level: null,
+            second_language: null,
+            second_language_level: null,
             subject: null,
             subject_level: null,
             phone: null,
             over18: null,
-            description:null
+            description: null,
         },
     }),
 
@@ -35,7 +37,7 @@ export const signupProcess_about = {
             state.about.country = payload;
         },
         set_country_code(state, payload) {
-            console.log('Setting country code to: ' + payload);
+            console.log("Setting country code to: " + payload);
             state.about.country_code = payload;
         },
         set_city(state, payload) {
@@ -52,6 +54,12 @@ export const signupProcess_about = {
         },
         set_level(state, payload) {
             state.about.level = payload;
+        },
+        set_second_language(state, payload) {
+            state.about.second_language = payload;
+        },
+        set_second_language_level(state, payload) {
+            state.about.second_language_level = payload;
         },
         set_subject(state, payload) {
             state.about.subject = payload;

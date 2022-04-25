@@ -67,10 +67,30 @@
                 </div>
                 <div class="row">
                     <div class="mb-3 col-md-6">
+                        <label for="language" class="form-label">Second language</label>
+                        <select id="language" v-model="second_language" class="w-100 border rounded bg-white p-2 text-muted">
+                            <option value="" selected> -Select- </option>
+                            <option :value="item.name" v-for="(item, index) in this.languages" :key="index">{{item.name}}</option>
+                        </select>
+                        <small class="text-danger small">{{this.errors.second_language}}</small>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label for="level" class="form-label">Level</label>
+                        <select  id="level" v-model="second_language_level" class="w-100 border rounded bg-white p-2 text-muted">
+                            <option value="" selected ="selected"> -Select- </option>
+                            <option value="intermidiate"> Intermidiate</option>
+                            <option value="expert" > Fluent</option>
+                            <option value="native" > Native</option>
+                        </select>
+                        <small class="text-danger small">{{this.errors.level}}</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-6">
                         <label for="subject" class="form-label">Subject to teach</label>
                         <select id="language" v-model="subject" class="w-100 border rounded bg-white p-2 text-muted">
                             <option value="" selected> -Select- </option>
-                            <option :value="item.name" v-for="(item, index) in this.languages" :key="index">{{item.name}}</option>
+                            <option :value="course.course_name" v-for="(course, index) in this.current_courses" :key="index">{{course.course_name}}</option>
                         </select>
                         <small class="text-danger small">{{this.errors.subject}}</small>
                     </div>
@@ -120,8 +140,10 @@ components: { vueCountriesCities },
             selectedCountryCode: null,
             selectedCountry: '',
             selectedCity: '',
+            current_courses:{},
             errors:{},
             spinner:{},
+
             timezone:null,
             currency:null,
             languages:{
@@ -2246,9 +2268,17 @@ components: { vueCountriesCities },
             get() { return this.$store.state.signupProcess_about.about.language;},           
             set(value) {  this.$store.commit('set_language', value); }
         },
-        level:{
+         level:{
             get() { return this.$store.state.signupProcess_about.about.level;},           
             set(value) { this.$store.commit('set_level', value); }
+        },
+        second_language:{
+            get() { return this.$store.state.signupProcess_about.about.second_language;},           
+            set(value) {  this.$store.commit('set_second_language', value); }
+        },
+        second_language_level:{
+            get() { return this.$store.state.signupProcess_about.about.second_language_level;},           
+            set(value) { this.$store.commit('set_second_language_level', value); }
         },
         subject:{
             get() { return this.$store.state.signupProcess_about.about.subject;},           
@@ -2297,10 +2327,14 @@ components: { vueCountriesCities },
                 form_data.append('last_name', this.$store.state.signupProcess_about.about.last_name);
                 form_data.append('country', this.$store.state.signupProcess_about.about.country);
                 form_data.append('country_code', this.$store.state.signupProcess_about.about.country_code);
+
                 form_data.append('city', this.$store.state.signupProcess_about.about.city);
                 form_data.append('currency', this.$store.state.signupProcess_about.about.currency);
                 form_data.append('language', this.$store.state.signupProcess_about.about.language);
                 form_data.append('level', this.$store.state.signupProcess_about.about.level);
+                form_data.append('second_language', this.$store.state.signupProcess_about.about.second_language);                
+                form_data.append('second_language_level', this.$store.state.signupProcess_about.about.second_language_level);
+
                 form_data.append('subject', this.$store.state.signupProcess_about.about.subject);
                 form_data.append('subject_level', this.$store.state.signupProcess_about.about.subject_level);
                 form_data.append('over18', this.$store.state.signupProcess_about.about.over18);
@@ -2338,6 +2372,9 @@ components: { vueCountriesCities },
             
             if(! this.language) this.errors.language = "Language field is required";
             if(! this.level) this.errors.level = "Level field is required";
+            if(! this.second_language) this.errors.second_language = "Language field is required";
+            if(! this.second_language_level) this.errors.second_language_level = "Level field is required";
+
             if(! this.subject) this.errors.subject = "Subject field is required";
             if(! this.subject_level) this.errors.subject_level = "Subject field is required";
             
@@ -2358,15 +2395,27 @@ components: { vueCountriesCities },
             this.timezone = this.getUser.timezone;
             this.currency = this.getUser.currency;
             this.language = this.getUser.language;
-            this.level = this.getUser.level;
+            this.second_language = this.getUser.second_language;
+            this.second_language_level = this.getUser.second_language_level;
             this.subject = this.getUser.subject;
             this.subject_level = this.getUser.subject_level;
             this.over18 = this.getUser.over18;
             this.description = this.getUser.description;
+        },
+        fetchCourses(){
+            axios.get('/api/courses')
+            .then(response=>{
+                this.current_courses = response.data.data;
+                console.log(response.data.data);
+            })
+            .catch(error=>{
+                console.log(error.response);
+            })
         }
     },
-    mounted(){
+    mounted(){        
        this.populateFormFields();
+       this.fetchCourses();
     }
 
 }

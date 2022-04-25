@@ -156,7 +156,7 @@ export default {
             .catch(error => {  console.log(error.response);   });
         },
         fetchMesages(){
-            if(!this.isLogedIn)  this.$router.push({name: 'login'});
+            if(!this.isLogedIn)  return;
             
             axios.get('/api/student/get-messages')
             .then(response => {
@@ -170,7 +170,7 @@ export default {
         },
         refreshCurrentMessage(){  
             if(!Object.keys(this.current_message).length) return;
-            if(!this.isLogedIn)  {this.$router.push({name: 'login'}); return; };
+            if(!this.isLogedIn)   return; 
             axios.get('/api/student/get-message/' + this.current_message.id)
             .then(response => {                
                 if(response.status == 200){
@@ -188,6 +188,7 @@ export default {
             .catch(error => {  console.log(error.response);   });
         },
         sendMessage(){
+            if(!this.isLogedIn)   return; 
             if(! this.new_message) return;
             var form_data = new FormData();
                 form_data.append('conversation_id', this.current_message.id);

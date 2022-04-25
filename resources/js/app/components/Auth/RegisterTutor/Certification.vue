@@ -3,11 +3,7 @@
       <h3 class="py-3">Teaching certification</h3>
       <p>Do you have any teaching certificates? <br> If so, describe them to enhance your profile credibility and get more students.</p>
       <div>
-            <div class="mb-3 ">
-                <label for="subject" class="form-label">Subject </label>
-                <input type="text" class="form-control" id="subject" v-model="subject">
-                <small class="text-danger small">{{this.errors.subject}}</small>
-            </div>
+          
             <div class="row">
                 <div class="mb-3 col-md-6">
                     <label for="certificate" class="form-label">Certificate type</label>
@@ -87,10 +83,7 @@ export default {
             get() { return this.$store.state.signupProcess_certification.certification.image; },
             set(value) { this.$store.commit('set_certificate_image', value); }
         },
-        subject:{
-            get() { return this.$store.state.signupProcess_certification.certification.subject; },
-            set(value) { this.$store.commit('set_subject_cert', value); }
-        },
+        
         certificate:{
             get() { return this.$store.state.signupProcess_certification.certification.certificate; },
             set(value) { this.$store.commit('set_certificate', value); }
@@ -139,7 +132,6 @@ export default {
                 form_data.append('last_name', this.$store.state.signupProcess_about.about.last_name);
                 form_data.append('has_teaching_certificate', this.$store.state.signupProcess_certification.certification.i_dont_have_certificate);
                 if(! this.img_preview) form_data.append('teaching_certificate_upload', this.$store.state.signupProcess_certification.certification.image);
-                form_data.append('teaching_certificate_subject', this.$store.state.signupProcess_certification.certification.subject);
                 form_data.append('teaching_certificate_year_of_study_from', this.$store.state.signupProcess_certification.certification.study_from);
                 form_data.append('teaching_certificate_year_of_study_to', this.$store.state.signupProcess_certification.certification.study_to);
                 form_data.append('teaching_certificate_description', this.$store.state.signupProcess_certification.certification.description);

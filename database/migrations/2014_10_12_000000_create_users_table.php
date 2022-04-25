@@ -54,6 +54,8 @@ class CreateUsersTable extends Migration
            $table->string('currency')->nullable();
            $table->string('language')->nullable();
            $table->string('level')->nullable();
+           $table->string('second_language')->nullable();
+            $table->string('second_language_level')->nullable();
            $table->string('subject')->nullable();
            $table->string('subject_level')->nullable();
            $table->string('over18')->nullable();

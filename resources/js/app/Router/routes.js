@@ -96,6 +96,11 @@ const routes = [
         path: "/admin/acount",
         component: require("../components/Admin/Account/Account.vue").default,
     },
+    {
+        name: "courses",
+        path: "/admin/courses",
+        component: require("../components/Admin/Courses/Courses.vue").default,
+    },
 
     // =======================================================================
     // ACCOUNT ROUTES

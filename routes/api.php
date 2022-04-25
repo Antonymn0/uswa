@@ -86,6 +86,9 @@ Route::group(['middleware'=>['auth:api']],function(){
 
   // Import lectures routes
   require __DIR__.'/lectures/lectures.php';
+ 
+  // Import courses routes
+  require __DIR__.'/courses/courses.php';
 
 
 
