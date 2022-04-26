@@ -20,8 +20,9 @@
                    <label for="lesson_type">Language | Subject | Course</label>
                     <select  id="lesson_type" v-model="lesson_type" class="w-100 py-3 border text-muted rounded bg-white">
                         <option select="selected" value="">- Select -</option>
-                        <option selected :value="this.tutor.language">{{this.capitalize(this.tutor.language)}}</option>
                         <option selected :value="this.tutor.subject">{{this.capitalize(this.tutor.subject)}}</option>
+                        <option selected :value="this.tutor.language">{{this.capitalize(this.tutor.language)}}</option>
+                        <option selected :value="this.tutor.second_language">{{this.capitalize(this.tutor.second_language)}}</option>
                     </select>
                     <small class="text-danger" v-if="this.errors.lesson_type"><i class="bi bi-exclamation-triangle"></i> {{this.errors.lesson_type}}</small>
                  </p>
