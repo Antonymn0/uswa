@@ -59,7 +59,7 @@
             </div>
             <div class="form-check p-3">
                 <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck" v-model="i_dont_have_certificate">
-                <label class="form-check-label" for="disabledFieldsetCheck">I dont have any certification </label>
+                <label class="form-check-label" for="disabledFieldsetCheck">I do not have any certification </label>
             </div>
         </div>
          <div class="text-center pt-5 pb-2">

@@ -54,7 +54,7 @@
              
             <div class="form-check pt-3">
                 <input class="form-check-input  text-secondary" type="checkbox" id="disabledFieldsetCheck" v-model="i_dont_have_certificate">
-                <label class="form-check-label  text-secondary" for="disabledFieldsetCheck">I dont have any certification </label>
+                <label class="form-check-label  text-secondary" for="disabledFieldsetCheck">I do not have any teaching certification </label>
             </div>   
       </div>
       <div class="text-center pt-5 pb-2"> 

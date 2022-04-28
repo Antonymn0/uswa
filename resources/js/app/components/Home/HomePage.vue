@@ -4,7 +4,7 @@
     <div  class="col-md-7 py-5 h-100">
       <div class="ps-4 h-100 py-5 d-flex align-items-center" >       
         <span class="align-middle " >
-            <h1 class="fw-bold mx-auto " style="font-size:4rem;"> Speak a new language with confidence  </h1>  
+            <h1 class="fw-bold mx-auto " style="font-size:4rem;"> Discover a new way of learning  </h1>  
             <h5 class="semi-bold mx-auto " style="font-size:3rem;">  Learn with the best online tutors.  </h5>
           </span>   
       </div>      
@@ -15,13 +15,13 @@
 
     <!-- ------------------------------------------ --> 
       <div class=" p-5 new-language">
-      <h1 class="text-center fw-bold py-5">Learn a new language the easy way</h1>
+      <h1 class="text-center fw-bold py-5">Learn at ease</h1>
         <div class="pb-5">
           <ul class="row list-unstyled text-center">
             <li class="col-md-4">
-              <h4 class="text-center">Expert native speakers</h4>
+              <h4 class="text-center">Expert tutors</h4>
               <p>
-                Find native speakers with expert knowledge  <br> and excelent ratings
+                Learn from the most best tutors in the world  
               </p>
             </li>
             <li class="col-md-4">

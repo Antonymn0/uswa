@@ -36,7 +36,7 @@
     <div class="text-muted acc desktop" v-if="isLogedIn">
       <router-link :to="{name: 'account'}" v-if="getUser.role !== 'admin'">
         <div class="border btn btn-default py-2">
-          <span class="fw-bold"> Bal: </span>
+          <span class="fw-bold"> Balance: </span>
           <span class="text-muted"> $</span>
           <span class="text-muted">{{this.getAccount.available_balance}} </span>
         </div> 
@@ -64,7 +64,7 @@
 
         <!-- ---------------------- Mobile login ------------------------------------ -->
         <div class="px-3 desktop">
-            <router-link :to="{name: 'login'}" class="px-1" v-if="! isLogedIn">Login</router-link>
+            <router-link :to="{name: 'login'}" class="px-1" v-if="! isLogedIn">Login</router-link> <span  v-if="! isLogedIn"> | </span>
             <router-link :to="{name: 'register'}" class="px-1" v-if="! isLogedIn">Register</router-link>            
 <!-- ----------------------------------------------------------------------------- -->
 

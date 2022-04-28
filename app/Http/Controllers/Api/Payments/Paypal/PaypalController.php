@@ -239,22 +239,16 @@ class PaypalController extends Controller
                 ], 
             'json'=>[
                 'payment_instruction' =>  [
-                    'disbursement_mode' =>  'INSTANT',
-                    // 'platform_fees' =>  [[
-                    //     'amount' =>  [
-                    //         'currency_code' =>  'USD',
-                    //         'value' =>  $commisson_amount
-                    //     ]
-                    // ]]
+                    'disbursement_mode' =>  'INSTANT',                    
                 ],
             ],  
         ]);
 
         $data = json_decode($response->getBody());
 
-        $account = LocalAccount::where('user_id', $user->id)->first();
+        $account = LocalAccount::where('user_id', $user->id)->first();        
 
-        // update local account balance
+        // update student local account balance
         $acc_data = [
             'last_transaction_date' => now(),
             'last_transaction_method' => 'paypal',
@@ -334,6 +328,5 @@ class PaypalController extends Controller
         
         return $account;
     }
-
    
 }

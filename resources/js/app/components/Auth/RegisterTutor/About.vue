@@ -114,7 +114,7 @@
 
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck" v-model="over18">
-                    <label class="form-check-label" for="disabledFieldsetCheck">Im am over 18 </label> <br>
+                    <label class="form-check-label" for="disabledFieldsetCheck">I am am over 18 years old </label> <br>
                     <small class="text-danger small">{{this.errors.over18}}</small>
                 </div>
 
@@ -2364,7 +2364,6 @@ components: { vueCountriesCities },
             if(! this.last_name) this.errors.last_name = "Last name field is required";
            
             if(! this.country) this.errors.country = "County field is required";
-            if(! this.country_code) this.errors.country_code = "Country code field is required";
             if(! this.city) this.errors.city = "City field is required";
             
             if(! this.timezone) this.errors.timezone = "Timezone field is required";

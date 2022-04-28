@@ -12,16 +12,16 @@
             </div>
              <div class="form-group py-5 mb-4">
                 <label class="form-label" for="disabledFieldsetCheck" > <h5> Set your charges per lecture in USD: </h5> </label>
-                <input class="bg-white w-100 p-3 border rounded text-muted"  type="number" min="5" id="disabledFieldsetCheck" v-model="hourly_rate" placeholder="Charge per lecture">
-                <small>Attracts a  commision fee of {{this.uswa_commision_percentage}}% .</small>
-                <small class="text-danger">{{this.errors.hourly_rate}}</small>
+                <input class="bg-white w-100 p-3 border rounded text-muted"  type="number" min="5" id="disabledFieldsetCheck" v-model="hourly_rate" @input.prevent="this.calculateCommissionAmount()" placeholder="Charge per lecture">
+                <small>Attracts a  commision fee of {{this.uswa_commision_percentage}}% .</small> <br>
+                <small>You will recieve: $ {{this.final_amount}}</small>
+                <small class="text-danger">{{ this.errors.hourly_rate}}</small>
             </div>
             <div class="schedule">
                 <h5>Set your working Schedule</h5>
                 <p>Availability shows your potential working hours.
                     Students can book lessons at these times.
                 </p>
-
                 <div class="py-3">
                      <div class="form-check">
                         <input class="form-check-input p-2" type="checkbox" id="disabledFieldsetCheck" v-model="monday.is_available">
@@ -1680,7 +1680,9 @@ export default {
             ],
             errors:{},
             spinner:{},
-            uswa_commision_percentage:0
+            uswa_commision_percentage:0,
+            uswa_commision_amount:0,
+            final_amount:0
         }
     },
     computed:{
@@ -1734,6 +1736,11 @@ export default {
         nextStep(){ 
             document.getElementById('availability').classList.add('hidden');
             document.getElementById('finish').classList.remove('hidden');
+        },
+        calculateCommissionAmount(){ 
+            if(! this.uswa_commision_percentage) return;
+            this.uswa_commision_amount = (this.uswa_commision_percentage / 100) * this.hourly_rate ;
+            this.final_amount = this.hourly_rate - this.uswa_commision_amount;
         },
         
        submitForm(){           
