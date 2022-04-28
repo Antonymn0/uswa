@@ -1821,7 +1821,7 @@ export default {
             axios.get('/api/get-uswa-commision')
             .then(response=>{
                 this.uswa_commision_percentage = response.data.data.fee_percentage;
-                console.log(response.data.data.fee_percentage);
+                this.calculateCommissionAmount();
             })
             .catch(error=>{
                 console.log(error.response);
