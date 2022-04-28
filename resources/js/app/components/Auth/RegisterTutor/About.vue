@@ -82,7 +82,7 @@
                             <option value="expert" > Fluent</option>
                             <option value="native" > Native</option>
                         </select>
-                        <small class="text-danger small">{{this.errors.level}}</small>
+                        <small class="text-danger small">{{this.errors.seconcond_language_level}}</small>
                     </div>
                 </div>
                 <div class="row">
@@ -2268,7 +2268,7 @@ components: { vueCountriesCities },
             get() { return this.$store.state.signupProcess_about.about.language;},           
             set(value) {  this.$store.commit('set_language', value); }
         },
-         level:{
+        level:{
             get() { return this.$store.state.signupProcess_about.about.level;},           
             set(value) { this.$store.commit('set_level', value); }
         },
@@ -2370,14 +2370,13 @@ components: { vueCountriesCities },
             if(! this.currency) this.errors.currency = "Currency field is required";
             
             if(! this.language) this.errors.language = "Language field is required";
-            if(! this.level) this.errors.level = "Level field is required";
+            if(! this.level) this.errors.level = "This field is required";
             if(! this.second_language) this.errors.second_language = "Language field is required";
             if(! this.second_language_level) this.errors.second_language_level = "Level field is required";
 
             if(! this.subject) this.errors.subject = "Subject field is required";
             if(! this.subject_level) this.errors.subject_level = "Subject field is required";
             
-            if(! this.subject_level) this.errors.subject_level = "Level field is required";
             if(! this.over18) this.errors.over18 = "Confirm you are an adult";
 
             if(! this.description) this.errors.description = "Please provide a short description of yourself";
@@ -2394,6 +2393,7 @@ components: { vueCountriesCities },
             this.timezone = this.getUser.timezone;
             this.currency = this.getUser.currency;
             this.language = this.getUser.language;
+            this.level = this.getUser.level;
             this.second_language = this.getUser.second_language;
             this.second_language_level = this.getUser.second_language_level;
             this.subject = this.getUser.subject;
