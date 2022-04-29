@@ -6,8 +6,8 @@
   <div class="col-md-10 pt-3 px-3">
        <small class="alert-success p-2 text-center" v-if="this.success.course_deleted">{{this.success.course_deleted}} <br></small>
        <small class="alert-danger p-2 text-center" v-if="this.errors.course_deleted">{{this.errors.course_deleted}} <br></small>
-      <h3>Courses offered on Uswa <span class="btn btn-primary float-end me-5" data-bs-toggle="modal" data-bs-target="#add-new-course"> <i class="bi bi-plus-lg"></i> New</span></h3>
-      <div class="table-responsive">
+      <h3 class="py-2 px-1">Courses  <span class="btn btn-primary float-end me-5" data-bs-toggle="modal" data-bs-target="#add-new-course"> <i class="bi bi-plus-lg"></i> New</span></h3>
+      <div class="table-responsive px-1 w-100">
           <table class="table table-striped table-hover table-sm">
               <thead>
                   <th>#</th>

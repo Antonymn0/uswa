@@ -4,10 +4,10 @@
       <SideNav />
     </div>
   <div class="col-md-10 pt-3 px-3">
-      <div class="row me-2">
+      <div class="row mx-1">
            <!-- --------------------------Acc Balance------------------------------------- -->
-          <div class="col-md-6 "> 
-              <div class="card px-3 py-5 text-center h-100">              
+          <div class="col-md-6 p-1"> 
+              <div class="card px-3 py-5  text-center h-100">              
                 <h3>Account balance</h3>
                 <p class="mb-5 pb-4 text-muted  align-center"> 
                       <span>Available bal:  </span><br>                
@@ -27,8 +27,8 @@
           </div>
 
           <!-- --------------------- Commision ----------------------- -->
-          <div class="col-md-6 "> 
-              <div class="card px-3 py-5 text-center h-100">              
+          <div class="col-md-6 p-1"> 
+              <div class="card px-3 py-5  text-center h-100">              
                 <h3>Uswa commission/fee</h3>
                 <p class="mb-5 text-muted">
                     <span>Current fee:  </span><br>

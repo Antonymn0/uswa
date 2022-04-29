@@ -1,6 +1,6 @@
 <template>
   <div class="px-3  text-secondary">
-    <div class="row "> 
+    <div class="row px-2"> 
       <div class="col-sm-6 bg-white">
         <div class="py-3 h-100">
           <div class=" p-3 text-center h-100">

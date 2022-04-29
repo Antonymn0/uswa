@@ -186,7 +186,7 @@ mounted(){
   background-color: #f5e4e4f3;
   border-radius: 5px;
 }
-@media screen and (max-width: 750px){
+@media screen and (max-width: 850px){
       .mobile{
         display: inline-block;
       }

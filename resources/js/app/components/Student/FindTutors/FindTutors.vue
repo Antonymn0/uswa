@@ -71,7 +71,9 @@ export default {
 /* media quesries */
 @media only screen and (max-width: 600px) {
     .top-header{       
-        padding: .8rem .7rem; 
+        padding: .8rem .7rem;
+        margin-left:2px; 
+        margin-right:2px; 
     }
 }
 </style>

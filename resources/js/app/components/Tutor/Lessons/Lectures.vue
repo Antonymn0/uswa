@@ -18,7 +18,7 @@
                     <button class="btn btn-primary" data-bs-target="#addModal2" data-bs-toggle="modal" data-bs-dismiss="modal"> <i class="bi bi-plus-lg"></i> New</button>
                     </span>                        
                    
-                        <div class="table responsive" v-if="Object.keys(this.lectures).length">
+                        <div class="table-responsive" v-if="Object.keys(this.lectures).length">
                             <table class="table table-sm p-2">
                                 <thead class="p-2">
                                     <th>#</th>

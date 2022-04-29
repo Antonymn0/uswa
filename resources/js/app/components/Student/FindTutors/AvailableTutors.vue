@@ -1,9 +1,9 @@
 <template>
-  <div class="parent">
+  <div class="parent ">
       <h5 class="fw-bold text-muted">   {{this.capitalize(this.search_term)}} tutors </h5>
       <!-- ----------------------------------------------------------------------------------------------------- -->
       <div class="row " v-if="Object.keys(this.current_tutors).length">
-      <div class="col-md-3 mb-2 px-1" v-for="(tutor, index) in this.current_tutors" :key="index" style="overflow:hidden" >
+      <div class="col-md-3 mb-2 px-2" v-for="(tutor, index) in this.current_tutors" :key="index"  style="overflow:hidden" >
           <div class=" h-100   ">              
             <div class="bg-white p-1 pt-2 inner rounded h-100  hover-card">
                 <div class="d-flex align-items-center">
@@ -212,6 +212,7 @@ export default {
 
     .hover-card{
         border: 1px solid rgb(241, 241, 241);
+        margin:2px;
     }
     .hover-card:hover{
         border: 1px solid rgb(241, 201, 201);

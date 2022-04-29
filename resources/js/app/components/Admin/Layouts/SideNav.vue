@@ -5,10 +5,9 @@
       <ul class="list-unstyled ">
         <li> <router-link :to="{name: 'all-users'}" class="px-1" >Users</router-link></li>
         <li> <router-link :to="{name: 'all-lessons'}" class="px-1" >Lessons</router-link></li>
-        <li> <router-link :to="{name: 'tutor-review'}" class="px-1" >Account Reviews</router-link></li>
-        <li> <router-link :to="{name: 'admin-account'}" class="px-1" >Commision Account</router-link></li>
+        <li> <router-link :to="{name: 'tutor-review'}" class="px-1" >Tutor Reviews</router-link></li>
+        <li> <router-link :to="{name: 'admin-account'}" class="px-1" >Commisions </router-link></li>
         <li> <router-link :to="{name: 'courses'}" class="px-1" >Courses</router-link></li>       
-     
       </ul>
     </div>
   </div>
@@ -31,6 +30,7 @@ ul li{
 @media only screen and (max-width:750px){
   .parent{
     height:auto;
+    display:none;
   }
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
-<div class="row">
+<div class="row px-1">
 <div class="col-md-2">    
 <SideNav />
 </div>
 
-<div class="col-md-10">  
+<div class="col-md-10 ">  
 <h5>Tutor review</h5>
-<div class="table-responsive">
+<div class="table-responsive  w-100">
     <table class="table table-small table-stripped">
         <thead>
             <th>#</th>
@@ -56,36 +56,38 @@
             <div class=" px-2">                       
             <div class="row  rounded border-top">                       
                 <div class="col-md-6 border-end pt-4">
-                    <p> <span>Full name: </span>  <span>{{this.capitalize(current_user.first_name)}} {{this.capitalize(current_user.middle_name)}} {{this.capitalize(current_user.last_name)}}</span> </p>
-                    <p> <span>Email: </span>  <span> {{current_user.email}} </span> </p>
-                    <p> <span>Role: </span>  <span> {{current_user.role}} </span> </p>
-                    <p> <span>Profile picture: </span> <span> <a :href="current_user.image" target="blank"> <img :src="current_user.image" alt="profile-img" class="shadow" style="width:40px; height:40px;"> </a> </span> </p>
+                    <p> <span class="fw-bold">Full name: </span>  <span>{{this.capitalize(current_user.first_name)}} {{this.capitalize(current_user.middle_name)}} {{this.capitalize(current_user.last_name)}}</span> </p>
+                    <p> <span class="fw-bold">Email: </span>  <span> {{current_user.email}} </span> </p>
+                    <p> <span class="fw-bold">Role: </span>  <span> {{this.capitalize(current_user.role)}} </span> </p>
+                    <p> <span class="fw-bold">Profile picture: </span> <span> <a :href="current_user.image" class="text-primary" target="blank"> Image </a> </span> </p>
 
-                    <p> <span>Language: </span> <span> {{this.capitalize(current_user.language)}} </span> </p>
-                    <p> <span>Profeciency level: </span> <span> {{this.capitalize(current_user.level)}} </span></p>
-                    <p> <span>Subject to teach: </span> <span> {{this.capitalize(current_user.subject)}} </span></p>
-                    <p> <span>Mastery level: </span> <span> {{this.capitalize(current_user.subject_level)}} </span> </p>
+                    <p class="border-top"> <span class="fw-bold">First language: </span> <span> {{this.capitalize(current_user.language)}} </span> </p>
+                    <p> <span class="fw-bold">Profeciency level: </span> <span> {{this.capitalize(current_user.level)}} </span></p>
+                    <p> <span class="fw-bold">Second language: </span> <span> {{this.capitalize(current_user.language)}} </span> </p>
+                    <p> <span class="fw-bold">Profeciency level: </span> <span> {{this.capitalize(current_user.second_language_level)}} </span></p>
+                    <p> <span class="fw-bold">Subject to teach: </span> <span> {{this.capitalize(current_user.subject)}} </span></p>
+                    <p > <span class="fw-bold">Mastery level: </span> <span> {{this.capitalize(current_user.subject_level)}} </span> </p>
 
-                    <p> <span>Introduction text: </span> <span> {{this.capitalize(current_user.description)}} </span> </p>
+                    <p class="border-top"> <span class="fw-bold">Introduction text: </span> <span> {{this.capitalize(current_user.description)}} </span> </p>
                 </div>
                 <div class="col-md-6 border-start pt-4">                            
-                    <p> <span>Has teaching certificate: </span> <span v-if="current_user.has_teaching_certificate" class="text-pimary">Yes </span> <span class="text-danger" v-else> No </span> </p>
-                    <p> <span>Teaching certificate: </span> <span> <a :href="current_user.teaching_certificate_upload" target="blank"> File link</a> </span> </p>
-                    <p> <span>Institution: </span> <span>{{this.capitalize(current_user.teaching_certificate_issued_by)}} </span> </p>
-                    <p> <span> Description: </span> <span> {{this.capitalize(current_user.teaching_certificate_desription)}} </span> </p> 
+                    <p> <span class="fw-bold">Has teaching certificate: </span> <span v-if="current_user.has_teaching_certificate" class="text-pimary">Yes </span> <span class="text-danger" v-else> No </span> </p>
+                    <p> <span class="fw-bold">Teaching certificate: </span> <span> <a :href="current_user.teaching_certificate_upload" class="text-primary" target="blank"> File link</a> </span> </p>
+                    <p> <span class="fw-bold">Institution: </span> <span>{{this.capitalize(current_user.teaching_certificate_issued_by)}} </span> </p>
+                    <p> <span class="fw-bold"> Description: </span> <span> {{this.capitalize(current_user.teaching_certificate_desription)}} </span> </p> 
 
-                    <p> <span>Has higher education: </span> <span v-if="current_user.higher_education_certificate_upload" class="text-pimary">Yes </span> <span class="text-danger" v-else> No </span>  </p>
-                    <p> <span>Institution: </span> <span> {{this.capitalize(current_user.higher_education_institution)}} </span> </p>
-                    <p> <span>Higher education certificate: </span> <span class="text-primary"> <a :href="current_user.higher_education_certificate_upload" target="blank"> File  </a> </span></p>
+                    <p class="border-top"> <span class="fw-bold">Has higher education: </span> <span v-if="current_user.higher_education_certificate_upload" class="text-pimary">Yes </span> <span class="text-danger" v-else> No </span>  </p>
+                    <p> <span class="fw-bold">Institution: </span> <span> {{this.capitalize(current_user.higher_education_institution)}} </span> </p>
+                    <p> <span class="fw-bold">Higher education certificate: </span> <span class="text-primary"> <a :href="current_user.higher_education_certificate_upload" target="blank"> File  </a> </span></p>
                     
-                    <p> <span>Has introduction video: </span>  <span v-if="current_user.introduction_video || current_user.introduction_video_url" class="text-pimary">Yes </span> <span class="text-danger" v-else> No </span> </p>
-                    <p> <span>Introduction video: </span>
+                    <p> <span class="fw-bold">Has introduction video: </span>  <span v-if="current_user.introduction_video || current_user.introduction_video_url" class="text-pimary">Yes </span> <span class="text-danger" v-else> No </span> </p>
+                    <p> <span class="fw-bold">Introduction video: </span>
                         <span v-if="current_user.introduction_video"> <a :href="current_user.introduction_video" class="underline" target="blank">Uploaded </a> </span> 
                         <span v-if="current_user.introduction_video_url"> <a :href="current_user.introduction_video_url" class="underline" target="blank">Video link </a> </span> 
                     </p>
                 </div>
                 </div>                        
-                <p>
+                <p class="p-2">
                     <label for="remarks"></label>
                     <textarea name="" id="remarks" cols="10" rows="5" placeholder="Remarks" class="border p-2 rounded w-100" v-model="decline_reason"></textarea>
                     <small class="small text-muted">Type any remarks for the candidate incase of a revert.</small> <br>

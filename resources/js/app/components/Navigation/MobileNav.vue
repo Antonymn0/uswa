@@ -21,7 +21,8 @@
                         <router-link :to="{name: 'all-users'}" class="nav-link" v-if="getUser.role == 'admin'" @click.prevent="pushRoutes('all-users')"> Users</router-link>
                         <router-link :to="{name: 'all-lessons'}" class="nav-link" v-if="getUser.role == 'admin'" @click.prevent="pushRoutes('all-lessons')"> Lessons</router-link>
                         <router-link :to="{name: 'tutor-review'}" class="nav-link" v-if="getUser.role == 'admin'" @click.prevent="pushRoutes('tutor-review')"> Reviews</router-link>
-                        <router-link :to="{name: 'admin-account'}" class="nav-link" v-if="getUser.role == 'admin'" @click.prevent="pushRoutes('admin-account')"> Account</router-link>
+                        <router-link :to="{name: 'admin-account'}" class="nav-link" v-if="getUser.role == 'admin'" @click.prevent="pushRoutes('admin-account')"> Commision Account</router-link>
+                        <router-link :to="{name: 'courses'}" class="nav-link" v-if="getUser.role == 'admin'" @click.prevent="pushRoutes('courses')"> Courses</router-link>
                     </li>                    
                     <li class="dropdown-item  pt-2">                          
                         <button type="submit" class="btn-danger mx-auto text-white" @click.prevent="this.closeNav()"> 
@@ -122,7 +123,7 @@ i{
 }
 
 /* //media querries */
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 850px) {
  .parent-nav{
      font-family:Poppins;
      color:#9699a2;
