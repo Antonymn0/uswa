@@ -1,7 +1,7 @@
 <template>
 <div class="">
    <div class="row  pt-5 mx-4 top align-items-center h-100">
-    <div  class="col-md-7 py-3 h-100">
+    <div  class="col-md-7  h-100">
       <div class="ps-4 h-100  d-flex align-items-center" >       
         <span class="align-middle " >
             <h1 class="fw-bold mx-auto " style="font-size:4rem;"> Discover a new way of learning  </h1>  
