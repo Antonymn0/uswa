@@ -44,7 +44,7 @@
     </div>
     <!-- --------------------------------------------------- --> 
     <!-- ---------Dashboard----------------- -->
-    <div class="d-flex align-items-center">        
+    <div class="d-flex align-items-center w-auto">        
         <div class="px-2 desktop" v-if=" isLogedIn ">
           <router-link :to="{name: 'student-dashboard'}" v-if="getUser.role == 'student'">Dashboard</router-link> &nbsp;
           <router-link :to="{name: 'tutor-dashboard'}" v-if="getUser.role == 'tutor'">Dashboard</router-link>
@@ -53,7 +53,7 @@
      <!-- --------------------------------------------------   -->
 
      <!-- ------------------- Components -------------------------- -->
-        <div class="d-flex components" v-if="isLogedIn && this.getUser.role !== 'admin' ">
+        <div class="d-flex  w-auto" v-if="isLogedIn && this.getUser.role !== 'admin' ">
           <span class="" v-if="getUser.role == 'student' "> <StudentMessages /></span>
           <span class="" v-if="getUser.role == 'tutor' "> <TutorMessages /></span>
           <span class="" v-if="getUser.role == 'student' "> <StudentNotifications /></span>
@@ -205,9 +205,7 @@ mounted(){
         height:25px ;
         border-radius:50%;
       }
-      .components{
-        margin: 0 50px 0
-      }
+
       .px-3{
         padding-left: 0 !important;
         padding-right: 0 !important;       
