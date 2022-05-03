@@ -25,9 +25,15 @@
 
         <style>
             body {
-                font-family: 'Nunito', sans-serif;
-                background-color:#edeff0a6;
+                font-family: sans-serif;
+                background-color:#edeff0a6; 
+            
             }
+            h1,h2{
+                font-family: serif;
+            }
+
+            
             .hidden{
                 display:none;
             }

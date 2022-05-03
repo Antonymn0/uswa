@@ -1,6 +1,6 @@
 <template>
 <div class="">
-   <div class="row  pt-5 mx-4 top align-items-center h-100">
+   <div class="row  pt-5 mx-4 top align-items-center " >
     <div  class="col-md-7  h-100">
       <div class="ps-4 h-100  d-flex align-items-center" >       
         <span class="align-middle " >
@@ -9,29 +9,31 @@
           </span>   
       </div>      
       </div>
-    <div class="col-md-5 text-right h-100"><img src="/images/cover.png" alt="" style="max-width:100%; height:auto"></div>
+    <div class="col-md-5 text-right  h-100"><img src="/images/cover.png" alt="" style="max-width:100%; height:auto"></div>
   </div> 
 
-
     <!-- ------------------------------------------ --> 
-      <div class=" p-5 new-language">
-      <h1 class="text-center fw-bold py-5">Learn at ease</h1>
-        <div class="pb-5">
+      <div class=" p-5 new-language h-100">
+      <h1 class="text-center fw-bold pt-5 pb-3">Learn at ease</h1>
+        <div class="py-4">
           <ul class="row list-unstyled text-center">
-            <li class="col-md-4">
-              <h4 class="text-center">Expert tutors</h4>
+            <li class="col-md-4">          
+              <font-awesome-icon :icon="['far', 'chess-queen']" />
+              <h3 class="text-center">   Expert tutors</h3>
               <p>
                 Learn from the most best tutors in the world  
               </p>
             </li>
             <li class="col-md-4">
-              <h4 class="text-center">Learn anytime anywhere</h4>
+             <font-awesome-icon :icon="['far', 'clock']" />
+              <h3 class="text-center">Learn anytime anywhere</h3>
               <p>
                 Tutors are available virtualy 24/7. 
               </p>
             </li>
-            <li class="col-md-4">
-              <h4 class="text-center">Affordable rates</h4>
+            <li class="col-md-4"> 
+              <font-awesome-icon :icon="['far', 'credit-card']" />
+              <h3 class="text-center">Affordable rates</h3>
               <p>
                 Tutors are available with affordable <br> rates to suit your pocket. 
               </p>
@@ -54,7 +56,7 @@
         </div>
       </div>
 
-      <div class="row mx-5 py-3 mx-auto how-uswa-work clearfix align-items-center">  
+      <div class="row mx-5 py-3 mx-auto how-uswa-work clearfix align-items-center desktop">  
         <div class="col-md-6 text-center">
           <img src="/images/lessons_anytime.png" alt="image">
         </div>   
@@ -65,7 +67,18 @@
         </div>      
       </div>
 
-      <div class="row mx-5 py-3 mx-auto how-uswa-work clearfix align-items-center">     
+      <div class="row mx-5 py-3 mx-auto how-uswa-work clearfix align-items-center mobile">          
+        <div class="col-md-6 ">
+          <h1 class="fw-bold">Take lessons anytime, anywhere </h1> 
+          <p class="text-secondary">Find the perfect time for your busy schedule. 
+            Book a lessons in seconds on our platform </p>        
+        </div> 
+        <div class="col-md-6 text-center">
+          <img src="/images/lessons_anytime.png" alt="image">
+        </div>     
+      </div>    
+
+      <div class="row mx-5 py-3 mx-auto how-uswa-work clearfix align-items-center ">     
         <div class="col-md-6">
           <h1 class="fw-bold">Enter virtual classroom </h1> 
           <p class="text-secondary">When it’s lesson time, 
@@ -88,7 +101,6 @@
 </template>
 
 <script>
-
 
 export default {
   components:{
@@ -138,6 +150,11 @@ export default {
 </script>
 
 <style scoped>
+.new-language svg{
+  font-size:4.5rem;
+  margin-bottom:1.3rem;
+  color: #6f7072;
+}
 .how_uswa_works{
   font-size: 22px;
 }
@@ -235,18 +252,32 @@ export default {
   margin:auto;
   font-weight:500;
   font-size:1.2rem;
-
 }
+.mobile{
+      display:none;
+    }
+
 
 /* media quesries */
 @media only screen and (max-width: 950px) {
     .tutors .tutor-panels{
-        width:50%;
-        
+        width:50%;        
     }
 }
 /* media quesries */
 @media only screen and (max-width: 750px) {
+  .new-language svg{
+    font-size:2.8rem;
+    margin-top:1.2rem;
+    margin-bottom:.1rem;
+    color: #6f7072;
+  }
+    .mobile{
+      display:inline-block;
+    }
+    .desktop{
+      display:none;
+    }
     .tutors .tutor-panels{
         width:100%;       
     }
@@ -268,7 +299,7 @@ export default {
     padding-top:5rem;
   }
     .new-language h3{  
-      margin-top:5rem;
+      margin-top:.5rem;
       margin-bottom: 1.2rem;
     }
     .mx-5{
