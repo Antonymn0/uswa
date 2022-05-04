@@ -1,15 +1,17 @@
 <template>
 <div class="">
-   <div class="row   ms-4 top align-items-center h-100" >
-    <div  class="col-md-7  h-100">
-      <div class="ps-4 h-100  d-flex align-items-center" >       
-        <span class="align-middle " >
+   <div class="row pt-5  ms-4 top  h-100" >
+    <div  class="col-md-7 pt-5 h-100">            
+        <span class="  " >
             <h1 class="fw-bold mx-auto " style="font-size:4rem;"> Discover a new way of learning  </h1>  
             <h5 class="semi-bold mx-auto " style="font-size:3rem;">  Learn with the best online tutors.  </h5>
-          </span>   
-      </div>      
+
+        </span>  
+        <p class="text-center desktop pt-5 mt-5">
+          <router-link :to="{name: 'register'}" class=" btn background-red  text-white rounded-pill px-5 py-3" v-if="! isLogedIn">Register now</router-link> 
+        </p>       
       </div>
-    <div class="col-md-5 text-right  p-0 m-0 h-100"><img src="/images/cover.png" alt="" style="max-width:100%; height:auto"></div>
+    <div class="col-md-5 text-right align-items-center   h-100"><img src="/images/cover.png" alt="" style="width:100%; height:100%"></div>
   </div> 
 
     <!-- ------------------------------------------ --> 
@@ -91,7 +93,7 @@
 
   </div> 
   <p class="text-center py-5">
-    <router-link :to="{name: 'register'}" class=" btn btn-danger rounded-pill px-5 py-3" v-if="! isLogedIn">Register now</router-link> 
+    <router-link :to="{name: 'register'}" class=" btn background-red text-white rounded-pill px-5 py-3" v-if="! isLogedIn">Register now</router-link> 
   </p>
     
 </div> 
