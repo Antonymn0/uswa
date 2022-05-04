@@ -1,6 +1,6 @@
 <template>
 <div class="">
-   <div class="row  pt-5 mx-4 top align-items-center " >
+   <div class="row   ms-4 top align-items-center h-100" >
     <div  class="col-md-7  h-100">
       <div class="ps-4 h-100  d-flex align-items-center" >       
         <span class="align-middle " >
@@ -9,12 +9,12 @@
           </span>   
       </div>      
       </div>
-    <div class="col-md-5 text-right  h-100"><img src="/images/cover.png" alt="" style="max-width:100%; height:auto"></div>
+    <div class="col-md-5 text-right  p-0 m-0 h-100"><img src="/images/cover.png" alt="" style="max-width:100%; height:auto"></div>
   </div> 
 
     <!-- ------------------------------------------ --> 
       <div class=" p-5 new-language h-100">
-      <h1 class="text-center fw-bold pt-5 pb-3">Learn at ease</h1>
+      <h1 class="text-center fw-bold pt-5 pb-2">Learn at ease</h1>
         <div class="py-4">
           <ul class="row list-unstyled text-center">
             <li class="col-md-4">          
@@ -151,7 +151,7 @@ export default {
 
 <style scoped>
 .new-language svg{
-  font-size:4.5rem;
+  font-size:4.4rem;
   margin-bottom:1.3rem;
   color: #6f7072;
 }
@@ -282,8 +282,8 @@ export default {
         width:100%;       
     }
     .top {
-      margin-left: 5px !important;
-      margin-right: 5px !important;
+      margin-left: 1px !important;
+      margin-right: 1px !important;
     }
     .tutors{
       margin-left: 1%;
@@ -293,14 +293,23 @@ export default {
     .how-uswa-work{
       text-align: center;
     }
+    .how_uswa_works img{
+        padding:.7rem 0;    
+    }
+    .how-uswa-work p{  
+      padding-right:0;
+    }
     .new-language {
-    padding-left: 8px !important;
-    padding-right: 8px !important;
-    padding-top:5rem;
-  }
+      padding-left: 8px !important;
+      padding-right: 8px !important;
+      padding-top:5rem;
+    }
     .new-language h3{  
       margin-top:.5rem;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.1rem;
+    }
+    .ps-4{
+      padding-left:5px;
     }
     .mx-5{
       margin-right:3px !important;
