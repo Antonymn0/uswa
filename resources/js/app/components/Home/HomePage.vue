@@ -155,6 +155,7 @@ export default {
   margin-bottom:1.3rem;
   color: #6f7072;
   width:auto;
+  max-width:100%;
 }
 .how_uswa_works{
   font-size: 22px;
