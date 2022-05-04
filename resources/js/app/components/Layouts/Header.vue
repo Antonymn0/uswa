@@ -14,8 +14,8 @@
           <img src="/images/email_logo.png" alt="uswa-logo" class="mobile" style="width:150px; "> 
           </router-link>  </span>  
         <span v-else> <router-link :to="{name: 'home'}">
-          <img src="/images/logo.svg" alt="uswa-logo" class="" style="width:150px; height:auto">  
-          <!-- <img src="/images/email_logo.png" class="mobile" alt="uswa-logo" style="width:150px;">   -->
+          <img src="/images/logo.svg" alt="uswa-logo" class="desktop" style="width:150px; height:auto">  
+          <img src="/images/email_logo.png" class="mobile" alt="uswa-logo" style="width:150px;">  
           </router-link>  </span>  
       </div>
      
