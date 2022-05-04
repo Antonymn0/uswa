@@ -309,7 +309,7 @@ export default {
       margin-bottom: 1.1rem;
     }
     .ps-4{
-      padding-left:5px;
+      padding-left:5px !important;
     }
     .mx-5{
       margin-right:3px !important;
@@ -317,6 +317,9 @@ export default {
     }
     .p-5{
       padding: 5px !important;
+    }
+    .ms-3{
+      margin-left: 0 !important;
     }
 }
 
