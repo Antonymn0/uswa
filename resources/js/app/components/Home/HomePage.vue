@@ -154,6 +154,7 @@ export default {
   font-size:4.4rem;
   margin-bottom:1.3rem;
   color: #6f7072;
+  width:auto;
 }
 .how_uswa_works{
   font-size: 22px;
@@ -258,12 +259,7 @@ export default {
     }
 
 
-/* media quesries */
-@media only screen and (max-width: 950px) {
-    .tutors .tutor-panels{
-        width:50%;        
-    }
-}
+
 /* media quesries */
 @media only screen and (max-width: 750px) {
   .new-language svg{
@@ -279,7 +275,7 @@ export default {
       display:none;
     }
     .tutors .tutor-panels{
-        width:100%;       
+        width:100%;        
     }
     .top {
       margin-left: 1px !important;
