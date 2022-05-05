@@ -114,7 +114,7 @@
 
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck" v-model="over18">
-                    <label class="form-check-label" for="disabledFieldsetCheck">I am am over 18 years old </label> <br>
+                    <label class="form-check-label" for="disabledFieldsetCheck">I am over 18 years old </label> <br>
                     <small class="text-danger small">{{this.errors.over18}}</small>
                 </div>
 
