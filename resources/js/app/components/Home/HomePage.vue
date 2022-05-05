@@ -148,7 +148,6 @@ export default {
 <style scoped>
 .landing-text{
   padding:5rem 3rem 0 3rem; 
-
 }
 .header-h1{
     font-size:4rem;
@@ -272,8 +271,8 @@ export default {
 /* media quesries */
 @media only screen and (max-width: 750px) {
   .landing-text{
-    padding-top:1.5rem;
-  }
+  padding:1.5rem 0; 
+}
   .header-h1{
     font-size:3rem;
     padding:0;
