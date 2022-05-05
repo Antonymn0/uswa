@@ -1,6 +1,6 @@
 <template>
 <div class="">
-   <div class="row landing-text  ms-4 top  h-100" >
+   <div class="row landing-text align-items-center ms-4 top  h-100" >
     <div  class="col-md-7  h-100">  
             <h1 class="fw-bold mx-auto header-h1" > Discover a new way of learning  </h1>  
             <h5 class="semi-bold mx-auto header-h2">  Learn with the best online tutors.  </h5>               
