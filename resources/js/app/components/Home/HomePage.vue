@@ -147,7 +147,8 @@ export default {
 
 <style scoped>
 .landing-text{
-  padding-top:5rem;
+  padding:5rem 3rem 0 3rem; 
+
 }
 .header-h1{
     font-size:4rem;
@@ -165,7 +166,7 @@ export default {
   max-width:100%;
 }
 .how_uswa_works{
-  font-size: 22px;
+  font-size: 20px;
 }
 .new-language{
   background-color:#fff;
