@@ -150,8 +150,7 @@ export default {
   padding:5rem 3rem 0 3rem; 
 }
 .header-h1{
-    font-size:4rem;
-    padding:3rem  0 0 3rem;
+    font-size:4rem;    
 }
 .header-h2{
     font-size:3rem;
