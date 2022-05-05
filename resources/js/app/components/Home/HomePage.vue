@@ -1,11 +1,11 @@
 <template>
 <div class="">
-   <div class="row landing-text align-items-center ms-4 top  h-100" >
-    <div  class="col-md-7  h-100">  
+   <div class="row landing-text align-items-center ms-4 top pb-5 h-100" >
+    <div  class="col-md-7 pb-3 h-100">  
             <h1 class="fw-bold mx-auto header-h1" > Discover a new way of learning  </h1>  
             <h5 class="semi-bold mx-auto header-h2">  Learn with the best online tutors.  </h5>               
       </div>
-    <div class="col-md-5 text-right align-items-center   h-100"><img src="/images/cover.png" alt="" style="width:100%; height:100%"></div>
+    <div class="col-md-5 text-right align-items-center pt-4  h-100"><img src="/images/cover.png" alt="" style="width:100%; height:100%"></div>
   </div> 
 
     <!-- ------------------------------------------ --> 
@@ -147,7 +147,7 @@ export default {
 
 <style scoped>
 .landing-text{
-  padding:2rem 3rem 0 3rem; 
+  padding:0 3rem 2rem 3rem; 
 }
 .header-h1{
     font-size:4rem;    
