@@ -1,6 +1,6 @@
 <template>
 <div class="">
-   <div class="row landing-text align-items-center ms-4 top pb-5 h-100" >
+   <div class="row landing-text align-items-center ms-4 top  h-100" >
     <div  class="col-md-7 pb-3 h-100">  
             <h1 class="fw-bold mx-auto header-h1" > Discover a new way of learning  </h1>  
             <h5 class="semi-bold mx-auto header-h2">  Learn with the best online tutors.  </h5>               
@@ -147,7 +147,7 @@ export default {
 
 <style scoped>
 .landing-text{
-  padding:0 3rem 2rem 3rem; 
+  padding:0 3rem  0 3rem; 
 }
 .header-h1{
     font-size:4rem;    
