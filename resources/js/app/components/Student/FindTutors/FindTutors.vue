@@ -21,8 +21,6 @@
         <div>
             <AvailableTutors :search_tutors_results="this.tutors" :search_keyword="this.search_keyword"/>
         </div>
-
-
           
       </div>
 </template>

@@ -8,7 +8,7 @@
 
         </span>  
         <p class="text-center desktop pt-5 mt-5">
-          <router-link :to="{name: 'register'}" class=" btn background-red  text-white rounded-pill px-5 py-3" v-if="! isLogedIn">Register now</router-link> 
+          <router-link :to="{name: 'find-tutor'}" class=" btn background-red  text-white rounded-pill px-5 py-3" v-if="! isLogedIn">Find a tutor</router-link> 
         </p>       
       </div>
     <div class="col-md-5 text-right align-items-center   h-100"><img src="/images/cover.png" alt="" style="width:100%; height:100%"></div>
