@@ -154,7 +154,7 @@ export default {
 }
 .header-h2{
     font-size:3rem;
-    padding:0 0 0 3rem;
+    
 }
 .new-language svg{
   font-size:4.4rem;
