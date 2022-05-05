@@ -147,7 +147,7 @@ export default {
 
 <style scoped>
 .landing-text{
-  padding:5rem 3rem 0 3rem; 
+  padding:2rem 3rem 0 3rem; 
 }
 .header-h1{
     font-size:4rem;    
