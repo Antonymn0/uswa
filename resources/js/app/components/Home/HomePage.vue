@@ -1,15 +1,9 @@
 <template>
 <div class="">
-   <div class="row pt-5  ms-4 top  h-100" >
-    <div  class="col-md-7 pt-5 h-100">            
-        <span class="  " >
-            <h1 class="fw-bold mx-auto " style="font-size:4rem;"> Discover a new way of learning  </h1>  
-            <h5 class="semi-bold mx-auto " style="font-size:3rem;">  Learn with the best online tutors.  </h5>
-
-        </span>  
-        <p class="text-center desktop pt-5 mt-5">
-          <router-link :to="{name: 'find-tutor'}" class=" btn background-red  text-white rounded-pill px-5 py-3" v-if="! isLogedIn">Find a tutor</router-link> 
-        </p>       
+   <div class="row landing-text  ms-4 top  h-100" >
+    <div  class="col-md-7  h-100">  
+            <h1 class="fw-bold mx-auto header-h1" > Discover a new way of learning  </h1>  
+            <h5 class="semi-bold mx-auto header-h2">  Learn with the best online tutors.  </h5>               
       </div>
     <div class="col-md-5 text-right align-items-center   h-100"><img src="/images/cover.png" alt="" style="width:100%; height:100%"></div>
   </div> 
@@ -49,7 +43,7 @@
 
     <div class="row mx-5 py-4 how-uswa-work mx-auto clearfix align-items-center">      
         <div class="col-md-6  ">
-          <h1 class="fw-bold "> Find the best tutor</h1> 
+          <h2 class="fw-bold py-2 "> Find the best tutor</h2> 
           <p class="text-secondary text-justify ">Choose from a pool of seasoned online tutors. 
             Use filters to narrow your search and find the perfect fit </p>        
         </div>
@@ -63,7 +57,7 @@
           <img src="/images/lessons_anytime.png" alt="image">
         </div>   
         <div class="col-md-6 ">
-          <h1 class="fw-bold">Take lessons anytime, anywhere </h1> 
+          <h2 class="fw-bold py-2">Take lessons anytime, anywhere </h2> 
           <p class="text-secondary">Find the perfect time for your busy schedule. 
             Book a lessons in seconds on our platform </p>        
         </div>      
@@ -71,7 +65,7 @@
 
       <div class="row mx-5 py-3 mx-auto how-uswa-work clearfix align-items-center mobile">          
         <div class="col-md-6 ">
-          <h1 class="fw-bold">Take lessons anytime, anywhere </h1> 
+          <h2 class="fw-bold py-2">Take lessons anytime, anywhere </h2> 
           <p class="text-secondary">Find the perfect time for your busy schedule. 
             Book a lessons in seconds on our platform </p>        
         </div> 
@@ -82,7 +76,7 @@
 
       <div class="row mx-5 py-3 mx-auto how-uswa-work clearfix align-items-center ">     
         <div class="col-md-6">
-          <h1 class="fw-bold">Enter virtual classroom </h1> 
+          <h2 class="fw-bold py-2">Enter virtual classroom </h2> 
           <p class="text-secondary">When it’s lesson time, 
           connect with your tutor through zoom video platform </p>        
         </div>
@@ -152,6 +146,17 @@ export default {
 </script>
 
 <style scoped>
+.landing-text{
+  padding-top:5rem;
+}
+.header-h1{
+    font-size:4rem;
+    padding:3rem  0 0 3rem;
+}
+.header-h2{
+    font-size:3rem;
+    padding:0 0 0 3rem;
+}
 .new-language svg{
   font-size:4.4rem;
   margin-bottom:1.3rem;
@@ -228,7 +233,7 @@ export default {
   margin: auto;
   padding-right:2.5rem;
 }
-.how-uswa-work h1{
+.how-uswa-work h1, .how-uswa-work h2{
   width:auto;
   max-width:31rem;
   margin: auto;
@@ -265,6 +270,17 @@ export default {
 
 /* media quesries */
 @media only screen and (max-width: 750px) {
+  .landing-text{
+    padding-top:1.5rem;
+  }
+  .header-h1{
+    font-size:3rem;
+    padding:0;
+  }
+  .header-h2{
+      font-size:2rem;
+      padding:0;
+  }
   .new-language svg{
     font-size:2.8rem;
     margin-top:1.2rem;
