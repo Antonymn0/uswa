@@ -17,15 +17,15 @@
             <div>
                 <div class="border-line rounded p-3 m-1 h-100">
                     <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
-                        <h6 class="py-2 fw-bold"> 
+                        <p class="py-2 fw-bold align-items-center"> 
                             <span v-if="trial_lesson.get_tutor.image"> <img :src="trial_lesson.get_tutor.image" alt="profile pic" style="height:26px; width:26px; border-radius:50%"> </span>
                             <span v-else>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
-                            {{this.capitalize(trial_lesson.get_tutor.first_name)}}
-                        </h6>
-                        <small class='text-muted fw-light'> <span class="small  fw-bold">  Status:</span> {{trial_lesson.tutor_confirm}} </small> 
+                            {{this.capitalize(trial_lesson.get_tutor.first_name)}} {{ trial_lesson.get_tutor.last_name.charAt(0).toUpperCase()}}.
+                        </p>
+                        <small class='text-muted fw-lighter'> <span class="small  fw-bold">  Status:</span> {{this.capitalize(trial_lesson.tutor_confirm)}} </small> 
                     </span>
                        
-                    <p class="fw-bold">  {{this.capitalize(trial_lesson.lesson_type)}} trial lesson with tutor {{this.capitalize(trial_lesson.get_tutor.first_name)}}   </p>
+                    <p class="">  {{this.capitalize(trial_lesson.lesson_type)}} trial lesson with tutor {{this.capitalize(trial_lesson.get_tutor.first_name)}}   </p>
                     <span class="py-2">Scheduled for: {{this.formatDate(trial_lesson.lesson_date)}}</span> <br>                  
                     <span>Time: </span> <span>{{trial_lesson.start_time}}hrs  </span> <span class="btn btn-success btn-sm float-end" data-bs-target="#reschedule-trial-lesson" data-bs-toggle="modal" data-bs-dismiss="modal" @click.prevent="updateCurrentTrialLesson(trial_lesson)">Reschedule</span><br>
                     <span class="py-2">Duration: </span> <span> 20 mins </span> <br>
@@ -38,7 +38,7 @@
                    <p class="py-2 mb-0 mt-2 small" v-if="trial_lesson.tutor_confirm == 'accepted' "> {{this.capitalize(trial_lesson.get_tutor.first_name)}} has accepted the trial request. Your lesson is scheduled on the set date.</p>
 
                     <div class="mb-0 py-2 ">
-                        <a v-if="! this.zoom_user_auth_token" :href="'https://zoom.us/oauth/authorize?response_type=code&client_id=' + this.CLIENT_ID + '&state=' + this.ZOOM_STATE + '&redirect_uri=' + this.REDIRECT_URI" class="btn btn-secondary btn-small m-2" >Link with zoom</a>  
+                        <a v-if="! this.zoom_user_auth_token" :href="'https://zoom.us/oauth/authorize?response_type=code&client_id=' + this.CLIENT_ID + '&state=' + this.ZOOM_STATE + '&redirect_uri=' + this.REDIRECT_URI" class="btn btn-secondary btn-sm m-2" >Link with zoom</a>  
                         <button class="btn btn-sm btn-danger m-1" v-if="trial_lesson.tutor_confirm == 'pending' " @click.prevent="this.cancelTrialLesson(trial_lesson)">Cancel request </button>
                       
                          <span class=" d-flex align-items-center"> 
@@ -76,20 +76,25 @@
       <h4 class="alert-secondary w-100 py-3 px-3">In progress <span class="float-end mx-3"> <button class="btn btn-sm btn-danger" @click.prevent="fetchLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
       <small class="alert-danger p-2" v-if="this.errors.insuficient_funds">{{this.errors.insuficient_funds}}</small>
       <small class="alert-success p-2" v-if="this.success.payment_success">{{this.success.payment_success}}</small>
+        <p class="p-3 px-4 ">Your ongoing lessons will appear here </p>
       <div v-if="Object.keys(this.current_lessons).length"> 
         <div class="row px-4 panel ">      
             <div class="col-md-4 row p-3"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'ongoing'">              
                 <div>
                     <div class="border-line rounded p-2  h-100">
-                        <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
-                            <h6 class="py-2 fw-bold"> 
+                        <span class="  mb-2  align-items-center">
+                            <p class="py-3 fw-bold border-bottom align-items-center"> 
                                 <span v-if="lesson.get_lesson_tutor.image"> <img :src="lesson.get_lesson_tutor.image" alt="profile pic" style="height:26px; width:26px; border-radius:50%"> </span>
-                               <span v-else>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
-                                {{this.capitalize(lesson.get_lesson_tutor.first_name)}}
-                            </h6>
-                            <span class="small"> Status: {{lesson.status}}...</span>
+                                <span v-else>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i>  </span>
+                                <span>{{this.capitalize(lesson.get_lesson_tutor.first_name)}} {{lesson.get_lesson_tutor.last_name.charAt(0).toUpperCase()}}. </span> 
+                                <span class="small text-muted float-end"> 
+                                    <span class="fw-bold"> Status: </span>
+                                    <span class="fw-lighter">{{this.capitalize(lesson.status)}}... </span>
+                               </span>
+                            </p>
+                            
                         </span>                    
-                        <p class="fw-bold">
+                        <p class="">
                             <span class="m-0">{{this.capitalize(lesson.lesson_type)}} lesson with tutor {{this.capitalize(lesson.get_lesson_tutor.first_name)}} </span> 
                             <span class=" m-0 d-flex justify-content-end" style="overflow:auto">
                                 <a :href="lesson.meeting_link" target="blank" class="btn btn-secondary btn-sm my-1" v-if="lesson.meeting_link && (this.getAccount.available_balance - lesson.get_lesson_tutor.hourly_rate) > 1 && !checkIfLectureUnpaid(lesson)">Classroom</a> 
@@ -100,8 +105,8 @@
                         </p>
                         <!-- -------------------- Lectures------------------------  -->
                         <div>
-                            <h5>Lectures</h5>
-                            <div v-if="Object.keys(lesson.lectures).length" class="lec-scroll border-start">   
+                            <h6 class="px-2">Lectures</h6>
+                            <div v-if="Object.keys(lesson.lectures).length" class="lec-scroll shadow p-1 border-start">   
                                                     
                                 <p v-for="(lecture, index) in lesson.lectures" :key="index" class="row pt-2  rounded  lec-hover  mb-1 mx-1  ">
                                     <span class="col-1 m-0 align-middle ">
@@ -132,13 +137,13 @@
                             </div>
                             <p class="text-muted small p-2" v-if="! Object.keys(lesson.lectures).length"> This tutor has not set any lectures yet. Lectures for this lesson will appear here</p>
                         </div>  
-                        <a href="#" class="text-warning  my-3 float-end  text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
+                        <a href="#" class="text-warning  mx-2 my-3 float-end  text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
                     </div>
                 </div>              
             </div>
             </div>
           </div>
-          <p class="p-3 mb-0 small text-muted" >
+          <p class="p-4 mb-0 small text-muted" >
             Learning at Uswa is absolutely free-flow and self-paced. You  are in total control of your learning process. 
             You can take lessons anytime anywhere.                   
         </p>
@@ -182,26 +187,27 @@
 <!-- ------------------------------------------------------------------------------------------------------------------------ -->
 
 <div class="bg-white mt-3 ">
-      <h4 class="alert-secondary w-100 py-3 px-3">Completed <span class="float-end mx-3"> <button class="btn btn-sm btn-danger" @click.prevent="fetchLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
-     <p class="p-3 small text-muted text-center"> Completed lessons will appear here </p>
-      <div class="row p-3 panel" > 
+     <h4 class="alert-secondary w-100 py-3 px-3">Completed <span class="float-end mx-3"> <button class="btn btn-sm btn-danger" @click.prevent="fetchLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
+     <p class="px-4 ">All completed lessons will appear here </p>
+      <div class="row p-3 mx-2 panel" > 
           <div class="col-md-4 row p-2 my-2"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'completed'">              
-              <div>
-                  <div class="border-line rounded p-3 h-100">
+              <div class="border-line rounded p-3 h-100">
+                  <div >
                     <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
-                        <h6 class="py-2 fw-bold"> 
+                        <p class="py-2 fw-bold align-items-center"> 
                             <span v-if="lesson.get_lesson_tutor.image"> <img :src="lesson.get_lesson_tutor.image" alt="profile pic" style="height:26px; width:26px; border-radius:50%"> </span>
                             <span v-else>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
-                            {{this.capitalize(lesson.get_lesson_tutor.first_name)}}
-                        </h6>
-                        <span class="small"> Status: {{lesson.status}}</span>
+                            {{this.capitalize(lesson.get_lesson_tutor.first_name)}} {{lesson.get_lesson_tutor.last_name.charAt(0).toUpperCase()}}. 
+                        </p>
+                        <span class="small text-muted fw-bold">  Status: <span class="fw-lighter"> {{this.capitalize(lesson.status)}}</span> </span>
                         </span>                       
-                    <p class="fw-bold">{{this.capitalize(lesson.lesson_type)}} lessons with tutor {{this.capitalize(lesson.get_lesson_tutor.first_name)}}</p>
+                    <p class="">{{this.capitalize(lesson.lesson_type)}} lessons with tutor {{this.capitalize(lesson.get_lesson_tutor.first_name)}}</p>
                     <span class="py-2">Date started: {{this.formatDate(lesson.created_at)}}</span> <br>                   
-                    <span class="py-2">Total Duration: </span><span>{{lesson.lesson_total_duration}}hr </span>  &nbsp; &nbsp;                      
+                    <span class="py-2">Date completed: {{this.formatDate(lesson.lessons_end_date)}} </span>  <br>                      
                     <span>Score: </span> <span>{{lesson.student_score}}%</span>
 
-                    <p class="pt-2 mb-0">This was completed in a total duration of {{lesson.lesson_total_duration}}hrs.</p>
+                    <p class="pt-2 mb-0">A total of {{lesson.lectures.length}} lectures completed in this course.</p>
+
                   </div>
                    <a href="#" class="text-warning mt-3 float-end  text-decoration-underline" @click.prevent="updateCurrentLesson(lesson)" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Write a review </a> 
               </div>              

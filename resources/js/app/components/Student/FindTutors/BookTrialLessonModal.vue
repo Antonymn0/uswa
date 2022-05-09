@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body px-2">  
                 
-              <h5>Select date and time to meet with {{this.tutor.first_name}} {{this.tutor.last_name}}</h5>
+              <p>Select date and time to meet with {{this.tutor.first_name}} {{this.tutor.last_name}}</p>
                <div>
                  <p>
                    <label for="date">Date</label>
@@ -17,7 +17,7 @@
                     <small class="text-danger" v-if="this.errors.date"><i class="bi bi-exclamation-triangle"></i> {{this.errors.date}}</small>
                  </p>
                  <p>
-                   <label for="lesson_type">Language | Subject | Course</label>
+                   <label for="lesson_type"> Course | Subject | Language</label>
                     <select  id="lesson_type" v-model="lesson_type" class="w-100 py-3 border text-muted rounded bg-white">
                         <option select="selected" value="">- Select -</option>
                         <option selected :value="this.tutor.subject">{{this.capitalize(this.tutor.subject)}}</option>
@@ -38,8 +38,8 @@
                   </p>
                   
                </div>
-                  <div class="small text-muted pb-4">
-                    <span class="fw-bold"> Note: </span>
+                  <div class="small alert-warning p-2 mb-4">
+                    <span class="fw-bold"> <i class="bi bi-info-circle"></i>  Note: </span>
                     <span> 
                       <ul>
                         <li>All trial lessons are limited to 20 mins. </li>

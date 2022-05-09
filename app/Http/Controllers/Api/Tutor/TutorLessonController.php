@@ -35,7 +35,10 @@ class TutorLessonController extends Controller
     public function markLessonComplete(Request $request, $lesson_id){
         $lesson = Lesson::findOrFail($lesson_id);
 
-        $lesson->update([ 'status' => 'completed'  ]);
+        $lesson->update([ 
+            'status' => 'completed', 
+            'lessons_end_date' => now(), 
+             ]);
 
         return response()->json([
             'success' => true,

@@ -4,25 +4,25 @@
 
   <div class="bg-white  ">      
       <h4 class="alert-secondary w-100 py-3 px-3">Trial lessons <span class="float-end mx-3"> <button class="btn btn-sm btn-danger" @click.prevent="fetchTrialLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
-        <p class="px-3 small">
+        <p class="px-3 ">
             Request for trial lessons from students will appear here. You can either choose to accept requests or decline.
         </p>
         <small class="alert-success p-2" v-if="this.success.shedule_meeting">{{this.success.shedule_meeting}}</small>
       <small class="alert-danger p-2" v-if="this.success.shedule_meeting">{{this.errors.meeting_sheduled}}</small>
-      <div class="row p-3 panel">          
+      <div class="row p-3 panel px-4">          
           <div class="col-md-4 row p-1"  v-for="(trial_lesson, index) in this.current_trial_lessons" :key="index">              
               <div>
                   <div class="border-line rounded p-2 h-100">
                     <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
-                        <h6 class="py-2 fw-bold"> 
+                        <p class="py-2 fw-bold align-items-center"> 
                             <span v-if="trial_lesson.get_student.image"> <img :src="trial_lesson.get_student.image" alt="profile pic" style="height:26px; width:26px; border-radius:50%"> </span>
                             <span v-else>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
-                            {{this.capitalize(trial_lesson.get_student.first_name)}}
-                        </h6>
-                        <small class='text-muted small fw-light'> <span class="small  fw-bold">  Status:</span> {{trial_lesson.tutor_confirm}} </small> 
+                            {{this.capitalize(trial_lesson.get_student.first_name)}} {{trial_lesson.get_student.last_name.charAt(0).toUpperCase()}}.
+                        </p>
+                        <small class='text-muted small fw-light'> <span class="small  fw-bold">  Status:</span> {{this.capitalize(trial_lesson.tutor_confirm)}} </small> 
                     </span>
                        
-                    <p class="fw-bold">{{this.capitalize(trial_lesson.get_student.first_name)}} wants to book  {{this.capitalize(trial_lesson.lesson_type)}}  lessons with you</p>
+                    <p class="">{{this.capitalize(trial_lesson.get_student.first_name)}} wants to book  {{this.capitalize(trial_lesson.lesson_type)}}  lessons with you</p>
                     <span class="py-2">Scheduled for: {{this.formatDate(trial_lesson.lesson_date)}}</span> <br>                  
                     <span>Time: </span> <span>{{trial_lesson.start_time}}hrs </span> <span class="btn btn-success btn-sm float-end" data-bs-target="#reschedule-trial-lesson" data-bs-toggle="modal" data-bs-dismiss="modal" @click.prevent="updateCurrentTrialLesson(trial_lesson)">Reschedule</span> <br>
                     <span class="py-2">Duration: </span> <span>20 mins </span> <br>
@@ -80,22 +80,22 @@
      <small class="alert-success text-center p-2 rounded" v-if="this.success.lesson_complete"> {{this.success.lesson_complete}} </small>
      <small class="alert-danger text-center p-2 rounded" v-if="this.errors.lesson_complete"> {{this.errors.lesson_complete}} </small>
      <div v-if="Object.keys(this.current_lessons).length  "> 
-      <div class="row p-2 panel">            
+      <div class="row px-4 panel ">            
           <div class="col-md-4 row p-1"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'ongoing'">         
               <div>
                   <div class="border-line rounded p-3 h-100">
                     <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
-                        <h6 class="py-2 fw-bold"> 
+                        <h6 class="py-2 fw-bold align-items-center"> 
                             <span v-if="lesson.get_lesson_student.image"> <img :src="lesson.get_lesson_student.image" alt="profile pic" style="height:26px; width:26px; border-radius:50%"> </span>
                             <span v-else>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
                             {{this.capitalize(lesson.get_lesson_student.first_name)}}
                         </h6>
-                        <span class="small"> Status: {{lesson.status}}...</span>
+                        <span class="small text-muted fw-bold"> Status: <span class="fw-lighter"> {{this.capitalize(lesson.status)}}...</span> </span>
                     </span>
                        
-                    <p class="fw-bold">
+                    <p class="">
                         <span class="m-0">{{this.capitalize(lesson.lesson_type)}} lessons with tutor {{this.capitalize(lesson.get_lesson_student.first_name)}} </span> 
-                        <span class="d-flex m-0 ">
+                        <span class="d-flex m-0 py-1 justify-content-end">
                             <a :href="lesson.meeting_link" target="blank" v-if="lesson.meeting_link && ! this.checkIfLectureUnpaid(lesson)" class="btn btn-secondary btn-sm m-1">Classroom</a> <br>
                             <button class="btn btn-default m-1 btn-sm border " v-if="this.checkIfLectureUnpaid(lesson)" @click.prevent="showArrearsTip()">Arrears </button>
                             <a class="btn btn-secondary btn-sm m-1" @click.prevent="updateCurrentLesson(lesson)" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Assignments</a>
@@ -104,8 +104,8 @@
 
                    <!-- --------------------- Lectures---------------------------------------------------       -->
                     <div>
-                        <h5>Lectures  </h5>
-                        <div v-if="Object.keys(lesson.lectures).length" class="lec-scroll border-start mb-2">
+                        <h6 class='ps-2'>Lectures  </h6>
+                        <div v-if="Object.keys(lesson.lectures).length" class="lec-scroll border-start mb-2 shadow">
                             <p v-for="(lecture, index) in lesson.lectures" :key="index" class="row small pt-2 pb- rounded align-middle lec-hover  mb-1 mx-1 " >
                                 <span class="col-1 m-0 align-middle ">
                                         <i class="bi bi-patch-check-fill text-muted"  v-if="this.isLectureComplete(lecture, lesson)"></i> 
@@ -156,35 +156,35 @@
   <div class="bg-white mt-3 ">
       <h4 class="alert-secondary w-100 py-3 px-3">Completed <span class="float-end mx-3"> <button class="btn btn-sm btn-danger" @click.prevent="fetchLessons()"><i class="bi bi-arrow-clockwise"></i></button> </span></h4>
       <div class="row p-3 panel"> 
-          <div class="col-md-4 row p-1"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'completed'">                
+          <div class="col-md-4 row px-2"  v-for="(lesson, index) in this.current_lessons" :key="index" v-show="lesson.status == 'completed'">                
               <div v-show="lesson.status == 'completed'">
               <div>
                   <div class="border-line rounded p-3 h-100">
                       <span class="d-flex border-bottom mb-2 justify-content-between align-items-center">
-                          <h6 class="py-2 fw-bold"> 
+                          <p class="py-2 fw-bold align-items-center"> 
                               <span v-if="lesson.get_lesson_student.image"> <img :src="lesson.get_lesson_student.image" alt="profile pic" style="height:26px; width:26px; border-radius:50%"> </span>
                               <span v-else>  <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.5rem"></i> </span>
                                  Antony mn
-                            </h6>
-                           <span class="small"> Status: {{lesson.status}}</span>
+                            </p>
+                           <span class="small fw-bold text-muted"> Status: <span class="fw-lighter"> {{this.capitalize(lesson.status)}}</span> </span>
                          </span>
                        
-                      <p class="fw-bold">{{lesson.lesson_type}} lessons</p>
+                      <p class="">{{lesson.lesson_type}} lessons</p>
                       <span class="py-2">Date started: {{this.formatDate(lesson.created_at)}}</span> <br>
-                      <span class="py-2">Course Duration: </span><span>{{lesson.lesson_total_duration}}hrs </span>  <br>                      
+                      <span class="py-2">Date completed: {{this.formatDate(lesson.lessons_end_date)}} </span>  <br>                      
                       <span>Student score: </span> <span>{{lesson.student_score}}%</span>
 
-                      <p class="pt-2 mb-0 small">This course was taught in a total duration of {{lesson.lesson_total_duration}}hrs.</p>
+                     <p class="pt-2 mb-0">A total of {{lesson.lectures.length}} lectures completed in this course.</p>
                   </div>
               </div>              
               </div>              
           </div>
-            <p class="p-3 mb-0 small text-muted "> 
-               Tip: <br>
-                <i class="bi bi-dot"></i> Completed lessons will appear here <br>
-                <i class="bi bi-dot"></i>  Complete more lessons with your students. <br>
-                <i class="bi bi-dot"></i>  Always aim to get a 5 star review   <br>       
-                <i class="bi bi-dot"></i>  This will increase your rating   <br>       
+            <p class="p-3 mb-0 small alert-warning m-2  "> 
+               <i class="bi bi-info-circle "></i> Tips: <br>
+                <i class="bi bi-dot ms-1"></i> Completed lessons will appear here <br>
+                <i class="bi bi-dot ms-1"></i>  Complete more lessons with your students. <br>
+                <i class="bi bi-dot ms-1"></i>  Always aim to get a 5 star review   <br>       
+                <i class="bi bi-dot ms-1"></i>  This will increase your rating   <br>       
             </p> 
       </div>
   </div>

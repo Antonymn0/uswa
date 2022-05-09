@@ -1,66 +1,77 @@
 <template>
-  <div class="parent ">
+  <div class="parent clearfix">
       <h5 class="fw-bold text-muted">   {{this.capitalize(this.search_term)}} tutors </h5>
       <!-- ----------------------------------------------------------------------------------------------------- -->
       <div class="row " v-if="Object.keys(this.current_tutors).length">
-      <div class="col-md-3 mb-2 px-2" v-for="(tutor, index) in this.current_tutors" :key="index"  style="overflow:hidden" >
+      <div class="col-md-4 mb-2 px-2" v-for="(tutor, index) in this.current_tutors" :key="index"  style="overflow:hidden" >
           <div class=" h-100   ">              
-            <div class="bg-white p-1 pt-2 inner rounded h-100  hover-card">
-                <div class="d-flex align-items-center">
+            <div class="bg-white p-1 pt-2 inner rounded  hover-card">
+                <div class="row">                
+                <div class="col-md-8">                
+                <div class="  d-flex align-items-center">
                     <div class="px-2 ">
                         <img src="/images/profile-placeholder.jpg" alt="" style="width:5rem; background:cover" v-if="!tutor.image">                        
                         <img :src="tutor.image" alt="" style="width:5.7rem; height:5.7rem;"  v-if="tutor.image">  
                     </div>
                     <div class="pl-2 ms-2">
                         <h5 class="d-flex align-items-center mb-0">
-                           <span> {{this.capitalize(tutor.first_name)}} {{ tutor.last_name.charAt(0).toUpperCase()}}. </span> 
+                           <span class=""> {{this.capitalize(tutor.first_name)}} {{ tutor.last_name.charAt(0).toUpperCase()}}. </span> 
                             <span class="float-end ms-3">
-                                <!-- <country-flag :country='tutor.country_code' size='.5rem'/> &nbsp; -->
                                 <i class="bi bi-shield-fill-check text-primary" ></i>
                             </span>                            
                         </h5>
                         <span class="clearfix w-100"></span>
                         <div class=" d-flex align-items-center justify-content-between " >                           
-                            <span class="small fw-bold"><i class="bi bi-mortarboard-fill text-secondary"></i> &nbsp; {{tutor.subject}} </span> 
+                            <span ><i class="bi bi-mortarboard-fill text-secondary"></i> &nbsp;
+                             <span class="alert-primary rounded px-1">{{tutor.subject}} </span>  </span> 
                            
                         </div>
                             <div class="align-items-center ">
-                                 <span class="small align-items-center "><i class="bi bi-circle-fill text-success" style="font-size:.7rem"></i> Online &nbsp; &nbsp; </span> <span class="text-muted small"><i class="bi bi-house"></i>  {{this.capitalize(tutor.country)}}</span> <br>
-                               <span class="mt-5  lead"> $ {{tutor.hourly_rate}} <span class="small">/hr </span>  </span> 
+                                <span class=" align-items-center "><i class="bi bi-circle-fill text-success" style="font-size:.7rem"></i> Online &nbsp; &nbsp; </span>
+                                <span class="text-muted "> <i class="bi bi-house"></i> {{this.capitalize(tutor.country)}} </span> <br>
+                                <span class="mt-5  "> $ {{tutor.hourly_rate}} <span class="small">/hr </span>  </span> 
                             </div>
                        </div>
-                </div>
-                <!-- ------------------------------- -->
+                </div>               
                 
                 <div class="p-1 d-flex justify-content-start align-items-center">
                     <span class="small ps-1" data-bs-toggle="modal" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)"> <i class="bi bi-star-fill text-warning"></i> {{this.calculateStarRating(tutor.reviews)}}  &nbsp; &nbsp; &nbsp;</span> 
                     <span > <a  data-bs-toggle="modal" class="text-warning" href="#exampleModalToggle" role="button" style="cursor:pointer" @click.prevent ="updateCurrent_tutor(tutor)">{{Object.keys(tutor.reviews).length}} Reviews </a>  &nbsp; &nbsp; &nbsp; </span> 
                      <span class="small float-end" ><i class="bi bi-suit-heart-fill text-muted" style="font-size:1.3rem" @click.prevent="toggleFavourite($event, tutor)"></i> </span>
                 </div>
-                            
-                
-                <div class="d-flex  small px-2">
-                    <span> <i class="bi bi-person-fill"></i> 0 Active students</span>
+
+                </div>                
+
+                <div class="col-md-4 desktop-btns  my-auto ">                    
+                    <span> <button class="btn btn-primary btn-sm  shadow rounded " @click.prevent="updateCurrent_tutor(tutor)" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo"> Introduction  </button> &nbsp; </span> 
+                </div>
+
+                 </div>           
+                <!-- ------------------------------- -->
+                <div class="d-flex text-muted small  px-2">
+                    <span> <i class="bi bi-person-fill"></i>  Active student(s) 0</span>
                     <span class=""> &nbsp; | &nbsp;</span> 
-                    <span>0 Lessons </span>
+                    <span> Lesson(s) 0</span>
                 </div>
                 <!-- ------------------------------------- -->
-                <div class="d-flex  small px-2 speaks">
-                    <span class="fw-bold">Languages: &nbsp; </span> 
+                <div class="d-flex   mx-2 speaks">
+                    <span class="">Speaks: &nbsp; </span> 
                     <span> {{tutor.language}} &nbsp;</span> <span class="alert-success px-1 rounded"> {{ this.capitalize(tutor.level)}} </span>  
                     <span class="">  &nbsp; | &nbsp;</span>
-                    <span>{{tutor.second_language}} &nbsp; </span>  <span class="alert-primary px-1 rounded">  {{ this.capitalize(tutor.second_language_level)}} </span>  
+                    <span>{{tutor.second_language}} &nbsp; </span> 
+                     <span class="alert-success px-1 rounded">  {{ this.capitalize(tutor.second_language_level)}} </span>  
                 </div>
                 <!-- -------------------------- -->
                 <div class="px-2" style="height:4.5rem; overflow:hidden">
-                    <span> Description: </span>
+                    <span class="fw-bold"> About: </span>
                     <span>{{ this.capitalize(tutor.description)}}  </span>
                 </div>
-                <div class="d-flex   p-2 ">                    
-                    <span> <button class="btn btn-danger rounded" @click.prevent="updateCurrent_tutor(tutor)" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo">Intro</button> &nbsp; </span> 
+                <!-- ----------------------------------------  -->
+               <div class="   p-2 ">                    
+                    <span> <button class="btn btn-primary mobile-btns rounded" @click.prevent="updateCurrent_tutor(tutor)" data-bs-toggle="modal" data-bs-target="#staticBackdropIntroVideo"> Intro.</button> &nbsp;</span> 
+                    <span> <button class='btn btn-success '  @click.prevent="updateCurrent_tutor(tutor)"  data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i> <span class="desktop-btns"> Message </span> </button> &nbsp;</span> 
                     <span> <button class="btn btn-danger  rounded"  @click.prevent="updateCurrent_tutor(tutor)" data-bs-toggle="modal" data-bs-target="#staticBackdropTrial">Book  lesson</button> &nbsp; </span> 
-                    <span> <button class='btn btn-primary '  @click.prevent="updateCurrent_tutor(tutor)"  data-bs-toggle="modal" data-bs-target="#staticBackdropMessage"><i class="bi bi-envelope"></i></button> </span> 
-                </div>
+                 </div>
             </div>
         </div> 
       </div>  
@@ -78,6 +89,7 @@
     <Reviews :tutor="this.current_tutor"/>
 </div>
   </div>
+  <div class="clearfix"></div>
 </template>
 
 <script>
@@ -180,7 +192,7 @@ export default {
                     if(response.status == 200){  
                         this.tutors =response.data.data.data;   
                         this.current_tutors = this.tutors; 
-                        
+                        console.log(this.tutors);                        
                     }                
                 })
                 .catch(error=>{               
@@ -197,7 +209,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .speaks{
         overflow: auto;
         white-space: nowrap;
@@ -211,17 +223,24 @@ export default {
     }
 
     .hover-card{
-        border: 1px solid rgb(241, 241, 241);
+        overflow:hidden;
+        border: 1px solid rgba(231, 151, 151, 0.452);
         margin:2px;
     }
     .hover-card:hover{
-        border: 1px solid rgb(241, 201, 201);
+        border: 1px solid rgb(245, 134, 134);
     }
 
   
     .mobile .inner{
         padding:  .7rem;
         margin:  .3rem .2rem ;
+    }
+    .mobile-btns{
+        display:none;               
+    }
+    .desktop-btns{
+        display:inline-block;               
     }
 
 /* media queries */
@@ -232,12 +251,22 @@ export default {
     .parent{
         margin: 0 .8rem;
     }
+    .mobile-btns{
+        display:inline-block;               
+    }
+    .desktop-btns{
+        display:none;               
+    }
+    .row .col-md-8{
+        width:100%;
+    }
 }
 /* media queries */
 @media only screen and (max-width: 600px) {
     .mobile{
         width:100%;               
     }
+    
     .parent{
         margin: 0 .3rem;
     }

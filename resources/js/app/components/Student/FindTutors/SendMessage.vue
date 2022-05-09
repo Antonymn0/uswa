@@ -1,7 +1,7 @@
 <template>
   <div>
         <div class="modal fade" id="staticBackdropMessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog text-muted modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content px-3">
             <div class="modal-header">
                 <h4 class="modal-title fw-bold">Send message </h4>
@@ -9,18 +9,18 @@
             </div>
             <div class="modal-body px-2">
 				 <p class="alert-success p-2 m-2" v-if="this.success.message_sent">{{this.success.message_sent}}</p> 
-              <h6>Contact {{this.tutor.first_name}},</h6>
-              <small class="text-muted p-1">Introduce yourself to the tutor.
-               Share your learning goals and ask any questions</small>
+              <p>Contact {{this.tutor.first_name}},</p>
+              <p class=" p-1">Introduce yourself to the tutor.
+               Share your learning goals and ask any questions</p>
 
               <textarea cols="30" rows="10" class="w-100 form-control p-2" autofocus v-model="this.message"></textarea>
               <small class="text-danger text-center">{{this.errors.message}}</small>
-                <div class="small text-muted py-3">
-                    <span class="fw-bold">Saftey Note: </span>
+                <div class="small alert-warning p-3 my-2 ">
+                    <span class="fw-bold">Safety Note: </span>
                     <span> 
                       <ul>
-                        <li>Do not share your persnal details. </li>
-                        <li>Personal email address or phone numbers. </li>                       
+                        <li>Do not share your personal details. </li>
+                        <li>Email address or phone numbers. </li>                       
                       </ul>
                     </span>                  
                 </div>  

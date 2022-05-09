@@ -58,7 +58,7 @@
                         <label for="level" class="form-label">Level</label>
                         <select  id="level" v-model="level" class="w-100 border rounded bg-white p-2 text-muted">
                             <option value="" selected ="selected"> -Select- </option>
-                            <option value="intermidiate"> Intermidiate</option>
+                            <option value="intermediate"> Intermediate</option>
                             <option value="expert" > Fluent</option>
                             <option value="native" > Native</option>
                         </select>
@@ -78,7 +78,7 @@
                         <label for="level" class="form-label">Level</label>
                         <select  id="level" v-model="second_language_level" class="w-100 border rounded bg-white p-2 text-muted">
                             <option value="" selected ="selected"> -Select- </option>
-                            <option value="intermidiate"> Intermidiate</option>
+                            <option value="intermediate"> Intermediate</option>
                             <option value="expert" > Fluent</option>
                             <option value="native" > Native</option>
                         </select>
@@ -99,7 +99,7 @@
                          <select  id="la" v-model="subject_level" class="w-100 border rounded bg-white p-2 text-muted">
                             <option value="" selected ="selected"> -Select- </option>
                             <option value="begginer" > Beginer </option>
-                            <option value="intermidiate"> Intermidiate</option>
+                            <option value="intermediate"> Intermediate</option>
                             <option value="expert" > Expert</option>
                             <option value="native" > Native</option>
                         </select>

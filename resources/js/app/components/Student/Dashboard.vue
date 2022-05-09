@@ -1,19 +1,19 @@
 <template>
   <div>
       <h4 class="ps-4 pt-3 mx-4">Dashboard </h4>  
-      <div> <myLessons /> </div>    
+      <div> <Lessons /> </div>    
   </div>
 </template>
 
 <script>
-import myLessons from "./Lessons/StudentLessons.vue";
+import Lessons from "./Lessons/StudentLessons.vue";
 export default {  
     components:{
-      myLessons
+      Lessons
     }
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

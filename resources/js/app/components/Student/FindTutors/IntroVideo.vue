@@ -1,7 +1,7 @@
 <template>
    <div>
       <div class="modal fade" id="staticBackdropIntroVideo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable text-muted ">
             <div class="modal-content px-1">
             <div class="modal-header">
                 <h4 class="modal-title fw-bold">About {{this.tutor.first_name}} {{this.tutor.last_name}}</h4>
@@ -10,7 +10,7 @@
             <div class="modal-body ">              
                 <div class="row">                     
                     <div class="col-md-6 ">
-                        <h6>Introduction Video</h6>
+                        <p class="ps-1 fw-bold">Introduction Video</p>
                         <p class="mb-0 rounded text-center" style="overflow:hidden" v-if="this.tutor.introduction_video">                        
                             <iframe width="350" height="250"  :src="this.tutor.introduction_video" autoplay="false" id='iframe' class="shadow   rounded" >  </iframe>                    
                         </p>
@@ -19,7 +19,7 @@
                             <span v-if="this.tutor.introduction_video_url && !this.tutor.introduction_video" class="pt-2 text-start">If the video doesnt play, click this <a :href="this.tutor.introduction_video_url" target="blank" class="text-primary underline">link to open </a>  in another tab  </span>                      
                         </p>
                         <p v-if="!this.tutor.introduction_video && !this.tutor.introduction_video_url" class="text-muted small  py-5 mt-5">This tutor has not uploded an introduction video yet</p>
-                          <p class="text-muted p-3 mb-0 pb-0 d-flex justify-content-between align-items-center">
+                        <p class=" ps-1 mb-0 pb-0 py-3 d-flex justify-content-between align-items-center">
                             <span class="m-0 p-0 fw-bold"> Homeland: </span>  
                             <span class="m-0 p-0"> &nbsp; &nbsp; {{tutor.city}} </span> 
                             <span class="m-0 p-0"> &nbsp; &nbsp; {{tutor.country}} </span> 
@@ -29,13 +29,13 @@
                     <div class="col-md-6 border-start px-3">                         
                         <p >
                             <span class="m-0 p-0 fw-bold">About:</span> <br>
-                            <span class="m-0 p-0">{{tutor.description}}</span>
+                            <span class="m-0 p-0">{{ this.capitalize(tutor.description) }}</span>
                         </p>
-                        <div class="py-2">
-                          <h5>Availability</h5>
+                        <div class="pt-5">
+                         <p class="fw-bold">Availability</p>
                          <p v-if="tutor.tutor_schedule">
-                             <table class="table table-striped table-sm">
-                                <thead class="text-muted">
+                             <table class="table table-striped table-sm text-muted mb-5">
+                                <thead class="">
                                      <th >Day</th>
                                      <th>From</th>
                                      <th>To</th>
@@ -48,7 +48,7 @@
                                     </tr>
                                     <tr v-else>
                                         <td>Monday</td>
-                                        <td colspan="2" class="text-muted small"> Not available</td>
+                                        <td colspan="2" class=" small"> Not available</td>
                                     </tr>
 
                                     <tr class="" v-if="tutor.tutor_schedule.tuesday == '1'">
@@ -58,7 +58,7 @@
                                     </tr>
                                     <tr v-else>
                                         <td>Tuesday</td>
-                                        <td colspan="2" class="text-muted small"> Not available</td>
+                                        <td colspan="2" class=" small"> Not available</td>
                                     </tr>
 
                                     <tr class="" v-if="tutor.tutor_schedule.wednesday == '1'">
@@ -68,7 +68,7 @@
                                     </tr>
                                     <tr v-else>
                                         <td>Wednesday</td>
-                                        <td colspan="2" class="text-muted small"> Not available</td>
+                                        <td colspan="2" class=" small"> Not available</td>
                                     </tr>
 
                                     <tr class="" v-if="tutor.tutor_schedule.thursday == '1'">
@@ -78,7 +78,7 @@
                                     </tr>
                                     <tr v-else>
                                         <td>Thursday</td>
-                                        <td colspan="2" class="text-muted small"> Not available</td>
+                                        <td colspan="2" class=" small"> Not available</td>
                                     </tr>
 
                                     <tr class="" v-if="tutor.tutor_schedule.friday == '1'">
@@ -88,7 +88,7 @@
                                     </tr>
                                     <tr v-else>
                                         <td>Friday</td>
-                                        <td colspan="2" class="text-muted small"> Not available</td>
+                                        <td colspan="2" class=" small"> Not available</td>
                                        
                                     </tr>
                                     
@@ -99,7 +99,7 @@
                                     </tr>
                                     <tr v-else>
                                         <td>Saturday</td>
-                                        <td colspan="2" class="text-muted small"> Not available</td>
+                                        <td colspan="2" class=" small"> Not available</td>
                                     </tr>
 
                                     <tr class="" v-if="tutor.tutor_schedule.sunday == '1'">
@@ -109,15 +109,15 @@
                                     </tr>
                                     <tr v-else>
                                         <td>Sunday</td>
-                                        <td colspan="2" class="text-muted small"> Not available</td>
+                                        <td colspan="2" class=" small"> Not available</td>
                                     </tr>
                                  
                                  </tbody>
                              </table>  
-                             <small class="text-muted text-center">Tip: Time is shown in your local timezone</small>                           
+                             <small class="alert-warning p-3 mt-3 rounded text-center"> <i class="bi bi-info-circle"></i> Time is shown in your local timezone</small>                           
                          </p>
                          <p v-else>
-                             <small class="text-center  text-muted py-4">This tutor has not set his schedule yet</small>
+                             <small class="text-center   py-4">This tutor has not set his schedule yet</small>
                          </p>
                       </div>
                   </div>
@@ -155,6 +155,9 @@ export default {
         }
     },
     methods:{
+        capitalize(string){
+          if(string)  return string.charAt(0).toUpperCase() + string.slice(1);
+        },
         convertTimeToLocal(time, tutor){
             // convert date from utc to local time 
           if(! time ) return "Invalid time";

@@ -44,7 +44,7 @@
 
             <!-- ----------------------------- Conversation Thread --------------------------------------- -->
             <div id="thread" class="mr-3 ">
-                <div  v-if="Object.keys(this.current_message).length">
+                <div  v-if="Object.keys(this.current_message).length ">
                 <h4 class="d-flex align-items-center border-bottom">
                     <span class="p-2" v-if="this.current_message.message_sender.image"> <img :src="this.current_message.message_sender.image" alt="profile pic" style="width:30px; height:30px; border-radius:50%;"> </span>                   
                     <span v-else><i class="bi bi-person-circle rounded-circle text-muted" style="font-size:1.7rem"></i>  </span>                   

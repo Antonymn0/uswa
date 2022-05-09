@@ -3,23 +3,23 @@
 
     <!--Lectures main Modal -->
     <div class="modal fade" id="lecturesModal" tabindex="-1" aria-labelledby="lecturesModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-dialog modal-dialog-centered modal-xl text-muted">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Lectures</h5>
+                <h4 class="modal-title" id="exampleModalLabel">Lectures</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <small class="alert alert-success p-2 text-center" v-if="this.success.lecture_delete">{{this.success.lecture_delete}}</small>
                 <small class="alert alert-danger p-2 text-center" v-if="this.errors.lecture_delete">{{this.errors.lecture_delete}}</small>
                 <div>
-                    <span class="d-flex justify-content-between">
-                    <h6 class="fw-bold">Define your course lectures</h6> 
-                    <button class="btn btn-primary" data-bs-target="#addModal2" data-bs-toggle="modal" data-bs-dismiss="modal"> <i class="bi bi-plus-lg"></i> New</button>
+                    <span class="d-flex justify-content-between py-2 mb-2">
+                        <p class="fw-bold">Define your course lecture(s)</p> 
+                        <button class="btn btn-primary" data-bs-target="#addModal2" data-bs-toggle="modal" data-bs-dismiss="modal"> <i class="bi bi-plus-lg"></i> New</button>
                     </span>                        
                    
                         <div class="table-responsive" v-if="Object.keys(this.lectures).length">
-                            <table class="table table-sm p-2">
+                            <table class="table table-sm p-2 text-muted">
                                 <thead class="p-2">
                                     <th>#</th>
                                     <th>Name</th>
@@ -49,7 +49,7 @@
 
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer py-3">
                 <button type="button" class="btn btn-success px-3" @click.prevent="this.fetchLectures()">Refresh</button>
                 <button type="button" class="btn btn-danger px-3" data-bs-dismiss="modal">Close</button>
             </div>
@@ -59,7 +59,7 @@
 
     <!-- --------------------- Small add new modal ------------------  -->
     <div class="modal fade" id="addModal2" aria-hidden="true" aria-labelledby="addModalLabel2" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered text-muted">
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalToggleLabel2">Add a lecture</h5>
@@ -85,8 +85,8 @@
                         </div>
                     </form>
                 </div>
-                <p class="text-muted small p-2">
-                    Tips: <br>                    
+                <p class="alert-warning small p-2">
+                    <i class="bi bi-info-circle "></i> Tips: <br>                    
                     <i class="bi bi-dot"></i> Define your lectures in small chunks of about 1hr each <br>
                     <i class="bi bi-dot"></i> Your defined  charge rate will be applied on these lectures <br>
                     <i class="bi bi-dot"></i>  Students are billed per lecture flat rate
@@ -105,7 +105,7 @@
 
      <!-- --------------------- Small edit modal ------------------  -->
     <div class="modal fade" id="editModal2" aria-hidden="true" aria-labelledby="editModalleLabel2" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered text-muted">
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalToggleLabel2">Update lecture</h5>

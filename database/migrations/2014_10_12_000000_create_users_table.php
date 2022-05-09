@@ -59,7 +59,7 @@ class CreateUsersTable extends Migration
            $table->string('subject')->nullable();
            $table->string('subject_level')->nullable();
            $table->string('over18')->nullable();
-           $table->string('description')->nullable();
+           $table->text('description')->nullable();
 
            $table->string('teaching_certificate')->nullable();           
            $table->string('has_teaching_certificate')->nullable();           

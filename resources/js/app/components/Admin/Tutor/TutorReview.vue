@@ -98,7 +98,7 @@
                     <small class="text-success"> {{this.success}} </small>                  
                     <small class="text-danger"> {{this.errors.revert}} </small> <br>
                     <small class="text-danger"> {{this.errors.approve}} </small> <br>
-                    <button type="button" class="btn btn-secondary m-2" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary m-2" id="close-tutor" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-success m-2" @click.prevent="revertToTutor(current_user.id)"> <span class="spinner-border spinner-border-sm " v-if="this.spinner.revert"></span> Revert</button>
                     <button type="button" class="btn btn-primary m-2" @click.prevent="approveTutor(current_user.id)"> <span class="spinner-border spinner-border-sm " v-if="this.spinner.approve"></span> Approve</button>
                 </div>
@@ -154,8 +154,11 @@ export default {
             axios.get('/api/admin/approve-tutor/' + id + '/' + 'complete')
             .then(response=>{
                 this.spinner.approve=false;
-                this.success = "Success, Account approved!" 
+                this.success = "Success, Account approved!"                 
                 this.fetchTutors();
+                setTimeout(() => {
+                   document.getElementById('close-tutor').click();
+                }, 2500);
             })
             .catch(error=>{
                 this.spinner.approve=false;
@@ -175,6 +178,9 @@ export default {
                 this.success = "Success,  Account reverted!";
                 this.decline_reason = '';
                 this.fetchTutors();
+                setTimeout(() => {
+                   document.getElementById('close-tutor').click();
+                }, 2500);
             })
             .catch(error=>{
                 this.spinner.approve=false;
