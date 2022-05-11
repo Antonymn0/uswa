@@ -4,7 +4,7 @@
 <SideNav />
 </div>
 
-<div class="col-md-10 ">  
+<div class="col-md-10 py-3">  
 <h5>Tutor review</h5>
 <div class="table-responsive  w-100">
     <table class="table table-small table-stripped">

@@ -2,7 +2,7 @@
 
    <!-- Review Twin modals  -->
   <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered text-muted">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalToggleLabel">Reviews</h5>
@@ -11,11 +11,11 @@
       <div class="modal-body">
         <div v-if="Object.keys(this.tutor.reviews).length">
           <div v-for="(review, index) in this.tutor.reviews" :key="index" class="card p-2 my-2">
-              <h5 class="align-items-center">
+              <p class=" d-flex align-items-center fw-bold mb-0">
                   <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2rem" v-if="! review.reviewer_image"></i>
                 <img v-else :src="review.reviewer_image" alt="profile picture" style="width:30px; height:30px; border-radius:50%">
                 &nbsp; {{this.capitalize(review.reviewer_name)}}
-                  </h5>
+                  </p>
               <p>{{this.capitalize(review.body)}}</p>
               <p class="small text-muted  d-flex justify-content-between m-0 mb-0 p-0">
                   <span class="m-0">
