@@ -225,7 +225,7 @@ export default {
     .hover-card{
         overflow:hidden;
         border: 1px solid rgba(231, 151, 151, 0.452);
-        margin:2px;
+        margin:5px;
     }
     .hover-card:hover{
         border: 1px solid rgb(245, 134, 134);
