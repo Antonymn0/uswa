@@ -9,9 +9,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div v-if="this.tutor.reviews">
+        <div v-if="Object.keys(this.tutor.reviews).length">
           <div v-for="(review, index) in this.tutor.reviews" :key="index" class="card p-2 my-2">
-              <h5>
+              <h5 class="align-items-center">
                   <i class="bi bi-person-circle rounded-circle text-muted" style="font-size:2rem" v-if="! review.reviewer_image"></i>
                 <img v-else :src="review.reviewer_image" alt="profile picture" style="width:30px; height:30px; border-radius:50%">
                 &nbsp; {{this.capitalize(review.reviewer_name)}}
@@ -28,7 +28,7 @@
                   <span class="m-0">{{this.formatDate(review.created_at)}} </span> </p>            
           </div>
         </div>
-        <div>
+        <div v-else>
           <p class="small text-muted text-center py-5"> This tutor has no reviews yet</p>
         </div>
       </div>

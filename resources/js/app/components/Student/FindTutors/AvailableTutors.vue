@@ -49,7 +49,7 @@
                  </div>           
                 <!-- ------------------------------- -->
                 <div class="d-flex text-muted small  px-2">
-                    <span> <i class="bi bi-person-fill"></i>  Active student(s) 0</span>
+                    <span> <i class="bi bi-person-fill"></i>  Active Student(s) 0</span>
                     <span class=""> &nbsp; | &nbsp;</span> 
                     <span> Lesson(s) 0</span>
                 </div>
